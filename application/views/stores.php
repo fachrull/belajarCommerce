@@ -19,7 +19,7 @@
         <td><?= $post['username'];?></td>
         <td><?= $post['email'];?></td>
         <td><?= $post['company_name'];?></td>
-        <td><a href="<?=site_url('home/detail/'.$post['id']);?>">Detail</a></td>
+        <td><a href="<?=site_url('home/adminStores/'.$post['user_id']);?>" class="btn">Detail</a></td>
       </tr>
     <?php endforeach; ?>
   </tbody>

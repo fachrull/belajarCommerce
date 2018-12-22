@@ -1,5 +1,11 @@
 <?php defined('BASEPATH') or exit('No directt script access allowed'); ?>
 
+<?php if($this->session->has_userdata('error')): ?>
+  <script>
+    alert('<?= $this->session->userdata('error')?>');
+  </script>
+<?php endif; ?>
+
 <form action="<?= site_url('auth/regis');?>" method="post">
   <div class="row">
     <label for="uname">Username:</label>
