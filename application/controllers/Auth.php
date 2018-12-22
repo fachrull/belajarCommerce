@@ -94,37 +94,23 @@ class Auth extends CI_Controller{
     $this->load->helper('form');
     $this->load->library('form_validation');
 
-    if ($this->session->userdata('isLogin', FALSE)) {
+    $this->form_validation->set_rules('uname', 'Username', 'required');
+    $this->form_validation->set_rules('password', 'Passsword', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'required');
+    $this->form_validation->set_rules('company', 'Company', 'required');
 
-      $this->form_validation->set_rules('uname', 'Username', 'required');
-      $this->form_validation->set_rules('password', 'Passsword', 'required');
-      $this->form_validation->set_rules('email', 'Email', 'required');
-      $this->form_validation->set_rules('company', 'Company', 'required');
-
-      if ($this->form_validation->run() === FALSE) {
-        $this->load->view('include/header');
-        $this->load->view('register');
-        $this->load->view('include/footer');
-      } else {
-        $this->mauth->regis();
+    if ($this->form_validation->run() === FALSE) {
+      $this->load->view('include/header');
+      $this->load->view('register');
+      $this->load->view('include/footer');
+    } else {
+      $this->mauth->regis();
+      if ($this->session->userdata('uType') == NULL) {
         redirect('auth/login');
-      }
-    } elseif ($this->session->userdata('uType') == 1) {
-      $this->form_validation->set_rules('uname', 'Username', 'required');
-      $this->form_validation->set_rules('password', 'Passsword', 'required');
-      $this->form_validation->set_rules('email', 'Email', 'required');
-      $this->form_validation->set_rules('company', 'Company', 'required');
-
-      if ($this->form_validation->run() === FALSE) {
-        $this->load->view('include/header');
-        $this->load->view('register');
-        $this->load->view('include/footer');
-      }else {
-        $this->mauth->regis();
-        redirect();
+      } elseif($this->session->userdata('uType') == 1){
+        redirect('');
       }
     }
-
   }
 
 }
