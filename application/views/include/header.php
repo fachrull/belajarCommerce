@@ -12,14 +12,31 @@
         <div class="nav-wrapper">
           <a href="<?=site_url();?>" class="brand-logo">eCommerce</a>
           <ul class="right">
+            <!-- This is navbar for super admin -->
             <?php if($this->session->userdata('uType') == 1): ?>
               <li><a href="<?= site_url('home/admin');?>">Admin</a></li>
-              <li><a href="<?= site_url('home/adminStores');?>">Stores</a></li>
+
+
+            <!-- This is navbar for store owner -->
             <?php elseif($this->session->userdata('uType') == 2): ?>
               <li><a href="<?= site_url('home/store');?>">My Store</a></li>
+              <li><a href="#">Invoice</a></li>
+              <li><a href="#">Product</a></li>
+
+            <!-- This is navbar for user -->
             <?php elseif($this->session->userdata('uType') == 3): ?>
-              <li><a href="<?= site_url('home/customer');?>">My Account</a></li>
+              <li><a href="<?= site_url('home/customer');?>">Profile</a></li>
+              <li><a href="#">Pembelian</a></li>
+
+            <!-- This is navbar for admin -->
+            <?php elseif($this->session->userdata('uType') == 4): ?>
+              <li><a href="#">Voucher</a></li>
+              <li><a href="#">Distributor</a></li>
+              <li><a href="#">Products</a></li>
+              <li><a href="<?= site_url('home/adminStores');?>">Stores</a></li>
             <?php endif; ?>
+
+            <!-- This is navbar logout or login -->
             <?php if($this->session->userdata('isLogin', TRUE)): ?>
               <li><a href="<?= site_url('auth/logout');?>">Logout</a></li>
             <?php else: ?>
