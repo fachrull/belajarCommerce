@@ -14,7 +14,7 @@
           <ul class="right">
             <?php if($this->session->userdata('uType') == 1): ?>
               <li><a href="<?= site_url('home/admin');?>">Admin</a></li>
-              <li><a href="<?= site_url('home/store');?>">Stores</a></li>
+              <li><a href="<?= site_url('home/adminStores');?>">Stores</a></li>
             <?php elseif($this->session->userdata('uType') == 2): ?>
               <li><a href="<?= site_url('home/store');?>">My Store</a></li>
             <?php elseif($this->session->userdata('uType') == 3): ?>

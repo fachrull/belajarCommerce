@@ -32,20 +32,26 @@ class Home extends CI_Controller{
       $this->load->view('include/header');
       $this->load->view('store');
       $this->load->view('include/footer');
-    }elseif ($this->session->userdata('uType') == 1) {
-      if ($this->session->userdata('uId') === FALSE) {
+    } else {
+      show_404();
+    }
+  }
+
+  public function adminStores($link = FALSE){
+    if($this->session->userdata('uType') == 1 ){
+      if($link === FALSE){
         $data['posts'] = $this->mhome->dataStores();
+
         $this->load->view('include/header');
         $this->load->view('stores', $data);
         $this->load->view('include/footer');
-      }else {
-        $id = $this->session->userdata('uId');
-        $data['post'] = $this->mhome->dataStores($id);
+      } else {
+        $data['post'] = $this->mhome->dataStores($link);
+
         $this->load->view('include/header');
-        $this->load->view('stores', $data);
+        $this->load->view('detail', $data);
         $this->load->view('include/footer');
       }
-
     } else {
       show_404();
     }
