@@ -95,7 +95,7 @@ class Auth extends CI_Controller{
     $this->load->library('form_validation');
 
     $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUnameReg');
-    $this->form_validation->set_rules('password', 'Passsword', 'required|callback_checkingPassReg');
+    $this->form_validation->set_rules('password', 'Passsword', 'required');
     $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmailReg');
     $this->form_validation->set_rules('company', 'Company', 'required');
 
@@ -138,24 +138,6 @@ class Auth extends CI_Controller{
       }
     }else {
       $this->session->set_flashdata('error', 'Username has already been taken');
-    }
-  }
-
-  public function checkingPassReg($password){
-    if ($this->checkingEmailReg($this->input->post('email'))) {
-      $user = $this->mauth->getData(array('username' => $this->input->post('uname')),
-        array('paswordRegField' => 'password'), TRUE);
-
-        if(password_verify($password, $user->password)){
-          $this->session->set_flashdata('error', 'Password has already been taken');
-          return FALSE;
-        }else {
-          return TRUE;
-        }
-    } elseif ($this->checkingUnameReg($this->input->post('uname'))) {
-      $this->session->set_flashdata('error', 'Username has already been taken');
-    }else {
-      $this->session->set_flashdata('error', 'Email has already been taken');
     }
   }
 
