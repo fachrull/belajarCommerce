@@ -94,9 +94,15 @@ class Auth extends CI_Controller{
     $this->load->helper('form');
     $this->load->library('form_validation');
 
+<<<<<<< HEAD
     $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUnameReg');
     $this->form_validation->set_rules('password', 'Passsword', 'required|callback_checkingPassReg');
     $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmailReg');
+=======
+    $this->form_validation->set_rules('uname', 'Username', 'required');
+    $this->form_validation->set_rules('password', 'Passsword', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'required');
+>>>>>>> 27d538f46cbedac8f6567d9b7f89233aefec6e98
     $this->form_validation->set_rules('company', 'Company', 'required');
 
     if ($this->form_validation->run() === FALSE) {
@@ -105,6 +111,7 @@ class Auth extends CI_Controller{
       $this->load->view('include/footer');
     } else {
       $this->mauth->regis();
+<<<<<<< HEAD
       if($this->session->userdata('isLogin') == NULL){
         redirect('auth/login');
       }elseif($this->session->userdata('isLogin') == 1){
@@ -135,10 +142,17 @@ class Auth extends CI_Controller{
         return FALSE;
       }else{
         return TRUE;
+=======
+      if ($this->session->userdata('uType') == NULL) {
+        redirect('auth/login');
+      } elseif($this->session->userdata('uType') == 1){
+        redirect('');
+>>>>>>> 27d538f46cbedac8f6567d9b7f89233aefec6e98
       }
     }else {
       $this->session->set_flashdata('error', 'Username has already been taken');
     }
+<<<<<<< HEAD
   }
 
   public function checkingPassReg($password){
@@ -157,6 +171,8 @@ class Auth extends CI_Controller{
     }else {
       $this->session->set_flashdata('error', 'Email has already been taken');
     }
+=======
+>>>>>>> 27d538f46cbedac8f6567d9b7f89233aefec6e98
   }
 
 }
