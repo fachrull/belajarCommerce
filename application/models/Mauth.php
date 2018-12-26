@@ -11,12 +11,11 @@ class Mauth extends CI_Model{
   // public function createDummyUser(){
   //   $data = array(
   //     'username'      => 'admin',
-  //     'password'      => password_hash('cr34t3p4ssw0rd', PASSWORD_DEFAULT),
+  //     'password'      => password_hash('admin', PASSWORD_DEFAULT),
   //     'email'         => 'admin@keraton.com',
-  //     'company_name'  => 'keraton',
-  //     'user_type'     => '1',
+  //     'user_type'          => '2'
   //   );
-  //   $this->db->insert('user',$data);
+  //   $this->db->insert('user_login',$data);
   // }
 
   public function getData($condition=NULL, $selection=NULL, $singleRowResult = FALSE){
@@ -28,14 +27,14 @@ class Mauth extends CI_Model{
       }
     }
 
-    // if we are selection some http_post_fields
+    // if we are selection some fields
     if ($selection != NULL) {
       foreach ($selection as $key => $value) {
         $this->db->select($value);
       }
     }
 
-    $query = $this->db->get('user');
+    $query = $this->db->get('user_login');
 
     if ($singleRowResult === TRUE) {
       return $query->row();
