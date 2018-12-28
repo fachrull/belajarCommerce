@@ -11,6 +11,7 @@
             <strong>Oh snap!</strong> <?= $this->session->userdata('error')?>
           </div>
         <?php endif; ?>
+        <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
         <!-- /ALERT -->
 
         <!-- register form -->
@@ -36,7 +37,7 @@
                   </label>
                   <label class="input mb-10">
                       <i class="ico-append fa fa-lock"></i>
-                      <input type="password" placeholder="Confirm password">
+                      <input name="conf_pass" type="password" placeholder="Confirm password">
                       <b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
                   </label>
                   <div class="row mb-3">
@@ -51,17 +52,25 @@
                           </label>
                       </div>
                   </div>
-                  <div class="row mb-3">
-                    <div class="col-md-6">
-                      <label for="input">
-                        <input type="radio" name="gender" value="m"> Male
-                      </label>
+                  <div class="row align-content-between mb-10 pl-5">
+                    <div class="col-6 col-md-6">
+                        <div class="custom-control custom-radio">
+                          <input name="gender" type="radio" class="custom-control-input" id="male" name="radiogroup">
+                          <label class="custom-control-label" for="male">Male</label>
+                        </div>
+                      </div>
+                      <div class="col-6 col-md-6">
+                        <div class="custom-control custom-radio">
+                          <input name="gender" type="radio" class="custom-control-input" id="female" name="radiogroup">
+                          <label class="custom-control-label" for="female">Female</label>
+                      </div>
                     </div>
-                    <div class="col-md-6">
-                      <label for="input">
-                        <input type="radio" name="gender" value="f"> Female
-                      </label>
-                    </div>
+                  </div>
+                  <div class="mt-30">
+                      <label class="checkbox m-0"><input class="checked-agree" type="checkbox" name="checkbox"><i></i>I
+                          agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a></label>
+                      <!-- <label class="checkbox m-0"><input type="checkbox" name="checkbox"><i></i>I want to receive
+                          news and special offers</label> -->
                   </div>
                 <?php endif; ?>
                 <?php if($this->session->userdata('uType') == 2): ?>
@@ -116,16 +125,10 @@
                       <input name="phone" type="text" placeholder="Phone Number">
                   </label>
                 <?php endif; ?>
-                <div class="mt-30">
-                    <label class="checkbox m-0"><input class="checked-agree" type="checkbox" name="checkbox"><i></i>I
-                        agree to the <a href="#" data-toggle="modal" data-target="#termsModal">Terms of Service</a></label>
-                    <label class="checkbox m-0"><input type="checkbox" name="checkbox"><i></i>I want to receive
-                        news and special offers</label>
-                </div>
             </fieldset>
             <div class="row mb-20">
                 <div class="col-md-12">
-                    <button type="submit" class="btn btn-oldblue"><i class="fa fa-check"></i> REGISTER</button>
+                    <button type="submit" class="btn btn-oldblue"><i class="fa fa-plus"></i> REGISTER</button>
                 </div>
             </div>
 
