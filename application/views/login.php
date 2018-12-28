@@ -29,10 +29,9 @@
           <div class="col-md-6">
               <button type="submit" class="btn btn-oldblue"><i class="fa fa-check"></i>LOGIN</button>
           </div>
-          <div class="col-md-6">
-              <a href="<?= site_url('auth/regis');?>" class="btn btn-oldblue float-right" style="margin-right: 20px;">
-                REGISTER
-              </a>
+          <div class="row justify-content-end full-width pr-15 mb-20 col-md-6">
+              <a href="<?= site_url('auth/regis');?>" type="submit" class="btn btn-oldblue text-white"><i class="fa fa-plus"></i>
+                REGISTER</a>
           </div>
       </div>
     </form>
