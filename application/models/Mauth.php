@@ -45,34 +45,115 @@ class Mauth extends CI_Model{
 
   public function regis(){
     if ($this->session->userdata('uType') == NULL) {
-      $uType = 3;
-      $data = array(
-        'username'      => $this->input->post('uname'),
-        'password'      => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-        'email'         => $this->input->post('email'),
-        'company_name'  => $this->input->post('company'),
-        'user_type'     => $uType
+      $uType = 4;
+      $newCS = 1;
+      $dataUserLogin = array(
+        'username'  => $this->input->post('uname'),
+        'password'  => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+        'email'     => $this->input->post('email'),
+        'user_type' => $uType,
+        'newer'     => $newCS
       );
-      return $this->db->insert('user', $data);
-    } elseif($this->session->userdata('uType') == 1) {
-        $uType = 2;
-        $data = array(
-          'username'      => $this->input->post('uname'),
-          'password'      => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-          'email'         => $this->input->post('email'),
-          'company_name'  => $this->input->post('company'),
-          'user_type'     => $uType,
-          'user_add1'     => $this->input->post('add1'),
-          'user_add2'     => $this->input->post('add2'),
-          'postcode'      => $this->input->post('pCode'),
-          'city'          => $this->input->post('city'),
-          'province'      => $this->input->post('province'),
-          'country'       => $this->input->post('country'),
-          'region'        => $this->input->post('region'),
-          'phone1'        => $this->input->post('phone1'),
-          'phone2'        => $this->input->post('phone2')
+      $queryULoging = $this->db->insert('user_login', $dataUserLogin);
+
+      $userId = $this->getData(array('username' => $this->input->post('uname')),
+        array('userIdField' => 'user_id'), TRUE);
+      $id = $userId->user_id;
+
+      $dataCustomer = array(
+        'id_userLogin'  => $id,
+        'first_name'    => $this->input->post('fname'),
+        'last_name'     => $this->input->post('lname'),
+        'gender'        => $this->input->post('gender')
+      );
+
+      $queryCustomer = $this->db->insert('tm_customer', $dataCustomer);
+
+      return array(
+        'queryULoging'  => $queryULoging,
+        'queryCustomer' => $queryCustomer
+      );
+    } elseif($this->session->userdata('uType') == 2) {
+        $uType = 3;
+        $newOwner = 1;
+        $pass = 'store_owner_agm';
+        $dataUserLogin = array(
+          'username' => $this->input->post('uname'),
+          'password' => password_hash(($pass), PASSWORD_DEFAULT),
+          'email'    => $this->input->post('emai;'),
+          'type'     => $uType,
+          'newer'    => $newOwner
         );
-        return $this->db->insert('user', $data);
+        $queryULoging = $this->db->insert('user_login', $dataUserLogin);
+
+        $userId = $this->getData(array('username' => $this->input->post('uname')),
+          array('userIdField' => 'user_id'), TRUE);
+        $id = $userId->user_id;
+
+        $dataStoreOwner = array(
+          'id_userLogin' => $id,
+          'new_owner'    => 1,
+          'company_name' => $this->input->post('company_name'),
+          'address'      => $this->input->post('add'),
+          'sub_district' => $this->input->post('sub_district'),
+          'city'         => $this->input->post('sub_district'),
+          'province'     => $this->input->post('province'),
+          'postcode'     => $this->input->post('pCode'),
+          'phone1'       => $this->input->post('phone1'),
+          'phone2'       => $this->input->post('phone2'),
+          'owner_name'   => $this->input->post('owner_name')
+        );
+        $queryStoreOwner = $this->db->insert('tm_store_owner', $dataStoreOwner);
+        return array(
+          'queryULoging'    => $queryULoging,
+          'queryStoreOwner' => $queryStoreOwner
+        );
+    } elseif($this->session->userdata('uType') == 1){
+      $uType = 2;
+      $newAdmin = 1;
+      $pass = "agm_admin";
+      $dataUserLogin = array(
+        'username'  => $this->input->post('uname'),
+        'password'  => password_hash($pass, PASSWORD_DEFAULT),
+        'user_type' => $uType,
+        'newer'     => $newAdmin
+      );
+      $queryULoging = $this->db->insert('user_login', $dataUserLogin);
+      $userId = $this->getData(array('username' => $this->input->post('uname')),
+        array('userIdField' => 'user_id'), TRUE);
+      $id = $userId->user_id;
+
+      $dataAdmin = array(
+        'id_userLogin' => $id,
+        'first_name'   => $this->input->post('fname'),
+        'last_name'    => $this->input->post('lname'),
+        'phone'        => $this->input->post('phone')
+      );
+      $queryAdmin = $this->db->insert('tm_super_admin', $dataAdmin);
+      return array(
+        'queryULoging' => $queryULoging,
+        'queryAdmin'   => $queryAdmin
+      );
     }
+  }
+
+  function forgotPass($email = NULL, $username = NULL){
+    $dataUdatePassword = array(
+      'password' => password_hash($this->input->post('pass'), PASSWORD_DEFAULT),
+    );
+
+    if($email != NULL){
+      foreach ($email as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+
+    if ($username != NULL) {
+      foreach ($username as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+
+    return $this->db->update('user_login', $dataUdatePassword);
   }
 }

@@ -86,7 +86,6 @@ class Auth extends CI_Controller{
   }
 
   // public function inputDummyUser(){
-  //   $this->load->model('Mauth', 'mauth');
   //   $this->mauth->createDummyUser();
   // }
 
@@ -95,20 +94,52 @@ class Auth extends CI_Controller{
     $this->load->library('form_validation');
 
     $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUnameReg');
-    $this->form_validation->set_rules('password', 'Passsword', 'required');
     $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmailReg');
-    $this->form_validation->set_rules('company', 'Company', 'required');
 
-    if ($this->form_validation->run() === FALSE) {
-      $this->load->view('include/header');
-      $this->load->view('register');
-      $this->load->view('include/footer');
-    } else {
-      $this->mauth->regis();
-      if($this->session->userdata('isLogin') == NULL){
-        redirect('auth/login');
-      }elseif($this->session->userdata('isLogin') == 1){
+    if ($this->session->userdata('uType') == 1) {
+      $this->form_validation->set_rules('phone', 'Phone', 'required');
+
+      if ($this->form_validation->run() === FALSE) {
+        $this->load->view('include/header');
+        $this->load->view('register');
+        $this->load->view('include/footer');
+      } else{
+        $this->mauth->regis();
+        redirect();
+      }
+    } elseif ($this->session->userdata('uType') == 2) {
+      $this->form_validation->set_rules('company_name', 'Company_name', 'required');
+      $this->form_validation->set_rules('add', 'Address', 'required');
+      $this->form_validation->set_rules('sub_district', 'Sub_district', 'required');
+      $this->form_validation->set_rules('city', 'City', 'required');
+      $this->form_validation->set_rules('province', 'Province', 'required');
+      $this->form_validation->set_rules('pCode', 'Postcode', 'required');
+
+      if($this->form_validation->run() === FALSE){
+        $this->load->view('include/header');
+        $this->load->view('register');
+        $this->load->view('include/footer');
+      } else{
+        $this->mauth->regis();
         redirect('home/adminStores');
+      }
+    } elseif ($this->session->userdata('uType') == NULL) {
+      $this->form_validation->set_rules('password', 'Password', 'required');
+      $this->form_validation->set_rules('fname', 'First_name', 'required');
+      $this->form_validation->set_rules('lname', 'Last_name', 'required');
+      $this->form_validation->set_rules('gender', 'Gender', 'required');
+
+      // $arrayName = array(
+      //   'uname' => $this->input->,
+      // );
+
+      if ($this->form_validation->run() === FALSE) {
+          $this->load->view('include/header');
+          $this->load->view('register');
+          $this->load->view('include/footer');
+      } else {
+        $this->mauth->regis();
+        redirect('auth/login');
       }
     }
   }
@@ -138,7 +169,68 @@ class Auth extends CI_Controller{
       }
     }else {
       $this->session->set_flashdata('error', 'Username has already been taken');
+      return FALSE;
     }
   }
+
+  public function checkForgot(){
+    $this->load->helper('form');
+    $this->load->library('form_validation');
+
+    $this->form_validation->set_rules('search', 'Search', 'required|callback_checkingUnameMail');
+    $this->form_validation->set_rules('pass', 'Password', 'required');
+
+    if($this->form_validation->run() === FALSE){
+      $this->load->view('include/header');
+      $this->load->view('forgot_pass');
+      $this->load->view('include/footer');
+    }else{
+      $uname = $this->mauth->getData(array('username' => $this->input->post('search')),
+        array('usernameField' => 'username'), TRUE);
+
+
+      $mail = $this->mauth->getData(array('email' => $this->input->post('search')),
+        array('emailField' => 'email'), TRUE);
+
+
+      if(isset($uname)){
+          $username = $uname->username;
+          $this->mauth->forgotPass(NULL, $username);
+      }
+      if (isset($mail)) {
+        $email = $mail->email;
+        $this->mauth->forgotPass($email, NULL);
+      }
+      redirect('auth/login');
+    }
+  }
+
+  public function checkingUnameMail($search){
+    $uname = $this->mauth->getData(array('username' => $search),
+      array('usernameField' => 'username'), TRUE);
+    $mail = $this->mauth->getData(array('email' => $search),
+      array('emailField' => 'email'), TRUE);
+
+    if (isset($uname) || isset($mail)) {
+      $this->session->set_flashdata('updatePass', TRUE);
+      return TRUE;
+    }else{
+      $this->session->set_flashdata('wrongUnameOrPass', 'No search results');
+      return FALSE;
+    }
+  }
+
+
+
+  // public function checkingNewPass(){
+  //   if (condition) {
+  //     // code...
+  //   }
+  // }
+
+  // public function coba(){
+  //   $read = $this->mauth->getData(array('username' => 'superAdmin'), array('emailField' => 'email'), TRUE);
+  //   print_r($read);
+  // }
 
 }
