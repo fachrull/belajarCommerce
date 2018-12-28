@@ -46,7 +46,7 @@ class Mauth extends CI_Model{
   public function regis(){
     if ($this->session->userdata('uType') == NULL) {
       $uType = 4;
-      $newCS = 1;
+      $newCS = 0;
       $dataUserLogin = array(
         'username'  => $this->input->post('uname'),
         'password'  => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
