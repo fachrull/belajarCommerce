@@ -91,8 +91,24 @@
 						<nav class="nav-main text-center">
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
                 <?php if($this->session->userdata('uType') == 1): ?>
-            				<li><a class="page-scroll">CATEGORY</a></li>
-										<li><a class="page-scroll">PRODUCT</a></li>
+									<li><a class="page-scroll">SLIDER</a></li>
+									<li><a class="page-scroll">PROMOTION</a></li>
+									<li><a class="page-scroll">AGMPEDIA</a></li>
+									<li><a class="page-scroll">LOCATION STORES</a></li>
+									<li class="dropdown">
+										<a class="page-scroll">MANAGE PRODUCT</a>
+										<ul class="dropdown-menu" role="menu">
+											<li><a class="page-scroll" href="<?= site_url('home/sa_brand');?>">BRAND</a></li>
+											<li><a class="page-scroll">CATEGORY</a></li>
+											<li class="dropdown">
+												<a class="page-scroll">PRODUCT</a>
+												<ul class="dropdown-menu">
+													<li><a class="page-scroll">RATING</a></li>
+													<li><a class="page-scroll">BEST ORDER</a></li>
+												</ul>
+											</li>
+										</ul>
+									</li>
                   <!-- This is navbar for store owner -->
                 <?php elseif($this->session->userdata('uType') == 2): ?>
                     <li><a class="page-scroll" href="#">VOUCHER</a></li>
