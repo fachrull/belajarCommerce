@@ -79,7 +79,16 @@ class Home extends CI_Controller{
     }else {
       show_404();
     }
+  }
 
+  public function sa_brand(){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->view('include/header');
+      $this->load->view('sa_brand');
+      $this->load->view('include/footer');
+    }else{
+      show_404();
+    }
   }
 
 
