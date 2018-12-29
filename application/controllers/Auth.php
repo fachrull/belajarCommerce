@@ -95,7 +95,6 @@ class Auth extends CI_Controller{
 
     $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUnameReg');
     $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmailReg|valid_email');
-    $this->form_validation->set_rules('checkbox', 'Checkbox', 'required');
 
     if ($this->session->userdata('uType') == 1) {
       $this->form_validation->set_rules('phone', 'Phone', 'required');
@@ -109,9 +108,9 @@ class Auth extends CI_Controller{
         redirect();
       }
     } elseif ($this->session->userdata('uType') == 2) {
-      $this->form_validation->set_rules('company_name', 'Company_name', 'required');
+      $this->form_validation->set_rules('company_name', 'Company name', 'required');
       $this->form_validation->set_rules('add', 'Address', 'required');
-      $this->form_validation->set_rules('sub_district', 'Sub_district', 'required');
+      $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
       $this->form_validation->set_rules('city', 'City', 'required');
       $this->form_validation->set_rules('province', 'Province', 'required');
       $this->form_validation->set_rules('pCode', 'Postcode', 'required');
@@ -130,6 +129,7 @@ class Auth extends CI_Controller{
       $this->form_validation->set_rules('fname', 'First name', 'required');
       $this->form_validation->set_rules('lname', 'Last name', 'required');
       $this->form_validation->set_rules('gender', 'Gender', 'required');
+      $this->form_validation->set_rules('checkbox', 'Checkbox', 'required');
 
       // $arrayName = array(
       //   'uname' => $this->input->,
