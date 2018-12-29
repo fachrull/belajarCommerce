@@ -91,12 +91,13 @@
 						<nav class="nav-main text-center">
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
                 <?php if($this->session->userdata('uType') == 1): ?>
-                  <li><a class="page-scroll" href="<?= site_url('home/admin');?>">Admin</a></li>
+            				<li><a class="page-scroll">CATEGORY</a></li>
+										<li><a class="page-scroll">PRODUCT</a></li>
                   <!-- This is navbar for store owner -->
                 <?php elseif($this->session->userdata('uType') == 2): ?>
-                    <li><a class="page-scroll" href="#">Voucher</a></li>
-                    <li><a class="page-scroll" href="#">Distributor</a></li>
-                    <li><a class="page-scroll" href="#">Products</a></li>
+                    <li><a class="page-scroll" href="#">VOUCHER</a></li>
+                    <li><a class="page-scroll" href="#">DISTRIBUTOR</a></li>
+                    <li><a class="page-scroll" href="#">PRODUCTS</a></li>
                     <li><a class="page-scroll" href="<?= site_url('home/adminStores');?>">STORES</a></li>
 
                 <!-- This is navbar for user -->
