@@ -16,6 +16,54 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `tm_brand`
+--
+
+DROP TABLE IF EXISTS `tm_brand`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tm_brand` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `id_super_admin` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tm_brand`
+--
+
+LOCK TABLES `tm_brand` WRITE;
+/*!40000 ALTER TABLE `tm_brand` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tm_brand` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tm_category`
+--
+
+DROP TABLE IF EXISTS `tm_category`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tm_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `id_super_admin` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tm_category`
+--
+
+LOCK TABLES `tm_category` WRITE;
+/*!40000 ALTER TABLE `tm_category` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tm_category` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tm_customer`
 --
 
@@ -49,6 +97,34 @@ INSERT INTO `tm_customer` VALUES (1,15,'dummy','customer2',NULL,'',NULL,NULL,NUL
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tm_product`
+--
+
+DROP TABLE IF EXISTS `tm_product`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tm_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `price` decimal(10,0) NOT NULL,
+  `sub_price` decimal(10,0) NOT NULL,
+  `description` text NOT NULL,
+  `status` int(11) NOT NULL,
+  `id_super_admin` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tm_product`
+--
+
+LOCK TABLES `tm_product` WRITE;
+/*!40000 ALTER TABLE `tm_product` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tm_product` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tm_store_owner`
 --
 
@@ -67,6 +143,7 @@ CREATE TABLE `tm_store_owner` (
   `phone1` int(20) DEFAULT NULL,
   `phone2` int(20) DEFAULT NULL,
   `owner_name` varchar(50) DEFAULT NULL,
+  `id_super_admin` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -77,7 +154,7 @@ CREATE TABLE `tm_store_owner` (
 
 LOCK TABLES `tm_store_owner` WRITE;
 /*!40000 ALTER TABLE `tm_store_owner` DISABLE KEYS */;
-INSERT INTO `tm_store_owner` VALUES (1,4,'PT First Company','JL. Akses UI No.123','Kelapa Dua','Depok','Jawa Barat','16451',NULL,NULL,'First');
+INSERT INTO `tm_store_owner` VALUES (1,4,'PT First Company','JL. Akses UI No.123','Kelapa Dua','Depok','Jawa Barat','16451',NULL,NULL,'First',0);
 /*!40000 ALTER TABLE `tm_store_owner` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -132,7 +209,7 @@ CREATE TABLE `user_login` (
 
 LOCK TABLES `user_login` WRITE;
 /*!40000 ALTER TABLE `user_login` DISABLE KEYS */;
-INSERT INTO `user_login` VALUES (2,'superAdmin','$2y$10$go/at5f32Z8ll84Kjk3TU.v2.Zcox5Lo/KHSnHxGBP//r9wWr4P22','super.admin@keraton.com',1,0),(3,'dummyCS','$2y$10$go/at5f32Z8ll84Kjk3TU.v2.Zcox5Lo/KHSnHxGBP//r9wWr4P22','dummy@koliho.com',4,0),(4,'dummyStr','$2y$10$go/at5f32Z8ll84Kjk3TU.v2.Zcox5Lo/KHSnHxGBP//r9wWr4P22','dummystr@koliho.com',3,0),(5,'admin','$2y$10$go/at5f32Z8ll84Kjk3TU.v2.Zcox5Lo/KHSnHxGBP//r9wWr4P22','admin@keraton.com',2,0),(15,'dummyCS2','$2y$10$go/at5f32Z8ll84Kjk3TU.v2.Zcox5Lo/KHSnHxGBP//r9wWr4P22','dummycs2@koliho.com',4,0),(16,'customer','$2y$10$go/at5f32Z8ll84Kjk3TU.v2.Zcox5Lo/KHSnHxGBP//r9wWr4P22','customer@koliho.com',4,0);
+INSERT INTO `user_login` VALUES (2,'superAdmin','$2y$10$3YRswITgyZZYpwgxLc3ZN.emGdYMtrCmwKAoePPKSo6tBWl8hDWEK','super.admin@keraton.com',1,0),(3,'dummyCS','$2y$10$3YRswITgyZZYpwgxLc3ZN.emGdYMtrCmwKAoePPKSo6tBWl8hDWEK','dummy@koliho.com',4,0),(4,'dummyStr','$2y$10$3YRswITgyZZYpwgxLc3ZN.emGdYMtrCmwKAoePPKSo6tBWl8hDWEK','dummystr@koliho.com',3,0),(5,'admin','$2y$10$3YRswITgyZZYpwgxLc3ZN.emGdYMtrCmwKAoePPKSo6tBWl8hDWEK','admin@keraton.com',2,0),(15,'dummyCS2','$2y$10$3YRswITgyZZYpwgxLc3ZN.emGdYMtrCmwKAoePPKSo6tBWl8hDWEK','dummycs2@koliho.com',4,0),(16,'customer','$2y$10$3YRswITgyZZYpwgxLc3ZN.emGdYMtrCmwKAoePPKSo6tBWl8hDWEK','customer@koliho.com',4,0);
 /*!40000 ALTER TABLE `user_login` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -145,4 +222,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-12-29  1:04:38
+-- Dump completed on 2018-12-29 23:56:40
