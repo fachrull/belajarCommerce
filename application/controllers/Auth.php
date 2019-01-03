@@ -20,7 +20,7 @@ class Auth extends CI_Controller{
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUsername');
+      $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmail|valid_email');
       $this->form_validation->set_rules('password', 'Password', 'required|callback_checkingPassword');
 
       // this is block for if our form validation running unseccessly
@@ -31,17 +31,22 @@ class Auth extends CI_Controller{
 
         // this block for giving session login if all the requiry is complete
       } else {
-        $userType = $this->mauth->getData(array('username' => $this->input->post('uname')),
+        $userType = $this->mauth->getData(array('email' => $this->input->post('email')),
           array('userTypeField' => 'user_type'), TRUE);
         $type = $userType->user_type;
 
-        $userId = $this->mauth->getData(array('username' => $this->input->post('uname')),
+        $userId = $this->mauth->getData(array('email' => $this->input->post('email')),
           array('userIdField' => 'user_id'), TRUE);
         $id = $userId->user_id;
+
+        $newerId = $this->mauth->getData(array('email' => $this->input->post('email')),
+          array('newerField' => 'newer'), TRUE);
+        $newer = $newerId->newer;
 
         $data = array(
           'uId'     => $id,
           'uType'   => $type,
+          'uNew'    => $newer,
           'isLogin' => TRUE
         );
         $this->session->set_userdata($data);
@@ -52,26 +57,27 @@ class Auth extends CI_Controller{
 
   // this function for unset sessio
   public function logout(){
-    $data =  array('uId','uType', 'isLogin');
-    $this->session->unset_userdata($data);
-    redirect();
+    // $this->session->unset_userdata('UId');
+    // $this->session->unset_userdata('uType');
+    $this->session->sess_destroy();
+    redirect('home', 'refresh');
   }
 
-  // this function for checking username
-  public function checkingUsername($username){
-    $user = $this->mauth->getData(array('username' => $username),
-      array('usernameField' => 'username'), TRUE);
+  // this function for checking email
+  public function checkingEmail($email){
+    $user = $this->mauth->getData(array('email' => $email),
+      array('usernameField' => 'email'), TRUE);
 
     if (isset($user)) {
       return TRUE;
     } else {
-      $this->session->set_flashdata('error', 'Wrong username!');
+      $this->session->set_flashdata('error', 'Wrong email!');
     }
   }
   // this function for checking password
   public function checkingPassword($password){
-    if($this->checkingUsername($this->input->post('uname'))){
-      $user = $this->mauth->getData(array('username' => $this->input->post('uname')),
+    if($this->checkingEmail($this->input->post('email'))){
+      $user = $this->mauth->getData(array('email' => $this->input->post('email')),
         array('passwordField' => 'password'), TRUE);
 
       if (password_verify($password, $user->password)) {
@@ -81,7 +87,7 @@ class Auth extends CI_Controller{
         return FALSE;
       }
     } else {
-      $this->session->set_flashdata('error', 'Wrong username!');
+      $this->session->set_flashdata('error', 'Wrong email!');
     }
   }
 
@@ -98,11 +104,14 @@ class Auth extends CI_Controller{
 
     if ($this->session->userdata('uType') == 1) {
       $this->form_validation->set_rules('phone', 'Phone', 'required');
+      $this->form_validation->set_rules('adminType', 'Admin Authority', 'required');
 
       if ($this->form_validation->run() === FALSE) {
-        $this->load->view('include/header');
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
         $this->load->view('register');
-        $this->load->view('include/footer');
+        $this->load->view('include/admin/right-sidebar');
+        $this->load->view('include/admin/footer');
       } else{
         $this->mauth->regis();
         redirect();
@@ -130,10 +139,6 @@ class Auth extends CI_Controller{
       $this->form_validation->set_rules('lname', 'Last name', 'required');
       $this->form_validation->set_rules('gender', 'Gender', 'required');
       $this->form_validation->set_rules('checkbox', 'Checkbox', 'required');
-
-      // $arrayName = array(
-      //   'uname' => $this->input->,
-      // );
 
       if ($this->form_validation->run() === FALSE) {
           $this->load->view('include/header');
@@ -164,7 +169,7 @@ class Auth extends CI_Controller{
         array('emailRegField' => 'email'), TRUE);
 
       if(isset($user)){
-        $this->session->set_flashdata('error', 'Email hasl already been taken');
+        $this->session->set_flashdata('error', 'Email has already been taken');
         return FALSE;
       }else{
         return TRUE;

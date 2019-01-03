@@ -90,34 +90,7 @@
 					<div class="navbar-collapse collapse nav-main-collapse">
 						<nav class="nav-main text-center">
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
-                <?php if($this->session->userdata('uType') == 1): ?>
-									<li><a class="page-scroll">SLIDER</a></li>
-									<li><a class="page-scroll">PROMOTION</a></li>
-									<li><a class="page-scroll">AGMPEDIA</a></li>
-									<li><a class="page-scroll">LOCATION STORES</a></li>
-									<li class="dropdown">
-										<a class="page-scroll">MANAGE PRODUCT</a>
-										<ul class="dropdown-menu" role="menu">
-											<li><a class="page-scroll" href="<?= site_url('home/sa_brand');?>">BRAND</a></li>
-											<li><a class="page-scroll">CATEGORY</a></li>
-											<li class="dropdown">
-												<a class="page-scroll">PRODUCT</a>
-												<ul class="dropdown-menu">
-													<li><a class="page-scroll">RATING</a></li>
-													<li><a class="page-scroll">BEST ORDER</a></li>
-												</ul>
-											</li>
-										</ul>
-									</li>
-                  <!-- This is navbar for store owner -->
-                <?php elseif($this->session->userdata('uType') == 2): ?>
-                    <li><a class="page-scroll" href="#">VOUCHER</a></li>
-                    <li><a class="page-scroll" href="#">DISTRIBUTOR</a></li>
-                    <li><a class="page-scroll" href="#">PRODUCTS</a></li>
-                    <li><a class="page-scroll" href="<?= site_url('home/adminStores');?>">STORES</a></li>
-
-                <!-- This is navbar for user -->
-                <?php elseif($this->session->userdata('uType') == 3): ?>
+                <?php if($this->session->userdata('uType') == 3): ?>
                       <li><a class="page-scroll" href="<?= site_url('home/store');?>">MY STORE</a></li>
                       <li><a class="page-scroll" href="#">INVOICE</a></li>
                       <li><a class="page-scroll" href="#">PRODUCT</a></li>
@@ -148,21 +121,3 @@
 			</header>
 			<!-- /Top Nav -->
 		</div>
-
-		<section class="page-header">
-			<div class="container">
-
-				<h1>REGISTER</h1>
-
-				<!-- breadcrumbs -->
-				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li><a href="#">Pages</a></li>
-					<li class="active">Register</li>
-				</ol><!-- /breadcrumbs -->
-
-			</div>
-		</section>
-		<!-- /PAGE HEADER -->
-    <section>
-        <div class="container">

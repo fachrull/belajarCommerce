@@ -1,7 +1,4 @@
 <?php defined('BASEPATH') or Exit('No direct script access allowed');?>
-
-    </div>
-  </section>
 <!-- FOOTER -->
 <footer id="footer">
 	<div class="container footer-zero">

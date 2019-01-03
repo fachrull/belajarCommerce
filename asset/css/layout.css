@@ -499,9 +499,9 @@ section.dark h6.page-header {
 
 
 
-/* 
+/*
 	GLOBAL RADIUS
-	Add here all needed bootstrap elements 
+	Add here all needed bootstrap elements
 */
 pre,
 .alert,
@@ -513,8 +513,8 @@ pre,
 	border-radius: 3px;
 }
 
-/* 
-	bootstrap rewrite 
+/*
+	bootstrap rewrite
 */
 img.img-fluid {
 	display: inline-block;
@@ -578,8 +578,8 @@ body.grain-yellow section.page-header {
 
 
 
-/* 
-		GRAIN BLUE BACKGROUND 
+/*
+		GRAIN BLUE BACKGROUND
 	*/
 body.grain-blue,
 body.grain-blue #wrapper,
@@ -596,8 +596,8 @@ body.grain-blue div.heading-title h6 {
 	background: #dce4e9 url('../images/_smarty/grain_bg.png') repeat;
 }
 
-/* 
-		GRAIN GREY BACKGROUND 
+/*
+		GRAIN GREY BACKGROUND
 	*/
 body.grain-grey,
 body.grain-grey #wrapper,
@@ -614,8 +614,8 @@ body.grain-grey div.heading-title h6 {
 	background: #f1f2f7 url('../images/_smarty/grain_bg.png') repeat;
 }
 
-/* 
-		GRAIN GREEN BACKGROUND 
+/*
+		GRAIN GREEN BACKGROUND
 	*/
 body.grain-green,
 body.grain-green #wrapper,
@@ -632,8 +632,8 @@ body.grain-green div.heading-title h6 {
 	background: #e6eeea url('../images/_smarty/grain_bg.png') repeat;
 }
 
-/* 
-		GRAIN ORANGE BACKGROUND 
+/*
+		GRAIN ORANGE BACKGROUND
 	*/
 body.grain-orange,
 body.grain-orange #wrapper,
@@ -650,8 +650,8 @@ body.grain-orange div.heading-title h6 {
 	background: #fff4ea url('../images/_smarty/grain_bg.png') repeat;
 }
 
-/* 
-		GRAIN YELLOW BACKGROUND 
+/*
+		GRAIN YELLOW BACKGROUND
 	*/
 body.grain-yellow,
 body.grain-yellow #wrapper,
@@ -1968,7 +1968,7 @@ form.mobile-search {
 
 
 
-/** Quick Shop Cart 
+/** Quick Shop Cart
 	 ********************** **/
 #header li.quick-cart .quick-cart-box {
 	display: none;
@@ -2111,7 +2111,7 @@ form.mobile-search {
 		overflow-y: auto;
 	}
 
-	/** 
+	/**
 			Quick Cart & top Search Fix (if #topBar exists).
 			.has-topBar - added by Javascript
 		**/
@@ -2492,8 +2492,8 @@ body.menu-vertical.menu-vertical-hide #mainMenu.sidebar-vertical #sidebar_vertic
 	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADcAAAA3CAYAAACo29JGAAAARklEQVRoge3WsQ0AIAwDsML/P8MLdECoxZ4zJFsiAAAAqGgksutai7yj3vN2i5dajwPgex5KVa3HAfA9D6Wq1uMAAACoaQMxSAMQNhNmmQAAAABJRU5ErkJggg==');
 }
 
-/* 
-		for anywhere use 
+/*
+		for anywhere use
 		<button class="fancy_big_btn inverse"><i></i></button>
 	*/
 .fancy_big_btn {
@@ -2695,7 +2695,7 @@ body.menu-vertical #mainMenu.sidebar-vertical .sidebar-nav .navbar li a {
 
 
 
-/** Mobile Button 
+/** Mobile Button
 	 ********************** **/
 #topNav button.btn-mobile {
 	display: none;
@@ -3324,7 +3324,7 @@ body.menu-vertical #mainMenu.sidebar-vertical .sidebar-nav .navbar li a {
 
 
 
-/* 
+/*
 		Top Bar
 	*/
 #topBar {
@@ -3526,8 +3526,8 @@ body.boxed #topBar.dark ul.top-links>li {
 
 
 
-/* 
-		Nav Second Main 
+/*
+		Nav Second Main
 		- search, etc
 	*/
 #header ul.nav-second-main {
@@ -4324,8 +4324,8 @@ body.boxed #topBar.dark ul.top-links>li {
 }
 
 
-/* 
-		page menu color 
+/*
+		page menu color
 	*/
 #page-menu.page-menu-color ul li {
 	border-left: rgba(0, 0, 0, 0.1) 1px solid;
@@ -4835,8 +4835,8 @@ section.dark .owl-carousel.featured a {
 
 
 
-/* 
-	increment / decrement - quantity shop like 
+/*
+	increment / decrement - quantity shop like
 
 	<!-- QTY -->
 	<span class="incrdcr">
@@ -4950,7 +4950,7 @@ h6>span.rotate {
 }
 
 
-/** EVENT LIST 
+/** EVENT LIST
 
 	Example Usage: index-thematics-music.html
 
@@ -5046,19 +5046,19 @@ section.dark .event-item {
 }
 
 
-/**  INLINE NEWS 
+/**  INLINE NEWS
 
 	Example Usage: index-thematics-music.html
 
 	<div class="inews-item">
 		<a class="inews-thumbnail" href="#">
 			<span class="inews-sticky font-lato">
-				<i class="fa fa-bullhorn"></i> 
+				<i class="fa fa-bullhorn"></i>
 				STICKY POST
 			</span>
 			<img class="img-fluid" src="assets/images/_smarty/demo/thematics/music/i3-min.jpg" alt="image" />
 		</a>
-		
+
 		<div class="inews-item-content">
 
 			<div class="inews-date-wrapper">
@@ -5073,12 +5073,12 @@ section.dark .event-item {
 				<ul class="blog-post-info list-inline noborder margin-bottom-20 nopadding">
 					<li>
 						<a href="page-profile.html">
-							<i class="fa fa-user"></i> 
+							<i class="fa fa-user"></i>
 							<span class="font-lato">By John Doe</span>
 						</a>
 					</li>
 					<li>
-						<i class="fa fa-folder-open-o"></i> 
+						<i class="fa fa-folder-open-o"></i>
 
 						<a class="category" href="#">
 							<span class="font-lato">Design</span>
@@ -5091,7 +5091,7 @@ section.dark .event-item {
 
 				<p>Lorem ipsum dolor sit amet, consectetur adipisici elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Idque Caesaris facere voluntate liceret: sese habere....</p>
 			</div>
-			
+
 
 		</div>
 	</div>
@@ -5223,7 +5223,7 @@ section.dark .event-item {
 
 	<div class="team-item clearfix">
 		<img class="team-item-image rounded" src="assets/images/_smarty/demo/thematics/wedding/him-min.jpg" alt="wedding" width="150" height="150" />
-		
+
 		<div class="team-item-desc">
 			<h4 class="nomargin">MIKE BAKER</h4>
 			<h5><span>Groom</span></h5>
@@ -5489,8 +5489,8 @@ div.vector-map {
 
 
 
-/* 
-	breathing background 
+/*
+	breathing background
 	zoom in - zoom out
 */
 @keyframes breath {
@@ -5578,7 +5578,7 @@ div.vector-map {
 	left: auto;
 }
 
-/* 
+/*
 	DROPDOWN ANIMATE
 	Dependency: animate.css
 */
@@ -6055,7 +6055,7 @@ section.page-header * {
 
 
 
-/** BS 4 fix 
+/** BS 4 fix
  ************************************ **/
 .btn-group>.btn {
 	padding: 10px !important;
@@ -6683,10 +6683,10 @@ section.featured-grid div.row>div .ribbon h4 {
 	background-color: #d9534f;
 }
 
-/* 
-	Slider Default Caption 
+/*
+	Slider Default Caption
 	Example usage: shop-4col-left.html (top banner)
-	
+
 */
 .caption-slider-default {
 	position: absolute !important;
@@ -8473,7 +8473,7 @@ section.dark #portfolio h3 {
 }
 
 
-/** Isotope Portfolio 
+/** Isotope Portfolio
 	 ****************** **/
 #portfolio.portfolio-isotope {
 	display: block;
@@ -8566,7 +8566,7 @@ section.dark #portfolio h3 {
 
 
 
-/** Ajax Portfolio 
+/** Ajax Portfolio
 	 ****************** **/
 #portfolio_ajax_container {
 	position: relative;
@@ -8984,7 +8984,7 @@ h1.blog-post-title {
 
 
 
-/** Isotope Blog 
+/** Isotope Blog
 	 ****************** **/
 #blog.blog-isotope {
 	display: block;
@@ -9217,8 +9217,8 @@ section.dark .comments small {
 
 
 
-/* 
-	article default comments 
+/*
+	article default comments
 	usage example: page-profile-comments.html
 */
 ul.comment {
@@ -9812,7 +9812,7 @@ section.section-dark div.category-grid .card {
 
 @media only screen and (min-width: 768px) {
 
-	/* 
+	/*
 			6 COLUMNS - RECALIBRATE FOR LONG TITLES
 		*/
 	.category-grid>div.col-sm-2:nth-child(6n+1),
@@ -9821,7 +9821,7 @@ section.section-dark div.category-grid .card {
 		clear: both;
 	}
 
-	/* 
+	/*
 			5 COLUMNS - RECALIBRATE FOR LONG TITLES
 		*/
 	.category-grid>div.col-sm-5th:nth-child(5n+1),
@@ -9831,7 +9831,7 @@ section.section-dark div.category-grid .card {
 	}
 
 
-	/* 
+	/*
 			4 COLUMNS - RECALIBRATE FOR LONG TITLES
 		*/
 	.category-grid>div.col-sm-3:nth-child(4n+1),
@@ -9840,7 +9840,7 @@ section.section-dark div.category-grid .card {
 		clear: both;
 	}
 
-	/* 
+	/*
 			3 COLUMNS - RECALIBRATE FOR LONG TITLES
 		*/
 	.category-grid>div.col-sm-4:nth-child(3n+1),
@@ -9852,7 +9852,7 @@ section.section-dark div.category-grid .card {
 
 @media only screen and (max-width: 768px) {
 
-	/* 
+	/*
 			2 COLUMNS - RECALIBRATE FOR LONG TITLES
 		*/
 	.category-grid>div.col-sm-6:nth-child(2n+1),
@@ -11136,6 +11136,11 @@ input::placeholder {
 }
 
 /* customise shop.html shop-cart.html detail-product.html */
+.full-width,
+.full-width .btn {
+	width: 100%;
+}
+
 .page-item.active .page-link {
 	background-color: #33518F;
 	border-color: #33518F;

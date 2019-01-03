@@ -77,12 +77,14 @@ class Mauth extends CI_Model{
         $uType = 3;
         $newOwner = 1;
         $pass = 'store_owner_agm';
+        $created = $this->session->userdata('uId');
         $dataUserLogin = array(
           'username' => $this->input->post('uname'),
           'password' => password_hash(($pass), PASSWORD_DEFAULT),
           'email'    => $this->input->post('emai;'),
           'type'     => $uType,
-          'newer'    => $newOwner
+          'newer'    => $newOwner,
+          'created'  => $created
         );
         $queryULoging = $this->db->insert('user_login', $dataUserLogin);
 
@@ -109,14 +111,17 @@ class Mauth extends CI_Model{
           'queryStoreOwner' => $queryStoreOwner
         );
     } elseif($this->session->userdata('uType') == 1){
-      $uType = 2;
+      $uType = $this->input->post('adminType');
       $newAdmin = 1;
-      $pass = "agm_admin";
+      $pass = "admin_agm";
+      $created = $this->session->userdata('uId');
       $dataUserLogin = array(
         'username'  => $this->input->post('uname'),
         'password'  => password_hash($pass, PASSWORD_DEFAULT),
+        'email'     => $this->input->post('email'),
         'user_type' => $uType,
-        'newer'     => $newAdmin
+        'newer'     => $newAdmin,
+        'created'   => $created
       );
       $queryULoging = $this->db->insert('user_login', $dataUserLogin);
       $userId = $this->getData(array('username' => $this->input->post('uname')),

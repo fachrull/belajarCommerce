@@ -1,6 +1,10 @@
 <?php defined('BASEPATH')or exit('No direct script access allowed'); ?>
 
-<div class="row">
+<?php print_r($post); ?>
+<br><br><br>
+<?php print_r($prime); ?>
+
+<!-- <div class="row">
   <div class="row">
     <h5>Company Name</h5>
     <p><?= $post['company_name'];?></p>
@@ -56,4 +60,4 @@
   <div class="row">
     <a href="#" class="right btn">Edit</a>
   </div>
-</div>
+</div> -->
