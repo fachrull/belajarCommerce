@@ -22,6 +22,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         page. However, you can choose any other skin. Make sure you
         apply the skin class to the body tag so the changes take effect. -->
 	<link rel="stylesheet" href="dist/css/skins/skin-black-light.min.css">
+	<!-- Custom -->
+	<link rel="stylesheet" href="custom.css">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -231,7 +233,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 						</a>
 					</li>
 					<li>
-						<a href="pages/upload.html">
+						<a href="upload.html">
 							<i class="fa fa-upload"></i> <span>Upload</span>
 						</a>
 					</li>
@@ -246,24 +248,32 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
-					Page Header
-					<small>Optional description</small>
+					Upload
 				</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-					<li class="active">Here</li>
+					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li class="active">Upload</li>
 				</ol>
 			</section>
 
-			<!-- Main content -->
-			<section class="content container-fluid">
+			<section class="content">
 
-				<!--------------------------
-        | Your Page Content Here |
-        -------------------------->
+				<body class="hold-transition register-page">
+					<div class="register-box">
+						<div class="register-box-body">
+							<div class="form-group">
+								<p>Please choose the file correctly and press the Submit button.</p>
+								<label for="exampleInputFile">File input</label>
+								<input type="file" id="exampleInputFile">
 
+								<button class="btn btn-oldblue help-block">Submit</button>
+							</div>
+						</div>
+						<!-- /.form-box -->
+					</div>
+					<!-- /.register-box -->
 			</section>
-			<!-- /.content -->
+
 		</div>
 		<!-- /.content-wrapper -->
 
