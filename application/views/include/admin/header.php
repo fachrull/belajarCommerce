@@ -33,6 +33,14 @@
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap-daterangepicker/daterangepicker.css');?>">
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="<?= base_url('asset/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css');?>">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?= base_url('asset/bower_components/select2/dist/css/select2.min.css');?>">
+  <!-- Bootstrap time Picker -->
+  <link rel="stylesheet" href="<?= base_url('asset/plugins/timepicker/bootstrap-timepicker.min.css');?>">
+  <!-- Bootstrap Color Picker -->
+  <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css');?>">
+  <!-- iCheck for checkboxes and radio inputs -->
+  <link rel="stylesheet" href="<?= base_url('asset/plugins/iCheck/all.css');?>">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -91,10 +99,10 @@
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
-          <li>
+          <!-- <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
-  </header>
+  </header><!-- Content Wrapper. Contains page content -->
