@@ -23,7 +23,6 @@ class Home extends CI_Controller{
           $this->load->view('include/admin/left-sidebar');
           $this->load->view('admin/home_admin', $data);
           $this->load->view('include/admin/footer');
-          $this->load->view('include/admin/right-sidebar');
         }else{
           $this->load->view('include/header');
           echo "<h1>This feature will be updated soon.</h1>";
@@ -37,17 +36,19 @@ class Home extends CI_Controller{
         if($link === FALSE){
           $data['posts'] = $this->mhome->getDataIndex();
 
-          $this->load->view('include/header');
-          $this->load->view('stores', $data);
-          $this->load->view('include/footer');
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/stores', $data);
+          $this->load->view('include/admin/footer');
         } else {
           $id_userLogin = $this->session->userdata('uId');
           $data['post'] = $this->mhome->getDataIndex($link);
           $data['prime'] = $this->mhome->dataPrime($id_userLogin);
 
-          $this->load->view('include/header');
-          $this->load->view('detail_store', $data);
-          $this->load->view('include/footer');
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/detail_store', $data);
+          $this->load->view('include/admin/footer');
         }
       }
     } elseif ($this->session->userdata('uType') == 3) {
