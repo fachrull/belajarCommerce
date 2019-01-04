@@ -46,7 +46,7 @@ class Auth extends CI_Controller{
         $data = array(
           'uId'     => $id,
           'uType'   => $type,
-          'uNew'    => $newer,
+          'uNew'    => $newer, // store owner and admin
           'isLogin' => TRUE
         );
         $this->session->set_userdata($data);
