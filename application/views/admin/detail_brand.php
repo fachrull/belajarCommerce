@@ -1,23 +1,19 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<section class="page-header">
-  <div class="container">
-
-    <h1>Brad <?= $brand['name'];?></h1>
-
-  </div>
-</section>
-<section>
-    <div class="container">
-      <div class="row">
-        <form class="" action="<?= site_url();?>" method="post">
-          <label class="select mb-10">
-            <select class="custom-control-input" name="cat">
-              <label class="input">
-                <option value=""></option>
-              </label>
-            </select>
-          </label>
-        </form>
-      </div>
-    </div>
-</section>
+<div class="content-wrapper">
+  <section class="content-header">
+    <h1>
+      <?= $brand['name'];?>
+      <small>Categories</small>
+    </h1>
+    <br>
+    <a href="<?= site_url('home/sa_brand/'.$brand['id'].'/'.$add);?>" class="btn btn-oldblue">
+      <i class="fa fa-plus"></i>
+      Category
+    </a><hr>
+  </section>
+  <section class="content">
+    <?php foreach($category as $cat): ?>
+      <h3><?= $cat;?></h3>
+    <?php endforeach; ?>
+  </section>
+</div>

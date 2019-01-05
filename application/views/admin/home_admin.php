@@ -25,7 +25,7 @@
                   <td><?= $post['first_name'];?></td>
                   <td><?= $post['last_name'];?></td>
                   <td><?= $post['phone'];?></td>
-                  <td><a href="#" class="btn btn-default">Detail</a></td>
+                  <td><a href="#" class="btn btn-oldblue">Detail</a></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>

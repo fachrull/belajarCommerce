@@ -24,7 +24,7 @@
               </fieldset>
               <div class="row mb-20">
                   <div class="col-md-12">
-                      <button type="submit" class="btn btn-default"><i class="fa fa-plus"></i>ADD</button>
+                      <button type="submit" class="btn btn-oldblue"><i class="fa fa-plus"></i>ADD</button>
                   </div>
               </div>
             </form>
