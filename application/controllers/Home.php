@@ -12,9 +12,12 @@ class Home extends CI_Controller{
   }
 
   public function index($link = FALSE){
+    $this->load->library('form_validation');
     if ($this->session->userdata('uType') == 1) {
       if ($this->session->userdata('uNew') == 1) {
-        echo "you are new here";
+        $this->load->view('include/header');
+        $this->load->view('new_user');
+        $this->load->view('include/footer');
       }else{
         if ($link === FALSE) {
           $data['posts'] = $this->mhome->getDataIndex();
@@ -31,7 +34,9 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 2) {
       if($this->session->userdata('uNew') == 1){
-        echo "you are new here";
+        $this->load->view('include/header');
+        $this->load->view('new_user');
+        $this->load->view('include/footer');
       }else{
         if($link === FALSE){
           $data['posts'] = $this->mhome->getDataIndex();
@@ -53,7 +58,9 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 3) {
       if ($this->session->userdata('uNew') == 1) {
-        echo "you are new here";
+        $this->load->view('include/header');
+        $this->load->view('new_user');
+        $this->load->view('include/footer');
       }else{
         $this->load->view('include/header');
         $this->load->view('store');
