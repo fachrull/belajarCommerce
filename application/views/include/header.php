@@ -103,7 +103,7 @@
 									<!-- HOME -->
 									<li><a class="page-scroll" href="#product">PRODUCT</a></li>
 									<li><a class="page-scroll" href="#promotion">PROMOTION</a></li>
-									<li><a class="page-scroll" href="#agmpedia">AGMPEDIA</a></li>
+									<li><a class="page-scroll" href="<?= site_url('home/agmpedia');?>">AGMPEDIA</a></li>
 									<li><a class="page-scroll" href="#location">LOCATION</a></li>
 	                <li><a class="page-scroll" href="!#">PARTNERSHIP</a></li>
                 <?php endif; ?>

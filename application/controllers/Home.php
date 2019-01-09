@@ -204,6 +204,154 @@ class Home extends CI_Controller{
     }
   }
 
+  public function sa_agmpedia()
+  {
+    if ($this->session->userdata('uType') == 1) {
+      $data['pedia'] = $this->mhome->getPedia();
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/sa_agmpedia', $data);
+      $this->load->view('include/admin/footer');  
+      }else {
+        show_404();
+       } 
+  }
+
+  public function addPedia()
+  {
+    if ($this->session->userdata('uType')== 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/addPedia');
+      $this->load->view('include/admin/footer');
+    } else {
+      show_404();
+    }
+  }
+
+  public function pediaInputProcess()
+  {
+    if ($this->session->userdata('uType')== 1) {
+      $config['upload_path']          = './uploads/';
+                $config['allowed_types']        = 'gif|jpg|png';
+                $config['max_size']             = 10240;
+
+                $this->load->library('upload', $config);
+
+                if ( ! $this->upload->do_upload('photo'))
+                {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+
+                        redirect(base_url('home/addPedia'));
+                }
+                else
+                {
+                    $data = array(
+            'title'=>$this->input->post('title'),
+            'content'=>$this->input->post('content'),
+            'date'=>date('Ymd'),
+            'photo'=>$this->upload->data('file_name')
+          );
+
+          $this->mhome->pediaInput($data);
+
+          $this->session->set_flashdata('success','Data saved successfully!');
+          redirect(base_url('home/sa_agmpedia'));
+                }
+    } else {
+      show_404();
+    }
+  }
+
+  public function editPedia($id)
+  {
+    if ($this->session->userdata('uType')== 1) {
+      $data['pedia'] = $this->mhome->getPediaByID($id);
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/editPedia',$data);
+      $this->load->view('include/admin/footer');
+    } else {
+      show_404();
+    }
+  }
+
+  public function pediaEditProcess($id)
+  {
+    if ($this->session->userdata('uType')==1) {
+      $config['upload_path']          = './uploads/';
+      $config['allowed_types']        = 'gif|jpg|png';
+      $config['max_size']             = 10240;
+         
+          $this->load->library('upload', $config);
+
+          if ( ! $this->upload->do_upload('photo'))
+          {
+            $data = array(
+              'title'=>$this->input->post('title'),
+              'content'=>$this->input->post('content'),
+              'date'=>date('Ymd'),
+              'photo'=>$this->input->post('oldPhoto')
+            );
+
+          $this->mhome->updatePedia($id,$data);
+          $this->session->set_flashdata('success','Data successfully updated!');
+          redirect(base_url('home/sa_agmpedia'));
+          }
+          else
+          {
+            $data = array(
+              'title'=>$this->input->post('title'),
+              'content'=>$this->input->post('content'),
+              'date'=>date('Ymd'),
+              'photo'=>$this->upload->data('file_name')
+            );
+
+          $this->mhome->updatePedia($id,$data);
+
+          $this->session->set_flashdata('success','Data successfully updated!');
+          redirect(base_url('home/sa_agmpedia'));
+                }
+    } else {
+      show_404();
+    }
+  }
+
+  public function deletePedia($id)
+  {
+    if ($this->session->userdata('uType')== 1 ) {
+      $photo = $this->mhome->getPediaByID($id);
+      foreach ($photo->result() as $row) {
+        echo $nm_photo = $row->photo;
+      }
+
+      unlink("uploads/".$nm_photo."");
+      
+      $this->mhome->deletePedia($id);
+
+      $this->session->set_flashdata('success','Data deleted successfully!');
+
+      redirect(base_url('home/sa_agmpedia'));
+    } else {
+      show_404();
+    }    
+  }
+
+  public function agmpedia()
+  {
+    $data['pedia'] = $this->mhome->getPedia();
+    $this->load->view('include/header');
+    $this->load->view('agmpedia',$data);
+    $this->load->view('include/footer');
+  }
+
   public function sa_cat(){
     if ($this->session->userdata('uType') == 1) {
       $data['categories'] = $this->mhome->getProducts(NULL, NULL, 'tm_category', FALSE);

@@ -51,7 +51,7 @@
             <a href="#"><i class="fa fa-tag"></i><span>Promotion</span></a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
+            <a href="<?=site_url('home/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
           </li>
           <li>
             <a href="#"><i class="fa fa-map"></i><span>Location Stores</span></a>
