@@ -7,6 +7,14 @@
     </h1>
   </section>
   <section class="content">
+    <!-- ALERT -->
+    <?php if($this->session->has_userdata('error')): ?>
+      <div class="alert alert-mini alert-danger mb-30">
+        <strong>Oh snap!</strong> <?= $this->session->userdata('error')?>
+      </div>
+    <?php endif; ?>
+    <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
+    <!-- /ALERT -->
     <form action="<?= site_url('home/sa_brand/'.$brand['id'].'/'.$add);?>" method="post">
       <header>
           <i class="fa fa-users"></i> Brand
@@ -23,6 +31,9 @@
                   </label>
                 <?php endforeach; ?>
             </select>
+        </label>
+        <label class="input mb-10">
+          <input type="hidden" name="brand" value="<?= $brand['id'];?>">
         </label>
       </fieldset>
       <div class="row mb-20">

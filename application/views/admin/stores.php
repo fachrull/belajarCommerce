@@ -7,8 +7,6 @@
     </h1>
   </section>
   <section class="content">
-    <br><a href="<?=site_url('auth/regis');?>" class="btn btn-oldblue"><i class="fa fa-plus"></i>Store</a><br>
-    <br>
     <table class="table">
       <thead>
         <tr>

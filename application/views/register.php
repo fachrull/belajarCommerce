@@ -82,52 +82,64 @@
                         <?php endif; ?>
                         <?php if($this->session->userdata('uType') == 2): ?>
                           <label class="input mb-10">
-                              <input type="text" placeholder="Company Name">
+                              <input name="company_name" type="text" placeholder="Company Name">
                           </label>
                           <label class="input mb-10">
-                              <input type="text" placeholder="Owner Name">
+                              <input name="owner" type="text" placeholder="Owner Name">
                           </label>
                           <label class="input mb-10">
-                              <input type="text" placeholder="Address">
+                              <input name="add" type="text" placeholder="Address">
                           </label>
                           <div class="row mb-3">
                               <div class="col-md-6">
                                   <label class="input mb-10">
-                                      <input type="text" placeholder="Sub District">
+                                      <input name="province" type="text" placeholder="Province">
                                   </label>
                               </div>
                               <div class="col-md-6">
                                   <label class="input mb-10">
-                                      <input type="text" placeholder="Postcode">
+                                      <input name="city" type="text" placeholder="City">
                                   </label>
                               </div>
                           </div>
                           <div class="row mb-3">
                               <div class="col-md-6">
                                   <label class="input mb-10">
-                                      <input type="text" placeholder="Province">
+                                      <input name="sub_district" type="text" placeholder="Sub District">
                                   </label>
                               </div>
                               <div class="col-md-6">
                                   <label class="input mb-10">
-                                      <input type="text" placeholder="City">
+                                      <input name="pCode" type="text" placeholder="Postcode">
                                   </label>
                               </div>
                           </div>
                           <div class="row mb-3">
                               <div class="col-md-6">
                                   <label class="input">
-                                      <input type="text" placeholder="Phone Number 1">
+                                      <input name="phone1" type="text" placeholder="Phone Number 1">
                                   </label>
                               </div>
                               <div class="col col-md-6">
                                   <label class="input">
-                                      <input type="text" placeholder="Phone Number 2">
+                                      <input name="phone2" type="text" placeholder="Phone Number 2">
                                   </label>
                               </div>
                           </div>
                         <?php endif; ?>
                         <?php if($this->session->userdata('uType') == 1): ?>
+                          <div class="row mb-3">
+                              <div class="col-md-6">
+                                  <label class="input">
+                                      <input name="fname" type="text" placeholder="First name">
+                                  </label>
+                              </div>
+                              <div class="col col-md-6">
+                                  <label class="input">
+                                      <input name="lname" type="text" placeholder="Last name">
+                                  </label>
+                              </div>
+                          </div>
                           <label class="input mb-10">
                               <input name="phone" type="text" placeholder="Phone Number">
                           </label>

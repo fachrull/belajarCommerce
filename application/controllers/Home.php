@@ -15,9 +15,7 @@ class Home extends CI_Controller{
     $this->load->library('form_validation');
     if ($this->session->userdata('uType') == 1) {
       if ($this->session->userdata('uNew') == 1) {
-        $this->load->view('include/header');
-        $this->load->view('new_user');
-        $this->load->view('include/footer');
+        redirect('auth/completing_profile');
       }else{
         if ($link === FALSE) {
           $data['posts'] = $this->mhome->getDataIndex();
@@ -34,9 +32,7 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 2) {
       if($this->session->userdata('uNew') == 1){
-        $this->load->view('include/header');
-        $this->load->view('new_user');
-        $this->load->view('include/footer');
+        redirect('auth/completing_profile');
       }else{
         if($link === FALSE){
           $data['posts'] = $this->mhome->getDataIndex();
@@ -135,7 +131,8 @@ class Home extends CI_Controller{
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('cat', 'Category', 'required');
+        $this->form_validation->set_rules('cat', 'Category', 'required|callback_checkingRel');
+        $this->form_validation->set_rules('brand', 'Brand', 'required');
 
         if ($this->form_validation->run() == FALSE) {
           $data['brand'] = $this->mhome->getProducts(array('id' => $link),
@@ -150,7 +147,7 @@ class Home extends CI_Controller{
           $this->load->view('include/admin/footer');
         }else{
           $item = array(
-            'brand_id'  => $link,
+            'brand_id'  => $this->input->post('brand'),
             'cat_id'    => $this->input->post('cat'),
             'user_id'   => $this->session->userdata('uId')
           );
@@ -161,6 +158,17 @@ class Home extends CI_Controller{
       }
     }else{
       show_404();
+    }
+  }
+
+  public function checkingRel($rel) {
+    $relCat = $this->mhome->getProducts(array('brand_id' => $this->input->post('brand'), 'cat_id' => $this->input->post('cat')),
+      array('catIDField' => 'cat_id'), 'relation_brand_category', TRUE);
+    if (isset($relCat)) {
+      $this->session->set_flashdata('error', 'The category has already been added');
+      return FALSE;
+    }else {
+      return TRUE;
     }
   }
 
@@ -238,5 +246,57 @@ class Home extends CI_Controller{
       return TRUE;
     }
   }
+
+  public function allProd($link = FALSE){
+    if ($this->session->userdata('uType') == 1) {
+      if ($link === FALSE) {
+        $data['products'] = $this->mhome->getProducts(NULL, NULL, 'tm_product', FALSE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/allProd', $data);
+        $this->load->view('include/admin/footer');
+      }else{
+        $data['product'] = $this->mhome->getProducts(array('id' => $link),
+          NULL, 'tm_product', TRUE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/prodDetail', $data);
+        $this->load->view('include/admin/footer');
+      }
+    }else{
+      show_404();
+    }
+  }
+  // public function addProd(){
+  //   if ($this->session->userdata('uType') = 1) {
+  //     $this->load->helper('form');
+  //     $this->load->library('form_validation');
+  //
+  //     $this->form_validation->set_rules();
+  //     $this->form_validation->set_rules();
+  //     $this->form_validation->set_rules();
+  //     $this->form_validation->set_rules();
+  //     $this->form_validation->set_rules();
+  //     $this->form_validation->set_rules();
+  //
+  //     if ($this->form_validation->run() === FALSE) {
+  //       $this->load->view('include/admin/header');
+  //       $this->load->view('include/admin/left-sidebar');
+  //       $this->load->view('admin/addProd');
+  //       $this->load->view('include/admin/footer');
+  //     }else{
+  //       $config['upload_path']    = './asset/upload/';
+  //       $config['allowed_types']  = 'jpg|jpeg|png|JPG|JPEG|PNG';
+  //       $config['max_size']       = '100000';
+  //       $config['file_ext_tolower']   = TRUE;
+  //       // $config['file_name']
+  //       $this->load->helper('upload');
+  //     }
+  //   }else{
+  //     show_404();
+  //   }
+  // }
 
 }

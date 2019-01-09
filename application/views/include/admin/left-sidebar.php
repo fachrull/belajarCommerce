@@ -25,8 +25,9 @@
                 <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                 </button>
               </span>
-        </div>
+          </div>
       </form>
+      <hr>
       <!-- /.search form -->
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu" data-widget="tree">
@@ -40,38 +41,38 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i> Admin</a></li>
+              <li><a href="<?=site_url('auth/regisAdmin');?>"><i class="fa fa-user-plus"></i> Add Admin</a></li>
             </ul>
           </li>
-          <li class="active">
-            <a href="#">Slider</a>
+          <li>
+            <a href="#"><i class="fa fa-pencil-square-o"></i><span>Slider</span></a>
           </li>
-          <li class="active">
-            <a href="#">Promotion</a>
+          <li>
+            <a href="#"><i class="fa fa-tag"></i><span>Promotion</span></a>
           </li>
-          <li class="active">
-            <a href="#">AGM-Pedia</a>
+          <li>
+            <a href="#"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
           </li>
-          <li class="active">
-            <a href="#">Location Stores</a>
+          <li>
+            <a href="#"><i class="fa fa-map"></i><span>Location Stores</span></a>
           </li>
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-tags"></i> <span>Manage Products</span>
+              <i class="fa fa-cube"></i> <span>Manage Products</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="<?= site_url('home/sa_brand');?>">Brands</a></li>
-              <li class="active"><a href="<?= site_url('home/sa_cat');?>">Categories</a></li>
-              <li class="active"><a href="<?= site_url();?>">Products</a></li>
-              <li class="active"><a href="<?= site_url();?>">Rating</a></li>
-              <li class="active"><a href="<?= site_url();?>">Best Order</a></li>
+              <li><a href="<?= site_url('home/sa_brand');?>"><i class="fa fa-circle-o"></i>Brands</a></li>
+              <li><a href="<?= site_url('home/sa_cat');?>"><i class="fa fa-circle-o"></i>Categories</a></li>
+              <li><a href="<?= site_url('home/allProd');?>"><i class="fa fa-circle-o"></i>Products</a></li>
+              <li><a href="<?= site_url();?>"><i class="fa fa-circle-o"></i>Rating</a></li>
+              <li><a href="<?= site_url();?>"><i class="fa fa-circle-o"></i>Best Order</a></li>
             </ul>
           </li>
         <?php else: ?>
-          <li class="active treeview">
+          <li class="treeview">
             <a href="#">
               <i class="fa fa-id-badge"></i> <span>Store Owners</span>
               <span class="pull-right-container">
@@ -79,16 +80,16 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
+              <li><a href="<?=site_url('auth/regisAdmin');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
             </ul>
           </li>
-          <li class="active">
+          <li>
             <a href="#">Voucher</a>
           </li>
-          <li class="active">
+          <li>
             <a href="#">Distributor</a>
           </li>
-          <li class="active">
+          <li>
             <a href="#">Products</a>
           </li>
         <?php endif; ?>
