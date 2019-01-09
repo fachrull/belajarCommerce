@@ -218,8 +218,8 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- Sparkline -->
 <script src="<?= base_url('asset/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js');?>"></script>
 <!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="<?= base_url('asset/plugins/jquery-vectormap/jquery-jvectormap-1.2.2.min.js');?>"></script>
+<script src="<?= base_url('asset/plugins/jquery-vectormap/jquery-jvectormap-world-mill-en.js');?>"></script>
 <!-- jQuery Knob Chart -->
 <script src="<?= base_url('asset/bower_components/jquery-knob/dist/jquery.knob.min.js');?>"></script>
 <!-- daterangepicker -->
@@ -239,5 +239,21 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?= base_url('asset/dist/js/pages/dashboard.js');?>"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url('asset/dist/js/demo.js');?>"></script>
+<!-- DataTables -->
+<script src="<?= base_url('asset/bower_components/datatables.net/js/jquery.dataTables.min.js');?>"></script>
+<script src="<?= base_url('asset/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js');?>"></script>
+<!-- page script -->
+<script>
+  $(function () {
+    $('#dataTable').DataTable({
+      'paging'      : true,
+      'lengthChange': false,
+      'searching'   : false,
+      'ordering'    : true,
+      'info'        : true,
+      'autoWidth'   : false
+    })
+  })
+</script>
 </body>
 </html>

@@ -22,7 +22,7 @@
                 <!-- register form -->
                 <form class="m-0 sky-form boxed" action="<?= site_url('auth/completing_profile');?>" method="post">
                     <header>
-                        <i class="fa fa-users"></i> 
+                        <i class="fa fa-users"></i>
                         complete the following profile
                     </header>
 
@@ -72,30 +72,15 @@
                           </label>
                     <?php endif; ?>
 
-                    <?php if($this->session->userdata('uType') == 2): ?>
-                    <label class="input mb-10">
-                              <input type="text" name="first_name" placeholder="First Name">
+                    <?php if($this->session->userdata('uType') == 2 || $this->session->userdata('uType') == 1): ?>
+                          <label class="input mb-10">
+                              <input type="text" name="first_name" value="<?= $user['first_name'];?>">
                           </label>
                           <label class="input mb-10">
-                              <input type="text" name="last_name" placeholder="Last Name">
+                              <input type="text" name="last_name" value="<?= $user['last_name'];?>">
                           </label>
                           <label class="input mb-10">
-                              <input type="number" name="phone" placeholder="Phone Number">
-                          </label>
-                          <label class="input mb-10">
-                              <input type="password" name="new_pass" placeholder="Change Password">
-                          </label>
-                    <?php endif; ?>
-
-                    <?php if($this->session->userdata('uType') == 1): ?>
-                    <label class="input mb-10">
-                              <input type="text" name="first_name" placeholder="First Name">
-                          </label>
-                          <label class="input mb-10">
-                              <input type="text" name="last_name" placeholder="Last Name">
-                          </label>
-                          <label class="input mb-10">
-                              <input type="number" name="phone" placeholder="Phone Number">
+                              <input type="number" name="phone" value="<?= $user['phone'];?>">
                           </label>
                           <label class="input mb-10">
                               <input type="password" name="new_pass" placeholder="Change Password">

@@ -117,21 +117,23 @@ class Auth extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 2) {
       $this->form_validation->set_rules('company_name', 'Company name', 'required');
+      $this->form_validation->set_rules('owner', 'Owner', 'required');
       $this->form_validation->set_rules('add', 'Address', 'required');
-      $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
-      $this->form_validation->set_rules('city', 'City', 'required');
       $this->form_validation->set_rules('province', 'Province', 'required');
+      $this->form_validation->set_rules('city', 'City', 'required');
+      $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
       $this->form_validation->set_rules('pCode', 'Postcode', 'required');
       $this->form_validation->set_rules('phone1', 'Phone number 1', 'required');
       $this->form_validation->set_rules('phone2', 'Phone number 2', 'required');
 
       if($this->form_validation->run() === FALSE){
-        $this->load->view('include/header');
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
         $this->load->view('register');
-        $this->load->view('include/footer');
+        $this->load->view('include/admin/footer');
       } else{
         $this->mauth->regis();
-        redirect('home');
+        redirect();
       }
     } elseif ($this->session->userdata('uType') == NULL) {
       $this->form_validation->set_rules('password', 'Password', 'required');
@@ -233,20 +235,22 @@ class Auth extends CI_Controller{
     $this->load->helper('form');
     $this->load->library('form_validation');
 
-    if ($this->session->userdata('uType') == 1) {
+    if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
       $this->form_validation->set_rules('first_name', 'First Name', 'required');
       $this->form_validation->set_rules('last_name', 'Last Name', 'required');
       $this->form_validation->set_rules('phone', 'Phone', 'required');
       $this->form_validation->set_rules('new_pass', 'Password', 'required');
 
       if ($this->form_validation->run() == FALSE) {
-      $this->load->view('include/header');
-      $this->load->view('new_user');
-      $this->load->view('include/footer');
+        $data['user'] = $this->mauth->getUData(array('id_userlogin' => $this->session->userdata('uId')),
+          NULL, 'tm_super_admin', TRUE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('new_user', $data);
+        $this->load->view('include/admin/footer');
       } else{
       $data_admin = array(
-        'id'=>'',
-        'id_userlogin'=>$this->session->userdata('uId'),
         'first_name'=>$this->input->post('first_name'),
         'last_name'=>$this->input->post('last_name'),
         'phone'=>$this->input->post('phone')
@@ -255,36 +259,8 @@ class Auth extends CI_Controller{
         'password'=>password_hash($this->input->post('new_pass'), PASSWORD_DEFAULT),
         'newer'=>'0'
       );
-      $this->mauth->complete_profile_admin($data_admin);
-      $this->mauth->update_newer($newer);
-      $this->session->set_userdata('uNew','0');
-      redirect();
-      }
-
-    } elseif ($this->session->userdata('uType') == 2) {
-      $this->form_validation->set_rules('first_name', 'First Name', 'required');
-      $this->form_validation->set_rules('last_name', 'Last Name', 'required');
-      $this->form_validation->set_rules('phone', 'Phone', 'required');
-      $this->form_validation->set_rules('new_pass', 'Password', 'required');
-
-      if ($this->form_validation->run() == FALSE) {
-      $this->load->view('include/header');
-      $this->load->view('new_user');
-      $this->load->view('include/footer');
-      } else{
-      $data_admin = array(
-        'id'=>'',
-        'id_userlogin'=>$this->session->userdata('uId'),
-        'first_name'=>$this->input->post('first_name'),
-        'last_name'=>$this->input->post('last_name'),
-        'phone'=>$this->input->post('phone')
-      );
-      $newer = array(
-        'password'=>password_hash($this->input->post('new_pass'), PASSWORD_DEFAULT),
-        'newer'=>'0'
-      );
-      $this->mauth->complete_profile_admin($data_admin);
-      $this->mauth->update_newer($newer);
+      $this->mauth->updateData(array('id_userlogin' => $this->session->userdata('uId')), 'tm_super_admin', $data_admin);
+      $this->mauth->updateData(array('user_id' => $this->session->userdata('uId')), 'user_login', $newer);
       $this->session->set_userdata('uNew','0');
       redirect();
       }
@@ -326,20 +302,28 @@ class Auth extends CI_Controller{
       $this->session->set_userdata('uNew','0');
       redirect();
     }
-   } 
-  }
+   }
+ }
 
-
-
-  // public function checkingNewPass(){
-  //   if (condition) {
-  //     // code...
-  //   }
-  // }
-
-  // public function coba(){
-  //   $read = $this->mauth->getData(array('username' => 'superAdmin'), array('emailField' => 'email'), TRUE);
-  //   print_r($read);
-  // }
-
+ public function regisAdmin() {
+   if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+     $this->load->helper('form');
+     $this->load->library('form_validation');
+     
+     $this->load->view('include/admin/header');
+     $this->load->view('include/admin/left-sidebar');
+     $this->load->view('admin/register');
+     $this->load->view('include/admin/footer');
+   }
+ }
 }
+// public function checkingNewPass(){
+//   if (condition) {
+//     // code...
+//   }
+// }
+
+// public function coba(){
+//   $read = $this->mauth->getData(array('username' => 'superAdmin'), array('emailField' => 'email'), TRUE);
+//   print_r($read);
+// }
