@@ -12,9 +12,12 @@ class Home extends CI_Controller{
   }
 
   public function index($link = FALSE){
+    $this->load->library('form_validation');
     if ($this->session->userdata('uType') == 1) {
       if ($this->session->userdata('uNew') == 1) {
-        echo "you are new here";
+        $this->load->view('include/header');
+        $this->load->view('new_user');
+        $this->load->view('include/footer');
       }else{
         if ($link === FALSE) {
           $data['posts'] = $this->mhome->getDataIndex();
@@ -31,7 +34,9 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 2) {
       if($this->session->userdata('uNew') == 1){
-        echo "you are new here";
+        $this->load->view('include/header');
+        $this->load->view('new_user');
+        $this->load->view('include/footer');
       }else{
         if($link === FALSE){
           $data['posts'] = $this->mhome->getDataIndex();
@@ -53,7 +58,9 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 3) {
       if ($this->session->userdata('uNew') == 1) {
-        echo "you are new here";
+        $this->load->view('include/header');
+        $this->load->view('new_user');
+        $this->load->view('include/footer');
       }else{
         $this->load->view('include/header');
         $this->load->view('store');
@@ -96,7 +103,7 @@ class Home extends CI_Controller{
     }
   }
 
-  public function sa_brand($link = FALSE){
+  public function sa_brand($link = FALSE, $add = FALSE){
     if ($this->session->userdata('uType') == 1) {
       if ($link === FALSE) {
         $data['brands'] = $this->mhome->getProducts(NULL, NULL, 'tm_brand', FALSE);
@@ -104,17 +111,54 @@ class Home extends CI_Controller{
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/sa_brand', $data);
-        $this->load->view('include/admin/right-sidebar');
+        $this->load->view('include/admin/footer');
+      }elseif($add === FALSE){
+        $test=[];
+        $data['brand'] = $this->mhome->getProducts(array('id' => $link),
+          array('nameField' => 'name', 'idField' => 'id'), 'tm_brand', TRUE);
+        $dBrand['id'] = $this->mhome->getProducts(array('brand_id' => $link),
+          array('catIdField' => 'cat_id'), 'relation_brand_category', FALSE);
+        foreach ($dBrand['id'] as $id) {
+          $tst = $this->mhome->getProducts(array('id' => $id['cat_id']),
+            array('nameField' => 'name'), 'tm_category', TRUE);
+          $test[] = $tst['name'];
+        }
+        $data['category'] = $test;
+        $true = substr(password_hash('true', PASSWORD_DEFAULT),7);
+        $data['add'] = 'true';
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/detail_brand', $data);
         $this->load->view('include/admin/footer');
       }else{
-        $data['brand'] = $this->mhome->getProducts(array('id' => $link),
-          array('nameField' => 'name'), 'tm_brand', TRUE);
+        $this->load->helper('form');
+        $this->load->library('form_validation');
 
-        $this->load->view('include/header');
-        $this->load->view('detail_brand', $data);
-        $this->load->view('include/footer');
+        $this->form_validation->set_rules('cat', 'Category', 'required');
+
+        if ($this->form_validation->run() == FALSE) {
+          $data['brand'] = $this->mhome->getProducts(array('id' => $link),
+            array('nameField' => 'name', 'idField' => 'id'), 'tm_brand', TRUE);
+          $data['add'] = 'true';
+          $data['cat'] = $this->mhome->getProducts(NULL,
+            array('idCat' => 'id', 'nameCat' => 'name'), 'tm_category', FALSE);
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/relation', $data);
+          $this->load->view('include/admin/footer');
+        }else{
+          $item = array(
+            'brand_id'  => $link,
+            'cat_id'    => $this->input->post('cat'),
+            'user_id'   => $this->session->userdata('uId')
+          );
+          $table = 'relation_brand_category';
+          $this->mhome->inputData($table, $item);
+          redirect('home/sa_brand/'.$link);
+        }
       }
-
     }else{
       show_404();
     }
@@ -131,7 +175,6 @@ class Home extends CI_Controller{
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/addBrands');
-        $this->load->view('include/admin/right-sidebar');
         $this->load->view('include/admin/footer');
       }else{
         $this->mhome->createItems('tm_brand');
@@ -160,7 +203,6 @@ class Home extends CI_Controller{
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');
       $this->load->view('admin/sa_cat', $data);
-      $this->load->view('include/admin/right-sidebar');
       $this->load->view('include/admin/footer');
     }else {
       show_404();
@@ -178,7 +220,6 @@ class Home extends CI_Controller{
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/addCats');
-        $this->load->view('include/admin/right-sidebar');
         $this->load->view('include/admin/footer');
       }else{
         $this->mhome->createItems('tm_category');

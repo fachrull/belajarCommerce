@@ -67,4 +67,7 @@ class Mhome extends CI_Model{
     return $this->db->insert($table, $items);
   }
 
+  public function inputData($table, $items){
+    return $this->db->insert($table, $items);
+  }
 }

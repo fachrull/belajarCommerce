@@ -81,8 +81,8 @@ class Mauth extends CI_Model{
         $dataUserLogin = array(
           'username' => $this->input->post('uname'),
           'password' => password_hash(($pass), PASSWORD_DEFAULT),
-          'email'    => $this->input->post('emai;'),
-          'type'     => $uType,
+          'email'    => $this->input->post('email'),
+          'user_type'     => $uType,
           'newer'    => $newOwner,
           'created'  => $created
         );
@@ -92,23 +92,8 @@ class Mauth extends CI_Model{
           array('userIdField' => 'user_id'), TRUE);
         $id = $userId->user_id;
 
-        $dataStoreOwner = array(
-          'id_userLogin' => $id,
-          'new_owner'    => 1,
-          'company_name' => $this->input->post('company_name'),
-          'address'      => $this->input->post('add'),
-          'sub_district' => $this->input->post('sub_district'),
-          'city'         => $this->input->post('sub_district'),
-          'province'     => $this->input->post('province'),
-          'postcode'     => $this->input->post('pCode'),
-          'phone1'       => $this->input->post('phone1'),
-          'phone2'       => $this->input->post('phone2'),
-          'owner_name'   => $this->input->post('owner_name')
-        );
-        $queryStoreOwner = $this->db->insert('tm_store_owner', $dataStoreOwner);
         return array(
-          'queryULoging'    => $queryULoging,
-          'queryStoreOwner' => $queryStoreOwner
+          'queryULoging'    => $queryULoging
         );
     } elseif($this->session->userdata('uType') == 1){
       $uType = $this->input->post('adminType');
@@ -128,16 +113,8 @@ class Mauth extends CI_Model{
         array('userIdField' => 'user_id'), TRUE);
       $id = $userId->user_id;
 
-      $dataAdmin = array(
-        'id_userLogin' => $id,
-        'first_name'   => $this->input->post('fname'),
-        'last_name'    => $this->input->post('lname'),
-        'phone'        => $this->input->post('phone')
-      );
-      $queryAdmin = $this->db->insert('tm_super_admin', $dataAdmin);
       return array(
-        'queryULoging' => $queryULoging,
-        'queryAdmin'   => $queryAdmin
+        'queryULoging' => $queryULoging
       );
     }
   }
@@ -160,5 +137,22 @@ class Mauth extends CI_Model{
     }
 
     return $this->db->update('user_login', $dataUdatePassword);
+  }
+
+  public function complete_profile_admin($data_admin)
+  {
+   $this->db->insert('tm_super_admin', $data_admin);
+  }
+
+  public function complete_profile_store($data_store)
+  {
+   $this->db->insert('tm_store_owner', $data_store);
+  }
+
+  public function update_newer($newer)
+  {
+    $this->db->where('user_id',$this->session->userdata('uId'));
+    $this->db->set($newer);
+    $this->db->update('user_login');
   }
 }
