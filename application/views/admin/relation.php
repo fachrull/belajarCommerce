@@ -15,7 +15,7 @@
     <?php endif; ?>
     <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
     <!-- /ALERT -->
-    <form action="<?= site_url('home/sa_brand/'.$brand['id'].'/'.$add);?>" method="post">
+    <form action="<?= site_url('admin/sa_brand/'.$brand['id'].'/'.$add);?>" method="post">
       <header>
           <i class="fa fa-users"></i> Brand
       </header>

@@ -6,7 +6,7 @@
       <small>Categories</small>
     </h1>
     <br>
-    <a href="<?= site_url('home/sa_brand/'.$brand['id'].'/'.$add);?>" class="btn btn-oldblue">
+    <a href="<?= site_url('admin/sa_brand/'.$brand['id'].'/'.$add);?>" class="btn btn-oldblue">
       <i class="fa fa-plus"></i>
       Category
     </a><hr>
