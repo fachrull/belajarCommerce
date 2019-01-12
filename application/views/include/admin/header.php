@@ -45,11 +45,7 @@
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css');?>">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url('asset/plugins/iCheck/all.css');?>">
-<<<<<<< HEAD
   <link rel="stylesheet" href="<?= base_url('asset/css/custom.css')?>">
-=======
-  <link rel="stylesheet" href="<?= base_url('asset/css/custom.css');?>">
->>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
 
