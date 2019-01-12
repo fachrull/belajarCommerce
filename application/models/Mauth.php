@@ -102,7 +102,7 @@ class Mauth extends CI_Model{
           'postcode'        => $this->input->post('pCode'),
           'phone1'          => $this->input->post('phone1'),
           'phone2'          => $this->input->post('phone2'),
-          'owner_name'      => $this->input->post('owner_name'),
+          'owner_name'      => $this->input->post('owner'),
           'id_super_admin'  => $this->session->userdata('uId')
         );
         $queryStoreOwner = $this->db->insert('tm_store_owner', $dataStoreOwner);
