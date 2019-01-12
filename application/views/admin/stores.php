@@ -6,7 +6,6 @@
     </h1>
   </section>
   <section class="content">
-<<<<<<< HEAD
     <div class="col-xs-12">
       <div class="box">
         <div class="box-header pb-0">
@@ -42,35 +41,5 @@
         </table>
       </div>
     </div>
-=======
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Company Name</th>
-          <th>Owner Name</th>
-          <th>Address</th>
-          <th>Sub District</th>
-          <th>City</th>
-          <th>Province</th>
-          <th>Phone</th>
-          <th>Detai</th>
-        </tr>
-      </thead>
-      <tbody>
-        <?php foreach($posts as $post): ?>
-          <tr>
-            <td><?= $post['company_name'];?></td>
-            <td><?= $post['owner_name'];?></td>
-            <td><?= $post['address'];?></td>
-            <td><?= $post['sub_district'];?></td>
-            <td><?= $post['city'];?></td>
-            <td><?= $post['province'];?></td>
-            <td><?= $post['phone1'];?></td>
-            <td><a href="<?=site_url('home/index/'.$post['id']);?>" type="submit" class="btn btn-oldblue text-white">Detail</a></td>
-          </tr>
-        <?php endforeach; ?>
-      </tbody>
-    </table>
->>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
   </section>
 </div>
