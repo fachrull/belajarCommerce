@@ -12,7 +12,8 @@
           <br>
           <?php if($this->session->userdata('uType') == 1): ?>
             <p>Super Admin</p>
-          <?php else: ?>
+          <?php endif; ?>
+          <?php if($this->session->userdata('uType') == 2): ?>
             <p>Admin</p>
           <?php endif; ?>
         </div>
@@ -40,37 +41,40 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i> Admin</a></li>
+              <li>
+                <a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i><span> Admin</span></a>
+              </li>
             </ul>
           </li>
-          <li class="active">
-            <a href="#">Slider</a>
+          <li>
+            <a href="#"><i class="fa fa-pencil-square-o"></i><span> Slider</span></a>
           </li>
-          <li class="active">
-            <a href="#">Promotion</a>
+          <li>
+            <a href="#"><i class="fa fa-tag"></i><span> Promotion</span></a>
           </li>
-          <li class="active">
-            <a href="#">AGM-Pedia</a>
+          <li>
+            <a href="<?= site_url('admin/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
           </li>
-          <li class="active">
-            <a href="#">Location Stores</a>
+          <li>
+            <a href="#"><i class="fa fa-map"></i><span>Location Stores</span></a>
           </li>
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-tags"></i> <span>Manage Products</span>
+              <i class="fa fa-cube"></i> <span>Manage Products</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li class="active"><a href="<?= site_url('home/sa_brand');?>">Brands</a></li>
-              <li class="active"><a href="<?= site_url('home/sa_cat');?>">Categories</a></li>
-              <li class="active"><a href="<?= site_url();?>">Products</a></li>
+              <li class="active"><a href="<?= site_url('admin/sa_brand');?>">Brands</a></li>
+              <li class="active"><a href="<?= site_url('admin/sa_cat');?>">Categories</a></li>
+              <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
               <li class="active"><a href="<?= site_url();?>">Rating</a></li>
               <li class="active"><a href="<?= site_url();?>">Best Order</a></li>
             </ul>
           </li>
-        <?php else: ?>
+        <?php endif; ?>
+        <?php if($this->session->userdata('uType') == 2): ?>
           <li class="active treeview">
             <a href="#">
               <i class="fa fa-id-badge"></i> <span>Store Owners</span>

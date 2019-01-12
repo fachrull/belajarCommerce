@@ -1,13 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="home">
 
 <head>
+	<title>The Most Complete Mattress Shopping Center | American Giant Mattress</title>
 	<meta charset="utf-8" />
-	<title>AGM - American Giant Mattress</title>
-	<meta name="description" content="" />
-	<meta name="Author" content="Dorin Grigoras [www.stepofweb.com]" />
+	<meta name="description" content="American Giant Mattress, AGM, a trusted online mattress shop sells comfortable mattressess and etc." />
+	<meta name="Author" />
+	<link rel="icon" type="image/icon" href="<?= base_url('asset/logo-agm/favicon.png');?>">
 
 	<!-- mobile settings -->
 	<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
@@ -26,13 +27,11 @@
 
 	<!-- PAGE LEVEL SCRIPTS -->
 	<link href="<?= base_url('asset/css/header-1.css');?>" rel="stylesheet" type="text/css" />
+	<link href="<?= base_url('asset/css/layout-shop.css')?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('asset/css/lightgrey.css');?>" rel="stylesheet" type="text/css" id="color_scheme" />
-
 </head>
 
 <body class="smoothscroll enable-animation">
-
-
 
 	<!-- wrapper -->
 	<div id="wrapper">
@@ -40,14 +39,13 @@
 
 			<!-- SEARCH HEADER -->
 			<div class="search-box over-header">
-				<a id="closeSearch" href="#" class="fa fa-remove"></a>
+				<a id="closeSearch" href="<?= site_url('#');?>" class="fa fa-remove"></a>
 
-				<form action="page-search-result-1.html" method="get">
+				<form action="search-result-1.html" method="get">
 					<input type="text" class="form-control" placeholder="SEARCH" />
 				</form>
 			</div>
 			<!-- /SEARCH HEADER -->
-
 
 			<!-- TOP NAV -->
 			<header id="topNav">
@@ -63,28 +61,22 @@
 
 						<!-- SEARCH -->
 						<li class="search">
-							<!-- <a href="<?= base_url('asset/javascript');?>"> -->
-              <a href="#">
-								<i class="fa fa-search"></i>
-							</a>
+							<i class="fa fa-search"></i>
 						</li>
 						<!-- /SEARCH -->
 
 						<!-- CART -->
 						<li class="search">
-							<!-- <a href="<?= base_url('asset/javascript');?>"> -->
-              <a href="#">
+              <a href="<?= site_url('#');?>">
 								<i class="fa fa-user"></i>
 							</a>
 						</li>
 						<!-- /CART -->
-
-
 					</ul>
 					<!-- /BUTTONS -->
 
 					<!-- Logo -->
-					<a class="logo float-left page-scroll" href="<?= site_url();?>">
+					<a class="logo float-left page-scroll" href="<?= site_url('#home');?>">
 						<img src="<?= base_url('asset/logo-agm/logo.png');?>" alt="" />
 					</a>
 					<div class="navbar-collapse collapse nav-main-collapse">
@@ -92,20 +84,20 @@
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
                 <?php if($this->session->userdata('uType') == 3): ?>
                       <li><a class="page-scroll" href="<?= site_url('home/store');?>">MY STORE</a></li>
-                      <li><a class="page-scroll" href="#">INVOICE</a></li>
-                      <li><a class="page-scroll" href="#">PRODUCT</a></li>
+                      <li><a class="page-scroll" href="<?= site_url('#');?>">INVOICE</a></li>
+                      <li><a class="page-scroll" href="<?= site_url('#');?>">PRODUCT</a></li>
 
                 <!-- This is navbar for admin -->
                 <?php elseif($this->session->userdata('uType') == 4): ?>
                       <li><a class="page-scroll" href="<?= site_url('home/customer');?>">PROFILE</a></li>
-                      <li><a class="page-scroll" href="#">PURCHASES</a></li>
+                      <li><a class="page-scroll" href="<?= site_url('#')?>">PURCHASES</a></li>
 								<?php else: ?>
 									<!-- HOME -->
-									<li><a class="page-scroll" href="#product">PRODUCT</a></li>
-									<li><a class="page-scroll" href="#promotion">PROMOTION</a></li>
-									<li><a class="page-scroll" href="#agmpedia">AGMPEDIA</a></li>
-									<li><a class="page-scroll" href="#location">LOCATION</a></li>
-	                <li><a class="page-scroll" href="!#">PARTNERSHIP</a></li>
+									<li><a class="page-scroll" href="<?= site_url('#product');?>">PRODUCT</a></li>
+									<li><a class="page-scroll" href="<?= site_url('#promotion');?>">PROMOTION</a></li>
+									<li><a class="page-scroll" href="<?= site_url('#agmpedia');?>">AGMPEDIA</a></li>
+									<li><a class="page-scroll" href="<?= site_url('#location');?>">LOCATION</a></li>
+	                <li><a class="page-scroll" href="<?= site_url('#shopLoadModal');?>">PARTNERSHIP</a></li>
                 <?php endif; ?>
 								<!-- This is navbar logout or login -->
 		            <?php if($this->session->userdata('isLogin', TRUE)): ?>

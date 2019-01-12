@@ -79,12 +79,12 @@ class Mauth extends CI_Model{
         $pass = 'store_owner_agm';
         $created = $this->session->userdata('uId');
         $dataUserLogin = array(
-          'username' => $this->input->post('uname'),
-          'password' => password_hash(($pass), PASSWORD_DEFAULT),
-          'email'    => $this->input->post('emai;'),
-          'type'     => $uType,
-          'newer'    => $newOwner,
-          'created'  => $created
+          'username'      => $this->input->post('uname'),
+          'password'      => password_hash(($pass), PASSWORD_DEFAULT),
+          'email'         => $this->input->post('email'),
+          'user_type'     => $uType,
+          'newer'         => $newOwner,
+          'created'       => $created
         );
         $queryULoging = $this->db->insert('user_login', $dataUserLogin);
 
@@ -93,17 +93,17 @@ class Mauth extends CI_Model{
         $id = $userId->user_id;
 
         $dataStoreOwner = array(
-          'id_userLogin' => $id,
-          'new_owner'    => 1,
-          'company_name' => $this->input->post('company_name'),
-          'address'      => $this->input->post('add'),
-          'sub_district' => $this->input->post('sub_district'),
-          'city'         => $this->input->post('sub_district'),
-          'province'     => $this->input->post('province'),
-          'postcode'     => $this->input->post('pCode'),
-          'phone1'       => $this->input->post('phone1'),
-          'phone2'       => $this->input->post('phone2'),
-          'owner_name'   => $this->input->post('owner_name')
+          'id_userLogin'    => $id,
+          'company_name'    => $this->input->post('company_name'),
+          'address'         => $this->input->post('add'),
+          'sub_district'    => $this->input->post('sub_district'),
+          'city'            => $this->input->post('sub_district'),
+          'province'        => $this->input->post('province'),
+          'postcode'        => $this->input->post('pCode'),
+          'phone1'          => $this->input->post('phone1'),
+          'phone2'          => $this->input->post('phone2'),
+          'owner_name'      => $this->input->post('owner_name'),
+          'id_super_admin'  => $this->session->userdata('uId')
         );
         $queryStoreOwner = $this->db->insert('tm_store_owner', $dataStoreOwner);
         return array(
@@ -160,5 +160,36 @@ class Mauth extends CI_Model{
     }
 
     return $this->db->update('user_login', $dataUdatePassword);
+  }
+
+  public function getUData($condition = NULL, $selection = NULL, $table, $singleRowResult =  FALSE){
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+
+    if ($selection != NULL) {
+      foreach ($selection as $key => $value) {
+        $this->db->select($value);
+      }
+    }
+
+    $query =  $this->db->get($table);
+
+    if ($singleRowResult === TRUE) {
+      return $query->row_array();
+    }else {
+      return $query->result_array();
+    }
+  }
+
+  public function updateData($condition = NULL, $table, $items) {
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+    return $this->db->update($table, $items);
   }
 }

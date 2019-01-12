@@ -7,8 +7,12 @@
   <?php if($this->session->userdata('uType') == 1): ?>
     <title>Super Admin</title>
   <?php else: ?>
+    <title>American Giant Mattress</title>
+  <?php endif; ?>
+  <?php if($this->session->userdata('uType') == 2): ?>
     <title>Admin</title>
   <?php endif; ?>
+  <link rel="icon" type="image/icon" href="<?= base_url('asset/logo-agm/favicon.png');?>">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -42,6 +46,8 @@
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url('asset/plugins/iCheck/all.css');?>">
   <link rel="stylesheet" href="<?= base_url('asset/css/custom.css')?>">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?= base_url('asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -65,6 +71,9 @@
       <?php if($this->session->userdata('uType') == 1): ?>
         <span class="logo-lg"><b>Super Admin</b> AGM</span>
       <?php else: ?>
+        <span class="logo-lg"><b>AGM</b></span>
+      <?php endif;?>
+      <?php if($this->session->userdata('uType') == 2): ?>
         <span class="logo-lg"><b>Admin</b> AGM</span>
       <?php endif; ?>
     </a>
