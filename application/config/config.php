@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-<<<<<<< HEAD
+
 // $config['base_url'] = 'http://localhost/belajarCommerce/';
   $baseDir = dirname(__FILE__);
   // automatically define the base url
@@ -34,19 +34,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   define('CI_BASE_DIR', $baseDir);
   define('CI_BASE_URL', $baseUrl);
   $config['base_url']	= CI_BASE_URL;
-=======
-//$config['base_url'] = 'http://localhost:8888/belajarCommerce/';
-$baseDir = dirname(__FILE__);
-// automatically define the base url
-$baseUrl = ( isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off') ? 'https://' : 'http://';
-$baseUrl .= isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : getenv('HTTP_HOST');
-$baseUrl .= str_replace('\\','/', dirname( isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : getenv('SCRIPT_NAME')));
-// Defines to deprecate the global baseUrl/baseDir
-define('CI_BASE_DIR', $baseDir);
-define('CI_BASE_URL', $baseUrl);
-$config['base_url']	= CI_BASE_URL;
 
->>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
 
 /*
 |--------------------------------------------------------------------------
