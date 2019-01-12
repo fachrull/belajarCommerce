@@ -84,7 +84,7 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?=site_url('auth/regisAdmin');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
+              <li><a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
             </ul>
           </li>
           <li>
