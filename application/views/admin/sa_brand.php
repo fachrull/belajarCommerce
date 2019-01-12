@@ -22,7 +22,7 @@
               <tr>
                 <td><a href="#" class="btn btn-oldblue h-30">Delete-<?= $brand['id'];?></a></td>
                 <td><?= $brand['name'];?></td>
-                <td><a href="<?=site_url('home/sa_brand/'.$brand['id']);?>" class="btn btn-oldblue h-30">Detail</a></td>
+                <td><a href="<?=site_url('admin/sa_brand/'.$brand['id']);?>" class="btn btn-oldblue h-30">Detail</a></td>
               </tr>
             <?php endforeach; ?>
           </tbody>
