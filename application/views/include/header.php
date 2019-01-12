@@ -93,11 +93,19 @@
                       <li><a class="page-scroll" href="<?= site_url('#')?>">PURCHASES</a></li>
 								<?php else: ?>
 									<!-- HOME -->
+<<<<<<< HEAD
 									<li><a class="page-scroll" href="<?= site_url('#product');?>">PRODUCT</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#promotion');?>">PROMOTION</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#agmpedia');?>">AGMPEDIA</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#location');?>">LOCATION</a></li>
 	                <li><a class="page-scroll" href="<?= site_url('#shopLoadModal');?>">PARTNERSHIP</a></li>
+=======
+									<li><a class="page-scroll" href="#product">PRODUCT</a></li>
+									<li><a class="page-scroll" href="#promotion">PROMOTION</a></li>
+									<li><a class="page-scroll" href="<?= site_url('home/agmpedia');?>">AGMPEDIA</a></li>
+									<li><a class="page-scroll" href="#location">LOCATION</a></li>
+	                <li><a class="page-scroll" href="!#">PARTNERSHIP</a></li>
+>>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
                 <?php endif; ?>
 								<!-- This is navbar logout or login -->
 		            <?php if($this->session->userdata('isLogin', TRUE)): ?>

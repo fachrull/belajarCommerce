@@ -218,8 +218,8 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- Sparkline -->
 <script src="<?= base_url('asset/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js');?>"></script>
 <!-- jvectormap -->
-<script src="plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-<script src="plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
+<script src="<?= base_url('asset/plugins/jquery-vectormap/jquery-jvectormap-1.2.2.min.js');?>"></script>
+<script src="<?= base_url('asset/plugins/jquery-vectormap/jquery-jvectormap-world-mill-en.js');?>"></script>
 <!-- jQuery Knob Chart -->
 <script src="<?= base_url('asset/bower_components/jquery-knob/dist/jquery.knob.min.js');?>"></script>
 <!-- daterangepicker -->

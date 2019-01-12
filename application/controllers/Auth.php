@@ -109,7 +109,11 @@ class Auth extends CI_Controller{
       if ($this->form_validation->run() === FALSE) {
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
+<<<<<<< HEAD
         $this->load->view('admin/register');
+=======
+        $this->load->view('register');
+>>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
         $this->load->view('include/admin/footer');
       } else{
         $this->mauth->regis();
@@ -123,13 +127,22 @@ class Auth extends CI_Controller{
       $this->form_validation->set_rules('city', 'City', 'required');
       $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
       $this->form_validation->set_rules('pCode', 'Postcode', 'required');
+<<<<<<< HEAD
       // $this->form_validation->set_rules('phone1', 'Phone number 1', 'required');
       // $this->form_validation->set_rules('phone2', 'Phone number 2', 'required');
+=======
+      $this->form_validation->set_rules('phone1', 'Phone number 1', 'required');
+      $this->form_validation->set_rules('phone2', 'Phone number 2', 'required');
+>>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
 
       if($this->form_validation->run() === FALSE){
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
+<<<<<<< HEAD
         $this->load->view('admin/register');
+=======
+        $this->load->view('register');
+>>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
         $this->load->view('include/admin/footer');
       } else{
         $this->mauth->regis();
@@ -304,6 +317,21 @@ class Auth extends CI_Controller{
     }
    }
  }
+<<<<<<< HEAD
+=======
+
+ public function regisAdmin() {
+   if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+     $this->load->helper('form');
+     $this->load->library('form_validation');
+     
+     $this->load->view('include/admin/header');
+     $this->load->view('include/admin/left-sidebar');
+     $this->load->view('admin/register');
+     $this->load->view('include/admin/footer');
+   }
+ }
+>>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
 }
 // public function checkingNewPass(){
 //   if (condition) {

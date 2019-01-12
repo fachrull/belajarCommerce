@@ -22,11 +22,11 @@
   <!-- Ionicons -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/Ionicons/css/ionicons.min.css');?>">
   <!-- Theme style -->
-  <link rel="stylesheet" href="<?= base_url('asset/dist/css/AdminLTE.min.css');?>">
+  <link rel="stylesheet" href="<?= base_url('asset/dist/css/AdminLTE.css');?>">
   <link href="<?= base_url('asset/css/essentials.css');?>" rel="stylesheet" type="text/css" />
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="<?= base_url('asset/dist/css/skins/_all-skins.min.css');?>">
+  <link rel="stylesheet" href="<?= base_url('asset/dist/css/skins/_all-skins.css');?>">
   <!-- Morris chart -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/morris.js/morris.css');?>">
   <!-- jvectormap -->
@@ -45,7 +45,11 @@
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css');?>">
   <!-- iCheck for checkboxes and radio inputs -->
   <link rel="stylesheet" href="<?= base_url('asset/plugins/iCheck/all.css');?>">
+<<<<<<< HEAD
   <link rel="stylesheet" href="<?= base_url('asset/css/custom.css')?>">
+=======
+  <link rel="stylesheet" href="<?= base_url('asset/css/custom.css');?>">
+>>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
 
@@ -89,21 +93,22 @@
           <!-- User Account: style can be found in dropdown.less -->
           <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-              <i class="fa fa-users user-image hidden-xs" alt="User Image"></i>
+              <i class="fa fa-users user-image hidden-xs mt-3" alt="User Image"></i>
               <span class="hidden-xs">Profile</span>
             </a>
             <ul class="dropdown-menu">
               <!-- User image -->
               <li class="user-header">
                 <img src="<?= base_url('asset/dist/img/user.png');?>" class="img-circle" alt="User Image">
+                <p>Admin Name</p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Profile</a>
+                  <a href="#" class="btn btn-default btn-flat h-30">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="<?= site_url('auth/logout')?>" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="<?= site_url('auth/logout')?>" class="btn btn-default btn-flat h-30">Sign out</a>
                 </div>
               </li>
             </ul>

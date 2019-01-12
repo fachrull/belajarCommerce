@@ -13,7 +13,11 @@
         <div class="col-xs-12">
           <div class="box">
             <div class="box-header pb-0">
+<<<<<<< HEAD
               <h3 class="box-title">Data admin</h3>
+=======
+            <h3 class="box-title">Data Table With Full Features</h3>
+>>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
             </div>
             <table id="dataTable" class="table">
             <thead>

@@ -67,6 +67,35 @@ class Mhome extends CI_Model{
     return $this->db->insert($table, $items);
   }
 
+  public function getPedia()
+  {
+    return $this->db->get('tm_agmpedia');
+  }
+
+  public function pediaInput($data)
+  { 
+    $this->db->insert('tm_agmpedia',$data);
+  }
+
+  public function getPediaByID($id)
+  {
+    $this->db->where('id',$id);
+    return $this->db->get('tm_agmpedia');
+  }
+
+  public function updatePedia($id,$data)
+  {
+    $this->db->where('id',$id);
+    $this->db->set($data);
+    $this->db->update('tm_agmpedia');
+  }
+
+  public function deletePedia($id)
+  {
+    $this->db->where('id',$id);
+    $this->db->delete('tm_agmpedia');
+  }
+
   public function inputData($table, $items){
     return $this->db->insert($table, $items);
   }
