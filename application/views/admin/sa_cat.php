@@ -8,11 +8,7 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header pb-0">
-<<<<<<< HEAD
           <a href="<?= site_url('admin/addCat');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i>Category</a>
-=======
-          <a href="<?= site_url('home/addCat');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i>Category</a>
->>>>>>> 2d924f0472adb59308389fdc4217121d2bd95949
           </div>
           <div class="box-body">
           <table id="dataTable" class="table table-bordered table-striped">
