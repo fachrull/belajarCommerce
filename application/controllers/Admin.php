@@ -344,4 +344,79 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
+
+  public function storeProd(){
+    if ($this->session->userdata('uType') == 2) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('product', 'Product', 'required');
+
+      $data['products'] = $this->madmin->getProducts(NULL, NULL, 'tm_product', FALSE);
+      // $data['id'] = $idStore;
+
+      if($this->form_validation->run() == FALSE){
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/storeProd', $data);
+        $this->load->view('include/admin/footer');
+      }else{
+        $prod = array('idProd' => $this->input->post('product'));
+        $this->session->set_userdata($prod);
+        redirect('admin/addQuan');
+      }
+    }else{
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function addQuan(){
+    if ($this->session->userdata('uType') == 2) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('quan', 'Quantity', 'required');
+
+      $data['quantity'] = $this->madmin->getProducts(array('id' => $this->session->userdata('idProd')),
+        array('quantityField' => 'quantity'), 'tm_product', TRUE);
+
+      if ($this->form_validation->run() == FALSE) {
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/prodQuantity', $data);
+        $this->load->view('include/admin/footer');
+      }else{
+        if ($this->input->post('quan') > $data['quantity']) {
+          $this->session->set_flashdata('error', 'Quantity must be at least same from current quantity');
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/prodQuantity', $data);
+          $this->load->view('include/admin/footer');
+        }else{
+          $items = array(
+            'id_store' => $this->session->userdata('idStore'),
+            'id_product' => $this->session->userdata('idProd'),
+            'quantity' => $this->input->post('quan'),
+            'id_admin' => $this->session->userdata('uId')
+          );
+          $this->madmin->inputData('tr_product', $items);
+          $newQuan = $data['quantity'] - $this->input->post('quan');
+          $new_quantity = array(
+            'quantity' => $newQuan
+          );
+          $this->madmin->updateData(array('id' => $this->session->userdata('idProd')),
+            'tr_product', $new_quantity);
+          $this->session->unset_userdata('idProd');
+          $this->session->unset_userdata('idStore');
+          redirect();
+        }
+      }
+    }else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
 }
