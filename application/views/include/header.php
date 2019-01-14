@@ -66,11 +66,28 @@
 						<!-- /SEARCH -->
 
 						<!-- CART -->
-						<li class="search">
-              <a href="<?= site_url('#');?>">
+						<!-- <li class="nav-item dropdown">
+              <a href="<?= site_url('#');?>" class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dorpdown" aria-haspopup="true" aria-expanded="false">
 								<i class="fa fa-user"></i>
 							</a>
-						</li>
+							<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<a href="#">Login</a>
+								<a href="#">Logout</a>
+							</div>
+						</li> -->
+
+						<li class="nav-item dropdown">
+        			<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          			<i class="fa fa-user"></i>
+        			</a>
+        			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<?php if($this->session->userdata('isLogin', TRUE)): ?>
+									<a class="dropdown-item" href="<?= site_url('auth/logout');?>">Logout</a>
+								<?php else: ?>
+          				<a class="dropdown-item" href="<?= site_url('auth/login');?>">Login</a>
+								<?php endif; ?>
+        			</div>
+      			</li>
 						<!-- /CART -->
 					</ul>
 					<!-- /BUTTONS -->
@@ -92,19 +109,13 @@
                       <li><a class="page-scroll" href="<?= site_url('home/customer');?>">PROFILE</a></li>
                       <li><a class="page-scroll" href="<?= site_url('#')?>">PURCHASES</a></li>
 								<?php else: ?>
-									<!-- HOME -->	
+									<!-- HOME -->
 									<li><a class="page-scroll" href="<?= site_url('#product');?>">PRODUCT</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#promotion');?>">PROMOTION</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#agmpedia');?>">AGMPEDIA</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#location');?>">LOCATION</a></li>
 	                <li><a class="page-scroll" href="<?= site_url('#shopLoadModal');?>">PARTNERSHIP</a></li>
                 <?php endif; ?>
-								<!-- This is navbar logout or login -->
-		            <?php if($this->session->userdata('isLogin', TRUE)): ?>
-		              <li><a class="page-scroll" href="<?= site_url('auth/logout');?>">LOGOUT</a></li>
-		            <?php else: ?>
-		              <li><a class="page-scroll" href="<?= site_url('auth/login');?>">LOGIN</a></li>
-		            <?php endif; ?>
 							</ul>
 						</nav>
 					</div>
