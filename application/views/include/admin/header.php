@@ -48,6 +48,9 @@
   <link rel="stylesheet" href="<?= base_url('asset/css/custom.css')?>">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
+  <!-- Select box using Ajax JQuery -->
+  <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap/dist/js/bootstrap.min.js');?>">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
