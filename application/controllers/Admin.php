@@ -137,6 +137,7 @@ class Admin extends CI_Controller {
       $this->load->library('form_validation');
 
       $this->form_validation->set_rules('items', 'Category', 'required|callback_checkingCat');
+      $this->form_validation->set_rules('desc', 'Description', 'required');
 
       if ($this->form_validation->run() === FALSE) {
         $this->load->view('include/admin/header');
@@ -144,7 +145,12 @@ class Admin extends CI_Controller {
         $this->load->view('admin/addCats');
         $this->load->view('include/admin/footer');
       }else{
-        $this->madmin->createItems('tm_category');
+        $items = array(
+          'name'        => $this->input->post('items'),
+          'description' => $this->input->post('desc'),
+          'status'      => 1
+        );
+        $this->madmin->inputData('tm_category', $items);
         redirect('admin/sa_cat');
       }
     }
@@ -159,6 +165,37 @@ class Admin extends CI_Controller {
     }else{
       return TRUE;
     }
+  }
+
+  public function activeCat($cat){
+    if ($this->session->userdata('uType') == 1) {
+      $stat = $this->madmin->getProducts(array('id' => $cat), array('statField' => 'status'), 'tm_category',TRUE);
+      if($stat['status'] == 1){
+        $items = array('status' => 0);
+        $this->madmin->updateData(array('id' => $cat), 'tm_category', $items);
+        redirect('admin/sa_cat');
+      }else{
+        $items = array('status' => 1);
+        $this->madmin->updateData(array('id' => $cat), 'tm_category', $items);
+        redirect('admin/sa_cat');
+      }
+    }else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function deleteCat($cat){
+    if ($this->session->userdata('uType') == 1) {
+      $this->madmin->deleteData(array('id' => $cat), 'tm_category');
+      redirect('admin/sa_cat', 'refresh');
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+
   }
 
   public function allProd($link = FALSE){
