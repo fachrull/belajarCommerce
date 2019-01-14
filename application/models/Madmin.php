@@ -44,9 +44,17 @@ class Madmin extends CI_Model {
       }
     }
 
-    $this->db->update($table, $items);
+    return $this->db->update($table, $items);
   }
 
+  public function deleteData($condition = NULL, $table){
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+    return $this->db->delete($table);
+  }
 
   public function createItems($table){
     $id_creator = $this->session->userdata('uId');
