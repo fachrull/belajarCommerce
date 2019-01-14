@@ -37,6 +37,17 @@ class Madmin extends CI_Model {
     return $this->db->insert($table, $items);
   }
 
+  public function updateData($condition = NULL, $table, $items){
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+
+    $this->db->update($table, $items);
+  }
+
+
   public function createItems($table){
     $id_creator = $this->session->userdata('uId');
     $items = array(
