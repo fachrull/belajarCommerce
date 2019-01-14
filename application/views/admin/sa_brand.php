@@ -12,21 +12,29 @@
           </div>
           <div class="box-body">
             <table id="dataTable" class="table table-bordered table-striped">
-          <thead>
-            <th>Delete</th>
-            <th>Brand</th>
-            <th>Detail</th>
-          </thead>
-          <tbody>
-            <?php foreach($brands as $brand): ?>
-              <tr>
-                <td><a href="#" class="btn btn-oldblue h-30">Delete-<?= $brand['id'];?></a></td>
-                <td><?= $brand['name'];?></td>
-                <td><a href="<?=site_url('admin/sa_brand/'.$brand['id']);?>" class="btn btn-oldblue h-30">Detail</a></td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
+              <thead>
+                <th>No.</th>
+                <th>Brand</th>
+                <th>Delete</th>
+                <th>Detail</th>
+              </thead>
+              <tbody>
+                <?php $no=1; ?>
+                <?php foreach($brands as $brand): ?>
+                  <tr>
+                    <td><?= $no;?></td>
+                    <td><?= $brand['name'];?></td>
+                    <td><a href="<?= site_url('admin/deleteBrand/'.$brand['id'])?>" class="btn btn-danger h-30"><i class="fa fa-trash"></i></a></td>
+                    <?php if ($brand['status'] == 1): ?>
+                      <td><a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>" class="btn btn-success h-30">Active</a></td>
+                    <?php else: ?>
+                      <td><a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>" class="btn btn-danger h-30">Active</a></td>
+                    <?php endif; ?>
+                  </tr>
+                  <?php $no++; ?>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
