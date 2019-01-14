@@ -42,9 +42,12 @@ class Home extends CI_Controller{
           $this->load->view('admin/stores', $data);
           $this->load->view('include/admin/footer');
         } else {
-          $id_userLogin = $this->session->userdata('uId');
+          $idStore = array('idStore' => $link);
+          $this->session->set_userdata($idStore);
+          $id = $this->mhome->getProducts(array('id' => $link),
+            array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
           $data['post'] = $this->mhome->getDataIndex($link);
-          $data['prime'] = $this->mhome->dataPrime($id_userLogin);
+          $data['prime'] = $this->mhome->dataPrime($id['id_userlogin']);
 
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
