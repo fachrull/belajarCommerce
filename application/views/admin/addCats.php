@@ -21,6 +21,9 @@
                   <label class="input mb-10">
                     <input name="items" type="text" placeholder="Category">
                   </label>
+                  <label class="input mb-10">
+                    <textarea name="desc" rows="8" cols="43" placeholder="Description"></textarea>
+                  </label>
                   <div class="row">
                       <div class="col-md-12 text-right">
                           <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i>ADD</button>
