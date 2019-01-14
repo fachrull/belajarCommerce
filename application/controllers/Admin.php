@@ -14,76 +14,17 @@ class Admin extends CI_Controller {
 
   public function sa_brand($link = FALSE, $add = FALSE){
     if ($this->session->userdata('uType') == 1) {
-      if ($link === FALSE) {
-        $data['brands'] = $this->madmin->getProducts(NULL, NULL, 'tm_brand', FALSE);
+      $data['brands'] = $this->madmin->getProducts(NULL, NULL, 'tm_brands', FALSE);
 
-        $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/sa_brand', $data);
-        $this->load->view('include/admin/footer');
-      }elseif($add === FALSE){
-        $test=[];
-        $data['brand'] = $this->madmin->getProducts(array('id' => $link),
-          array('nameField' => 'name', 'idField' => 'id'), 'tm_brand', TRUE);
-        $dBrand['id'] = $this->madmin->getProducts(array('brand_id' => $link),
-          array('catIdField' => 'cat_id'), 'relation_brand_category', FALSE);
-        foreach ($dBrand['id'] as $id) {
-          $tst = $this->madmin->getProducts(array('id' => $id['cat_id']),
-            array('nameField' => 'name'), 'tm_category', TRUE);
-          $test[] = $tst['name'];
-        }
-        $data['category'] = $test;
-        $true = substr(password_hash('true', PASSWORD_DEFAULT),7);
-        $data['add'] = 'true';
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/sa_brand', $data);
+      $this->load->view('include/admin/footer');
 
-        $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/detail_brand', $data);
-        $this->load->view('include/admin/footer');
-      }else{
-        $this->load->helper('form');
-        $this->load->library('form_validation');
-
-        $this->form_validation->set_rules('cat', 'Category', 'required|callback_checkingRel');
-        $this->form_validation->set_rules('brand', 'Brand', 'required');
-
-        if ($this->form_validation->run() == FALSE) {
-          $data['brand'] = $this->madmin->getProducts(array('id' => $link),
-            array('nameField' => 'name', 'idField' => 'id'), 'tm_brand', TRUE);
-          $data['add'] = 'true';
-          $data['cat'] = $this->madmin->getProducts(NULL,
-            array('idCat' => 'id', 'nameCat' => 'name'), 'tm_category', FALSE);
-
-          $this->load->view('include/admin/header');
-          $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/relation', $data);
-          $this->load->view('include/admin/footer');
-        }else{
-          $item = array(
-            'brand_id'  => $this->input->post('brand'),
-            'cat_id'    => $this->input->post('cat'),
-            'user_id'   => $this->session->userdata('uId')
-          );
-          $table = 'relation_brand_category';
-          $this->madmin->inputData($table, $item);
-          redirect('admin/sa_brand/'.$link);
-        }
-      }
     }else{
       $this->load->view('include/header');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
-    }
-  }
-
-  public function checkingRel($rel) {
-    $relCat = $this->madmin->getProducts(array('brand_id' => $this->input->post('brand'), 'cat_id' => $this->input->post('cat')),
-      array('catIDField' => 'cat_id'), 'relation_brand_category', TRUE);
-    if (isset($relCat)) {
-      $this->session->set_flashdata('error', 'The category has already been added');
-      return FALSE;
-    }else {
-      return TRUE;
     }
   }
 
@@ -93,15 +34,39 @@ class Admin extends CI_Controller {
       $this->load->library('form_validation');
 
       $this->form_validation->set_rules('items', 'Brand', 'required|callback_checkingBrand');
+      $this->form_validation->set_rules('desc', 'Description', 'required');
 
-      if ($this->form_validation->run() == FALSE) {
+      if ($this->form_validation->run() == TRUE) {
+        $file_name = strtolower('brand-logo-'.$this->input->post('items'));
+
+        $config['upload_path'] = './asset/upload/';
+        $config['allowed_types'] = 'jpg|jpeg|png|svg';
+        $config['file_name']  = $file_name;
+
+        $this->load->library('upload', $config);
+        if (! $this->upload->do_upload('brandPict')) {
+          $this->session->set_flashdata('error', $this->upload->display_errors());
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/addBrands');
+          $this->load->view('include/admin/footer');
+        }else{
+          $pName = $this->upload->data();
+          $items = array(
+            'name'          => $this->input->post('items'),
+            'logo'          => $pName['orig_name'],
+            'description'   => $this->input->post('desc'),
+            'status' => 1,
+          );
+          $this->madmin->inputData('tm_brands', $items);
+          redirect('admin/sa_brand');
+        }
+      }else{
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/addBrands');
         $this->load->view('include/admin/footer');
-      }else{
-        $this->madmin->createItems('tm_brand');
-        redirect('admin/sa_brand');
       }
     }else{
       $this->load->view('include/header');
@@ -112,12 +77,42 @@ class Admin extends CI_Controller {
 
   public function checkingBrand($brand){
     $has_brand = $this->madmin->getProducts(array('name' => $brand),
-      array('nameField' => 'name'), 'tm_brand', TRUE);
+      array('nameField' => 'name'), 'tm_brands', TRUE);
     if(isset($has_brand)){
       $this->session->set_flashdata('error', 'Brand has already been created');
       return FALSE;
     }else{
       return TRUE;
+    }
+  }
+
+  public function activeBrand($brand){
+    if($this->session->userdata('uType') == 1){
+      $stat = $this->madmin->getProducts(array('id' => $brand), array('statField' => 'status'), 'tm_brands',TRUE);
+      if($stat['status'] == 1){
+        $items = array('status' => 0);
+        $this->madmin->updateData(array('id' => $brand), 'tm_brands', $items);
+        redirect('admin/sa_brand', 'refresh');
+      }else{
+        $items = array('status' => 1);
+        $this->madmin->updateData(array('id' => $brand), 'tm_brands', $items);
+        redirect('admin/sa_brand', 'refresh');
+      }
+    }else{
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function deleteBrand($brand){
+    if ($this->session->userdata('uType') == 1) {
+      $this->madmin->deleteData(array('id' => $brand), 'tm_brands');
+      redirect('admin/sa_brand', 'refresh');
+    }else{
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
     }
   }
 
@@ -183,7 +178,7 @@ class Admin extends CI_Controller {
         $rel = $this->madmin->getProducts(array('id' => $stat['status']),
           array('idBrand' => 'brand_id', 'idCat' => 'cat_id'), 'relation_brand_category', TRUE);
         $data['brand'] = $this->madmin->getProducts(array('id' => $rel['brand_id']),
-          array('nameField' => 'name'), 'tm_brand', TRUE);
+          array('nameField' => 'name'), 'tm_brands', TRUE);
         $data['cat'] = $this->madmin->getProducts(array('id' => $rel['cat_id']),
           array('nameField' => 'name'), 'tm_category', TRUE);
 
@@ -219,7 +214,7 @@ class Admin extends CI_Controller {
 
       if ($this->form_validation->run() === TRUE) {
         $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
-          array('nameField' => 'name'), 'tm_brand', TRUE);
+          array('nameField' => 'name'), 'tm_brands', TRUE);
         $cName = $this->madmin->getProducts(array('id' => $this->input->post('cat')),
           array('nameField' => 'name'), 'tm_category', TRUE);
         $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName'));
@@ -231,7 +226,7 @@ class Admin extends CI_Controller {
         $this->load->library('upload',$config);
         if(! $this->upload->do_upload('productPict')){
           $data['brands'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
-            'nameField' => 'name'), 'tm_brand', FALSE);
+            'nameField' => 'name'), 'tm_brands', FALSE);
           $data['cats'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
             'nameField' => 'name'), 'tm_category', FALSE);
 
@@ -265,7 +260,7 @@ class Admin extends CI_Controller {
         }
       }else{
         $data['brands'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
-          'nameField' => 'name'), 'tm_brand', FALSE);
+          'nameField' => 'name'), 'tm_brands', FALSE);
         $data['cats'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
           'nameField' => 'name'), 'tm_category', FALSE);
 
