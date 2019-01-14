@@ -13,17 +13,25 @@
           <div class="box-body">
           <table id="dataTable" class="table table-bordered table-striped">
           <thead>
-            <th>Delete</th>
+            <th>No.</th>
             <th>Category</th>
+            <th>Delete</th>
             <th>Detail</th>
           </thead>
           <tbody>
+            <?php $no=1; ?>
             <?php foreach($categories as $cat): ?>
               <tr>
-                <td><a href="#" class="btn btn-oldblue h-30">Delete-<?=$cat['id'];?></a></td>
+                <td><?=$no;?></td>
                 <td><?= $cat['name'];?></td>
-                <td><a href="#" class="btn btn-oldblue h-30">Detail</a></td>
+                <td><a href="<?= site_url('admin/deleteCat/'.$cat['id']);?>" class="btn btn-danger h-30"><i class="fa fa-trash"></i></a></td>
+                <?php if ($cat['status'] == 1): ?>
+                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>" class="btn btn-success h-30">Active</a></td>
+                <?php else: ?>
+                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>" class="btn btn-danger h-30">Inactive</a></td>
+                <?php endif; ?>
               </tr>
+              <?php $no++; ?>
             <?php endforeach; ?>
           </tbody>
         </table>
