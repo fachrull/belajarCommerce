@@ -110,8 +110,87 @@ class Home extends CI_Controller{
     }
   }
 
-  // public function ($value='')
-  // {
-  //   // code...
-  // }
+  public function shop(){
+    $this->load->view('include/header');
+    $this->load->view('shop');
+    $this->load->view('include/footer');
+  }
+
+  public function listArticle(){
+    $this->load->view('include/header');
+    $this->load->view('list-article');
+    $this->load->view('include/footer');
+  }
+
+  public function fullArticle(){
+    $this->load->view('include/header');
+    $this->load->view('full-article');
+    $this->load->view('include/footer');
+  }
+
+  public function detailProduct(){
+    $this->load->view('include/header');
+    $this->load->view('detail-product');
+    $this->load->view('include/footer');
+  }
+
+  public function shopCart(){
+    $this->load->view('include/header');
+    $this->load->view('shop-cart');
+    $this->load->view('include/footer');
+  }
+
+  public function shopCheckout(){
+    $this->load->view('include/header');
+    $this->load->view('shop-checkout');
+    $this->load->view('include/footer');
+  }
+
+  public function checkoutDone(){
+    $this->load->view('include/header');
+    $this->load->view('checkout-done');
+    $this->load->view('include/footer');
+  }
+
+  public function promotionPage(){
+    $this->load->view('include/header');
+    $this->load->view('promotion-page');
+    $this->load->view('include/footer');
+  }
+
+  public function pageAbout(){
+    $this->load->view('include/header');
+    $this->load->view('page-about');
+    $this->load->view('include/footer');
+  }
+
+  public function pageContact(){
+    $this->load->view('include/header');
+    $this->load->view('page-contact');
+    $this->load->view('include/footer');
+  }
+
+  public function pageFaq(){
+    $this->load->view('include/header');
+    $this->load->view('page-faq');
+    $this->load->view('include/footer');
+  }
+
+  public function termCondition(){
+    $this->load->view('include/header');
+    $this->load->view('term-condition');
+    $this->load->view('include/footer');
+  }
+
+  public function privacyPolicy(){
+    $this->load->view('include/header');
+    $this->load->view('privacy-policy');
+    $this->load->view('include/footer');
+  }
+
+  public function searchResult(){
+    $this->load->view('include/header');
+    $this->load->view('search-result');
+    $this->load->view('include/footer');
+  }
 }
