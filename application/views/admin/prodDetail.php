@@ -7,15 +7,23 @@
     </h1>
   </section>
   <section class="content">
-    <img src="<?= base_url('asset/upload/'.$product['pict']);?>" alt="<?= $product['name'];?>" style="max-height: 388px; max-width: 405px;">
-    <p>Brand: <b><?= $brand['name'];?></b></p>
-    <p>Category: <b><?= $cat['name'];?></b></p>
-    <p>Quantity: <?= $product['quantity'];?></p>
-    <p>Comfort Level: <?= $product['comfort_lvl'];?></p>
-    <p>Tickness: <?= $product['tickness'];?></p>
-    <p>Headboard Type: <?= $product['headboard'];?></p>
-    <p>Foundation Type: <?= $product['foundation'];?></p>
-    <p>Size : <?= $product['size'];?></p>
-    <textarea rows="8" cols="80" disabled><?= $product['description'];?></textarea>
+    <img src="<?= base_url('asset/upload/'.$product['image']);?>" alt="<?= $product['name'];?>" style="max-height: 388px; max-width: 405px;">
+    <br><hr>
+    <div class="row">
+      <div class="col-sm-3">
+        <h3>Brand : <?=$brand['name'];?></h3>
+      </div>
+      <div class="col-sm-3">
+        <h3>Category: <?=$cat['name'];?></h3>
+      </div>
+      <div class="col-sm-12">
+        <h5>Price : Rp. <?= $product['price'];?></h5>
+        <h5>Sub Price : Rp <?=$product['sub_price'];?></h5>
+        <h5>Specification : <?=$spec['name'];?></h5>
+        <h5>Size : <?=$size['name'];?> (<?=$size['size'];?>)</h5>
+        <textarea rows="8" cols="80" disabled><?= $product['description'];?></textarea>
+      </div>
+    </div>
+    <a href="<?= site_url('admin/allProd');?>" class="btn btn-default">Back</a>
   </section>
 </div>

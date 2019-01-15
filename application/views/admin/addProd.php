@@ -52,41 +52,33 @@
               <div class="row mb-3">
                   <div class="col-md-6">
                       <label class="input">
-                          <input name="price" type="text" placeholder="Price">
+                          <input name="price" type="text" placeholder="Price (e.g 100000)">
                       </label>
                   </div>
                   <div class="col col-md-6">
                       <label class="input">
-                          <input name="sPrice" type="text" placeholder="Sub Price">
+                          <input name="sPrice" type="text" placeholder="Sub Price (e.g 100000)">
                       </label>
                   </div>
               </div>
-              <label class="input mb-10">
-                  <input name="quantity" type="text" placeholder="Quantity">
-              </label>
               <label class="input mb-10">
                 <textarea name="desc" rows="8" cols="141" placeholder="Description"></textarea>
               </label>
               <label class="input mb-10">
-                <input type="text" name="comfort" placeholder="Comfort Level">
+                <select class="form-control" name="spec">
+                  <option selected disabled>Specification</option>
+                  <?php foreach($specs as $spec): ?>
+                    <option value="<?= $spec['id'];?>"><?= $spec['name'];?></option>
+                  <?php endforeach; ?>
+                </select>
               </label>
               <label class="input mb-10">
-                <input type="text" name="tickness" placeholder="Mattress Tickness">
-              </label>
-              <div class="row mb-3">
-                  <div class="col-md-6">
-                      <label class="input">
-                          <input name="ht" type="text" placeholder="Headboard Type">
-                      </label>
-                  </div>
-                  <div class="col col-md-6">
-                      <label class="input">
-                          <input name="ft" type="text" placeholder="Foundation Type">
-                      </label>
-                  </div>
-              </div>
-              <label class="input mb-10">
-                <input type="text" name="size" placeholder="E.g. 160x200, 180x200">
+                <select class="form-control" name="size">
+                  <option selected disabled>Size</option>
+                  <?php foreach($sizes as $size): ?>
+                    <option value="<?= $size['id'];?>"><?=$size['name'];?> (<?=$size['size'];?>)</option>
+                  <?php endforeach; ?>
+                </select>
               </label>
               <label class="input mb-10">
                 <input type="file" name="productPict" />
