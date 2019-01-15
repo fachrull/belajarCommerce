@@ -48,7 +48,7 @@
             </ul>
           </li>
           <li>
-            <a href="#"><i class="fa fa-pencil-square-o"></i><span> Slider</span></a>
+            <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Slider</span></a>
           </li>
           <li>
             <a href="#"><i class="fa fa-tag"></i><span> Promotion</span></a>
