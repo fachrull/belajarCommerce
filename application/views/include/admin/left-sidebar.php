@@ -44,6 +44,7 @@
             <ul class="treeview-menu">
               <li>
                 <a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i><span> Admin</span></a>
+                <li><a href="<?=site_url('auth/regisSO');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
               </li>
             </ul>
           </li>
