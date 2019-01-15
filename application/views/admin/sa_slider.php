@@ -27,7 +27,7 @@
                   <div class="col-sm-6 col-md-4 col-sm-lg-2">
                     <div class="thumbnail">
                       <img src="<?= base_url('asset/upload/'.$slide['slide']);?>"><br>
-                      <a href="<?= site_url('admin/deleteSlider/'.$slide['id']);?>" class="btn btn-default" class="btn btn-default"><i class="pull-right fa fa-trash text-danger"></i></a>
+                      <a href="<?= site_url('admin/deleteSlider/'.$slide['id']);?>" class="btn btn-default" class="btn btn-default" onclick="return confirm('Are you sure?')"><i class="pull-right fa fa-trash text-danger"></i></a>
                     </div>
                   </div>
                 <?php endforeach; ?>

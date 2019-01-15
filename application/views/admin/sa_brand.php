@@ -24,7 +24,7 @@
                   <tr>
                     <td><?= $no;?></td>
                     <td><?= $brand['name'];?></td>
-                    <td><a href="<?= site_url('admin/deleteBrand/'.$brand['id'])?>" class="btn btn-danger h-30"><i class="fa fa-trash"></i></a></td>
+                    <td><a href="<?= site_url('admin/deleteBrand/'.$brand['id'])?>" class="btn btn-danger h-30" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a></td>
                     <?php if ($brand['status'] == 1): ?>
                       <td><a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>" class="btn btn-success h-30">Active</a></td>
                     <?php else: ?>

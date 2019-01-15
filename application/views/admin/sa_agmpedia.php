@@ -34,7 +34,7 @@
                       <tr>
                         <td><?php echo $pedia['title']; ?></td>
                         <td><?php echo $pedia['date']; ?></td>
-                        <td><a href="<?= site_url('admin/editPedia/'.$pedia['id']); ?>" class="btn btn-warning">Edit</a><a href="<?php echo site_url('admin/deletePedia/'.$pedia['id']); ?>" class="btn btn-danger">Delete</a></td>
+                        <td><a href="<?= site_url('admin/editPedia/'.$pedia['id']); ?>" class="btn btn-warning">Edit</a><a href="<?php echo site_url('admin/deletePedia/'.$pedia['id']); ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
                       </tr>
                     <?php endforeach; ?>
                   </tbody>
