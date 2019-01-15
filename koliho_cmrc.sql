@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 12, 2019 at 07:33 PM
+-- Generation Time: Jan 15, 2019 at 07:03 PM
 -- Server version: 5.7.24-0ubuntu0.18.04.1
 -- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
@@ -23,47 +23,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `relation_brand_category`
---
-
-CREATE TABLE `relation_brand_category` (
-  `id` int(11) NOT NULL,
-  `brand_id` int(11) NOT NULL,
-  `cat_id` int(11) DEFAULT NULL,
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `relation_brand_category`
---
-
-INSERT INTO `relation_brand_category` (`id`, `brand_id`, `cat_id`, `user_id`) VALUES
-(1, 1, 1, 2),
-(2, 2, 1, 2),
-(3, 2, 2, 2),
-(4, 2, 3, 2),
-(5, 2, 4, 2),
-(6, 2, 5, 2),
-(7, 2, 6, 2),
-(8, 3, 1, 2),
-(9, 3, 2, 2),
-(10, 3, 3, 2),
-(11, 3, 4, 2),
-(12, 3, 5, 2),
-(13, 3, 6, 2),
-(14, 4, 1, 2),
-(15, 4, 3, 2),
-(16, 5, 1, 2),
-(17, 5, 2, 2),
-(18, 5, 3, 2),
-(19, 5, 4, 2),
-(20, 5, 5, 2),
-(21, 5, 6, 2),
-(22, 9, 9, 2);
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tm_agmpedia`
 --
 
@@ -73,43 +32,35 @@ CREATE TABLE `tm_agmpedia` (
   `content` text NOT NULL,
   `date` date NOT NULL,
   `photo` blob NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0' COMMENT 'active = 1, 2; inactive = 0',
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `tm_agmpedia`
---
-
-INSERT INTO `tm_agmpedia` (`id`, `title`, `content`, `date`, `photo`, `user_id`) VALUES
-(0, 'Test Pedia', 'Testing content agm pedia', '2019-01-12', 0x61676d5f70656469612d746573745f70656469612e706e67, 2),
-(0, 'Test Pedia Dua', 'Test new pedia dua for agm pedia', '2019-01-12', 0x61676d5f70656469612d746573745f70656469615f6475612e706e67, 2);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tm_brand`
+-- Table structure for table `tm_brands`
 --
 
-CREATE TABLE `tm_brand` (
+CREATE TABLE `tm_brands` (
   `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
-  `id_super_admin` int(11) NOT NULL
+  `logo` blob NOT NULL,
+  `description` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; 0 = inactive'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tm_brand`
+-- Dumping data for table `tm_brands`
 --
 
-INSERT INTO `tm_brand` (`id`, `name`, `id_super_admin`) VALUES
-(1, 'Aireloom', 2),
-(2, 'Kingkoil', 2),
-(3, 'Serta', 2),
-(4, 'Tempur', 2),
-(5, 'Florence', 2),
-(6, 'Stressless', 2),
-(7, 'dummy', 2),
-(8, 'dummy2', 2),
-(9, 'dummy3', 2);
+INSERT INTO `tm_brands` (`id`, `name`, `logo`, `description`, `status`) VALUES
+(1, 'Aireloom', 0x6272616e642d6c6f676f2d616972656c6f6f6d2e737667, 'Best brand', 1),
+(2, 'Kingkoil', 0x6272616e642d6c6f676f2d6b696e676b6f696c2e737667, 'Best brand', 1),
+(3, 'Florence', 0x6272616e642d6c6f676f2d666c6f72656e63652e737667, 'Best brand', 1),
+(4, 'Serta', 0x6272616e642d6c6f676f2d73657274612e737667, 'Best Brand', 1),
+(5, 'Tempur', 0x6272616e642d6c6f676f2d74656d7075722e737667, 'Best Brand', 1),
+(6, 'Stressless', 0x6272616e642d6c6f676f2d7374726573736c6573732e737667, 'Best Brand', 1);
 
 -- --------------------------------------------------------
 
@@ -119,24 +70,22 @@ INSERT INTO `tm_brand` (`id`, `name`, `id_super_admin`) VALUES
 
 CREATE TABLE `tm_category` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `id_super_admin` int(11) NOT NULL
+  `name` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive = 0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_category`
 --
 
-INSERT INTO `tm_category` (`id`, `name`, `id_super_admin`) VALUES
-(1, 'Mattress', 2),
-(2, 'Bed Linen', 2),
-(3, 'Pillow', 2),
-(4, 'Bolster', 2),
-(5, 'Quilt', 2),
-(6, 'Mattress Protector', 2),
-(7, 'dummy', 2),
-(8, 'dummy2', 2),
-(9, 'dummy3', 2);
+INSERT INTO `tm_category` (`id`, `name`, `description`, `status`) VALUES
+(1, 'Mattress', 'Best Mattress', 1),
+(2, 'Bed Linen', 'Best bed linen', 1),
+(3, 'Pillow', 'Best Pillow', 1),
+(4, 'Bolster', 'Best bolster', 1),
+(5, 'Quilt', 'Best Quilt', 1),
+(6, 'Mattress Protector', 'Best Mattress Protector', 1);
 
 -- --------------------------------------------------------
 
@@ -175,29 +124,136 @@ INSERT INTO `tm_customer` (`id`, `id_userlogin`, `first_name`, `last_name`, `add
 
 CREATE TABLE `tm_product` (
   `id` int(11) NOT NULL,
-  `name` varchar(100) NOT NULL,
-  `price` decimal(10,0) NOT NULL,
-  `sub_price` decimal(10,0) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `brand_id` int(11) NOT NULL,
+  `cat_id` int(11) NOT NULL,
+  `position` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
   `description` text NOT NULL,
-  `comfort_lvl` varchar(100) NOT NULL,
-  `tickness` varchar(50) NOT NULL,
-  `headboard` varchar(100) NOT NULL,
-  `foundation` varchar(100) NOT NULL,
-  `size` varchar(150) NOT NULL,
-  `pict` blob NOT NULL,
-  `status` int(11) NOT NULL,
-  `id_super_admin` int(11) NOT NULL
+  `image` blob NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_size`
+--
+
+CREATE TABLE `tm_size` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `size` varchar(50) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive =0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tm_product`
+-- Dumping data for table `tm_size`
 --
 
-INSERT INTO `tm_product` (`id`, `name`, `price`, `sub_price`, `quantity`, `description`, `comfort_lvl`, `tickness`, `headboard`, `foundation`, `size`, `pict`, `status`, `id_super_admin`) VALUES
-(1, 'dummyProduct', '200000', '150000', 1000, 'This is a good mattress', 'Palatial Firm', '40 cm', 'Berkhampsted', 'Berkhampsted', '160x200, 180x200, 200x200', 0x616972656c6f6f6d2d6d617474726573732d64756d6d7970726f647563742e706e67, 1, 0),
-(2, 'Kingkoil Bed Linen', '300000', '350000', 1500, 'This is a good Bed Linen', 'Palatial Firm', '30 cm', 'Berkhampsted', 'Berkhampsted', '160x200, 180x200, 200x200', 0x6b696e676b6f696c2d6265645f6c696e656e2d6b696e676b6f696c5f6265645f6c696e656e2e706e67, 3, 0),
-(3, 'dummy product', '123435', '135599', 20000, 'this feels so good', 'Palatial Firm', '40 cm', 'Berkhampsted', 'Berkhampsted', '160x200, 180x200, 200x200', 0x73657274612d70696c6c6f772d64756d6d795f70726f647563742e706e67, 10, 0);
+INSERT INTO `tm_size` (`id`, `name`, `size`, `created_at`, `updated_at`, `status`) VALUES
+(1, 'Twin', '97 cm × 191 cm', '2019-01-14 17:00:00', '2019-01-15 10:38:15', 1),
+(2, 'Double', '135 cm × 191 cm', '2019-01-14 17:00:00', '2019-01-15 10:38:35', 1),
+(3, 'Queen', '152 cm × 203 cm', '2019-01-14 17:00:00', '2019-01-15 10:38:58', 1),
+(4, 'King', '193 cm × 203 cm', '2019-01-14 17:00:00', '2019-01-15 10:39:11', 1),
+(5, 'California king', '183 cm × 213 cm', '2019-01-14 17:00:00', '2019-01-15 10:39:35', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_slide`
+--
+
+CREATE TABLE `tm_slide` (
+  `id` int(11) NOT NULL,
+  `slide` blob NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_slide`
+--
+
+INSERT INTO `tm_slide` (`id`, `slide`, `created_at`, `updated_at`) VALUES
+(3, 0x312e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:20'),
+(4, 0x322e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:33'),
+(5, 0x332e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:44'),
+(6, 0x342e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:53'),
+(7, 0x352e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:07'),
+(8, 0x362e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:16'),
+(9, 0x372e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:35'),
+(10, 0x382e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:47');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_spec`
+--
+
+CREATE TABLE `tm_spec` (
+  `id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive = 0',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_spec`
+--
+
+INSERT INTO `tm_spec` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Luxurious Velour', 1, '2019-01-14 17:00:00', '2019-01-15 09:15:10'),
+(2, 'Double Euro Top', 1, '2019-01-14 17:00:00', '2019-01-15 09:16:00'),
+(3, 'Latex Layer', 1, '2019-01-14 17:00:00', '2019-01-15 09:16:23'),
+(4, 'Nano Comfort Fiber', 1, '2019-01-14 17:00:00', '2019-01-15 09:16:34'),
+(5, 'Double Latex Layer', 1, '2019-01-14 17:00:00', '2019-01-15 09:16:56'),
+(6, 'Spine Support Foam', 1, '2019-01-14 17:00:00', '2019-01-15 09:17:07'),
+(7, 'Smart Foam Guard', 1, '2019-01-14 17:00:00', '2019-01-15 09:17:16'),
+(8, 'Luxurious Belgium Knit', 1, '2019-01-14 17:00:00', '2019-01-15 09:17:35'),
+(9, 'Soft Touch Foam', 1, '2019-01-14 17:00:00', '2019-01-15 09:17:59'),
+(10, '3D Mesh', 1, '2019-01-14 17:00:00', '2019-01-15 09:18:11'),
+(11, 'Anti Dust Mite', 1, '2019-01-14 17:00:00', '2019-01-15 09:18:18'),
+(12, 'Anti Fungus', 1, '2019-01-14 17:00:00', '2019-01-15 09:18:22'),
+(13, 'Anti Bacterial', 1, '2019-01-14 17:00:00', '2019-01-15 09:18:28'),
+(14, 'Luxurious Knit', 1, '2019-01-14 17:00:00', '2019-01-15 09:18:45'),
+(15, 'Contour Zipper', 1, '2019-01-14 17:00:00', '2019-01-15 09:18:53'),
+(16, 'Pillow Top', 1, '2019-01-14 17:00:00', '2019-01-15 09:18:59'),
+(17, 'Premium Comfort Knit', 1, '2019-01-14 17:00:00', '2019-01-15 09:19:43'),
+(18, 'Wool', 1, '2019-01-14 17:00:00', '2019-01-15 09:19:47'),
+(19, 'Super Pillow Top', 1, '2019-01-14 17:00:00', '2019-01-15 09:19:56'),
+(20, 'Euro Top', 1, '2019-01-14 17:00:00', '2019-01-15 09:20:04'),
+(21, 'Belgium Knit', 1, '2019-01-14 17:00:00', '2019-01-15 09:20:13'),
+(22, 'King Koil Knit', 1, '2019-01-14 17:00:00', '2019-01-15 09:20:21'),
+(23, 'Foam Encasement', 1, '2019-01-14 17:00:00', '2019-01-15 09:20:28'),
+(24, '3-Zone Pocket Spring', 1, '2019-01-14 17:00:00', '2019-01-15 09:20:38'),
+(25, '5-Zone Pocket Spring', 1, '2019-01-14 17:00:00', '2019-01-15 09:20:50'),
+(26, 'Premium Knit', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:12'),
+(27, 'Memory Foam', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:17'),
+(28, 'M-Guard', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:21'),
+(29, 'U-Beam', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:27'),
+(30, '7 Zone System', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:42'),
+(31, 'Alpaca', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:46'),
+(32, 'Anti Skid', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:53'),
+(33, 'Cashmere', 1, '2019-01-14 17:00:00', '2019-01-15 09:21:57'),
+(34, 'Convoluted Foam', 1, '2019-01-14 17:00:00', '2019-01-15 09:22:06'),
+(35, 'Coolplush Viscotech', 1, '2019-01-14 17:00:00', '2019-01-15 09:22:17'),
+(36, 'Evo Inner Spring', 1, '2019-01-14 17:00:00', '2019-01-15 09:22:24'),
+(37, 'Firm Support Latex', 1, '2019-01-14 17:00:00', '2019-01-15 09:22:37'),
+(38, 'Foam With Edge', 1, '2019-01-14 17:00:00', '2019-01-15 09:22:56'),
+(39, 'Gold Series Coil', 1, '2019-01-14 17:00:00', '2019-01-15 09:23:05'),
+(40, 'Hairlock', 1, '2019-01-14 17:00:00', '2019-01-15 09:23:15'),
+(41, 'High Density Support', 1, '2019-01-14 17:00:00', '2019-01-15 09:23:27'),
+(42, 'Nano Fiber', 1, '2019-01-14 17:00:00', '2019-01-15 09:23:36'),
+(43, 'Nested Pocket Spring', 1, '2019-01-14 17:00:00', '2019-01-15 09:25:38'),
+(44, 'Soft Touch Memory Foam', 1, '2019-01-14 17:00:00', '2019-01-15 09:25:59'),
+(45, 'Talalay Embrace', 1, '2019-01-14 17:00:00', '2019-01-15 09:26:07'),
+(46, 'Talalay Latex Core', 1, '2019-01-14 17:00:00', '2019-01-15 09:26:32'),
+(47, 'Talalay', 1, '2019-01-14 17:00:00', '2019-01-15 09:26:36'),
+(48, 'Tufting', 1, '2019-01-14 17:00:00', '2019-01-15 09:26:42');
 
 -- --------------------------------------------------------
 
@@ -266,6 +322,39 @@ INSERT INTO `tm_super_admin` (`id`, `id_userlogin`, `first_name`, `last_name`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tr_product`
+--
+
+CREATE TABLE `tr_product` (
+  `id` int(11) NOT NULL,
+  `id_store` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `id_admin` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tr_product`
+--
+
+INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `quantity`, `id_admin`) VALUES
+(1, 1, 1, 100, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tr_product_spec`
+--
+
+CREATE TABLE `tr_product_spec` (
+  `id` int(11) NOT NULL,
+  `prod_id` int(11) NOT NULL,
+  `spec_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user_login`
 --
 
@@ -310,15 +399,15 @@ INSERT INTO `user_login` (`user_id`, `username`, `password`, `email`, `user_type
 --
 
 --
--- Indexes for table `relation_brand_category`
+-- Indexes for table `tm_agmpedia`
 --
-ALTER TABLE `relation_brand_category`
+ALTER TABLE `tm_agmpedia`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `tm_brand`
+-- Indexes for table `tm_brands`
 --
-ALTER TABLE `tm_brand`
+ALTER TABLE `tm_brands`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -340,6 +429,24 @@ ALTER TABLE `tm_product`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tm_size`
+--
+ALTER TABLE `tm_size`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tm_slide`
+--
+ALTER TABLE `tm_slide`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tm_spec`
+--
+ALTER TABLE `tm_spec`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tm_store_owner`
 --
 ALTER TABLE `tm_store_owner`
@@ -349,6 +456,18 @@ ALTER TABLE `tm_store_owner`
 -- Indexes for table `tm_super_admin`
 --
 ALTER TABLE `tm_super_admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tr_product`
+--
+ALTER TABLE `tr_product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tr_product_spec`
+--
+ALTER TABLE `tr_product_spec`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -362,20 +481,20 @@ ALTER TABLE `user_login`
 --
 
 --
--- AUTO_INCREMENT for table `relation_brand_category`
+-- AUTO_INCREMENT for table `tm_agmpedia`
 --
-ALTER TABLE `relation_brand_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+ALTER TABLE `tm_agmpedia`
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `tm_brand`
+-- AUTO_INCREMENT for table `tm_brands`
 --
-ALTER TABLE `tm_brand`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+ALTER TABLE `tm_brands`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tm_category`
 --
 ALTER TABLE `tm_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tm_customer`
 --
@@ -385,7 +504,22 @@ ALTER TABLE `tm_customer`
 -- AUTO_INCREMENT for table `tm_product`
 --
 ALTER TABLE `tm_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `tm_size`
+--
+ALTER TABLE `tm_size`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `tm_slide`
+--
+ALTER TABLE `tm_slide`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+--
+-- AUTO_INCREMENT for table `tm_spec`
+--
+ALTER TABLE `tm_spec`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `tm_store_owner`
 --
@@ -396,6 +530,16 @@ ALTER TABLE `tm_store_owner`
 --
 ALTER TABLE `tm_super_admin`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- AUTO_INCREMENT for table `tr_product`
+--
+ALTER TABLE `tr_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `tr_product_spec`
+--
+ALTER TABLE `tr_product_spec`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `user_login`
 --
