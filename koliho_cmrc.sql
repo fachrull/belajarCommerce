@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 15, 2019 at 07:03 PM
+-- Generation Time: Jan 16, 2019 at 02:04 AM
 -- Server version: 5.7.24-0ubuntu0.18.04.1
 -- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
@@ -126,13 +126,33 @@ CREATE TABLE `tm_product` (
   `id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `cat_id` int(11) NOT NULL,
-  `position` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
+  `price` varchar(10) NOT NULL,
+  `sub_price` varchar(10) NOT NULL,
   `description` text NOT NULL,
   `image` blob NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_product`
+--
+
+INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `price`, `sub_price`, `description`, `image`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Imperial Heritage', '1000000', '1500000', 'This crown-jewel breathes exceptional luxury and comfort. Imperial Heritage® is tailor-made with tufting technology and comlimented with the finest cashmere, alpaca and wool. This premium mattress produces a sensational feeling the moment you lay your body on its surface. With the combination of Talalay® latex layer, premium pillow top and 20cm pocket spring system provides the palatial firm support that can only be discovered on this extraordinary mattress.', 0x616972656c6f6f6d2d6d617474726573732d696d70657269616c5f68657269746167652e6a7067, '2019-01-14 17:00:00', '2019-01-15 15:01:40'),
+(2, 1, 1, 'Royal Souverign', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x616972656c6f6f6d2d6d617474726573732d726f79616c5f736f7576657269676e2e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:36:23'),
+(3, 1, 1, 'Coronation', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x616972656c6f6f6d2d6d617474726573732d636f726f6e6174696f6e2e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:38:09'),
+(4, 1, 1, 'Baron', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x616972656c6f6f6d2d6d617474726573732d6261726f6e2e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:38:52'),
+(5, 2, 1, 'Antoinette', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d616e746f696e657474652e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:42:22'),
+(6, 2, 1, 'Cordelia', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d636f7264656c69612e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:43:43'),
+(7, 2, 1, 'Ernestine', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d65726e657374696e652e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:44:35'),
+(8, 2, 1, 'Harriett', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d68617272696574742e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:46:27'),
+(9, 2, 1, 'Granville', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d6772616e76696c6c652e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:47:48'),
+(10, 2, 1, 'Ophelia', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d6f7068656c69612e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:48:57'),
+(11, 2, 1, 'Suite Palais', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f70616c6169732e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:50:14'),
+(12, 2, 1, 'Suite Ambassadeur', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f616d6261737361646575722e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:51:24'),
+(13, 2, 1, 'Suite Viceroy', '1000000', '1500000', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f76696365726f792e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:52:43');
 
 -- --------------------------------------------------------
 
@@ -343,6 +363,37 @@ INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `quantity`, `id_admin`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tr_product_size`
+--
+
+CREATE TABLE `tr_product_size` (
+  `id` int(11) NOT NULL,
+  `prod_id` int(11) NOT NULL,
+  `size_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tr_product_size`
+--
+
+INSERT INTO `tr_product_size` (`id`, `prod_id`, `size_id`) VALUES
+(1, 1, 4),
+(2, 2, 3),
+(3, 3, 5),
+(4, 4, 2),
+(5, 5, 1),
+(6, 6, 2),
+(7, 7, 5),
+(8, 8, 4),
+(9, 9, 2),
+(10, 10, 5),
+(11, 11, 3),
+(12, 12, 1),
+(13, 13, 5);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tr_product_spec`
 --
 
@@ -351,6 +402,25 @@ CREATE TABLE `tr_product_spec` (
   `prod_id` int(11) NOT NULL,
   `spec_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tr_product_spec`
+--
+
+INSERT INTO `tr_product_spec` (`id`, `prod_id`, `spec_id`) VALUES
+(1, 1, 46),
+(2, 2, 46),
+(3, 3, 46),
+(4, 4, 46),
+(5, 5, 46),
+(6, 6, 46),
+(7, 7, 46),
+(8, 8, 1),
+(9, 9, 2),
+(10, 10, 3),
+(11, 11, 4),
+(12, 12, 5),
+(13, 13, 7);
 
 -- --------------------------------------------------------
 
@@ -465,6 +535,12 @@ ALTER TABLE `tr_product`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tr_product_size`
+--
+ALTER TABLE `tr_product_size`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tr_product_spec`
 --
 ALTER TABLE `tr_product_spec`
@@ -504,7 +580,7 @@ ALTER TABLE `tm_customer`
 -- AUTO_INCREMENT for table `tm_product`
 --
 ALTER TABLE `tm_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `tm_size`
 --
@@ -536,10 +612,15 @@ ALTER TABLE `tm_super_admin`
 ALTER TABLE `tr_product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
+-- AUTO_INCREMENT for table `tr_product_size`
+--
+ALTER TABLE `tr_product_size`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+--
 -- AUTO_INCREMENT for table `tr_product_spec`
 --
 ALTER TABLE `tr_product_spec`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
 -- AUTO_INCREMENT for table `user_login`
 --
