@@ -70,6 +70,8 @@
               <li class="active"><a href="<?= site_url('admin/sa_brand');?>">Brands</a></li>
               <li class="active"><a href="<?= site_url('admin/sa_cat');?>">Categories</a></li>
               <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
+              <li class="active"><a href="<?= site_url('admin/sa_spec');?>">Spec</a></li>
+              <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
               <li class="active"><a href="<?= site_url();?>">Rating</a></li>
               <li class="active"><a href="<?= site_url();?>">Best Order</a></li>
             </ul>
