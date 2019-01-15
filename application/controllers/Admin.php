@@ -506,4 +506,171 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
+
+  public function sa_spec(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['specs'] = $this->madmin->getProducts(NULL, NULL, 'tm_spec', FALSE);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/sa_spec', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function addSpec(){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('name', 'Spec name', 'required|callback_checkingSpec');
+
+      if ($this->form_validation->run() === TRUE) {
+        // $file_name = strtolower('spec-'.$this->input->post('name'));
+        //
+        // $config['upload_path'] = './asset/upload/';
+        // $config['allowed_types'] = 'jpg|jpeg|png';
+        // $config['file_name'] = $file_name;
+        //
+        // $this->load->library('upload', $config);
+        // if (! $this->upload->do_upload('specPict')) {
+        //   $this->session->set_flashdata('error', $this->upload->display_errors());
+        //
+        //   $this->load->view('include/admin/header');
+        //   $this->load->view('include/admin/left-sidebar');
+        //   $this->load->view('admin/addSpec');
+        //   $this->load->view('include/admin/footer');
+        // }else{
+        //   $pName = $this->upload->data();
+
+          $items = array(
+            'name'        => $this->input->post('name'),
+            // 'image'       => $pName['orig_name'],
+            'created_at'  => date('Ymd')
+          );
+          $this->madmin->inputData('tm_spec', $items);
+          redirect('admin/sa_spec');
+        // }
+      }else{
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addSpec');
+        $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingSpec($spec){
+    $specName = $this->madmin->getProducts(array('name' => $spec), array('nameField' => 'name'), 'tm_spec', TRUE);
+
+    if(isset($specName)){
+      $this->session->set_flashdata('error', 'Spec has already been created');
+      return FALSE;
+    }else{
+      return TRUE;
+    }
+  }
+
+  public function deleteSpec($specId){
+    if ($this->session->userdata('uType') == 1) {
+      $this->madmin->deleteData(array('id' => $specId), 'tm_spec');
+      redirect('admin/sa_spec');
+    }else{
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function sa_size(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['sizes'] = $this->madmin->getProducts(NULL, NULL,'tm_size', FALSE);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/sa_size', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+
+  }
+
+  public function addSize(){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('name', 'Size name', 'required|callback_checkingSizeName');
+      $this->form_validation->set_rules('size', 'Size', 'required|callback_checkingSize');
+
+      if ($this->form_validation->run() === FALSE) {
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addSize');
+        $this->load->view('include/admin/footer');
+      }else{
+        $items = array(
+          'name'       => $this->input->post('name'),
+          'size'       => $this->input->post('size'),
+          'created_at' => date('Ymd'),
+          'status'     => 1
+        );
+        $this->madmin->inputData('tm_size', $items);
+        redirect('admin/sa_size');
+      }
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingSizeName($name){
+    $sizeName = $this->madmin->getProducts(array('name' => $name), array('nameField' => 'name'), 'tm_size', TRUE);
+
+    if (isset($sizeName)) {
+      $this->session->set_flashdata('error', 'Size name has already been created');
+      return FALSE;
+    }else{
+      return TRUE;
+    }
+  }
+
+  public function checkingSize($size){
+    if ($this->checkingSizeName($this->input->post('name'))) {
+      $size = $this->madmin->getProducts(array('size' => $size), array('sizeField' => 'size'), 'tm_size', TRUE);
+      if (isset($size)) {
+        $this->session->set_flashdata('error', 'Size has already been created');
+        return FALSE;
+      }else{
+        return TRUE;
+      }
+    }else{
+      $this->session->set_flashdata('error', 'Size name has already been created');
+      return FALSE;
+    }
+  }
+
+  public function deleteSize($sizeId){
+    if ($this->session->userdata('uType') == 1) {
+      $this->madmin->deleteData(array('id' => $sizeId), 'tm_size');
+      redirect('admin/sa_size');
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
 }
