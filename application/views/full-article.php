@@ -86,12 +86,12 @@
 									<div class="row tab-post">
 										<!-- post -->
 										<div class="col-md-3 col-sm-3 col-xs-3">
-											<a href="blog-sidebar-left.html">
+											<a href="<?= site_url('home/fullArticle/#');?>">
 												<img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" width="50" alt="" />
 											</a>
 										</div>
 										<div class="col-md-9 col-sm-9 col-xs-9">
-											<a href="blog-sidebar-left.html" class="tab-post-link">Maecenas metus nulla</a>
+											<a href="<?= site_url('home/fullArticle/#');?>" class="tab-post-link">Maecenas metus nulla</a>
 											<small>June 29 2014</small>
 										</div>
 									</div><!-- /post -->
@@ -99,12 +99,12 @@
 									<div class="row tab-post">
 										<!-- post -->
 										<div class="col-md-3 col-sm-3 col-xs-3">
-											<a href="blog-sidebar-left.html">
+											<a href="<?= site_url('home/fullArticle/#');?>">
 												<img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" width="50" alt="" />
 											</a>
 										</div>
 										<div class="col-md-9 col-sm-9 col-xs-9">
-											<a href="blog-sidebar-left.html" class="tab-post-link">Curabitur pellentesque neque eget diam</a>
+											<a href="<?= site_url('home/fullArticle/#');?>" class="tab-post-link">Curabitur pellentesque neque eget diam</a>
 											<small>June 29 2014</small>
 										</div>
 									</div><!-- /post -->
@@ -112,12 +112,12 @@
 									<div class="row tab-post">
 										<!-- post -->
 										<div class="col-md-3 col-sm-3 col-xs-3">
-											<a href="blog-sidebar-left.html">
+											<a href="<?= site_url('home/fullArticle/#');?>">
 												<img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" width="50" alt="" />
 											</a>
 										</div>
 										<div class="col-md-9 col-sm-9 col-xs-9">
-											<a href="blog-sidebar-left.html" class="tab-post-link">Nam et lacus neque. Ut enim massa, sodales</a>
+											<a href="<?= site_url('home/fullArticle/#');?>" class="tab-post-link">Nam et lacus neque. Ut enim massa, sodales</a>
 											<small>June 29 2014</small>
 										</div>
 									</div><!-- /post -->
@@ -132,12 +132,12 @@
 									<div class="row tab-post">
 										<!-- post -->
 										<div class="col-md-3 col-sm-3 col-xs-3">
-											<a href="blog-sidebar-left.html">
+											<a href="<?= site_url('home/fullArticle/#');?>">
 												<img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" width="50" alt="" />
 											</a>
 										</div>
 										<div class="col-md-9 col-sm-9 col-xs-9">
-											<a href="blog-sidebar-left.html" class="tab-post-link">Curabitur pellentesque neque eget diam</a>
+											<a href="<?= site_url('home/fullArticle/#');?>" class="tab-post-link">Curabitur pellentesque neque eget diam</a>
 											<small>June 29 2014</small>
 										</div>
 									</div><!-- /post -->
@@ -145,12 +145,12 @@
 									<div class="row tab-post">
 										<!-- post -->
 										<div class="col-md-3 col-sm-3 col-xs-3">
-											<a href="blog-sidebar-left.html">
+											<a href="<?= site_url('home/fullArticle/#');?>">
 												<img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" width="50" alt="" />
 											</a>
 										</div>
 										<div class="col-md-9 col-sm-9 col-xs-9">
-											<a href="blog-sidebar-left.html" class="tab-post-link">Maecenas metus nulla</a>
+											<a href="<?= site_url('home/fullArticle/#');?>" class="tab-post-link">Maecenas metus nulla</a>
 											<small>June 29 2014</small>
 										</div>
 									</div><!-- /post -->
@@ -158,12 +158,12 @@
 									<div class="row tab-post">
 										<!-- post -->
 										<div class="col-md-3 col-sm-3 col-xs-3">
-											<a href="blog-sidebar-left.html">
+											<a href="<?= site_url('home/fullArticle/#');?>">
 												<img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" width="50" alt="" />
 											</a>
 										</div>
 										<div class="col-md-9 col-sm-9 col-xs-9">
-											<a href="blog-sidebar-left.html" class="tab-post-link">Quisque ut nulla at nunc</a>
+											<a href="<?= site_url('home/fullArticle/#');?>" class="tab-post-link">Quisque ut nulla at nunc</a>
 											<small>June 29 2014</small>
 										</div>
 									</div><!-- /post -->
@@ -366,6 +366,3 @@
 			</div>
 		</section>
 		<!-- / -->
-
-
-		

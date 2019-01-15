@@ -21,32 +21,32 @@
 <section id="product" class="section-xs container pt-100">
   <div class="row text-center">
     <div class="col-6 col-md-2 offset-md-3 pb-70">
-      <a href="shop.html">
+      <a href="<?= site_url('home/shop');?>">
         <img alt="Aireloom" src="<?= base_url('asset/brands/brand-aireloom-blue.svg');?>" />
       </a>
     </div>
     <div class="col-6 col-md-2 pb-70">
-      <a href="shop.html">
+      <a href="<?= site_url('home/shop');?>">
         <img alt="King Koil" src="<?= base_url('asset/brands/brand-kingkoil-blue.svg');?>" />
       </a>
     </div>
     <div class="col-6 col-md-2 pb-70">
-      <a href="shop.html">
+      <a href="<?= site_url('home/shop');?>">
         <img alt="Florence" src="<?= base_url('asset/brands/brand-florence-blue.svg');?>" />
       </a>
     </div>
     <div class="col-6 col-md-2 offset-md-3 pb-70">
-      <a href="shop.html">
+      <a href="<?= site_url('home/shop');?>">
         <img alt="Serta" src="<?= base_url('asset/brands/brand-serta-blue.svg');?>" />
       </a>
     </div>
     <div class="col-6 col-md-2 pb-70">
-      <a href="shop.html">
+      <a href="<?= site_url('home/shop');?>">
         <img alt="Tempur" src="<?= base_url('asset/brands/brand-tempur-blue.svg');?>" />
       </a>
     </div>
     <div class="col-6 col-md-2 pb-70">
-      <a href="shop.html">
+      <a href="<?= site_url('home/shop');?>">
         <img alt="Stressless" src="<?= base_url('asset/brands/brand-stressless-blue.svg');?>" />
       </a>
     </div>
@@ -72,7 +72,7 @@
       <img class="promotion-image-1" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="agm best seller" />
       <div class="absolute pl-20 pb-20 bottom-center text-left">
         <h2 class="hidden-sm hidden-xs-down text-white">BEST<br>SELLER</h2>
-        <a class="mt-10" href="promotion-page.html">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+        <a class="mt-10" href="<?= site_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
       </div>
     </div>
 
@@ -83,7 +83,7 @@
             <img class="promotion-image-2" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="agm gallery" />
             <div class="absolute pl-20 pb-20 bottom-center text-left">
               <h2 class="hidden-sm hidden-xs-down text-white">AGM<br>GALLERY</h2>
-              <a href="promotion-page.html">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+              <a href="<?= site_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@
           <img class="promotion-image-3" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="agm lastest collectin" />
           <div class="absolute pl-20 pb-20 bottom-center text-left">
             <h2 class="hidden-sm hidden-xs-down text-white">LASTEST<br>COLLECTION</h2>
-            <a href="promotion-page.html">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+            <a href="<?= site_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
           </div>
         </div>
       </div>
@@ -125,7 +125,7 @@
             <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
 
             </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="full-article.html">read more<i class="fa fa-chevron-right pl-5"
+            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
                  aria-hidden="true"></i></a></p>
           </div>
         </div>
@@ -146,7 +146,7 @@
               maxime
               ducimus est
             </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="full-article.html">read more<i class="fa fa-chevron-right pl-5"
+            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
                  aria-hidden="true"></i></a></p>
           </div>
         </div>
@@ -171,7 +171,7 @@
               maxime
               ducimus est
             </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="full-article.html">read more<i class="fa fa-chevron-right pl-5"
+            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
                  aria-hidden="true"></i></a></p>
           </div>
         </div>
@@ -192,7 +192,7 @@
               maxime
               ducimus est
             </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="full-article.html">read more<i class="fa fa-chevron-right pl-5"
+            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
                  aria-hidden="true"></i></a></p>
           </div>
         </div>
