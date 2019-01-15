@@ -4,41 +4,14 @@
 <div class="text-center">
   <div class="header-carousel">
     <div class="owl-carousel m-0 owl-stage-outer" id="owl-header" data-plugin-options='{"autoPlay": 3000}'>
-      <div>
-        <span>
-          <img class="img-fluid" src="<?= base_url('asset/content-images/background-header.jpeg');?>" alt="!#">
-        </span>
-        <h2 class="owl-carousel-caption center text owl-caption-text-dark owl-featured">LOREM IPSUM</h2>
-        <button><a class="page-scroll absolute letter-spacing-1 text-white" href="<?= site_url('#product');?>">EXPLORE<br><i class="fa fa-chevron-down"></i></a></button>
-      </div>
-      <div>
-        <span>
-          <img class="img-fluid" src="<?= base_url('asset/content-images/background-header.jpeg');?>" alt="!#">
-        </span>
-        <h2 class="owl-carousel-caption center text owl-caption-text-dark owl-featured">LOREM IPSUM</h2>
-        <button><a class="page-scroll absolute letter-spacing-1 text-white" href="<?= site_url('#product');?>">EXPLORE<br><i class="fa fa-chevron-down"></i></a></button>
-      </div>
-      <div>
-        <span>
-          <img class="img-fluid" src="<?= base_url('asset/content-images/background-header.jpeg');?>" alt="!#">
-        </span>
-        <h2 class="owl-carousel-caption center text owl-caption-text-dark owl-featured">LOREM IPSUM</h2>
-        <button><a class="page-scroll absolute letter-spacing-1 text-white" href="<?= site_url('#product');?>">EXPLORE<br><i class="fa fa-chevron-down"></i></a></button>
-      </div>
-      <div>
-        <span>
-          <img class="img-fluid" src="<?= base_url('asset/content-images/background-header.jpeg');?>" alt="!#">
-        </span>
-        <h2 class="owl-carousel-caption center text owl-caption-text-dark owl-featured">LOREM IPSUM</h2>
-        <button><a class="page-scroll absolute letter-spacing-1 text-white" href="<?= site_url('#product');?>">EXPLORE<br><i class="fa fa-chevron-down"></i></a></button>
-      </div>
-      <div>
-        <span>
-          <img class="img-fluid" src="<?= base_url('asset/content-images/background-header.jpeg');?>" alt="!#">
-        </span>
-        <h2 class="owl-carousel-caption center text owl-caption-text-dark owl-featured">LOREM IPSUM</h2>
-        <button><a class="page-scroll absolute letter-spacing-1 text-white" href="<?= site_url('#product');?>">EXPLORE<br><i class="fa fa-chevron-down"></i></a></button>
-      </div>
+      <?php foreach ($slides as $slide): ?>
+        <div>
+          <span>
+            <img class="img-fluid" src="<?= base_url('asset/upload/'.$slide['slide']);?>" alt="!#">
+          </span>
+          <button><a class="page-scroll absolute letter-spacing-1 text-white" href="<?= site_url('#product');?>">EXPLORE<br><i class="fa fa-chevron-down"></i></a></button>
+        </div>
+      <?php endforeach; ?>
     </div>
   </div>
 </div>
