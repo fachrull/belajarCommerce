@@ -1,4 +1,6 @@
-    <section class="page-header page-header-md">
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+
+        <section class="page-header page-header-md">
 
             <div class="container">
 

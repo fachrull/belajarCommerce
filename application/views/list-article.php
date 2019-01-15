@@ -1,3 +1,5 @@
+<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+		
 		<!-- PAGE HEADER -->
 		<section class="page-header page-header-md">
 			<div class="container">
