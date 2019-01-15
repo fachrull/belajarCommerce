@@ -198,30 +198,42 @@ class Admin extends CI_Controller {
 
   }
 
-  public function allProd($link = FALSE){
+  public function allProd(){
     if ($this->session->userdata('uType') == 1) {
-      if ($link === FALSE) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('brand', 'Brand', 'required');
+      $this->form_validation->set_rules('cat', 'Category', 'required');
+
+      if ($this->form_validation->run() == FALSE){
         $data['products'] = $this->madmin->getProducts(NULL, NULL, 'tm_product', FALSE);
+        $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
+        $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/allProd', $data);
         $this->load->view('include/admin/footer');
       }else{
-        $data['product'] = $this->madmin->getProducts(array('id' => $link),
-          NULL, 'tm_product', TRUE);
-        $stat = $this->madmin->getProducts(array('id' => $link),
-          array('statField' => 'status'), 'tm_product', TRUE);
-        $rel = $this->madmin->getProducts(array('id' => $stat['status']),
-          array('idBrand' => 'brand_id', 'idCat' => 'cat_id'), 'relation_brand_category', TRUE);
-        $data['brand'] = $this->madmin->getProducts(array('id' => $rel['brand_id']),
-          array('nameField' => 'name'), 'tm_brands', TRUE);
-        $data['cat'] = $this->madmin->getProducts(array('id' => $rel['cat_id']),
-          array('nameField' => 'name'), 'tm_category', TRUE);
+        $idBrand = $this->input->post('brand');
+        $idCat = $this->input->post('cat');
+        if ($idBrand != 0 && $idCat != 0) {
+          $data['products'] = $this->madmin->getProducts(array('brand_id' => $idBrand,
+          'cat_id' => $idCat), NULL, 'tm_product', FALSE);
+        }elseif($idBrand != 0 && $idCat == 0){
+          $data['products'] = $this->madmin->getProducts(array('brand_id' => $idBrand), NULL, 'tm_product', FALSE);
+        }elseif ($idBrand == 0 && $idCat != 0) {
+          $data['products'] = $this->madmin->getProducts(array('cat_id' => $idCat), NULL, 'tm_product', FALSE);
+        }elseif ($idBrand == 0 && $idCat == 0) {
+          $data['products'] = $this->madmin->getProducts(NULL, NULL, 'tm_product', FALSE);
+        }
+        $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
+        $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/prodDetail', $data);
+        $this->load->view('admin/allProd', $data);
         $this->load->view('include/admin/footer');
       }
     }else{
@@ -237,17 +249,13 @@ class Admin extends CI_Controller {
       $this->load->library('form_validation');
 
       $this->form_validation->set_rules('brand', 'Brand', 'required');
-      $this->form_validation->set_rules('cat', 'Category', 'required');
+      // $this->form_validation->set_rules('cat', 'Category', 'required');
       $this->form_validation->set_rules('pName', 'Product Name', 'required');
       $this->form_validation->set_rules('price', 'Price', 'required');
       $this->form_validation->set_rules('sPrice', 'Sub Price', 'required');
-      $this->form_validation->set_rules('quantity', 'Quantity', 'required');
       $this->form_validation->set_rules('desc', 'Description', 'required');
-      $this->form_validation->set_rules('comfort', 'Comfort Level', 'required');
-      $this->form_validation->set_rules('tickness', 'Mattress Tickness', 'required');
-      $this->form_validation->set_rules('ht', 'Headboard Type', 'required');
-      $this->form_validation->set_rules('ft', 'Foundation Type', 'required');
-      $this->form_validation->set_rules('size', 'Mattress Size', 'required');
+      $this->form_validation->set_rules('spec', 'Specification', 'required');
+      $this->form_validation->set_rules('size', 'Size', 'required');
 
       if ($this->form_validation->run() === TRUE) {
         $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
@@ -262,10 +270,14 @@ class Admin extends CI_Controller {
 
         $this->load->library('upload',$config);
         if(! $this->upload->do_upload('productPict')){
-          $data['brands'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
+          $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
             'nameField' => 'name'), 'tm_brands', FALSE);
-          $data['cats'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
+          $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
             'nameField' => 'name'), 'tm_category', FALSE);
+          $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+            'nameField' => 'name'), 'tm_spec', FALSE);
+          $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+            'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
 
           $this->session->set_flashdata('error', $this->upload->display_errors());
 
@@ -276,30 +288,40 @@ class Admin extends CI_Controller {
         }else {
           // $data = array('upload_data' => $this->upload->data());
           $pName = $this->upload->data();
-          $relId = $this->madmin->getProducts(array('brand_id' => $this->input->post('brand'),
-            'cat_id' => $this->input->post('cat')), array('idField' => 'id'), 'relation_brand_category', TRUE);
           $items = array(
+            'brand_id'    => $this->input->post('brand'),
+            'cat_id'      => $this->input->post('cat'),
             'name'        => $this->input->post('pName'),
             'price'       => $this->input->post('price'),
             'sub_price'   => $this->input->post('sPrice'),
-            'quantity'    => $this->input->post('quantity'),
             'description' => $this->input->post('desc'),
-            'comfort_lvl' => $this->input->post('comfort'),
-            'tickness'    => $this->input->post('tickness'),
-            'headboard'   => $this->input->post('ht'),
-            'foundation'  => $this->input->post('ft'),
-            'size'        => $this->input->post('size'),
-            'pict'        => $pName['orig_name'],
-            'status'      => $relId['id']
+            'image'       => $pName['orig_name'],
+            'created_at'  => date('Ymd')
           );
           $this->madmin->inputData('tm_product', $items);
+          $prod = $this->madmin->getProducts(array('name' => $this->input->post('pName')),
+            array('idField' => 'id'), 'tm_product', TRUE);
+          $prodSpec = array(
+            'prod_id' => $prod['id'],
+            'spec_id' => $this->input->post('spec')
+          );
+          $prodSize = array(
+            'prod_id' => $prod['id'],
+            'size_id' => $this->input->post('size')
+          );
+          $this->madmin->inputData('tr_product_spec', $prodSpec);
+          $this->madmin->inputData('tr_product_size', $prodSize);
           redirect('admin/allProd');
         }
       }else{
-        $data['brands'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
+        $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
           'nameField' => 'name'), 'tm_brands', FALSE);
-        $data['cats'] = $this->madmin->getProducts(NULL, array('idField' => 'id',
+        $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
           'nameField' => 'name'), 'tm_category', FALSE);
+        $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+          'nameField' => 'name'), 'tm_spec', FALSE);
+        $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+          'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -307,6 +329,50 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }
     }else{
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function detailProd($idProd){
+    if ($this->session->userdata('uType') == 1) {
+      $idSize = array();
+      $data['product'] = $this->madmin->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
+      $idBrand = $this->madmin->getProducts(array('id' => $idProd),
+        array('idBrandField' => 'brand_id'), 'tm_product', TRUE);
+      $idCat = $this->madmin->getProducts(array('id' => $idProd),
+        array('diCatField' => 'cat_id'), 'tm_product', TRUE);
+      $idSize = $this->madmin->getProducts(array('prod_id' => $idProd), array('sizeIdField' => 'size_id'),
+        'tr_product_size', TRUE);
+      $idSpec = $this->madmin->getProducts(array('prod_id' => $idProd), array('specIdField' => 'spec_id'),
+        'tr_product_spec', TRUE);
+      $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec['spec_id']), array('nameField' => 'name'),
+        'tm_spec', TRUE);
+      $data['size'] = $this->madmin->getProducts(array('id' => $idSize['size_id']), array('nameField' => 'name',
+        'sizeField' => 'size'), 'tm_size', TRUE);
+      $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand['brand_id']), array('nameField' => 'name'),
+        'tm_brands', TRUE);
+      $data['cat'] = $this->madmin->getProducts(array('id' => $idCat['cat_id']), array('nameField' => 'name'),
+        'tm_category', TRUE);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/prodDetail', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+
+  }
+
+  public function deleteProd($idProd){
+    if ($this->session->userdata('uType') == 1) {
+      $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
+      redirect('admin/allProd');
+    } else {
       $this->load->view('include/header');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
