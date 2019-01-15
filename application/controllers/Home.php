@@ -66,11 +66,13 @@ class Home extends CI_Controller{
         $this->load->view('include/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
+      $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
       $this->load->view('include/header');
-      $this->load->view('home');
+      $this->load->view('home', $data);
       $this->load->view('include/footer');
     } elseif ($this->session->userdata('uType') == NULL) {
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
+      $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
 
       $this->load->view('include/header');
       $this->load->view('home', $data);

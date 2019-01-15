@@ -451,4 +451,59 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
+
+  public function sa_slider(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['slides'] = $this->madmin->getProducts(NULL, NULL, 'tm_slide', FALSE);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/sa_slider', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function addSlider(){
+    if ($this->session->userdata('uType') == 1) {
+
+      $config['upload_path'] = './asset/upload/';
+      $config['allowed_types'] = 'jpg|jpeg|png';
+
+      $this->load->library('upload', $config);
+
+      if (! $this->upload->do_upload('sliderPict')) {
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addSlider');
+        $this->load->view('include/admin/footer');
+      }else{
+        $pName = $this->upload->data();
+        $items = array(
+          'slide'       => $pName['orig_name'],
+          'created_at'  => date('Ymd'),
+        );
+        $this->madmin->inputData('tm_slide', $items);
+        redirect('admin/sa_slider');
+      }
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function deleteSlider($idSlider){
+    if ($this->session->userdata('uType') == 1) {
+      $this->madmin->deleteData(array('id' => $idSlider), 'tm_slide');
+      redirect('admin/sa_slider');
+    }else{
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
 }
