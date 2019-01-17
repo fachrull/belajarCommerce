@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 16, 2019 at 02:04 AM
+-- Generation Time: Jan 17, 2019 at 09:27 PM
 -- Server version: 5.7.24-0ubuntu0.18.04.1
 -- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
@@ -198,14 +198,7 @@ CREATE TABLE `tm_slide` (
 --
 
 INSERT INTO `tm_slide` (`id`, `slide`, `created_at`, `updated_at`) VALUES
-(3, 0x312e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:20'),
-(4, 0x322e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:33'),
-(5, 0x332e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:44'),
-(6, 0x342e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:53'),
-(7, 0x352e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:07'),
-(8, 0x362e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:16'),
-(9, 0x372e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:35'),
-(10, 0x382e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:05:47');
+(3, 0x312e6a7067, '2019-01-14 17:00:00', '2019-01-15 06:04:20');
 
 -- --------------------------------------------------------
 
@@ -286,13 +279,13 @@ CREATE TABLE `tm_store_owner` (
   `id_userlogin` int(11) NOT NULL,
   `company_name` varchar(100) NOT NULL,
   `address` text,
+  `address2` text NOT NULL,
   `sub_district` varchar(50) NOT NULL,
   `city` varchar(50) NOT NULL,
   `province` varchar(50) NOT NULL,
   `postcode` varchar(25) DEFAULT NULL,
-  `phone1` int(20) DEFAULT NULL,
-  `phone2` int(20) DEFAULT NULL,
-  `owner_name` varchar(50) DEFAULT NULL,
+  `phone1` varchar(20) DEFAULT NULL,
+  `fax` varchar(20) DEFAULT NULL,
   `id_super_admin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -300,11 +293,9 @@ CREATE TABLE `tm_store_owner` (
 -- Dumping data for table `tm_store_owner`
 --
 
-INSERT INTO `tm_store_owner` (`id`, `id_userlogin`, `company_name`, `address`, `sub_district`, `city`, `province`, `postcode`, `phone1`, `phone2`, `owner_name`, `id_super_admin`) VALUES
-(1, 4, 'PT First Company', 'JL. Akses UI No.123', 'Kelapa Dua', 'Depok', 'Jawa Barat', '16451', NULL, NULL, 'First', 0),
-(2, 28, 'PT Someone', 'Somewhere', 'Ciracas', 'Ciracas', 'DKI', '13730', 0, 0, NULL, 5),
-(3, 30, 'PT Someone Other', 'Somewhere', 'Ciracas', 'Ciracas', 'DKI', '13730', 0, 0, NULL, 5),
-(4, 31, 'PT Test', 'test address', 'Ciracas', 'Ciracas', 'DKI', '13730', 0, 0, 'test owner', 5);
+INSERT INTO `tm_store_owner` (`id`, `id_userlogin`, `company_name`, `address`, `address2`, `sub_district`, `city`, `province`, `postcode`, `phone1`, `fax`, `id_super_admin`) VALUES
+(5, 32, 'AGM JDC', 'Jl. Gatot Subroto No. 53, Jakarta Design Center Lantai 4 - 4SR081', 'Jakarta Design Center Lantai 4 - 4SR081', 'Mampang Prapatan', 'Jakarta', 'DKI Jakarta', '12780', '0215720533', '', 2),
+(6, 33, 'AGM Simpruk', 'Jl. Teuku Nyak Arief, Simpruk Garden Raya Blok G No.1, Permata Hijau', '', 'Kebayora Lama', 'Jakarta', 'DKI Jakarta', '12240', '02166676278', '', 2);
 
 -- --------------------------------------------------------
 
@@ -349,7 +340,8 @@ CREATE TABLE `tr_product` (
   `id` int(11) NOT NULL,
   `id_store` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
-  `quantity` int(11) NOT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `new` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive = 0',
   `id_admin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -357,8 +349,9 @@ CREATE TABLE `tr_product` (
 -- Dumping data for table `tr_product`
 --
 
-INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `quantity`, `id_admin`) VALUES
-(1, 1, 1, 100, 5);
+INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `quantity`, `new`, `id_admin`) VALUES
+(1, 5, 1, NULL, 1, 2),
+(2, 5, 2, NULL, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -445,7 +438,6 @@ CREATE TABLE `user_login` (
 INSERT INTO `user_login` (`user_id`, `username`, `password`, `email`, `user_type`, `newer`, `created`) VALUES
 (2, 'superAdmin', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'super.admin@keraton.com', 1, 0, NULL),
 (3, 'dummyCS', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'dummy@koliho.com', 4, 0, NULL),
-(4, 'dummyStr', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'dummystr@koliho.com', 3, 0, NULL),
 (5, 'admin', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'admin@keraton.com', 2, 0, NULL),
 (15, 'dummyCS2', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'dummycs2@koliho.com', 4, 0, NULL),
 (16, 'customer', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'customer@koliho.com', 4, 0, NULL),
@@ -459,10 +451,9 @@ INSERT INTO `user_login` (`user_id`, `username`, `password`, `email`, `user_type
 (25, 'tryingAdmin', '$2y$10$UudgROaKmAMaBp41a20wzOWUUrFWdaJF7MMhu88rsn/.DWTZfnYma', 'trying.admin@keraton.com', 2, 0, 2),
 (26, 'someone', '$2y$10$4VShPyleEsQDJbVnOLocvOwen3RlASKOcechDqfILD8Rqp3tQgVcC', 'someone@email.com', 1, 0, 2),
 (27, 'someother', '$2y$10$JbV5GOIkW7j0EaI6n5FZ.e1tvwD2FIAcw5jrUvmdwdNxdlG2OZ9xu', 'someother@email.com', 2, 1, 26),
-(28, 'somoneOwner', '$2y$10$2IoAxbWpzrBRjDte0tHoKezhsAncspVD6QKFHXHdKnWQTk2mUTqtq', 'someone@company.com', 3, 1, 5),
 (29, 'dummy', '$2y$10$6OLUFwLTmS2maUqXsIG.FOH8//BUfe3zAxikWqzTNkqmFWtbfRmyq', 'dummySA@email.com', 1, 1, 2),
-(30, 'someothers', '$2y$10$VBJeDcIHB/CgOYyJGRnYhuEA8l1jzCEEUI5Wwq2U9E61f4jBnbG12', 'someother@company.com', 3, 1, 5),
-(31, 'test', '$2y$10$qDBPMNBlYgeLlJtfLZdlhe1ueK74epemLph/ciTt5naze4R5/GD.q', 'testSO@storeowner.com', 3, 1, 5);
+(32, 'agmJDC', '$2y$10$ypn0tqqvhahBZX5E3H2.ye.ewV6SxDlkeZrt7prrBeLnKUuZX9dky', 'agm.jdc@email.com', 3, 0, 2),
+(33, 'agmSimpruk', '$2y$10$jkK2KE1kCW8oKSTjqid1B..c0gOKptpwu3GTcZ23LqrtJwevDBIay', 'agm.simpruk@email.com', 3, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -590,7 +581,7 @@ ALTER TABLE `tm_size`
 -- AUTO_INCREMENT for table `tm_slide`
 --
 ALTER TABLE `tm_slide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `tm_spec`
 --
@@ -600,7 +591,7 @@ ALTER TABLE `tm_spec`
 -- AUTO_INCREMENT for table `tm_store_owner`
 --
 ALTER TABLE `tm_store_owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `tm_super_admin`
 --
@@ -610,7 +601,7 @@ ALTER TABLE `tm_super_admin`
 -- AUTO_INCREMENT for table `tr_product`
 --
 ALTER TABLE `tr_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `tr_product_size`
 --
@@ -625,7 +616,7 @@ ALTER TABLE `tr_product_spec`
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
