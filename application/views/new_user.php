@@ -24,42 +24,42 @@
             </header>
             <fieldset class="m-0">
             <?php if($this->session->userdata('uType') == 3): ?>
-            <label class="input mb-10">
-                      <input type="text" name="company_name" placeholder="Company Name">
-                  </label>
-                  <label class="input mb-10">
-                      <input type="text" name="owner_name" placeholder="Owner Name">
-                  </label>
-                  <label class="input mb-10">
-                      <input type="text" name="address" placeholder="Address">
-                  </label>
-                  <label class="input mb-10">
-                      <input type="number" name="phone1" placeholder="Phone Number 1">
-                  </label>
-                  <label class="input mb-10">
-                      <input type="number" name="phone2" placeholder="Phone Number 2">
-                  </label>
+              <label class="input mb-10">
+                <input type="text" name="company_name" value="<?=$user['company_name'];?>" placeholder="Company Name">
+              </label>
+              <label class="input mb-10">
+                <input type="text" name="address" value="<?= $user['address']?>" placeholder="Address">
+              </label>
+              <label class="input mb-10">
+                <input type="text" name="address2" value="<?= $user['address2']?>" placeholder="Address 2">
+              </label>
+              <label class="input mb-10">
+                <input type="number" name="phone1" value="<?=$user['phone1'];?>" placeholder="Phone Number 1">
+              </label>
+              <label class="input mb-10">
+                <input type="number" name="fax" value="<?=$user['fax'];?>" placeholder="Fax">
+              </label>
                   <div class="row mb-3">
                       <div class="col-md-6">
                           <label class="input mb-10">
-                              <input type="text" name="sub_district" placeholder="Sub District">
+                              <input type="text" name="sub_district" value="<?=$user['sub_district'];?>" placeholder="Sub District">
                           </label>
                       </div>
                       <div class="col-md-6">
                           <label class="input mb-10">
-                              <input type="text" name="postcode" placeholder="Postcode">
+                              <input type="text" name="postcode" value="<?= $user['postcode'];?>" placeholder="Postcode">
                           </label>
                       </div>
                   </div>
                   <div class="row mb-3">
                       <div class="col-md-6">
                           <label class="input mb-10">
-                              <input type="text" name="province" placeholder="Province">
+                              <input type="text" name="province" value="<?=$user['province'];?>" placeholder="Province">
                           </label>
                       </div>
                       <div class="col-md-6">
                           <label class="input mb-10">
-                              <input type="text" name="city" placeholder="City">
+                              <input type="text" name="city" value="<?=$user['city'];?>" placeholder="City">
                           </label>
                       </div>
                   </div>
