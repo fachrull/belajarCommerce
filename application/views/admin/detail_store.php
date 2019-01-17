@@ -10,7 +10,6 @@
       <div class="col-xs">
         <div class="box">
           <div class="box-header pb-0">
-            <p>Owner Name: <?= $post['owner_name'];?></p>
             <p>Email: <?= $prime['email'];?></p>
             <p>Address: <?= $post['address'];?></p>
             <p>Province: <?= $post['province'];?></p>
@@ -22,14 +21,12 @@
             <?php else: ?>
               <p>Phone 1: -</p>
             <?php endif; ?>
-            <?php if ($post['phone2'] != NULL): ?>
-              <p>Phone 2: <?=$post['phone2'];?></p>
+            <?php if ($post['fax'] != NULL): ?>
+              <p>Fax: <?=$post['fax'];?></p>
             <?php else: ?>
-              <p>Phone 2: -</p>
+              <p>Fax: -</p>
             <?php endif; ?>
-
-            <?php print_r($this->session->userdata()); ?>
-            <a href="<?= site_url('admin/storeProd');?>" class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add product</a>
+            <a href="<?= site_url('admin/storeProd/'.$storeId['idStore']);?>" class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add product</a>
           </div>
           <div class="box-body">
             <table id="dataTable" class="table table-bordered table-striped">
