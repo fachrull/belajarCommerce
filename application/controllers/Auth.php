@@ -115,26 +115,6 @@ class Auth extends CI_Controller{
         $this->mauth->regis();
         redirect();
       }
-    } elseif ($this->session->userdata('uType') == 2) {
-      $this->form_validation->set_rules('company_name', 'Company name', 'required');
-      $this->form_validation->set_rules('owner', 'Owner', 'required');
-      $this->form_validation->set_rules('add', 'Address', 'required');
-      $this->form_validation->set_rules('province', 'Province', 'required');
-      $this->form_validation->set_rules('city', 'City', 'required');
-      $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
-      $this->form_validation->set_rules('pCode', 'Postcode', 'required');
-      // $this->form_validation->set_rules('phone1', 'Phone number 1', 'required');
-      // $this->form_validation->set_rules('phone2', 'Phone number 2', 'required');
-
-      if($this->form_validation->run() === FALSE){
-        $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/register');
-        $this->load->view('include/admin/footer');
-      } else{
-        $this->mauth->regis();
-        redirect();
-      }
     } elseif ($this->session->userdata('uType') == NULL) {
       $this->form_validation->set_rules('password', 'Password', 'required');
       $this->form_validation->set_rules('conf_pass', 'Confirm Password', 'required|matches[password]');
@@ -180,6 +160,37 @@ class Auth extends CI_Controller{
     }else {
       $this->session->set_flashdata('error', 'Username has already been taken');
       return FALSE;
+    }
+  }
+
+  public function regisSO(){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUnameReg');
+      $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmailReg|valid_email');
+      $this->form_validation->set_rules('company_name', 'Company name', 'required');
+      $this->form_validation->set_rules('add', 'Address', 'required');
+      // $this->form_validation->set_rules('add2', 'Address 2', 'required');
+      $this->form_validation->set_rules('province', 'Province', 'required');
+      $this->form_validation->set_rules('city', 'City', 'required');
+      $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
+      $this->form_validation->set_rules('pCode', 'Postcode', 'required');
+
+      if($this->form_validation->run() === FALSE){
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/registerSO');
+        $this->load->view('include/admin/footer');
+      } else{
+        $this->mauth->regisSO();
+        redirect('admin/stores');
+      }
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
     }
   }
 
@@ -266,39 +277,40 @@ class Auth extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 3) {
       $this->form_validation->set_rules('company_name', 'Company Name', 'required');
-      $this->form_validation->set_rules('owner_name', 'Company Name', 'required');
       $this->form_validation->set_rules('address', 'Address', 'required');
       $this->form_validation->set_rules('phone1', 'Phone Number 1', 'required');
-      $this->form_validation->set_rules('phone2', 'Phone Number 1', 'required');
       $this->form_validation->set_rules('postcode', 'Post Code', 'required');
       $this->form_validation->set_rules('province', 'Province', 'required');
       $this->form_validation->set_rules('city', 'City', 'required');
       $this->form_validation->set_rules('new_pass', 'Password', 'required');
 
     if ($this->form_validation->run() == FALSE) {
-        $this->load->view('include/header');
-        $this->load->view('new_user');
-        $this->load->view('include/footer');
+      $data['user'] = $this->mauth->getUData(array('id_userlogin' => $this->session->userdata('uId')),
+        NULL, 'tm_store_owner', TRUE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('new_user', $data);
+        $this->load->view('include/admin/footer');
     } else {
       $data_store = array(
-        'id'=>'',
-        'id_userlogin'=>$this->session->userdata('uId'),
-        'company_name'=>$this->input->post('company_name'),
-        'owner_name'=>$this->input->post('owner_name'),
-        'address'=>$this->input->post('address'),
-        'sub_district'=>$this->input->post('sub_district'),
-        'city'=>$this->input->post('city'),
-        'province'=>$this->input->post('province'),
-        'postcode'=>$this->input->post('postcode'),
-        'phone1'=>$this->input->post('phone1'),
-        'phone2'=>$this->input->post('phone2')
+        'id_userlogin'  =>$this->session->userdata('uId'),
+        'company_name'  =>$this->input->post('company_name'),
+        'address'       =>$this->input->post('address'),
+        'address2'      =>$this->input->post('address2'),
+        'sub_district'  =>$this->input->post('sub_district'),
+        'city'          =>$this->input->post('city'),
+        'province'      =>$this->input->post('province'),
+        'postcode'      =>$this->input->post('postcode'),
+        'phone1'        =>$this->input->post('phone1'),
+        'fax'           =>$this->input->post('fax')
       );
       $newer = array(
         'password'=>password_hash($this->input->post('new_pass'), PASSWORD_DEFAULT),
         'newer'=>'0'
       );
-      $this->mauth->complete_profile_store($data_store);
-      $this->mauth->update_newer($newer);
+      $this->mauth->updateData(array('id_userlogin' => $this->session->userdata('uId')), 'tm_store_owner', $data_store);
+      $this->mauth->updateData(array('user_id' => $this->session->userdata('uId')), 'user_login', $newer);
       $this->session->set_userdata('uNew','0');
       redirect();
     }
