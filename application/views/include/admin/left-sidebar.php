@@ -16,6 +16,9 @@
           <?php if($this->session->userdata('uType') == 2): ?>
             <p>Admin</p>
           <?php endif; ?>
+          <?php if($this->session->userdata('uType') == 3): ?>
+            <p>Store Owner</p>
+          <?php endif; ?>
         </div>
       </div>
       <!-- search form -->
@@ -36,7 +39,7 @@
         <?php if($this->session->userdata('uType') == 1): ?>
           <li class="treeview">
             <a href="#">
-              <i class="fa fa-id-badge"></i> <span>Admin</span>
+              <i class="fa fa-id-badge"></i> <span>Master data</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -58,7 +61,7 @@
             <a href="<?= site_url('admin/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-map"></i><span>Location Stores</span></a>
+            <a href="<?= site_url('admin/stores');?>"><i class="fa fa-map"></i><span>Manage store</span></a>
           </li>
           <li class="treeview">
             <a href="#">
@@ -98,6 +101,14 @@
           </li>
           <li>
             <a href="#">Products</a>
+          </li>
+        <?php endif; ?>
+        <?php if ($this->session->userdata('uType') == 3): ?>
+          <li>
+            <a href="#">Invoice</a>
+          </li>
+          <li>
+            <a href="#">Product</a>
           </li>
         <?php endif; ?>
       </ul>
