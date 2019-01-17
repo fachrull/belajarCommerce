@@ -15,7 +15,7 @@
                     <?php endif; ?>
                 <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
               <!-- /ALERT -->
-              <form class="m-0 sky-form" action="<?= site_url('auth/regis');?>" method="post">
+              <form class="m-0 sky-form" action="<?= site_url('auth/regisSO');?>" method="post">
                   <p class="register-box-msg">Register a new Store Owner</p>
                   <label class="input mb-10">
                     <input name="uname" type="text" placeholder="Username">
@@ -27,10 +27,10 @@
                     <input name="company_name" type="text" placeholder="Company Name">
                   </label>
                   <label class="input mb-10">
-                    <input name="owner" type="text" placeholder="Owner Name">
+                    <input name="add" type="text" placeholder="Address">
                   </label>
                   <label class="input mb-10">
-                    <input name="add" type="text" placeholder="Address">
+                    <input name="add2" type="text" placeholder="Address 2">
                   </label>
                   <div class="row mb-3">
                     <div class="col-md-6">
@@ -59,12 +59,12 @@
                   <div class="row mb-3">
                     <div class="col-md-6">
                       <label class="input mb-10">
-                        <input name="phone1" type="text" placeholder="Phone Number 1">
+                        <input name="phone1" type="text" placeholder="Phone Number">
                       </label>
                     </div>
                     <div class="col col-md-6 mb-10">
                       <label class="input">
-                        <input name="phone2" type="text" placeholder="Phone Number 2">
+                        <input name="fax" type="text" placeholder="Fax">
                       </label>
                     </div>
                   </div>
