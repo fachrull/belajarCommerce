@@ -81,6 +81,10 @@
           			<i class="fa fa-user"></i>
         			</a>
         			<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+								<?php if($this->session->userdata('uType') == 4): ?>
+										<a class="dropdown-item" href="<?= site_url('home/customer');?>">PROFILE</a>
+										<a class="dropdown-item" href="<?= site_url('#')?>">PURCHASES</a>
+								<?php endif; ?>
 								<?php if($this->session->userdata('isLogin', TRUE)): ?>
 									<a class="dropdown-item" href="<?= site_url('auth/logout');?>">Logout</a>
 								<?php else: ?>
@@ -99,23 +103,12 @@
 					<div class="navbar-collapse collapse nav-main-collapse">
 						<nav class="nav-main text-center">
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
-                <?php if($this->session->userdata('uType') == 3): ?>
-                      <li><a class="page-scroll" href="<?= site_url('home/store');?>">MY STORE</a></li>
-                      <li><a class="page-scroll" href="<?= site_url('#');?>">INVOICE</a></li>
-                      <li><a class="page-scroll" href="<?= site_url('#');?>">PRODUCT</a></li>
-
-                <!-- This is navbar for admin -->
-                <?php elseif($this->session->userdata('uType') == 4): ?>
-                      <li><a class="page-scroll" href="<?= site_url('home/customer');?>">PROFILE</a></li>
-                      <li><a class="page-scroll" href="<?= site_url('#')?>">PURCHASES</a></li>
-								<?php else: ?>
 									<!-- HOME -->
 									<li><a class="page-scroll" href="<?= site_url('#product');?>">PRODUCT</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#promotion');?>">PROMOTION</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#agmpedia');?>">AGMPEDIA</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#location');?>">LOCATION</a></li>
 	                <li><a class="page-scroll" href="<?= site_url('#shopLoadModal');?>">PARTNERSHIP</a></li>
-                <?php endif; ?>
 							</ul>
 						</nav>
 					</div>
