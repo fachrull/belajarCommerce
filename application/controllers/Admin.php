@@ -443,30 +443,78 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function storeProd(){
-    if ($this->session->userdata('uType') == 2) {
+  public function storeProd($idSO){
+    if ($this->session->userdata('uType') == 2 || $this->session->userdata('uType') == 1) {
+      // $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
+      //    'tm_product', FALSE);
+      //    $idStore = array('idStore' => $idSO);
+      //    $data['storeId'] = $idStore;
+      //
+      //    $this->load->view('include/admin/header');
+      //    $this->load->view('include/admin/left-sidebar');
+      //    $this->load->view('admin/storeProd', $data);
+      //    $this->load->view('include/admin/footer');
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('product', 'Product', 'required');
+      $this->form_validation->set_rules('product', 'Product', 'required|callback_checkingSProd');
+      
+      if ($this->form_validation->run() === FALSE) {
+           $idStore = array('idStore' => $idSO);
+           $data['storeId'] = $idStore;
+        $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
+         'tm_product', FALSE);
 
-      $data['products'] = $this->madmin->getProducts(NULL, NULL, 'tm_product', FALSE);
-      // $data['id'] = $idStore;
-
-      if($this->form_validation->run() == FALSE){
-        $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/storeProd', $data);
-        $this->load->view('include/admin/footer');
-      }else{
-        $prod = array('idProd' => $this->input->post('product'));
-        $this->session->set_userdata($prod);
-        redirect('admin/addQuan');
-      }
+         $this->load->view('include/admin/header');
+         $this->load->view('include/admin/left-sidebar');
+         $this->load->view('admin/storeProd', $data);
+         $this->load->view('include/admin/footer');
+       }else{
+         $items= array(
+           'id_store'     => $idSO,
+           'id_product'   => $this->input->post('product'),
+           'new'          => 1,
+           'id_admin'     => $this->session->userdata('uId')
+         );
+         $this->madmin->inputData('tr_product', $items);
+         redirect('admin/stores/'.$idSo);
+       }
     }else{
       $this->load->view('include/header');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
+    }
+  }
+
+  public function detailStore(){
+    if ($this->session->userdata('uType') == 1) {
+      $idStore = array('idStore' => 5);
+      $id = $this->madmin->getProducts(array('id' => 5),
+        array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
+      $data['post'] = $this->madmin->getProducts(array('id' => 5),NULL, 'tm_store_owner', TRUE);
+      $data['prime'] = $this->madmin->dataPrime($id['id_userlogin']);
+      $data['storeId'] = $idStore;
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/detail_store', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+
+  }
+
+  public function checkingSProd($prod){
+    $alreadyAssgn = $this->madmin->getProducts(array('id_product' => $prod, 'id_store' => $this->input->post('idStore')),
+     NULL, 'tr_product', TRUE);
+    if (isset($alreadyAssgn)) {
+      $this->session->set_flashdata('error', 'Product has already been added to store');
+      return FALSE;
+    }else{
+      return TRUE;
     }
   }
 
@@ -737,6 +785,36 @@ class Admin extends CI_Controller {
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
+  }
+
+  public function stores($link = FALSE){
+    if ($this->session->userdata('uType') == 1) {
+      if($link === FALSE){
+        $data['posts'] = $this->madmin->getProducts(NULL, NULL, 'tm_store_owner', FALSE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/stores', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $idStore = array('idStore' => $link);
+        $id = $this->madmin->getProducts(array('id' => $link),
+          array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
+        $data['post'] = $this->madmin->getProducts(array('id' => $link),NULL, 'tm_store_owner', TRUE);
+        $data['prime'] = $this->madmin->dataPrime($id['id_userlogin']);
+        $data['storeId'] = $idStore;
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/detail_store', $data);
+        $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+
   }
 
 }
