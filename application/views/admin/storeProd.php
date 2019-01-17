@@ -12,26 +12,33 @@
           <div class="box-header pb-0">
           </div>
           <div class="box-body">
-            <?php print_r($this->session->userdata()); ?>
-            <form class="m-0 sky-form" action="<?= site_url('admin/storeProd/');?>" method="post">
-              <fieldset>
-                <label class="input mb-10">
-                  <select class="custom-control-input" name="product">
-                    <label class="input">
-                      <option value="0" selected disabled>Product</option>
-                      <label class="input">
+            <div class="row">
+              <div class="col-md-12 col-sm-6">
+                <!-- ALERT -->
+
+                <!-- /ALERT -->
+                <form class="m-0 sky-form" action="<?= site_url('admin/storeProd/'.$storeId['idStore']);?>" method="post">
+                    <p class="register-box-msg">Add product to store</p>
+                    <label class="input mb-10">
+                      <select class="form-control" name="product">
+                        <option selected disabled>Select Product</option>
                         <?php foreach ($products as $product): ?>
-                          <option value="<?= $product['id'];?>"><?= $product['name'];?></option>
+                          <option value="<?=$product['id']?>"><?=$product['name']?></option>
                         <?php endforeach; ?>
-                      </label>
+                      </select>
                     </label>
-                  </select>
-                </label>
-                <div class="row mb-20">
-                  <button type="submit" class="btn btn-oldblue btn-default">Set</button>
+                    <label class="input mb-10">
+                      <input type="hidden" name="idStore" value="<?= $storeId['idStore'];?>">
+                    </label>
+                    <div class="row">
+                      <div class="col-md-12 text-right">
+                        <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Add</button>
+                        <!-- <a href="<?=site_url('admin/detailStore');?>" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Add</a> -->
+                      </div>
+                    </div>
+                  </form>
                 </div>
-              </fieldset>
-            </form>
+              </div>
           </div>
         </div>
       </div>
