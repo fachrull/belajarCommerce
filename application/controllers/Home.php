@@ -57,13 +57,12 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 3) {
       if ($this->session->userdata('uNew') == 1) {
-        $this->load->view('include/header');
-        $this->load->view('new_user');
-        $this->load->view('include/footer');
+        redirect('auth/completing_profile');
       }else{
-        $this->load->view('include/header');
-        $this->load->view('store');
-        $this->load->view('include/footer');
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('storeOwner/myStore');
+        $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
