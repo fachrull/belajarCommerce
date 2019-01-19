@@ -80,4 +80,17 @@ class Madmin extends CI_Model {
     $query = $this->db->get_where('user_login', array('user_id' =>$id));
     return $query->row_array();
   }
+
+  public function joinStoreProd($store_id){
+    $this->db->select('*');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product b', 'b.id_product = a.id', 'left');
+    $this->db->where('b.id_store', $store_id);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
 }
