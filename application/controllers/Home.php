@@ -59,9 +59,15 @@ class Home extends CI_Controller{
       if ($this->session->userdata('uNew') == 1) {
         redirect('auth/completing_profile');
       }else{
+        $idStore = $this->mhome->getProducts(array('id_userlogin' => $this->session->userdata('uId')),
+          array('idField' => 'id'), 'tm_store_owner', TRUE);
+        $data['products'] = $this->mhome->joinStoreProd($idStore['id']);
+        $id = array('idStore' => $idStore['id']);
+        $this->session->set_userdata($id);
+
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('storeOwner/myStore');
+        $this->load->view('storeOwner/myStore', $data);
         $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
