@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 17, 2019 at 09:33 PM
+-- Generation Time: Jan 19, 2019 at 10:48 PM
 -- Server version: 5.7.24-0ubuntu0.18.04.1
 -- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
@@ -350,7 +350,7 @@ CREATE TABLE `tr_product` (
 --
 
 INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `quantity`, `new`, `id_admin`) VALUES
-(1, 5, 1, NULL, 1, 2),
+(1, 5, 1, 1000, 0, 2),
 (2, 5, 2, NULL, 1, 2);
 
 -- --------------------------------------------------------
