@@ -73,7 +73,7 @@ class Mhome extends CI_Model{
   }
 
   public function pediaInput($data)
-  { 
+  {
     $this->db->insert('tm_agmpedia',$data);
   }
 
@@ -98,5 +98,19 @@ class Mhome extends CI_Model{
 
   public function inputData($table, $items){
     return $this->db->insert($table, $items);
+  }
+
+  public function joinStoreProd($store_id){
+    $this->db->select('*');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product b', 'b.id_product = a.id', 'left');
+    $where = array('b.id_store'=>$store_id, 'b.new'=>1);
+    $this->db->where($where);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
   }
 }
