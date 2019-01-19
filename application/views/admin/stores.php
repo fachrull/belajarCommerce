@@ -14,6 +14,7 @@
         <table id="dataTable" class="table">
           <thead>
             <tr>
+              <th>No.</th>
               <th>Company Name</th>
               <th>Address</th>
               <th>Sub District</th>
@@ -24,8 +25,10 @@
             </tr>
           </thead>
           <tbody>
+            <?php $no=1; ?>
             <?php foreach($posts as $post): ?>
               <tr>
+                <td><?= $no;?></td>
                 <td><?= $post['company_name'];?></td>
                 <td><?= $post['address'];?></td>
                 <td><?= $post['sub_district'];?></td>
@@ -34,6 +37,7 @@
                 <td><?= $post['phone1'];?></td>
                 <td><a href="<?=site_url('admin/stores/'.$post['id']);?>" type="submit" class="btn btn-oldblue text-white">Detail</a></td>
               </tr>
+              <?php $no++; ?>
             <?php endforeach; ?>
           </tbody>
         </table>
