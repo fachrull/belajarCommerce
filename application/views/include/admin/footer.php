@@ -61,7 +61,8 @@ $.widget.bridge('uibutton', $.ui.button);
       'searching'   : false,
       'ordering'    : true,
       'info'        : true,
-      'autoWidth'   : false
+      'autoWidth'   : true,
+      'searching'   : true
     })
   })
 </script>
