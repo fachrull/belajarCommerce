@@ -15,7 +15,13 @@
             <div class="row">
               <div class="col-md-12 col-sm-6">
                 <!-- ALERT -->
-
+                <?php if($this->session->has_userdata('error')): ?>
+                  <div class="alert alert-mini alert-danger mb-30">
+                    <strong>Oh snap!</strong> <?= $this->session->userdata('error')?>
+                  </div>
+                <?php else: ?>
+                  <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
+                <?php endif; ?>
                 <!-- /ALERT -->
                 <form class="m-0 sky-form" action="<?= site_url('admin/storeProd/'.$storeId['idStore']);?>" method="post">
                     <p class="register-box-msg">Add product to store</p>
