@@ -6,7 +6,7 @@
   <section class="content">
     <div class="box">
       <div class="box-header">
-        <h1>Product list</h1>
+        <h1>New product list</h1>
       </div>
       <div class="box-body">
         <table id="dataTable" class="table table-bordered table-striped">
@@ -16,17 +16,25 @@
             <th>Price</th>
             <th>Sub Price</th>
             <th>Quantity</th>
+            <th>Action</th>
           </thead>
           <tbody>
-
-              <tr>
-                <td>1.</td>
-                <td>Imperal Heritage</td>
-                <td>Rp 1000000</td>
-                <td>Rp 1500000</td>
-                <td>-</td>
-              </tr>
-
+            <?php if (is_array($products)): ?>
+              <?php $no=1; ?>
+              <?php foreach($products as $product): ?>
+                <tr>
+                  <td><?= $no;?></td>
+                  <td><?= $product['name'];?></td>
+                  <td>Rp <?= $product['price'];?></td>
+                  <td>Rp <?= $product['sub_price'];?></td>
+                  <td><?= ($product['quantity'] != NULL? $product['quantity'] : '-')?></td>
+                  <td>
+                    <a href="<?= site_url('stores/confirmProduct/'.$product['id_store'].'/'.$product['id_product']);?>"><i class="btn btn-success fa fa-check"></i></a>
+                  </td>
+                </tr>
+                <?php $no++; ?>
+              <?php endforeach; ?>
+            <?php endif; ?>
           </tbody>
         </table>
       </div>
