@@ -26,31 +26,34 @@
             <?php else: ?>
               <p>Fax: -</p>
             <?php endif; ?>
-            <a href="<?= site_url('admin/storeProd/'.$storeId['idStore']);?>" class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add product</a>
+            <a href="<?= site_url('admin/storeProd/'.$post['id']);?>" class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add product</a>
           </div>
           <div class="box-body">
             <table id="dataTable" class="table table-bordered table-striped">
               <thead>
+                <th>No.</th>
                 <th>Product</th>
                 <th>Price</th>
                 <th>Sub Price</th>
                 <th>Quantity</th>
               </thead>
               <tbody>
-                <!-- <?php foreach ($products as $product): ?> -->
-                  <tr>
-                    <td
-                      <a href="" class="btn btn-oldblue">Delete</a>
-                    </td>
-                    <td>product name</td>
-                    <td>product price</td>
-                    <td>product sub price</td>
-                    <td>product quantity</td>
-                    <td>
-                      <a href="" class="btn btn-oldblue">Detail</a>
-                    </td>
-                  </tr>
-                <!-- <?php endforeach; ?> -->
+                <?php if(is_array($products)): ?>
+                  <?php $no=1; ?>
+                  <?php foreach($products as $product): ?>
+                    <tr>
+                      <td><?= $no;?></td>
+                      <td><?= $product['name'];?></td>
+                      <td><?= $product['price'];?></td>
+                      <td><?= $product['sub_price'];?></td>
+                      <td><?= ($product['quantity'] != NULL? $product['quantity']:'-');?></td>
+                      <td>
+                        <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
+                      </td>
+                    </tr>
+                    <?php $no++; ?>
+                  <?php endforeach; ?>
+                <?php endif; ?>
               </tbody>
             </table>
           </div>
