@@ -108,7 +108,7 @@
             <a href="#">Invoice</a>
           </li>
           <li>
-            <a href="#">Product</a>
+            <a href="<?= site_url('stores/storeProduct')?>">Product</a>
           </li>
         <?php endif; ?>
       </ul>
