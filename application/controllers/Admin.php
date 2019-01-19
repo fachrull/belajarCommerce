@@ -195,7 +195,6 @@ class Admin extends CI_Controller {
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
-
   }
 
   public function allProd(){
@@ -445,20 +444,11 @@ class Admin extends CI_Controller {
 
   public function storeProd($idSO){
     if ($this->session->userdata('uType') == 2 || $this->session->userdata('uType') == 1) {
-      // $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
-      //    'tm_product', FALSE);
-      //    $idStore = array('idStore' => $idSO);
-      //    $data['storeId'] = $idStore;
-      //
-      //    $this->load->view('include/admin/header');
-      //    $this->load->view('include/admin/left-sidebar');
-      //    $this->load->view('admin/storeProd', $data);
-      //    $this->load->view('include/admin/footer');
       $this->load->helper('form');
       $this->load->library('form_validation');
 
       $this->form_validation->set_rules('product', 'Product', 'required|callback_checkingSProd');
-      
+
       if ($this->form_validation->run() === FALSE) {
            $idStore = array('idStore' => $idSO);
            $data['storeId'] = $idStore;
@@ -477,34 +467,13 @@ class Admin extends CI_Controller {
            'id_admin'     => $this->session->userdata('uId')
          );
          $this->madmin->inputData('tr_product', $items);
-         redirect('admin/stores/'.$idSo);
+         redirect('admin/stores/'.$idSO);
        }
     }else{
       $this->load->view('include/header');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
-  }
-
-  public function detailStore(){
-    if ($this->session->userdata('uType') == 1) {
-      $idStore = array('idStore' => 5);
-      $id = $this->madmin->getProducts(array('id' => 5),
-        array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
-      $data['post'] = $this->madmin->getProducts(array('id' => 5),NULL, 'tm_store_owner', TRUE);
-      $data['prime'] = $this->madmin->dataPrime($id['id_userlogin']);
-      $data['storeId'] = $idStore;
-
-      $this->load->view('include/admin/header');
-      $this->load->view('include/admin/left-sidebar');
-      $this->load->view('admin/detail_store', $data);
-      $this->load->view('include/admin/footer');
-    } else {
-      $this->load->view('include/header');
-      $this->load->view('un-authorise');
-      $this->load->view('include/footer');
-    }
-
   }
 
   public function checkingSProd($prod){
@@ -801,8 +770,9 @@ class Admin extends CI_Controller {
         $id = $this->madmin->getProducts(array('id' => $link),
           array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
         $data['post'] = $this->madmin->getProducts(array('id' => $link),NULL, 'tm_store_owner', TRUE);
-        $data['prime'] = $this->madmin->dataPrime($id['id_userlogin']);
+        $data['prime'] = $this->madmin->dataPrime($link);
         $data['storeId'] = $idStore;
+        $data['products'] = $this->madmin->joinStoreProd($link);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -814,7 +784,6 @@ class Admin extends CI_Controller {
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
-
   }
 
 }
