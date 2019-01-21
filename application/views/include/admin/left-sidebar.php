@@ -48,6 +48,13 @@
               <li>
                 <a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i><span> Admin</span></a>
                 <li><a href="<?=site_url('auth/regisSO');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
+                <li class="active"><a href="<?= site_url('admin/sa_brand');?>">Brands</a></li>
+                <li class="active"><a href="<?= site_url('admin/sa_cat');?>">Categories</a></li>
+                <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
+                <li class="active"><a href="<?= site_url('admin/sa_spec');?>">Spec</a></li>
+                <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
+                <li class="active"><a href="<?= site_url();?>">Rating</a></li>
+                <li class="active"><a href="<?= site_url();?>">Best Order</a></li>
               </li>
             </ul>
           </li>
@@ -63,22 +70,6 @@
           <li>
             <a href="<?= site_url('admin/stores');?>"><i class="fa fa-map"></i><span>Manage store</span></a>
           </li>
-          <li class="treeview">
-            <a href="#">
-              <i class="fa fa-cube"></i> <span>Manage Products</span>
-              <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-            </a>
-            <ul class="treeview-menu">
-              <li class="active"><a href="<?= site_url('admin/sa_brand');?>">Brands</a></li>
-              <li class="active"><a href="<?= site_url('admin/sa_cat');?>">Categories</a></li>
-              <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
-              <li class="active"><a href="<?= site_url('admin/sa_spec');?>">Spec</a></li>
-              <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
-              <li class="active"><a href="<?= site_url();?>">Rating</a></li>
-              <li class="active"><a href="<?= site_url();?>">Best Order</a></li>
-            </ul>
           </li>
         <?php endif; ?>
         <?php if($this->session->userdata('uType') == 2): ?>
