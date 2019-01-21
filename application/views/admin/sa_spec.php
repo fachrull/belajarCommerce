@@ -6,14 +6,10 @@
   <section class="content">
     <div class="row">
       <div class="box">
-        <div class="box-header pb-0">
-          <a href="<?= site_url('admin/addSpec');?>" class="btn btn-oldblue h-30">
-            <i class="fa fa-plus"></i>
-             Spec
-          </a>
-        </div>
         <div class="box-body">
           <table id="dataTable" class="table table-bordered table-striped">
+          <a href="<?= site_url('admin/addSpec');?>" class="btn btn-oldblue h-30">
+            <i class="fa fa-plus"></i>Spec</a>
             <thead>
               <th>No.</th>
               <th>Name</th>

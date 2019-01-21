@@ -7,12 +7,13 @@
   </section>
   <section class="content">
     <div class="row">
-      <div class="col-xs">
+      <div class="col-xs-12">
         <div class="box">
-          <div class="box-header pb-0">
+          <div class="box-body">
+            <table id="dataTable" class="table table-bordered table-striped">
             <form action="<?= site_url('admin/allProd')?>" method="post">
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-offset-6 col-sm-2">
                   <label class="input mb-10" style="width:100%;">
                     <select class="form-control" name="brand">
                       <option value="0" selected>Brand</option>
@@ -22,7 +23,7 @@
                     </select>
                   </label>
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                   <label class="input mb-10" style="width:100%;">
                     <select class="form-control"  name="cat">
                       <option value="0" selected>Category</option>
@@ -32,16 +33,14 @@
                     </select>
                   </label>
                 </div>
-                <div class="col-sm-4">
-                  <button type="submit" name="submit" class="btn btn-oldblue">
+                <div class="col-sm-2">
+                  <button type="submit" name="submit" class="btn btn-oldblue h-30">
                     <i class="fa fa-search"></i> Search
                   </button>
                 </div>
                 </div>
             </form>
-            </div>
-          <div class="box-body">
-            <table id="dataTable" class="table table-bordered table-striped">
+            <a href="<?= site_url('admin/addProd');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i> Add Product</a>
               <thead>
                 <th>No</th>
                 <th>Product</th>
@@ -70,9 +69,6 @@
               </tbody>
             </table>
             <div class="row">
-              <div class="col-md-12">
-                <a href="<?= site_url('admin/addProd');?>" class="btn btn-oldblue"><i class="fa fa-plus"></i> Add Product</a>
-              </div>
             </div>
           </div>
         </div>

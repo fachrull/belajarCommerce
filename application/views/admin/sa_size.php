@@ -6,14 +6,12 @@
   <section class="content">
     <div class="row">
       <div class="box">
-        <div class="box-header pb-0">
+        <div class="box-body">
+          <table id="dataTable" class="table table-bordered table-striped">
           <a href="<?= site_url('admin/addSize');?>" class="btn btn-oldblue h-30">
             <i class="fa fa-plus"></i>
              Size
           </a>
-        </div>
-        <div class="box-body">
-          <table id="dataTable" class="table table-bordered table-striped">
             <thead>
               <th>No.</th>
               <th>Name</th>

@@ -1,17 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="content-wrapper">
   <section class="content-header">
-    <h1>
-      Home
-    </h1>
+    <h1>Manage Store</h1>
   </section>
   <section class="content">
-    <div class="col-xs-12">
-      <div class="box">
-        <div class="box-header pb-0">
-          <h3>Data store owner</h3>
-        </div>
-        <table id="dataTable" class="table">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="box">
+          <div class="box-body">
+          <table id="dataTable" class="table">
           <thead>
             <tr>
               <th>No.</th>
@@ -39,9 +36,11 @@
               </tr>
               <?php $no++; ?>
             <?php endforeach; ?>
-          </tbody>
+            </tbody>
         </table>
       </div>
+      </div>
+    </div>
     </div>
   </section>
 </div>

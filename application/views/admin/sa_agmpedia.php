@@ -1,27 +1,21 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed') ?>
 <div class="content-wrapper">
   <section class="content-header">
-    <div class="container">
-      <h1>Categories</h1>
-    </div>
+      <h1>AGMPEDIA</h1>
+  </section>
   <section class="content">
     <div id="page-inner">
       <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <p>AGMPEDIA</p>
-            </div>
-            <div class="panel-body">
-              <div class="table-responsive">
+        <div class="col-xs-12">
+          <div class="box">
+            <div class="box-body">
                 <?php if($this->session->flashdata('success')): ?>
                   <div class="alert alert-success">
                     <strong>Well done!</strong> <?php echo $this->session->flashdata('success'); ?>
                   </div>
                 <?php endif; ?>
-                <a href="<?= site_url('admin/addPedia');?>" class="btn btn-default btn-oldblue"><i class="fa fa-plus"></i>AgmPedia</a>
-                <br><br>
                 <table id="dataTable" class="table table-bordered table-striped">
+                <a href="<?= site_url('admin/addPedia');?>" class="btn btn-default btn-oldblue h-30 test"><i class="fa fa-plus"></i>AgmPedia</a>
                   <thead>
                     <tr>
                       <th>Title</th>
@@ -39,7 +33,6 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
-              </div>
             </div>
           </div>
         </div>

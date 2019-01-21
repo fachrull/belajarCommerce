@@ -12,9 +12,7 @@
       <div class="row">
         <div class="col-xs-12">
           <div class="box">
-            <div class="box-header pb-0">
-              <h3 class="box-title">Data admin</h3>
-            </div>
+            <div class="box-body">
             <table id="dataTable" class="table">
             <thead>
               <th>First Name</th>
@@ -33,6 +31,7 @@
               <?php endforeach; ?>
             </tbody>
           </table>
+            </div>
           </div>
         </div>
       </div>
