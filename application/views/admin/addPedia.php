@@ -29,10 +29,18 @@
                 <input type="text" name="title" class="form-control" placeholder="Title">
               </label>
               <label class="input mb-10">
-                <textarea name="content" rows="8" cols="141" placeholder="Content news"></textarea>
+                <input type="text" maxlength="125" name="sContent" placeholder="Short news (max 100 characters)">
               </label>
               <label class="input mb-10">
-                <input type="file" name="photo"/>
+                <textarea id="editor1" name="content" rows="8" cols="124" placeholder="News"></textarea>
+              </label>
+              <label class="input mb-10">
+                <label for="thumbnail">Thumbnail pedia</label>
+                <input type="file" name="thumbnail" title="Thumbnail pedia">
+              </label>
+              <label class="input mb-10">
+                <label for="phot">Image pedia</label>
+                <input type="file" name="photo" title="Image pedia">
               </label>
             </fieldset>
             <div class="row mb-20">
@@ -46,3 +54,9 @@
     </div>
   </section>
 </div>
+
+<script>
+  $(function(){
+    $('textarea#content').froalaEditor()
+  });
+</script>

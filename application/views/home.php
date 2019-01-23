@@ -103,8 +103,6 @@
 </section>
 <!-- /PROMOTION -->
 
-<?php print_r($pedias); ?>
-
 <!-- AGMPEDIA -->
 <section id="agmpedia" class="section-xs container">
   <a href="list-article.html">
@@ -121,7 +119,7 @@
           <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title">
           <div class="absolute pt-20">
             <h4 class="text-white text-center">LOREM 1</h4>
-            <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT</h6>
+            <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 1</h6>
             <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
 
             </p>
@@ -133,7 +131,7 @@
           <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title">
           <div class="absolute pt-20">
             <h4 class="text-white text-center">LOREM 2</h4>
-            <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT</h6>
+            <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 2</h6>
             <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">Lorem ipsum dolor
               sit
               amet
@@ -153,54 +151,27 @@
       </div>
     </div>
     <div class="col-12 col-md-5 pb-5">
+      <?php foreach ($pedias as $pedia): ?>
       <div class="owl-carousel buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
         <div>
-          <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title">
-          <div class="absolute pt-20">
-            <h4 class="text-white text-center">LOREM 1</h4>
-            <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT</h6>
-            <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">Lorem ipsum dolor
-              sit
-              amet
-              consectetur
-              adipisicing elit.
-              Explicabo
-              cum
-              reprehenderit
-              unde
-              maxime
-              ducimus est
-            </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
-                 aria-hidden="true"></i></a></p>
-          </div>
-        </div>
-        <div>
-          <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title">
-          <div class="absolute pt-20">
-            <h4 class="text-white text-center">LOREM 2</h4>
-            <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT</h6>
-            <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">Lorem ipsum dolor
-              sit
-              amet
-              consectetur
-              adipisicing elit.
-              Explicabo
-              cum
-              reprehenderit
-              unde
-              maxime
-              ducimus est
-            </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
-                 aria-hidden="true"></i></a></p>
-          </div>
+            <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" alt="agmpedia title">
+            <div class="absolute pt-20">
+              <h4 class="text-white text-center"><?= $pedia['title'];?></h4>
+              <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
+                <?= $pedia['sub_content'];?>
+              </p>
+              <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">read more<i class="fa fa-chevron-right pl-5"
+                   aria-hidden="true"></i></a></p>
+            </div>
         </div>
       </div>
     </div>
     <div class="col-12 col-md-7 pb-5">
-      <img class="pedia-img-1" src="<?= base_url('asset/content-images/slider-2-100x100.png');?>" alt="agmpedia">
+      <div class="owl-carousel buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
+          <img class="pedia-img-1" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" alt="agmpedia">
+      </div>
     </div>
+  <?php endforeach; ?>
   </div>
 </section>
 <!-- /AGMPEDIA -->

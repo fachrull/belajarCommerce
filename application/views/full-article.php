@@ -6,11 +6,12 @@
 				<h1>BLOG</h1>
 
 				<!-- breadcrumbs -->
-				<ol class="breadcrumb">
+				<!-- <ol class="breadcrumb">
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Blog</a></li>
 					<li class="active">Single</li>
-				</ol><!-- /breadcrumbs -->
+				</ol> -->
+				<!-- /breadcrumbs -->
 
 			</div>
 		</section>
@@ -213,12 +214,12 @@
 					<!-- RIGHT -->
 					<div class="col-md-9 col-sm-9">
 
-						<h1 class="blog-post-title">BLOG POST TITLE HERE</h1>
+						<h1 class="blog-post-title"><?= strtoupper($pedia['title']);?></h1>
 						<ul class="blog-post-info list-inline">
 							<li>
 								<a href="#">
 									<i class="fa fa-clock-o"></i>
-									<span class="font-lato">June 29, 2017</span>
+									<span class="font-lato"><?= $pedia['date'];?></span>
 								</a>
 							</li>
 							<li>
@@ -247,7 +248,7 @@
 
 						<!-- IMAGE -->
 						<figure class="mb-20">
-							<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/slider-1.jpg');?>" alt="img" />
+							<img class="img-fluid" src="<?= site_url('asset/upload/pedia/'.$pedia['photo']);?>" alt="img" />
 						</figure>
 						<!-- /IMAGE -->
 
@@ -261,39 +262,9 @@
 
 
 						<!-- article content -->
-						<p class="dropcap left">Aliquam fringilla, sapien eget scelerisque placerat, lorem libero cursus lorem, sed
-							sodales
-							lorem libero eu sapien. Nunc mattis feugiat justo vel faucibus. Nulla consequat feugiat malesuada. Ut justo
-							nulla, <strong>facilisis vel molestie id</strong>, dictum ut arcu. Nunc ipsum nulla, eleifend non blandit quis,
-							luctus quis orci. Cras blandit turpis mattis nulla ultrices interdum. Mauris pretium pretium dictum. Nunc
-							commodo, felis sed dictum bibendum, risus justo iaculis dui, nec euismod orci sem eget neque. Donec in metus
-							metus, vitae eleifend lorem. Ut vestibulum gravida venenatis. Vestibulum ante ipsum primis in faucibus orci
-							luctus et ultrices posuere cubilia Curae; Pellentesque suscipit tincidunt magna non mollis. Fusce tempus
-							tincidunt nisi, in luctus elit pellentesque quis. Sed velit mi, ullamcorper ut tempor ut, mattis eu lacus. Morbi
-							rhoncus aliquet tellus, id accumsan enim sollicitudin vitae.</p>
-						<p class="left">Vivamus <a href="#">magna justo</a>, lacinia eget consectetur sed, convallis at tellus. Cras
-							ultricies ligula
-							sed magna dictum porta. Curabitur aliquet quam id dui posuere blandit. Sed porttitor lectus nibh. Vestibulum
-							ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet
-							aliquam vel, ullamcorper sit amet ligula. Nulla porttitor accumsan tincidunt.</p>
-
-						<!-- BLOCKQUOTE -->
-						<blockquote>
-							<p class="left">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-							<cite>Source Title</cite>
-						</blockquote>
-
-						<p class="left">Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus.Quisque velit nisi,
-							pretium ut lacinia
-							in, elementum id enim. Sed porttitor lectus nibh. Vestibulum ac diam sit amet quam vehicula elementum sed sit
-							amet dui. Donec rutrum congue leo eget malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-							Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Vivamus magna justo, lacinia eget consectetur
-							sed, convallis at tellus. Pellentesque in ipsum id orci porta dapibus. Nulla quis lorem ut libero malesuada
-							feugiat. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem.</p>
-						<p class="left">Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id
-							orci porta
-							dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla porttitor accumsan tincidunt. Lorem
-							ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<p class="dropcap left">
+							<?= $pedia['content']?>
+						</p>
 						<!-- /article content -->
 
 

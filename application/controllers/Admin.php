@@ -404,37 +404,42 @@ class Admin extends CI_Controller {
       $this->load->library('form_validation');
 
       $this->form_validation->set_rules('title', 'Title', 'required');
-      $this->form_validation->set_rules('content', 'Content', 'required');
+      $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]');
+      $this->form_validation->set_rules('content', 'News', 'required');
 
       if ($this->form_validation->run() === TRUE) {
-        $file_name = strtolower('agm_pedia-'.$this->input->post('title'));
-
-        $config['upload_path'] = './asset/upload/';
+        $config['upload_path'] = './asset/upload/pedia/';
         $config['allowed_types'] = 'jpg|jpeg|png';
-        $config['file_name'] = $file_name;
+        $config['max_size'] = 2048;
 
         $this->load->library('upload', $config);
-        if (! $this->upload->do_upload('photo')) {
+        if ( empty($this->upload->do_upload('photo')) || empty($this->upload->do_upload('thumbnail')) ) {
           $this->session->set_flashdata('error', $this->upload->display_errors());
 
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
           $this->load->view('admin/addPedia');
-          $this->load->view('include/admmin/footer');
+          $this->load->view('include/admin/footer');
         }else{
-          $pName = $this->upload->data();
+          $this->upload->do_upload('photo');
+          $photos = $this->upload->data();
+          $this->upload->do_upload('thumbnail');
+          $thumbnails = $this->upload->data();
 
           $items = array(
-            'title'   => $this->input->post('title'),
+            'title' => $this->input->post('title'),
+            'sub_content' => $this->input->post('sContent'),
             'content' => $this->input->post('content'),
-            'date'    => date('Ymd'),
-            'photo'   => $pName['orig_name'],
+            'date'  => date('Ymd'),
+            'thumbnail' => $thumbnails['orig_name'],
+            'photo' => $photos['orig_name'],
+            'status' => 1,
             'user_id' => $this->session->userdata('uId')
           );
           $this->madmin->inputData('tm_agmpedia', $items);
           redirect('admin/sa_agmpedia');
         }
-      }else{
+      } else {
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/addPedia');

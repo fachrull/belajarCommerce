@@ -21,28 +21,28 @@
                 <div class="col-xs-12 col-md-6 mb-20">
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Brand</p> 
+                      <label class="input mb-10"> <p>Brand</p>
                         <input name="pName" type="text" value="<?=$brand['name'];?>" disabled>
                       </label>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Category</p> 
+                      <label class="input mb-10"> <p>Category</p>
                         <input name="pName" type="text" value="<?=$cat['name'];?>" disabled>
                       </label>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Price</p> 
+                      <label class="input mb-10"> <p>Price</p>
                         <input name="pName" type="text" value="Rp. <?= $product['price'];?>" disabled>
                       </label>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Sub Price</p> 
+                      <label class="input mb-10"> <p>Sub Price</p>
                         <input name="pName" type="text" value="Rp. <?=$product['sub_price'];?>" disabled>
                       </label>
                     </div>
                     <div class="col-xs-12">
                     <form action="" class="mb-0">
-                      <label class="input"> <p>Specification</p> 
+                      <label class="input"> <p>Specification</p>
                         <div class="row">
                           <div class="col-xs-8 col-md-8">
                             <select class="form-control" name="spec">
@@ -66,7 +66,7 @@
                     </div>
                     <div class="col-xs-12">
                     <form action="" class="mb-0">
-                    <label class="input"> <p>Size</p> 
+                    <label class="input"> <p>Size</p>
                       <div class="row">
                         <div class="col-xs-8">
                           <select class="form-control" name="size">
@@ -91,7 +91,7 @@
                   </div>
                 </div>
             <div class="col-xs-12">
-              <label class="input mb-10"> <p>Description</p> 
+              <label class="input mb-10"> <p>Description</p>
                 <textarea disabled><?= $product['description'];?></textarea>
               </label>
             </div>

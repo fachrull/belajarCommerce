@@ -18,17 +18,23 @@
                 <a href="<?= site_url('admin/addPedia');?>" class="btn btn-default btn-oldblue h-30 test"><i class="fa fa-plus"></i>AgmPedia</a>
                   <thead>
                     <tr>
+                      <th>No.</th>
                       <th>Title</th>
                       <th>Date</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <?php foreach($pedias as $pedia): ?>
+                    <?php $no=1; foreach($pedias as $pedia): ?>
                       <tr>
+                        <td><?=$no++;?></td>
                         <td><?php echo $pedia['title']; ?></td>
                         <td><?php echo $pedia['date']; ?></td>
-                        <td><a href="<?= site_url('admin/editPedia/'.$pedia['id']); ?>" class="btn btn-warning">Edit</a><a href="<?php echo site_url('admin/deletePedia/'.$pedia['id']); ?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a></td>
+                        <td>
+                          <a href="#" class="btn btn-success">Active</a>
+                          <a href="" class="btn btn-warning">Detail</a>
+                          <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                        </td>
                       </tr>
                     <?php endforeach; ?>
                   </tbody>
