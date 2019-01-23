@@ -49,6 +49,8 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?= base_url('asset/dist/js/pages/dashboard.js');?>"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="<?= base_url('asset/dist/js/demo.js');?>"></script>
+<!-- CK Editor -->
+<script src="<?= base_url('asset/bower_components/ckeditor/ckeditor.js"');?>"></script>
 <!-- DataTables -->
 <script src="<?= base_url('asset/bower_components/datatables.net/js/jquery.dataTables.js');?>"></script>
 <script src="<?= base_url('asset/bower_components/datatables.net-bs/js/dataTables.bootstrap.js');?>"></script>
@@ -65,6 +67,11 @@ $.widget.bridge('uibutton', $.ui.button);
       'processing'  : true,
       "dom": '<"top"f>rt<"bottom"ilp><"clear">'
     })
+  })
+  $(function () {
+    // Replace the <textarea id="editor1"> with a CKEditor
+    // instance, using default configuration.
+    CKEDITOR.replace('editor1')
   })
 </script>
 </body>

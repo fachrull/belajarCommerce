@@ -3,7 +3,7 @@
   <section class="content">
     <h1 class="text-center">ADD PRODUCT</h1>
       <div class="container-fluid">
-        <div class="register-box mt-0">
+        <div class="register-box mt-0" style="width: auto !important">
           <div class="register-box-body">
           <div class="row">
           <div class="col-md-12 col-sm-6">
@@ -55,9 +55,8 @@
                       </label>
                   </div>
               </div>
-              <label class="input mb-3">
-                <textarea name="desc" rows="8" cols="141" placeholder="Description"></textarea>
-              </label>
+              <div class="row mb-3">
+              <div class="col-md-6 col-xs-12">
               <label class="input mb-10">
                 <select class="form-control" name="spec">
                   <option selected disabled>Specification</option>
@@ -66,7 +65,9 @@
                   <?php endforeach; ?>
                 </select>
               </label>
-              <label class="input mb-10">
+              </div>
+            <div class="col-md-6 col-xs-12">
+            <label class="input mb-10">
                 <select class="form-control" name="size">
                   <option selected disabled>Size</option>
                   <?php foreach($sizes as $size): ?>
@@ -74,8 +75,15 @@
                   <?php endforeach; ?>
                 </select>
               </label>
-              <label class="input mb-10">
-                <input type="file" name="productPict" />
+            </div>
+            </div>
+              <div class="box-body pad pt-0 pl-0 pr-0 mb-10">
+                <form>
+                  <textarea id="editor1" name="editor1" rows="10" cols="80" placeholder="Description"></textarea>
+                </form>
+              </div>
+              <label class="input mb-10"><b>Upload Product Image</b>
+                <input type="file" class="mt-5" name="productPict" />
               </label>
             <div class="row">
                 <div class="col-md-12 text-right">
