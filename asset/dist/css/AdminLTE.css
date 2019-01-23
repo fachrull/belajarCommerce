@@ -6007,28 +6007,54 @@ table.text-center th {
 	margin-top: 0px;
 }
 
-.product-detail textarea {
-	width: 100% !important;
-	height: 100px;
-	border: solid #e5e5e5 2px !important;
-}
-
 .register-box-body label textarea {
 	border: solid #e5e5e5 2px !important;
-	width: 100%;
+	width: 100% !important;
 	height: 80px;
 	padding: 8px 10px;
 	font: 15px/19px 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
+.box .box-body label textarea {
+	border: solid #e5e5e5 1px !important;
+	width: 100% !important;
+	height: 170px;
+	padding: 8px 10px;
+	font: 15px/19px 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.box .box-body img {
+	width: 100% !important;
+}
+
+.box .box-body .product-detail select {
+	height: 40px !important;
+}
+
+.box .box-body .product-detail label p {
+	font-weight: 700 !important;
+}
+
 .register-box-body select.form-control {
 	border: solid #e5e5e5 2px !important;
-	width: 100%;
+	width: 100% !important;
 	height: 80px;
 	padding: 8px 10px;
 	font: 15px/19px 'Open Sans', Helvetica, Arial, sans-serif;
 	color: #000 !important;
 	line-height: normal !important;
+}
+
+.box .box-body .product-detail label {
+	width: 100% !important;
+}
+
+.box .box-body label input {
+	width: 100% !important;
+}
+
+.box-body select.form-control {
+	color: #000 !important;
 }
 
 table .btn {
@@ -6046,4 +6072,12 @@ table .btn>i {
 
 div.box-body>a.btn {
 	float: left;
+}
+
+.float-left {
+	float: left !important;
+}
+
+.dropdown {
+	height: 40px !important;
 }

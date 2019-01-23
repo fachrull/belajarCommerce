@@ -346,14 +346,19 @@ class Admin extends CI_Controller {
         'tr_product_size', TRUE);
       $idSpec = $this->madmin->getProducts(array('prod_id' => $idProd), array('specIdField' => 'spec_id'),
         'tr_product_spec', TRUE);
-      $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec['spec_id']), array('nameField' => 'name'),
-        'tm_spec', TRUE);
-      $data['size'] = $this->madmin->getProducts(array('id' => $idSize['size_id']), array('nameField' => 'name',
-        'sizeField' => 'size'), 'tm_size', TRUE);
+      $data['specProds'] = $this->madmin->getProducts(array('id' => $idSpec['spec_id']), array('nameField' => 'name'),
+        'tm_spec', FALSE);
+      $data['sizeProds'] = $this->madmin->getProducts(array('id' => $idSize['size_id']), array('nameField' => 'name',
+        'sizeField' => 'size'), 'tm_size', FALSE);
       $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand['brand_id']), array('nameField' => 'name'),
         'tm_brands', TRUE);
       $data['cat'] = $this->madmin->getProducts(array('id' => $idCat['cat_id']), array('nameField' => 'name'),
         'tm_category', TRUE);
+      $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+        'nameField' => 'name'), 'tm_spec', FALSE);
+      $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+        'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
+
 
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');

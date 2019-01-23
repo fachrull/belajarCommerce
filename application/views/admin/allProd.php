@@ -11,11 +11,11 @@
         <div class="box">
           <div class="box-body">
             <table id="dataTable" class="table table-bordered table-striped">
-            <form action="<?= site_url('admin/allProd')?>" method="post">
-              <div class="row">
-                <div class="col-sm-offset-6 col-sm-2">
+            <form action="<?= site_url('admin/allProd')?>" method="post" class="test">
+              <div class="row float-left">
+                <div class="col-sm-4">
                   <label class="input mb-10" style="width:100%;">
-                    <select class="form-control" name="brand">
+                    <select class="form-control" name="brand" style="height:30px !important;">
                       <option value="0" selected>Brand</option>
                       <?php foreach($brands as $brand): ?>
                         <option value="<?= $brand['id']?>"><?= $brand['name'];?></option>
@@ -23,9 +23,9 @@
                     </select>
                   </label>
                 </div>
-                <div class="col-sm-2">
+                <div class="col-sm-6">
                   <label class="input mb-10" style="width:100%;">
-                    <select class="form-control"  name="cat">
+                    <select class="form-control"  name="cat" style="height:30px !important;">
                       <option value="0" selected>Category</option>
                       <?php foreach($cats as $cat): ?>
                         <option value="<?= $cat['id'];?>"><?= $cat['name']?></option>
@@ -40,7 +40,6 @@
                 </div>
                 </div>
             </form>
-            <a href="<?= site_url('admin/addProd');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i> Add Product</a>
               <thead>
                 <th>No</th>
                 <th>Product</th>
@@ -68,7 +67,10 @@
                 <?php endforeach; ?>
               </tbody>
             </table>
-            <div class="row">
+            <div class="row pb-10">
+                <div class="col-xs-12">
+                <a href="<?= site_url('admin/addProd');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i> Add Product</a>
+                </div>
             </div>
           </div>
         </div>
