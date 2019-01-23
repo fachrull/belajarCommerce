@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 19, 2019 at 10:48 PM
+-- Generation Time: Jan 24, 2019 at 04:09 AM
 -- Server version: 5.7.24-0ubuntu0.18.04.1
 -- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
@@ -29,12 +29,21 @@ SET time_zone = "+00:00";
 CREATE TABLE `tm_agmpedia` (
   `id` int(15) NOT NULL,
   `title` varchar(100) NOT NULL,
+  `sub_content` varchar(125) NOT NULL,
   `content` text NOT NULL,
   `date` date NOT NULL,
+  `thumbnail` blob NOT NULL,
   `photo` blob NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0' COMMENT 'active = 1, 2; inactive = 0',
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_agmpedia`
+--
+
+INSERT INTO `tm_agmpedia` (`id`, `title`, `sub_content`, `content`, `date`, `thumbnail`, `photo`, `status`, `user_id`) VALUES
+(1, 'Cara Merawat Bed Linen', 'Bed linen memiliki bahan yang unik sehingga cara perawatannya berbeda dengan bahan lainnya.', '<p style=\"text-align: justify;\">Bed linen atau sprei merupakan bahan yang unik serta memiliki karakteristik tersendiri yang tidak bisa disamakan cara perawatannya dengan bahan lain, untuk itu sangat disarankan untuk mengikuti tips cara merawat kain linen dibawah ini untuk menghindari kesalahan yang akan mengakibatkan kain linen anda rusak.</p>\n<ol style=\"text-align: justify;\">\n<li>Perhatikan label yang tertera pada kain.</li>\n<li>Gunakan Deterjen atau sabun pencuci yang memiliki tekstur lembut.</li>\n<li>Gunakan air dengan suhu sedang tidak terlalu dingin dan juga tidak terlalu panas agar tidak merusak serat kain.</li>\n<li>Pastikan tidak ada sabun atau busa yang masih menempel pada kain setelah pencucian. Karena jika tidak, dapat mengakibatkan oksidasi yang membuat kain kotor dan sulit dihilangkan.</li>\n<li>Gunakan putaran <em>gentle cycle</em> atau putaran yang lembut jika mencuci menggunakan mesin.</li>\n<li>Jangan mencampur kain sprei dengan bahan lain dan jangan direndam terlalu lama.</li>\n<li>Keringkan kain di lokasi yang memiliki sinar matahari merata namun tidak terlalu terik dengan bagian dalam kain menghadap matahari.</li>\n<li>Setrikalah kain linen pada suhu 204 – 218 derajat celcius (atau cari tombol khusus Linen pada setrika Anda) di bagian dalam terlebih dahulu, kemudian dilanjutkan dengan bagian luar agar kain terlihat berkilau, gantungkan selama lima menit sebelum dimasukkan ke lemari agar tidak mudah kusut.</li>\n<li>Hindari penyimpanan di tempat yang dapat menimbulkan jamur.</li>\n</ol>\n<p style=\"text-align: justify;\">&nbsp;</p>\n<p style=\"text-align: justify;\">Dengan perawatan yang baik dan benar, bed linen akan memberikan kenyamanan tidur sempurna yang lebih lama untuk istirahat malam Anda. Selamat mencoba! .</p>', '2019-01-23', 0x30315f616972656c6f6f6d5f696d70657269616c2d68657269746167652e6a7067, 0x312e6a7067, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -551,7 +560,7 @@ ALTER TABLE `user_login`
 -- AUTO_INCREMENT for table `tm_agmpedia`
 --
 ALTER TABLE `tm_agmpedia`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `tm_brands`
 --
