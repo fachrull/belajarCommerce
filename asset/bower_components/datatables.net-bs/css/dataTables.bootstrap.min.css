@@ -35,7 +35,6 @@ div.dataTables_wrapper div.dataTables_length select {
 
 div.dataTables_wrapper div.dataTables_filter {
 	text-align: right;
-	float: right;
 }
 
 div.dataTables_wrapper div.dataTables_filter label {
@@ -47,9 +46,8 @@ div.dataTables_wrapper div.dataTables_filter label {
 div.dataTables_wrapper div.dataTables_filter input {
 	margin-left: 0.5em;
 	display: inline-block;
-	width: auto;
+	width: auto !important;
 	height: 30px !important;
-	margin-bottom: 5px !important;
 }
 
 div.dataTables_wrapper div.dataTables_info {
@@ -164,7 +162,6 @@ div.dataTables_scrollFoot table {
 @media screen and (max-width: 767px) {
 
 	div.dataTables_wrapper div.dataTables_length,
-	div.dataTables_wrapper div.dataTables_filter,
 	div.dataTables_wrapper div.dataTables_info,
 	div.dataTables_wrapper div.dataTables_paginate {
 		text-align: center
