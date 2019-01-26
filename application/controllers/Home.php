@@ -127,9 +127,11 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function fullArticle(){
+  public function fullArticle($id){
+    $data['pedia'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_agmpedia', TRUE);
+
     $this->load->view('include/header');
-    $this->load->view('full-article');
+    $this->load->view('full-article', $data);
     $this->load->view('include/footer');
   }
 

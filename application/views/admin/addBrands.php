@@ -21,7 +21,7 @@
                   <input name="items" type="text" placeholder="Brand">
                 </label>
                 <label class="input mb-10">
-                  <textarea name="desc" rows="8" cols="43" placeholder="Description"></textarea>
+                  <textarea id="editor1" name="desc" rows="8" cols="43" placeholder="Description"></textarea>
                 </label>
                 <label class="input mb-10">
                   <input type="file" name="brandPict" />

@@ -21,78 +21,38 @@
                 <div class="col-xs-12 col-md-6 mb-20">
                   <div class="row">
                     <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Brand</p> 
+                      <label class="input mb-10"> <p>Brand</p>
                         <input name="pName" type="text" value="<?=$brand['name'];?>" disabled>
                       </label>
                     </div>
                     <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Category</p> 
-                        <input name="pName" type="text" value="<?=$cat['name'];?>" disabled>
-                      </label>
-                    </div>
-                    <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Price</p> 
-                        <input name="pName" type="text" value="Rp. <?= $product['price'];?>" disabled>
-                      </label>
-                    </div>
-                    <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Sub Price</p> 
-                        <input name="pName" type="text" value="Rp. <?=$product['sub_price'];?>" disabled>
+                      <label class="input mb-10"> <p>Category</p>
+                        <input name="pName" type="text" value="<?=$category['name'];?>" disabled>
                       </label>
                     </div>
                     <div class="col-xs-12">
-                    <form action="" class="mb-0">
-                      <label class="input"> <p>Specification</p> 
-                        <div class="row">
-                          <div class="col-xs-8 col-md-8">
-                            <select class="form-control" name="spec">
-                              <option selected disabled>Specification</option>
-                            <?php foreach($specs as $spec): ?>
-                              <option value="<?= $spec['id'];?>"><?= $spec['name'];?></option>
-                            <?php endforeach; ?>
-                            </select>
-                          </div>
-                          <div class="col-xs-4 col-md-4">
-                            <button type="submit" class="btn btn-oldblue btn-default" style="width:130px"><i class="fa fa-plus"></i> Specification</button>
-                          </div>
-                        </div>
+                      <label class="input"> <p>Specification</p>
+                        <ul class="mb-10">
+                          <?php foreach($specs as $spec): ?>
+                            <li><?= $spec['name'];?></li>
+                          <?php endforeach;?>
+                        </ul>
                       </label>
-                    </form>
-                    <ul class="mb-10">
-                      <?php foreach($specProds as $specProd) :?>
-                        <li><?= $specProd['name'];?></li>
-                      <?php endforeach;?>
-                    </ul>
                     </div>
                     <div class="col-xs-12">
-                    <form action="" class="mb-0">
-                    <label class="input"> <p>Size</p> 
-                      <div class="row">
-                        <div class="col-xs-8">
-                          <select class="form-control" name="size">
-                            <option selected disabled>Size</option>
-                          <?php foreach($sizes as $size): ?>
-                            <option value="<?= $size['id'];?>"><?=$size['name'];?> (<?=$size['size'];?>)</option>
-                          <?php endforeach; ?>
-                            </select>
-                          </div>
-                          <div class="col-xs-4">
-                            <button type="submit" class="btn btn-oldblue btn-default" style="width:130px"><i class="fa fa-plus"></i> Size</button>
-                          </div>
-                        </div>
-                      </label>
-                    </form>
-                    <ul class="mb-10">
-                      <?php foreach($sizeProds as $sizeProd): ?>
-                        <li><?= $sizeProd['name'];?></li>
-                      <?php endforeach;?>
-                    </ul>
+                    <label class="input"> <p>Size</p>
+                      <ul>
+                        <?php for($i = 0; $i < count($sizes); $i++): ?>
+                          <li><?= $sizes[$i][0]['name'];?> (<?= $sizes[$i][0]['size'];?>) -
+                            <b>Rp <?= number_format($prices[$i], 2, ",", ".");?></b></li>
+                        <?php endfor; ?>
+                      </ul>
                     </div>
                   </div>
                 </div>
             <div class="col-xs-12">
-              <label class="input mb-10"> <p>Description</p> 
-                <textarea disabled><?= $product['description'];?></textarea>
+              <label class="input mb-10"> <p>Description</p>
+                <?= $product['description'];?>
               </label>
             </div>
               </div>

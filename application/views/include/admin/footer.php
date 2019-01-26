@@ -1,10 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <!-- /.content-wrapper -->
 <footer class="main-footer">
-  <div class="pull-right hidden-xs">
-    <b>Version</b> 2.4.0
-  </div>
-  <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights reserved.
+  <strong>Copyright &copy; AGM - American Giant Mattress.</strong> All rights reserved.
 </footer>
 <!-- Add the sidebar's background. This div must be placed
      immediately after the control sidebar -->
@@ -28,7 +25,7 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- Sparkline -->
 <script src="<?= base_url('asset/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js');?>"></script>
 <!-- jvectormap -->
-<script src="<?= base_url('asset/plugins/jquery-vectormap/jquery-jvectormap-1.2.2.min.js');?>"></script>
+<script src="<?= base_url('asset/plugins/jquery-vectormap/jquery-jvectormap-2.0.3.min.js');?>"></script>
 <script src="<?= base_url('asset/plugins/jquery-vectormap/jquery-jvectormap-world-mill-en.js');?>"></script>
 <!-- jQuery Knob Chart -->
 <script src="<?= base_url('asset/bower_components/jquery-knob/dist/jquery.knob.min.js');?>"></script>
@@ -54,25 +51,77 @@ $.widget.bridge('uibutton', $.ui.button);
 <!-- DataTables -->
 <script src="<?= base_url('asset/bower_components/datatables.net/js/jquery.dataTables.js');?>"></script>
 <script src="<?= base_url('asset/bower_components/datatables.net-bs/js/dataTables.bootstrap.js');?>"></script>
+<!-- Select2 -->
+<script type="text/javascript" src="<?= base_url('asset/bower_components/select2/dist/js/select2.full.min.js');?>"></script>
 <!-- page script -->
 <script>
   $(function () {
     $('#dataTable').DataTable({
       'paging'      : true,
-      'lengthChange': false,
+      'lengthChange': true,
       'ordering'    : true,
       'info'        : true,
       'autoWidth'   : true,
       'searching'   : true,
       'processing'  : true,
-      "dom": '<"top"f>rt<"bottom"ilp><"clear">'
-    })
-  })
+      // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
+    });
+  });
   $(function () {
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
     CKEDITOR.replace('editor1')
-  })
+  });
+  $(function(){
+    $('.select2').select2()
+  });
+  var sizes  = [];
+  var prices = [];
+  $(function(){
+    $('#sizePrice').click(function(){
+      var size  = $("#size").val();
+      var price = $("#price").val();
+      $("#table_sizePrice").find('tbody')
+      .append($('<tr>')
+        .append($('<td>')
+          .attr('class', 'size-value')
+            .append(size)
+        )
+        .append($('<td>')
+          .attr('class', 'price-value')
+          .append(price)
+        )
+      );
+      $("#size").val("");
+      $("#price").val("");
+    });
+
+    $('#submit').click(function(){
+      // push each value of size to variable sizes
+      $("#table_sizePrice .size-value").each(function(){
+        // sizes.push($(this).html())
+        $("#addProd").append($('<input>')
+                      .attr('type', 'hidden')
+                      .attr('name', 'size[]')
+                      .val($(this).html()))
+      });
+
+      // push each value of price to variable prices
+      $("#table_sizePrice .price-value").each(function(){
+        $("#addProd").append($('<input>')
+                      .attr('type', 'hidden')
+                      .attr('name', 'price[]')
+                      .val($(this).html()))
+      });
+
+      // add variable sizes to input tag name's sizes[]
+      // $("#sizes").val(JSON.stringify(sizes));
+
+      // add variable prices to input tag name's prices[]
+      // $("#prices").val(JSON.stringify(prices));
+
+    });
+  });
 </script>
 </body>
 </html>
