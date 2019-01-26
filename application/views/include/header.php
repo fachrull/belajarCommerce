@@ -21,6 +21,9 @@
 	<!-- CORE CSS -->
 	<link href="<?= base_url('asset/plugins/bootstrap/css/bootstrap.min.css');?>" rel="stylesheet" type="text/css" />
 
+	<!-- SWIPER SLIDER -->
+	<link rel="stylesheet" href="<?= base_url('asset/plugins/slider.swiper/dist/css/swiper.css');?>">
+
 	<!-- THEME CSS -->
 	<link href="<?= base_url('asset/css/essentials.css');?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('asset/css/layout.css');?>" rel="stylesheet" type="text/css" />
@@ -35,7 +38,7 @@
 
 	<!-- wrapper -->
 	<div id="wrapper">
-		<div id="header" class="navbar-toggleable-md sticky clearfix">
+		<div id="header" class="navbar-toggleable-md sticky header-sm bottom clearfix">
 
 			<!-- SEARCH HEADER -->
 			<div class="search-box over-header">
@@ -104,11 +107,20 @@
 						<nav class="nav-main text-center">
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
 									<!-- HOME -->
-									<li><a class="page-scroll" href="<?= site_url('#product');?>">PRODUCT</a></li>
-									<li><a class="page-scroll" href="<?= site_url('#promotion');?>">PROMOTION</a></li>
-									<li><a class="page-scroll" href="<?= site_url('#agmpedia');?>">AGMPEDIA</a></li>
+									<li class="dropdown active"><a class="dropdown-toggle" href="#">PRODUCT</a>
+										<ul class="dropdown-menu">
+											<li class="dropdown"><a class="fs-14" href="#">AIRELOOM</a></li>
+											<li class="dropdown"><a class="fs-14" href="#">SERTA</a></li>
+											<li class="dropdown"><a class="fs-14" href="#">FLORENCE</a></li>
+											<li class="dropdown"><a class="fs-14" href="#">KINGKOIL</a></li>
+											<li class="dropdown"><a class="fs-14" href="#">TEMPUR</a></li>
+											<li class="dropdown"><a class="fs-14" href="#">STRESSLESS</a></li>
+										</ul>
+									</li>
+									<li><a href="<?= site_url('#');?>">PROMOTION</a></li>
+									<li><a href="<?= site_url('#');?>">AGMPEDIA</a></li>
 									<li><a class="page-scroll" href="<?= site_url('#location');?>">LOCATION</a></li>
-	                <li><a class="page-scroll" href="<?= site_url('#shopLoadModal');?>">PARTNERSHIP</a></li>
+	                <li><a href="<?= site_url('#');?>">PARTNERSHIP</a></li>
 							</ul>
 						</nav>
 					</div>
