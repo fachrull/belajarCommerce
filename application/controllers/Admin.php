@@ -250,11 +250,10 @@ class Admin extends CI_Controller {
       $this->form_validation->set_rules('brand', 'Brand', 'required');
       // $this->form_validation->set_rules('cat', 'Category', 'required');
       $this->form_validation->set_rules('pName', 'Product Name', 'required');
-      $this->form_validation->set_rules('price', 'Price', 'required');
-      $this->form_validation->set_rules('sPrice', 'Sub Price', 'required');
       $this->form_validation->set_rules('desc', 'Description', 'required');
-      $this->form_validation->set_rules('spec', 'Specification', 'required');
-      $this->form_validation->set_rules('size', 'Size', 'required');
+      $this->form_validation->set_rules('spec[]', 'Specification', 'required');
+      $this->form_validation->set_rules('size[]', 'Size', 'required');
+      $this->form_validation->set_rules('price[]', 'Price', 'required');
 
       if ($this->form_validation->run() === TRUE) {
         $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
@@ -287,29 +286,49 @@ class Admin extends CI_Controller {
         }else {
           // $data = array('upload_data' => $this->upload->data());
           $pName = $this->upload->data();
+
+          // data for input tm_product
           $items = array(
             'brand_id'    => $this->input->post('brand'),
             'cat_id'      => $this->input->post('cat'),
             'name'        => $this->input->post('pName'),
-            'price'       => $this->input->post('price'),
-            'sub_price'   => $this->input->post('sPrice'),
             'description' => $this->input->post('desc'),
             'image'       => $pName['orig_name'],
             'created_at'  => date('Ymd')
           );
+
+          // input data above to database
           $this->madmin->inputData('tm_product', $items);
+
+          // select id from product
           $prod = $this->madmin->getProducts(array('name' => $this->input->post('pName')),
             array('idField' => 'id'), 'tm_product', TRUE);
-          $prodSpec = array(
-            'prod_id' => $prod['id'],
-            'spec_id' => $this->input->post('spec')
+
+          // input for each spec id
+          $data = array('spec' => $this->input->post('spec[]'));
+          foreach($data['spec'] as $spec){
+            $prodSpec = array(
+              'prod_id' => $prod['id'],
+              'spec_id' => $spec
+            );
+            $this->madmin->inputData('tr_product_spec', $prodSpec);
+          }
+
+          // input for each size and price
+          $count_SizePrice = count($this->input->post('size[]'));
+          $data_SizePrice = array(
+            'size' => $this->input->post('size[]'),
+            'price' => $this->input->post('price[]')
           );
-          $prodSize = array(
-            'prod_id' => $prod['id'],
-            'size_id' => $this->input->post('size')
-          );
-          $this->madmin->inputData('tr_product_spec', $prodSpec);
-          $this->madmin->inputData('tr_product_size', $prodSize);
+          for ($i=0; $i < $count_SizePrice; $i++) {
+            $prodSizePrice = array(
+              'prod_id' => $prod['id'],
+              'size_id' => $data_SizePrice['size'][$i],
+              'price'   => $data_SizePrice['price'][$i]
+            );
+            // input size and price
+            $this->madmin->inputData('tr_product_size', $prodSizePrice);
+          }
           redirect('admin/allProd');
         }
       }else{
@@ -334,31 +353,82 @@ class Admin extends CI_Controller {
     }
   }
 
+  public function test(){
+    $this->load->helper('form');
+    $this->load->library('form_validation');
+
+    if ($this->form_validation->run() == FALSE) {
+      $data = array(
+        'brand' => $this->input->post('brand'),
+        'category' => $this->input->post('cat'),
+        'product_name' => $this->input->post('pName'),
+        'size' => $this->input->post('size[]'),
+        'price' => $this->input->post('price[]'),
+        'spec' => $this->input->post('spec[]'),
+        'desc' => $this->input->post('desc')
+      );
+
+      $count_SizePrice = count($this->input->post('size[]'));
+      print_r($data);
+      echo "<br>";
+      print_r($count_SizePrice);
+      echo "<br>";
+      for ($i=0; $i < $count_SizePrice ; $i++) {
+        print_r($data['size'][$i]);
+        echo "<br>";
+        print_r($data['price'][$i]);
+        echo "<br>";
+      }
+      // foreach($data['size'] as $size){
+      //   print_r($size);
+      //   echo "<br>";
+      // }
+    } else {
+      $data = array(
+        'brand' => $this->input->post('brand'),
+        'category' => $this->input->post('cat'),
+        'product_name' => $this->input->post('pName'),
+        'size' => $this->input->post('sizes[]'),
+        'price' => $this->input->post('prices[]'),
+        'spec' => $this->input->post('spec[]'),
+        'desc' => $this->input->post('desc')
+      );
+      print_r($data);
+    }
+
+  }
+
   public function detailProd($idProd){
     if ($this->session->userdata('uType') == 1) {
-      $idSize = array();
+      $specs = [];
+      $prices = [];
+      $sizes = [];
       $data['product'] = $this->madmin->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
-      $idBrand = $this->madmin->getProducts(array('id' => $idProd),
-        array('idBrandField' => 'brand_id'), 'tm_product', TRUE);
-      $idCat = $this->madmin->getProducts(array('id' => $idProd),
-        array('diCatField' => 'cat_id'), 'tm_product', TRUE);
-      $idSize = $this->madmin->getProducts(array('prod_id' => $idProd), array('sizeIdField' => 'size_id'),
-        'tr_product_size', TRUE);
-      $idSpec = $this->madmin->getProducts(array('prod_id' => $idProd), array('specIdField' => 'spec_id'),
-        'tr_product_spec', TRUE);
-      $data['specProds'] = $this->madmin->getProducts(array('id' => $idSpec['spec_id']), array('nameField' => 'name'),
-        'tm_spec', FALSE);
-      $data['sizeProds'] = $this->madmin->getProducts(array('id' => $idSize['size_id']), array('nameField' => 'name',
-        'sizeField' => 'size'), 'tm_size', FALSE);
-      $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand['brand_id']), array('nameField' => 'name'),
-        'tm_brands', TRUE);
-      $data['cat'] = $this->madmin->getProducts(array('id' => $idCat['cat_id']), array('nameField' => 'name'),
-        'tm_category', TRUE);
-      $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-        'nameField' => 'name'), 'tm_spec', FALSE);
-      $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-        'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
+      $data['brand'] = $this->madmin->getProducts(array('id' => $data['product']['brand_id']),
+       array('nameField' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->madmin->getProducts(array('id' => $data['product']['cat_id']),
+       array('nameField' => 'name'), 'tm_category', TRUE);
+      $idSpec = $this->madmin->getProducts(array('prod_id' => $idProd),
+       array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
+      $idSize = $this->madmin->getProducts(array('prod_id' => $idProd),
+       array('idField' => 'size_id', 'priceField' => 'price'), 'tr_product_size', FALSE);
 
+      for ($i=0; $i < count($idSpec) ; $i++) {
+        array_push($specs, $this->madmin->getProducts(array('id' => $idSpec[$i]['spec_id']),
+         array('nameField' => 'name'), 'tm_spec', TRUE));
+      }
+      $data['specs'] = $specs;
+
+      for ($i=0; $i < count($idSize); $i++) {
+        array_push($prices, $idSize[$i]['price']);
+      }
+      $data['prices'] = $prices;
+
+      for ($i=0; $i < count($idSize); $i++) {
+        array_push($sizes, $this->madmin->getProducts(array('id' => $idSize[$i]['size_id']),
+         array('nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE));
+      }
+      $data['sizes'] = $sizes;
 
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');
@@ -375,6 +445,8 @@ class Admin extends CI_Controller {
   public function deleteProd($idProd){
     if ($this->session->userdata('uType') == 1) {
       $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
+      $this->madmin->deleteDate(array('prod_id' => $idProd), 'tr_product_size');
+      $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_spec');
       redirect('admin/allProd');
     } else {
       $this->load->view('include/header');
