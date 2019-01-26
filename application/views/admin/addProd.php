@@ -16,7 +16,7 @@
               <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
             <?php endif;?>
             <!-- /ALERT -->
-            <?= form_open_multipart('admin/addProd', array('class' => 'm-0 sky-form')); ?>
+            <?= form_open_multipart('admin/addProd', array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
             <p class="register-box-msg">Add a new product</p>
               <div class="row mb-3">
                   <div class="col-md-6 col-xs-12">
@@ -44,34 +44,45 @@
                   <input name="pName" type="text" placeholder="Product Name">
               </label>
               <div class="row mb-3">
-                  <div class="col-md-6 col-xs-12">
+                  <div class="col col-md-5 col-xs-12">
                       <label class="input">
-                          <input name="price" type="text" placeholder="Price (e.g 100000)">
+                        <select class="form-control" id="size" name="size">
+                          <option value=""selected disabled>Size</option>
+                          <?php foreach($sizes as $size): ?>
+                            <option value="<?= $size['id'];?>"><?=$size['name'];?> (<?=$size['size'];?>)</option>
+                          <?php endforeach; ?>
+                        </select>
                       </label>
                   </div>
                   <div class="col col-md-6 col-xs-12">
                       <label class="input">
-                          <input name="sPrice" type="text" placeholder="Sub Price (e.g 100000)">
+                          <input id="price" name="price" type="number"
+                            placeholder="Price (e.g 100000)">
                       </label>
+                  </div>
+                  <div class="col col-md-1 col-xs-12">
+                    <button type="button" id="sizePrice" class="btn btn-oldblue pull-right"><i class="fa fa-plus"></i>Add</button>
                   </div>
               </div>
               <div class="row mb-3">
-                <div class="col-md-6 cl-xs-12">
-                  <label class="input mb-10">
-                    <select class="form-control" name="spec">
-                      <option selected disabled>Specification</option>
-                      <?php foreach($specs as $spec): ?>
-                        <option value="<?= $spec['id'];?>"><?= $spec['name'];?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </label>
+                <div class="col-md-12 cl-xs-12">
+                  <table id="table_sizePrice" class="table table-bordered table-striped">
+                    <thead>
+                      <th>Size</th>
+                      <th>Price</th>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
                 </div>
-                <div class="col-md-6 cl-xs-12">
+              </div>
+              <div class="row mb-3">
+                <div class="col-md-12 cl-xs-12">
                   <label class="input mb-10">
-                    <select class="form-control" name="size">
-                      <option selected disabled>Size</option>
-                      <?php foreach($sizes as $size): ?>
-                        <option value="<?= $size['id'];?>"><?=$size['name'];?> (<?=$size['size'];?>)</option>
+                    <select class="form-control select2" id="spec" name="spec[]" multiple="multiple"
+                     data-placeholder="Select a spec" data-role="tagsinput">
+                      <?php foreach ($specs as $spec): ?>
+                        <option value="<?=$spec['id']?>"><?= $spec['name'];?></option>
                       <?php endforeach; ?>
                     </select>
                   </label>
@@ -85,7 +96,8 @@
               </label>
             <div class="row">
                 <div class="col-md-12 text-right">
-                    <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Product</button>
+                    <button id="submit" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Product</button>
+                    <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
                 </div>
             </div>
           </form>
