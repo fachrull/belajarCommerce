@@ -1299,6 +1299,13 @@ section.page-header.page-header-2xlg {
 	.page-header ul.page-header-tabs.dark>li {
 		border: 0;
 	}
+
+	/* edited */
+	a.btn-exp {
+		margin-top: 0px !important;
+		top: 5px !important;
+
+	}
 }
 
 
@@ -2990,7 +2997,8 @@ body.menu-vertical #mainMenu.sidebar-vertical .sidebar-nav .navbar li a {
 #header.bottom {
 	position: absolute;
 	top: auto;
-	bottom: 0;
+	bottom: -65px;
+	/* edited */
 	border-bottom: rgba(0, 0, 0, 0.05) 1px solid;
 }
 
@@ -3098,7 +3106,7 @@ body.menu-vertical #mainMenu.sidebar-vertical .sidebar-nav .navbar li a {
 	bottom: auto;
 }
 
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1024px) {
 	#header.bottom {
 		top: 0;
 		bottom: auto;
@@ -3788,7 +3796,7 @@ body.boxed #topBar.dark ul.top-links>li {
 
 /** Responsive Top Nav
 	 ********************* **/
-@media only screen and (max-width: 992px) {
+@media only screen and (max-width: 1024px) {
 	.navbar-collapse {
 		height: 100%;
 	}
@@ -6197,6 +6205,7 @@ ul.list-unstyled .dropdown-toggle::after {
 	color: #333;
 	background-color: #f8f9fa;
 	border-color: #ddd;
+	max-width: 100% !important;
 }
 
 .card-default>.card-footer {
@@ -10960,13 +10969,13 @@ div h1 span {
 	left: 60px;
 }
 
-div p span {
+/* div p span {
 	color: #FFFFFF;
 	text-align: left;
 	position: absolute;
 	bottom: 40px;
 	left: 60px;
-}
+} */
 
 p.pedia-text {
 	line-height: 2 !important;
@@ -10986,20 +10995,19 @@ input.form-control-footer {
 	height: auto;
 }
 
-.owl-stage-outer {
-	width: 100%;
+.modal-backdrop {
+	z-index: -1 !important;
 }
 
-.header-carousel img.img-fluid {
-	display: block;
-	width: 100%;
-	height: 553px;
-}
+/* .dropdown-toggle::before,
+.dropdown-toggle::after {
+	display: none;
+} */
 
-.header-carousel button a {
-	top: 85%;
-}
 
+/* a.btn-exp {
+	position: absolute;
+} */
 .img1 {
 	height: 556px;
 }
@@ -11018,6 +11026,11 @@ input.form-control-footer {
 	color: #fff;
 	background-color: rgb(150, 150, 150);
 	border-radius: 10px;
+}
+
+.product-img {
+	width: 135px;
+	height: 90px;
 }
 
 .promotion-image-1 {
@@ -11041,6 +11054,10 @@ input.form-control-footer {
 	width: 1000px;
 }
 
+.full-width {
+	max-width: 100% !important;
+}
+
 
 input::placeholder {
 	color: rgb(179, 179, 179) !important;
@@ -11050,22 +11067,15 @@ input::placeholder {
 .pedia-img-1 {
 	position: relative;
 	height: 215px;
-	max-width: 100%;
-	width: 655px;
+	width: 100%;
+	/* width: 655px; */
 }
 
 .pedia-img-2 {
 	position: relative;
 	height: 215px;
-	/* max-width: 100%; */
-	width: 460px;
-	content:'';
-  display:inline-block;
-  z-index:0;
-  left:0;
-  -webkit-filter: blur(15px);
-  -moz-filter: blur(15px);
-  filter: blur(15px);
+	width: 100%;
+	/* width: 460px; */
 }
 
 .input-email {
@@ -11116,6 +11126,12 @@ input::placeholder {
 	font-size: 9px !important;
 }
 
+@media only screen and (max-width: 768px) {
+	/* .product-img {
+		margin: 0 10px 0 20px !important;
+	} */
+}
+
 @media only screen and (max-width: 420px) {
 	input.form-control-footer {
 		width: 180px !important;
@@ -11143,9 +11159,43 @@ input::placeholder {
 }
 
 /* customise shop.html shop-cart.html detail-product.html */
-.full-width,
-.full-width .btn {
-	width: 100%;
+div.tabbed {
+	position: relative;
+	font-size: 0;
+}
+
+
+div.tabbed>a {
+	display: inline-block;
+	padding: .5em;
+	font-size: 16px;
+	text-decoration: none;
+	line-height: 1em;
+	text-align: center !important;
+}
+
+div.tabbed>a+a {
+	margin-left: .5em;
+}
+
+div.tabbed>a:target {
+	color: #333;
+	background-color: #eee;
+}
+
+div.tabbed>a>div {
+	position: absolute;
+	top: 100%;
+	left: 0;
+	width: 400px;
+	padding: .5em;
+	border-radius: 0 3px 3px 3px;
+	display: none;
+	color: #333;
+}
+
+div.tabbed>a:hover>div {
+	display: block;
 }
 
 .page-item.active .page-link {
@@ -11153,9 +11203,16 @@ input::placeholder {
 	border-color: #33518F;
 }
 
-.btn-oldblue {
+.btn-oldblue,
+.btn-oldblue:hover,
+.btn-oldblue:focus {
 	background-color: #33518F;
 	color: #fff;
+}
+
+.btn-footer {
+	background-color: rgb(249, 249, 249);
+	color: #5F5F5F;
 }
 
 .btn-quitered {
@@ -11168,6 +11225,17 @@ input::placeholder {
 }
 
 .group-center {
-	width: 100%;
-	text-align: center;
+	max-width: 100% !important;
+}
+
+.thumbnail-specs {
+	width: 35px;
+	height: 35px;
+}
+
+/* article */
+@media only screen and (max-width: 767px) {
+	p.left {
+		text-align: left;
+	}
 }
