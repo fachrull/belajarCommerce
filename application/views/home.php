@@ -1,21 +1,43 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<!-- OWL CAROUSEL -->
-<div class="text-center">
-  <div class="header-carousel">
-    <div class="owl-carousel m-0 owl-stage-outer" id="owl-header" data-plugin-options='{"autoPlay": 3000}'>
-      <?php foreach ($slides as $slide): ?>
-        <div>
-          <span>
-            <img class="img-fluid" src="<?= base_url('asset/upload/'.$slide['slide']);?>" alt="!#">
-          </span>
-          <button><a class="page-scroll absolute letter-spacing-1 text-white" href="<?= site_url('#product');?>">EXPLORE<br><i class="fa fa-chevron-down"></i></a></button>
+<!-- SLIDER -->
+<section id="slider" class="fullheight mobile-fullheight">
+
+  <!--
+      SWIPPER SLIDER PARAMS
+
+      data-effect="slide|fade|coverflow"
+      data-autoplay="2500|false"
+    -->
+  <div class="swiper-container" data-effect="slide" data-autoplay="false">
+    <div class="swiper-wrapper">
+
+      <!-- SLIDE 1 -->
+      <div class="swiper-slide" id="slide" style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']);?>);">
+
+        <div class="display-table">
+          <div class="display-table-cell vertical-align-middle">
+            <div class="container">
+              <div class="row">
+                <div class="text-center col-md-8 col-xs-12 offset-md-2 mt-100">
+                  <div class="fixed-bottom pb-35">
+                    <a class="btn btn-lg scrollTo btn-exp b-0" href="#product">EXPLORE
+                      <br><i class="fa fa-chevron-down"></i></a>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
-      <?php endforeach; ?>
+      </div>
+      <!-- /SLIDE 1 -->
+
     </div>
   </div>
-</div>
-<!-- /OWL CAROUSEL -->
+
+</section>
+<!-- /SLIDER -->
 
 <!-- PRODUCT -->
 <section id="product" class="section-xs container pt-100">
