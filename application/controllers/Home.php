@@ -116,13 +116,13 @@ class Home extends CI_Controller{
   }
 
   public function shop(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('shop');
     $this->load->view('include/footer');
   }
 
   public function listArticle(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('list-article');
     $this->load->view('include/footer');
   }
@@ -130,74 +130,92 @@ class Home extends CI_Controller{
   public function fullArticle($id){
     $data['pedia'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_agmpedia', TRUE);
 
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('full-article', $data);
     $this->load->view('include/footer');
   }
 
   public function detailProduct(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('detail-product');
     $this->load->view('include/footer');
   }
 
   public function shopCart(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('shop-cart');
     $this->load->view('include/footer');
   }
 
   public function shopCheckout(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('shop-checkout');
     $this->load->view('include/footer');
   }
 
   public function checkoutDone(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('checkout-done');
     $this->load->view('include/footer');
   }
 
   public function promotionPage(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('promotion-page');
     $this->load->view('include/footer');
   }
 
   public function pageAbout(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('page-about');
     $this->load->view('include/footer');
   }
 
   public function pageContact(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('page-contact');
     $this->load->view('include/footer');
   }
 
   public function pageFaq(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('page-faq');
-    $this->load->view('include/footer');
+    $this->load->view('include/footer2');
   }
 
   public function termCondition(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('term-condition');
     $this->load->view('include/footer');
   }
 
   public function privacyPolicy(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('privacy-policy');
     $this->load->view('include/footer');
   }
 
   public function searchResult(){
-    $this->load->view('include/header');
+    $this->load->view('include/header2');
     $this->load->view('search-result');
+    $this->load->view('include/footer');
+  }
+
+  public function partnership(){
+    $this->load->view('include/header2');
+    $this->load->view('partnership');
+    $this->load->view('include/footer');
+  }
+
+  public function pageLogin(){
+    $this->load->view('include/header2');
+    $this->load->view('login');
+    $this->load->view('include/footer');
+  }
+
+  public function promotionDetail(){
+    $this->load->view('include/header2');
+    $this->load->view('promotion-detail');
     $this->load->view('include/footer');
   }
 }

@@ -76,10 +76,10 @@
 						<!-- BANNER ROTATOR -->
 						<div class="owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
 							<a href="#">
-								<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+								<img class="img-fluid" src="<?= site_url('asset/content-images/off_1.png');?>" width="270" height="350" alt="an offer's voucher">
 							</a>
 							<a href="#">
-								<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/slider-2-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+								<img class="img-fluid" src="<?= site_url('asset/content-images/off_1.png');?>" width="270" height="350" alt="an offer's voucher">
 							</a>
 						</div>
 						<!-- /BANNER ROTATOR -->

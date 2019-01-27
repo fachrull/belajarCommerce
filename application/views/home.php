@@ -40,90 +40,102 @@
 <!-- /SLIDER -->
 
 <!-- PRODUCT -->
-<section id="product" class="section-xs container pt-100">
-  <div class="row text-center">
-    <div class="col-6 col-md-2 offset-md-3 pb-70">
-      <a href="<?= site_url('home/shop');?>">
-        <img alt="Aireloom" src="<?= base_url('asset/brands/brand-aireloom-blue.svg');?>" />
-      </a>
-    </div>
-    <div class="col-6 col-md-2 pb-70">
-      <a href="<?= site_url('home/shop');?>">
-        <img alt="King Koil" src="<?= base_url('asset/brands/brand-kingkoil-blue.svg');?>" />
-      </a>
-    </div>
-    <div class="col-6 col-md-2 pb-70">
-      <a href="<?= site_url('home/shop');?>">
-        <img alt="Florence" src="<?= base_url('asset/brands/brand-florence-blue.svg');?>" />
-      </a>
-    </div>
-    <div class="col-6 col-md-2 offset-md-3 pb-70">
-      <a href="<?= site_url('home/shop');?>">
-        <img alt="Serta" src="<?= base_url('asset/brands/brand-serta-blue.svg');?>" />
-      </a>
-    </div>
-    <div class="col-6 col-md-2 pb-70">
-      <a href="<?= site_url('home/shop');?>">
-        <img alt="Tempur" src="<?= base_url('asset/brands/brand-tempur-blue.svg');?>" />
-      </a>
-    </div>
-    <div class="col-6 col-md-2 pb-70">
-      <a href="<?= site_url('home/shop');?>">
-        <img alt="Stressless" src="<?= base_url('asset/brands/brand-stressless-blue.svg');?>" />
-      </a>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-12 text-center">
-      <button class="brand-button">
-        N E W S L E T T E R
-      </button>
-      <a class="page-scroll" href="<?= site_url('#agmpedia');?>">
-        <p>View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
-      </a>
+<section id="product" class="section-lg">
+			<div class="container">
+				<div class="row text-center">
+					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
+						<a href="shop.html">
+							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
+						</a>
+					</div>
+					<div class="col-6 col-md-4 col-lg-2 pb-70">
+						<a href="shop.html">
+							<img class="product-img wow fadeInUp" alt="King Koil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
+						</a>
+					</div>
+					<div class="col-6 col-md-4 col-lg-2 pb-70">
+						<a href="shop.html">
+							<img class="product-img wow fadeInUp" alt="Florence" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Florence.png" />
+						</a>
+					</div>
+					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
+						<a href="shop.html">
+							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Serta" src="<?= base_url('');?>asset/brands/KingKoil.png" />
+						</a>
+					</div>
+					<div class="col-6 col-md-4 col-lg-2 pb-70">
+						<a href="shop.html">
+							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
+						</a>
+					</div>
+					<div class="col-6 col-md-4 col-lg-2 pb-70">
+						<a href="shop.html">
+							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
+						</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-12 text-center">
+						<button class="brand-button wow fadeInUp" data-wow-delay="0.6s">
+							N E W S L E T T E R
+						</button>
+						<a class="scrollTo wow fadeInUp" data-wow-delay="0.6s" href="#agmpedia">
+							<p>View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
+						</a>
 
-    </div>
-  </div>
-</section>
+					</div>
+				</div>
+			</div>
+		</section>
 <!-- /PRODUCT -->
 
-<!-- PROMOTION -->
-<section id="promotion" class="section-xs container">
-  <div class="row">
-    <div class="col-12 col-md-4 pt-30">
-      <img class="promotion-image-1" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="agm best seller" />
-      <div class="absolute pl-20 pb-20 bottom-center text-left">
-        <h2 class="hidden-sm hidden-xs-down text-white">BEST<br>SELLER</h2>
-        <a class="mt-10" href="<?= site_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-      </div>
-    </div>
+<hr>
 
-    <div class="col-12 col-md-8">
-      <div class="row">
-        <div class="col-md-12 pt-30">
-          <div class="relative">
-            <img class="promotion-image-2" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="agm gallery" />
-            <div class="absolute pl-20 pb-20 bottom-center text-left">
-              <h2 class="hidden-sm hidden-xs-down text-white">AGM<br>GALLERY</h2>
-              <a href="<?= site_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-6 pt-30">
-          <img class="promotion-image-3" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="promotion" />
-        </div>
-        <div class="col-md-6 pt-30">
-          <img class="promotion-image-3" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="agm lastest collectin" />
-          <div class="absolute pl-20 pb-20 bottom-center text-left">
-            <h2 class="hidden-sm hidden-xs-down text-white">LASTEST<br>COLLECTION</h2>
-            <a href="<?= site_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- PROMOTION -->
+<section id="promotion">
+			<div class="container">
+				<div class="row">
+					<div class="col-12 col-md-4 pt-30">
+						<img class="promotion-image-1" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm best seller" />
+						<div class="absolute pl-20 pb-20 bottom-center text-left">
+							<h2 class="hidden-md-down text-white">BEST<br>SELLER</h2>
+							<a class="mt-10" href="<?= base_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+						</div>
+					</div>
+
+					<div class="col-12 col-md-8">
+						<div class="row">
+							<div class="col-md-12 pt-30">
+								<div class="relative">
+									<img class="promotion-image-2" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm gallery" />
+									<div class="absolute pl-20 pb-20 bottom-center text-left">
+										<h2 class="hidden-md-down text-white">SPECIAL<br>PACKAGES</h2>
+										<a href="<?= base_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-6 pt-30">
+								<img class="promotion-image-3" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm lastest collectin" />
+								<div class="absolute pl-20 pb-20 bottom-center text-left">
+									<h2 class="hidden-md-down text-white">BED<br>LINEN</h2>
+									<a href="<?= base_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+								</div>
+							</div>
+							<div class="col-md-6 pt-30">
+								<img class="promotion-image-3" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm lastest collectin" />
+								<div class="absolute pl-20 pb-20 bottom-center text-left">
+									<h2 class="hidden-md-down text-white">BEDDING<br>ACCESSORIES</h2>
+									<a href="<?= base_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 <!-- /PROMOTION -->
+
+<hr>
 
 <!-- AGMPEDIA -->
 <section id="agmpedia" class="section-xs container">
@@ -197,6 +209,8 @@
   </div>
 </section>
 <!-- /AGMPEDIA -->
+
+<hr>
 
 <!-- LOCATION -->
 <section id="location" class="section-xs container">

@@ -38,8 +38,8 @@
 
 	<!-- wrapper -->
 	<div id="wrapper">
-		
-		<div id="header" class="navbar-toggleable-md sticky header-sm bottom clearfix">
+
+		<div id="header" class="navbar-toggleable-md sticky header-sm clearfix">
 
 			<!-- SEARCH HEADER -->
 			<div class="search-box over-header">
@@ -66,7 +66,7 @@
 
 						<!-- USER -->
 						<li>
-							<a href="<?= base_url('home/pageLogin');?>">
+							<a data-toggle="modal" data-target=".login">
 								<i class=" fa fa-user"></i>
 							</a>
 							<div class="modal fade login" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -78,6 +78,56 @@
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 										</div>
 
+										<!-- body modal -->
+										<div class="modal-body">
+											<!-- login form -->
+											<form action="#" method="post" class="sky-form boxed">
+
+												<header class="fs-18 mb-20">
+													I'm a returning customer
+												</header>
+
+												<fieldset class="m-0">
+
+													<label class="input mb-10">
+														<i class="ico-append fa fa-envelope"></i>
+														<input required type="email" placeholder="Email address">
+														<b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+													</label>
+
+													<label class="input mb-10">
+														<i class="ico-append fa fa-lock"></i>
+														<input required type="password" placeholder="Password">
+														<b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
+													</label>
+
+													<div class="clearfix note mb-30">
+														<a class="float-right" href="#">Forgot Password?</a>
+													</div>
+
+													<label class="checkbox fw-300">
+														<input type="checkbox" name="checkbox-inline">
+														<i></i> Keep me logged in
+													</label>
+
+												</fieldset>
+
+											</form>
+											<!-- /login form -->
+
+											<!-- ALERT -->
+											<div class="alert alert-mini alert-danger mb-30">
+												<strong>Oh snap!</strong> Login Incorrect!
+											</div><!-- /ALERT -->
+
+										</div>
+										<!-- /LOGIN -->
+										<!-- Modal Footer -->
+										<div class="modal-footer">
+											<footer>
+												<button type="submit" class="btn btn-oldblue rad-0 float-right"><i class="fa fa-check"></i> OK, LOG IN</button>
+											</footer>
+										</div>
 									</div>
 
 
@@ -155,7 +205,7 @@
 								</li>
 								<li>
 									<!-- HOME -->
-									<a class="scrollTo" href="#location">
+									<a href="<?= base_url('');?>">
 										LOCATION
 									</a>
 								</li>

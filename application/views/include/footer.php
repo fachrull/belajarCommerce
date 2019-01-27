@@ -52,30 +52,27 @@
 					<div class="col-md-4 col-4 pt-5">
 						<h4 class="letter-spacing-1 footer-zero">SHOP</h4>
 						<ul class="list-unstyled footer-list half-paddings b-0">
-							<li><a class="block" href="<?= site_url('!#');?>">All Furniture</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Packages</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Living Room</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Dinning Room</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Bedroom</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Home Office</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/Shop">Aireloom</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/Shop">Serta</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/Shop">Florence</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/Shop">Kingkoil</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/Shop">Tempur</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/Shop">Stressless</a></li>
 						</ul>
 					</div>
 					<div class="col-md-4 col-4 pt-5">
 						<h4 class="letter-spacing-1 footer-zero">ABOUT</h4>
 						<ul class="list-unstyled footer-list half-paddings b-0">
-							<li><a class="block" href="<?= site_url('!#');?>">How It Works</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Reviews</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">About Us</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Careers</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/pageAbout">About Us</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/pageContact">Contact Us</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/pageFaq">FAQ</a></li>
 						</ul>
 					</div>
 					<div class="col-md-4 col-4 pt-5">
 						<h4 class="letter-spacing-1 footer-zero">HELP</h4>
 						<ul class="list-unstyled footer-list half-paddings b-0">
-							<li><a class="block" href="<?= site_url('!#');?>">Contact Us</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">FAQ</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Terms & Conditions</a></li>
-							<li><a class="block" href="<?= site_url('!#');?>">Privacy Policy</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/termCondition">Terms & Conditions</a></li>
+							<li><a class="block" href="<?= site_url('');?>home/privacyPolicy">Privacy Policy</a></li>
 						</ul>
 					</div>
 				</div>
