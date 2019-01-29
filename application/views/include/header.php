@@ -57,29 +57,37 @@
 				<div class="container">
 
 					<!-- Mobile Menu Button -->
-					<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+					<button class="btn btn-mobile pl-0" data-toggle="collapse" data-target=".nav-main-collapse">
 						<i class="fa fa-bars"></i>
 					</button>
 
 					<!-- BUTTONS -->
-					<ul class="float-right nav nav-pills nav-second-main">
-
-						<!-- USER -->
-						<li>
-							<a href="<?= site_url('auth/login');?>">
-								<i class=" fa fa-user"></i>
+					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-0 bl-0 pl-0">
+					<li class="list-inline-item header-button-arrow">
+						<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
+							<i class="fa fa-user"></i>
+				
+						</a>
+						<div class="dropdown-menu dropdown-menu-right m-0 p-0">
+							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-wishlist.html">My Wishlist</a>
+							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">My Orders</a>
+							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">Account Settings</a>
+							<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">
+								<i class="fa fa-power-off"></i> 
+								<b>Log Out</b>
+							</a>
+					</li>
+					<li class="search">
+							<a href=" javascript:;">
+								<i class="fa fa-search h-60 line-height-60"></i>
 							</a>
 						</li>
-						<!-- /USER -->
-
-						<!-- SEARCH -->
-						<li class="search">
-							<a href="javascript:;">
-								<i class="fa fa-search"></i>
-							</a>
-						</li>
-						<!-- /SEARCH -->
-					</ul>
+				</ul>
+				<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
+					<li>
+						<a href="#" class="h-30 line-height-30"></a>
+					</li>
+				</ul>
 					<!-- /BUTTONS -->
 
 					<!-- Logo -->
@@ -89,7 +97,7 @@
 					<div class="navbar-collapse collapse nav-main-collapse">
 						<nav class="nav-main text-center">
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
-								<li class="dropdown active">
+								<li class="dropdown">
 									<!-- HOME -->
 									<a class="dropdown-toggle" href="#">
 										PRODUCT
