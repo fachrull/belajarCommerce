@@ -8,8 +8,13 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-body">
+              <div class="row">
+                  <div class="col-md-12">
+                      <a href="<?= site_url('admin/addBrand');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i>Brand</a>
+                  </div>
+              </div>
+              <hr class=col-xs-12>
             <table id="dataTable" class="table table-bordered table-striped">
-            <a href="<?= site_url('admin/addBrand');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i>Brand</a>
               <thead>
                 <th>No.</th>
                 <th>Brand</th>

@@ -82,60 +82,14 @@
 	</div>
 	<div class="copyright">
 		<div class="container text-center">
-			&copy; All Rights Reserved, Hayabusa
+			&copy; All Rights Reserved, <b>AGM - American Giant Mattress</b>
 		</div>
 	</div>
 </footer>
 <!-- /FOOTER -->
 
 
-		<div id="shopLoadModal" class="modal fade" data-autoload="true" data-autoload-delay="2000">
-			<div class="modal-dialog modal-full">
-				<div class="modal-content" style="background-image:url('<?= base_url('asset/content-images/shop_modal.jpg');?>');">
-
-					<!-- header modal -->
-					<div class="modal-header b-0 p-15">
-						<button type="button" class="close pt-5" data-dismiss="modal"><span>&times;</span></button>
-					</div>
-
-					<!-- body modal -->
-					<div class="modal-body">
-
-						<div class="block-content">
-
-							<img src="<?= base_url('asset/logo-agm/favicon.png');?>" alt="" />
-							<p class="fs-13 mb-20 mt-30">Subscribe to get all new products and all new discounts.</p>
-
-							<!-- newsletter -->
-							<div class="inline-search clearfix mb-30">
-								<form action="php/newsletter.php" method="post" class="validate m-0" data-success="Subscribed! Thank you!"
-								 data-toastr-position="bottom-right" novalidate="novalidate">
-
-									<input type="search" placeholder="Email Address" id="shop_email" name="shop_email" class="serch-input required">
-									<button type="submit">
-										<i class="fa fa-check"></i>
-									</button>
-								</form>
-							</div>
-							<!-- /newsletter -->
-
-							<!-- Don't show this popup again -->
-							<div class="fs-11 text-left">
-								<label class="checkbox float-left">
-									<input class="loadModalHide" type="checkbox" />
-									<i></i> <span class="fw-300">Don't show this popup again</span>
-								</label>
-
-							</div>
-							<!-- /Don't show this popup again -->
-
-						</div>
-
-					</div>
-
-				</div>
-			</div>
-		</div>
+		
 	</div>
 	<!-- SCROLL TO TOP -->
 	<a href="<?= site_url('#');?>" id="toTop"></a>

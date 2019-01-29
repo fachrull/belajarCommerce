@@ -6,10 +6,11 @@
 				<h1>AIRELOOM</h1>
 
 				<!-- breadcrumbs -->
-				<ol class="breadcrumb">
-					<li><a href="#">Home</a></li>
-					<li class="active">Product</li>
-				</ol><!-- /breadcrumbs -->
+				<!--<ol class="breadcrumb">-->
+				<!--	<li><a href="#">Home</a></li>-->
+				<!--	<li class="active">Product</li>-->
+				<!--</ol>-->
+				<!-- /breadcrumbs -->
 
 			</div>
 		</section>
@@ -32,19 +33,14 @@
 								<h4>CATEGORIES</h4>
 							</div>
 
-							<ul id="categories" class="list-group list-group-bordered list-group-noicon uppercase">
-								<li class="list-group-item active">
-									<a class="dropdown-toggle" href="#">AIRELOOM</a>
+							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
+								<li class="list-group-noicon active">
+									<a class="dropdown-toggle" href="#">MATTRESS</a>
 									<ul>
-										<li class="list-group-item active">
-											<a class="dropdown-toggle" href="#">MATTRESS</a>
-											<ul>
-												<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Imperial Heritage</a></li>
-												<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Royal Souvergin</a></li>
-												<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Conoration</a></li>
-												<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Baron</a></li>
-											</ul>
-										</li>
+										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Imperial Heritage</a></li>
+										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Royal Souvergin</a></li>
+										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Conoration</a></li>
+										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Baron</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -65,8 +61,8 @@
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(44)</span> KingKoil</a></li>
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(2)</span> Serta</a></li>
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(18)</span> Tempur</a></li>
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(87)</span> Stressless</a></li>
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(32)</span> Florence</a></li>
+								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(87)</span> Florence</a></li>
+								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(32)</span> Stressless</a></li>
 							</ul>
 
 						</div>
@@ -74,13 +70,33 @@
 
 
 						<!-- BANNER ROTATOR -->
-						<div class="owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
-							<a href="#">
-								<img class="img-fluid" src="<?= site_url('asset/content-images/off_1.png');?>" width="270" height="350" alt="an offer's voucher">
-							</a>
-							<a href="#">
-								<img class="img-fluid" src="<?= site_url('asset/content-images/off_1.png');?>" width="270" height="350" alt="an offer's voucher">
-							</a>
+                        <div class="owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+							<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+							<div class="absolute mt-120">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>Best Seller 1</p> 
+								</a>
+								</div>	
+							<div class="absolute position-bottom">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>View Detail</p> 
+								</a>
+								</div>
+							</div>
+							<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+							<div class="absolute mt-120">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>Best Seller 2</p> 
+								</a>
+								</div>	
+							<div class="absolute position-bottom">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>View Detail</p> 
+								</a>
+								</div>
+							</div>
 						</div>
 						<!-- /BANNER ROTATOR -->
 
@@ -124,7 +140,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" alt="product name" />
+											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name" />
 										</a>
 										<!-- /product image(s) -->
 
@@ -181,7 +197,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" alt="product name" />
+											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name" />
 										</a>
 										<!-- /product image(s) -->
 
@@ -230,7 +246,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" alt="product name" />
+											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name" />
 										</a>
 										<!-- /product image(s) -->
 
@@ -287,7 +303,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-												<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" alt="product name">
+												<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name">
 										</a>
 										<!-- /product image(s) -->
 
@@ -342,7 +358,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" alt="product name">
+											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name">
 										</a>
 										<!-- /product image(s) -->
 
@@ -399,7 +415,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" alt="product name">
+											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name">
 										</a>
 										<!-- /product image(s) -->
 
@@ -456,7 +472,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" alt="product name">
+											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
 										</a>
 										<!-- /product image(s) -->
 
@@ -505,7 +521,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" alt="product name">
+											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
 										</a>
 										<!-- /product image(s) -->
 
@@ -562,7 +578,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" alt="product name">
+											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
 										</a>
 										<!-- /product image(s) -->
 
@@ -611,7 +627,7 @@
 									<div class="thumbnail">
 										<!-- product image(s) -->
 										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" alt="product name">
+											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
 										</a>
 										<!-- /product image(s) -->
 

@@ -44,32 +44,32 @@
 			<div class="container">
 				<div class="row text-center">
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
-						<a href="shop.html">
-							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
+						<a href="<?= site_url('home/shop');?>">
+							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="shop.html">
-							<img class="product-img wow fadeInUp" alt="King Koil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
+						<a href="<?= site_url('home/shop');?>">
+							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="shop.html">
-							<img class="product-img wow fadeInUp" alt="Florence" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Florence.png" />
+						<a href="<?= site_url('home/shop');?>">
+							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
-						<a href="shop.html">
-							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Serta" src="<?= base_url('');?>asset/brands/KingKoil.png" />
-						</a>
-					</div>
-					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="shop.html">
+						<a href="<?= site_url('home/shop');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="shop.html">
+						<a href="<?= site_url('home/shop');?>">
+							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
+						</a>
+					</div>
+					<div class="col-6 col-md-4 col-lg-2 pb-70">
+						<a href="<?= site_url('home/shop');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
 						</a>
 					</div>
@@ -79,7 +79,7 @@
 						<button class="brand-button wow fadeInUp" data-wow-delay="0.6s">
 							N E W S L E T T E R
 						</button>
-						<a class="scrollTo wow fadeInUp" data-wow-delay="0.6s" href="#agmpedia">
+						<a class="wow fadeInUp" data-wow-delay="0.6s" href="<?= site_url('home/partnership')?>">
 							<p>View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
 						</a>
 
@@ -99,7 +99,7 @@
 						<img class="promotion-image-1" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm best seller" />
 						<div class="absolute pl-20 pb-20 bottom-center text-left">
 							<h2 class="hidden-md-down text-white">BEST<br>SELLER</h2>
-							<a class="mt-10" href="<?= base_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+							<a class="mt-10" href="<?= base_url('home/bestSeller');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 						</div>
 					</div>
 
@@ -148,35 +148,14 @@
       <img class="pedia-img-1" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="agmpedia">
     </div>
     <div class="col-12 col-md-5 pb-30 order-1 order-md-2">
-      <div class="owl-carousel buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
+      <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
         <div>
           <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title">
           <div class="absolute pt-20">
-            <h4 class="text-white text-center">LOREM 1</h4>
+            <h4 class="text-white text-center">LOREM</h4>
             <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 1</h6>
             <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
 
-            </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
-                 aria-hidden="true"></i></a></p>
-          </div>
-        </div>
-        <div>
-          <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title">
-          <div class="absolute pt-20">
-            <h4 class="text-white text-center">LOREM 2</h4>
-            <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 2</h6>
-            <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">Lorem ipsum dolor
-              sit
-              amet
-              consectetur
-              adipisicing elit.
-              Explicabo
-              cum
-              reprehenderit
-              unde
-              maxime
-              ducimus est
             </p>
             <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
                  aria-hidden="true"></i></a></p>
@@ -186,7 +165,7 @@
     </div>
     <div class="col-12 col-md-5 pb-5">
       <?php foreach ($pedias as $pedia): ?>
-      <div class="owl-carousel buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
+      <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
         <div>
             <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" alt="agmpedia title">
             <div class="absolute pt-20">
@@ -201,7 +180,7 @@
       </div>
     </div>
     <div class="col-12 col-md-7 pb-5">
-      <div class="owl-carousel buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
+      <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
           <img class="pedia-img-1" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" alt="agmpedia">
       </div>
     </div>

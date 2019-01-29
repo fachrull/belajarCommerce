@@ -14,8 +14,13 @@
                     <strong>Well done!</strong> <?php echo $this->session->flashdata('success'); ?>
                   </div>
                 <?php endif; ?>
-                <table id="dataTable" class="table table-bordered table-striped">
-                <a href="<?= site_url('admin/addPedia');?>" class="btn btn-default btn-oldblue h-30 test"><i class="fa fa-plus"></i>AgmPedia</a>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <a href="<?= site_url('admin/addPedia');?>" class="btn btn-default btn-oldblue h-30 test"><i class="fa fa-plus"></i>AgmPedia</a>
+                    </div>
+                    <hr class="col-xs-12">
+                    <div class="col-md-12">
+                        <table id="dataTable" class="table table-bordered table-striped">
                   <thead>
                     <tr>
                       <th>No.</th>
@@ -39,6 +44,8 @@
                     <?php endforeach; ?>
                   </tbody>
                 </table>
+                    </div>
+                </div>
             </div>
           </div>
         </div>

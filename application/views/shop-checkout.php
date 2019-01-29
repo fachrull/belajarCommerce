@@ -6,11 +6,12 @@
 		<h1>CHECKOUT</h1>
 
 		<!-- breadcrumbs -->
-		<ol class="breadcrumb">
-			<li><a href="<?= site_url('#home');?>">Home</a></li>
-			<li><a href="<?= site_url('home/shop');?>">Shop</a></li>
-			<li class="active">Checkout</li>
-		</ol><!-- /breadcrumbs -->
+		<!--<ol class="breadcrumb">-->
+		<!--	<li><a href="<?= site_url('#home');?>">Home</a></li>-->
+		<!--	<li><a href="<?= site_url('home/shop');?>">Shop</a></li>-->
+		<!--	<li class="active">Checkout</li>-->
+		<!--</ol>-->
+		<!-- /breadcrumbs -->
 
 	</div>
 </section>

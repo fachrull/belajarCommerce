@@ -11074,8 +11074,15 @@ input::placeholder {
 .pedia-img-2 {
 	position: relative;
 	height: 215px;
-	width: 100%;
-	/* width: 460px; */
+	/* max-width: 100%; */
+	width: 460px;
+	content:'';
+  display:inline-block;
+  z-index:0;
+  left:0;
+  -webkit-filter: blur(15px);
+  -moz-filter: blur(15px);
+  filter: blur(15px);
 }
 
 .input-email {
@@ -11238,4 +11245,15 @@ div.tabbed>a:hover>div {
 	p.left {
 		text-align: left;
 	}
+}
+
+/* banner-rotator */
+.banner-rotator p {
+	color: #fff;
+	text-shadow: #000 1px 1px;
+	margin-bottom: 10px;
+}
+
+.banner-rotator p:hover {
+	color: rgb(207, 207, 207);
 }

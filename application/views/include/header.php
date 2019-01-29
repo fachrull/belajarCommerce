@@ -38,7 +38,7 @@
 
 	<!-- wrapper -->
 	<div id="wrapper">
-		
+
 		<div id="header" class="navbar-toggleable-md sticky header-sm bottom clearfix">
 
 			<!-- SEARCH HEADER -->
@@ -66,23 +66,9 @@
 
 						<!-- USER -->
 						<li>
-							<a href="<?= base_url('home/pageLogin');?>">
+							<a href="<?= site_url('auth/login');?>">
 								<i class=" fa fa-user"></i>
 							</a>
-							<div class="modal fade login" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-sm">
-									<div class="modal-content">
-
-										<!-- header modal -->
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										</div>
-
-									</div>
-
-
-								</div>
-							</div>
 						</li>
 						<!-- /USER -->
 
@@ -116,22 +102,22 @@
 										</li>
 										<li class="dropdown">
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
-												SERTA
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
-												FLORENCE
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
 												KINGKOIL
 											</a>
 										</li>
 										<li class="dropdown">
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
+												SERTA
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="<?= base_url('home/shop');?>">
 												TEMPUR
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="<?= base_url('home/shop');?>">
+												FLORENCE
 											</a>
 										</li>
 										<li class="dropdown">

@@ -6,11 +6,12 @@
 		<h1>SHOP CART</h1>
 
 		<!-- breadcrumbs -->
-		<ol class="breadcrumb">
-			<li><a href="<?= site_url('#home');?>">Home</a></li>
-			<li><a href="<?= site_url('home/shop');?>">Shop</a></li>
-			<li class="active">Cart</li>
-		</ol><!-- /breadcrumbs -->
+		<!--<ol class="breadcrumb">-->
+		<!--	<li><a href="<?= site_url('#home');?>">Home</a></li>-->
+		<!--	<li><a href="<?= site_url('home/shop');?>">Shop</a></li>-->
+		<!--	<li class="active">Cart</li>-->
+		<!--</ol>-->
+		<!-- /breadcrumbs -->
 
 	</div>
 </section>
@@ -60,7 +61,7 @@
 
 						<!-- cart item -->
 						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" alt="product name"
+							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name"
 								 width="80" /></div>
 							<a href="#" class="product_name">
 								<span>Product Name</span>
@@ -76,7 +77,7 @@
 
 						<!-- cart item -->
 						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" alt="product name"
+							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name"
 								 width="80" /></div>
 							<a href="#" class="product_name">
 								<span>Product Name</span>
@@ -92,7 +93,7 @@
 
 						<!-- cart item -->
 						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('statis/agm-customer/assets/content-images/slider-1-100x100.png');?>" alt="product name"
+							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name"
 								 width="80" /></div>
 							<a href="#" class="product_name">
 								<span>Product Name</span>

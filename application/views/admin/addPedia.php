@@ -1,30 +1,23 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="content-wrapper">
-  <section class="content-header">
-    <h1>
-      AGM
-      <small> Pedia</small>
-    </h1>
-  </section>
   <section class="content">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-11 offset-md-3 col-sm-6 offset-sm-3">
-          <!-- ALERT -->
-          <?php if($this->session->has_userdata('error')): ?>
-            <div class="alert alert-mini alert-danger mb-30">
-              <strong>Oh snap!</strong> <?= $this->session->flashdata('error');?>
-            </div>
-          <?php elseif($this->input->post('items') == NULL): ?>
-            <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
-          <?php endif;?>
-          <!-- /ALERT -->
-
-          <?= form_open_multipart('admin/addPedia', array('class' => 'm-0 sky-form boxed')); ?>
-            <header>
-              <i class="fa fa-plus"></i> Add Pedia
-            </header>
-            <fieldset>
+    <h1 class="text-center">ADD AGM-PEDIA</h1>
+      <div class="container-fluid">
+        <div class="register-box mt-0" style="width: auto !important">
+          <div class="register-box-body">
+          <div class="row">
+          <div class="col-md-12 col-sm-6">
+            <!-- ALERT -->
+            <?php if($this->session->has_userdata('error')): ?>
+              <div class="alert alert-mini alert-danger mb-30">
+                <strong>Oh snap!</strong> <?= $this->session->flashdata('error');?>
+              </div>
+            <?php elseif($this->input->post('items') == NULL): ?>
+              <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
+            <?php endif;?>
+            <!-- /ALERT -->
+            <?= form_open_multipart('admin/addPedia', array('class' => 'm-0 sky-form')); ?>
+            <p class="register-box-msg">Add a AGM-Pedia Article</p>
               <label class="input mb-10">
                 <input type="text" name="title" class="form-control" placeholder="Title">
               </label>
@@ -35,24 +28,25 @@
                 <textarea id="editor1" name="content" rows="8" cols="124" placeholder="News"></textarea>
               </label>
               <label class="input mb-10">
-                <label for="thumbnail">Thumbnail pedia</label>
+                <label for="thumbnail"><b>Thumbnail pedia</b></label>
                 <input type="file" name="thumbnail" title="Thumbnail pedia">
               </label>
               <label class="input mb-10">
-                <label for="phot">Image pedia</label>
+                <label for="phot"><b>Image pedia</b></label>
                 <input type="file" name="photo" title="Image pedia">
               </label>
-            </fieldset>
-            <div class="row mb-20">
-              <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-12 text-right">
                 <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Add pedia</button>
-              </div>
+                </div>
             </div>
           </form>
+          </div>
+        </div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 </div>
 
 <script>
@@ -60,3 +54,5 @@
     $('textarea#content').froalaEditor()
   });
 </script>
+
+

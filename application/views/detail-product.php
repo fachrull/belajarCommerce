@@ -6,11 +6,12 @@
 		<h1>PRODUCT TITLE</h1>
 
 		<!-- breadcrumbs -->
-		<ol class="breadcrumb">
-			<li><a href="<?= site_url('#home');?>">Home</a></li>
-			<li><a href="<?= site_url('home/shop');?>">Shop</a></li>
-			<li class="active">Detail Product</li>
-		</ol><!-- /breadcrumbs -->
+		<!--<ol class="breadcrumb">-->
+		<!--	<li><a href="<?= site_url('#home');?>">Home</a></li>-->
+		<!--	<li><a href="<?= site_url('home/shop');?>">Shop</a></li>-->
+		<!--	<li class="active">Detail Product</li>-->
+		<!--</ol>-->
+		<!-- /breadcrumbs -->
 
 	</div>
 </section>
@@ -33,11 +34,8 @@
 						<h4>CATEGORIES</h4>
 					</div>
 
-					<ul id="categories" class="list-group list-group-bordered list-group-noicon uppercase">
-						<li class="list-group-item active">
-							<a class="dropdown-toggle" href="#">AIRELOOM</a>
-							<ul>
-								<li class="list-group-item active">
+					<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
+								<li class="list-group-noicon active">
 									<a class="dropdown-toggle" href="#">MATTRESS</a>
 									<ul>
 										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Imperial Heritage</a></li>
@@ -47,8 +45,6 @@
 									</ul>
 								</li>
 							</ul>
-						</li>
-					</ul>
 
 				</div>
 				<!-- /CATEGORIES -->
@@ -73,7 +69,36 @@
 				</div>
 				<!-- BRANDS -->
 
-				
+				<!-- BANNER ROTATOR -->
+                <div class="owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+							<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+							<div class="absolute mt-120">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>Best Seller 1</p> 
+								</a>
+								</div>	
+							<div class="absolute position-bottom">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>View Detail</p> 
+								</a>
+								</div>
+							</div>
+							<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+							<div class="absolute mt-120">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>Best Seller 2</p> 
+								</a>
+								</div>	
+							<div class="absolute position-bottom">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>View Detail</p> 
+								</a>
+								</div>
+							</div>
+						</div>
+					<!-- /BANNER ROTATOR -->				
 
 			</div>
 
@@ -88,9 +113,9 @@
 
 						<div class="thumbnail relative mb-3">
 							<figure id="zoom-primary" class="zoom" data-mode="mouseover">
-								<a class="lightbox bottom-right" href="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" data-plugin-options='{"type":"image"}'><i
+								<a class="lightbox bottom-right" href="<?= site_url('asset/content-images/01.jpg');?>" data-plugin-options='{"type":"image"}'><i
 									 class="glyphicon glyphicon-search"></i></a>
-								<img class="img-fluid" src="<?= site_url('statis/agm-customer/assets/content-images/01.jpg');?>" alt="This is the product title" />
+								<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="This is the product title" />
 							</figure>
 
 						</div>

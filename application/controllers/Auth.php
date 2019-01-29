@@ -25,7 +25,7 @@ class Auth extends CI_Controller{
 
       // this is block for if our form validation running unseccessly
       if ($this->form_validation->run() === FALSE) {
-        $this->load->view('include/header');
+        $this->load->view('include/header2');
         $this->load->view('login');
         $this->load->view('include/footer');
 

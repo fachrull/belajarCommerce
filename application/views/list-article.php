@@ -1,17 +1,18 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-		
+
 <section class="page-header page-header-md">
 			<div class="container">
 
 				<h1>ARCTILE</h1>
 
 				<!-- breadcrumbs -->
-				<ol class="breadcrumb">
+				<!-- <ol class="breadcrumb">
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Something</a></li>
 					<li><a href="#">Something</a></li>
 					<li class="active">Article</li>
-				</ol><!-- /breadcrumbs -->
+				</ol> -->
+				<!-- /breadcrumbs -->
 			</div>
 		</section>
 		<!-- /PAGE HEADER -->
@@ -39,20 +40,13 @@
 							</div>
 
 							<ul id="rp" class="list-group list-group-bordered list-group-noicon">
-								<li class="list-group-item">
-									<a href="#">
-										<span class="fs-13 text-muted float-right"></span> Title <br>
-										<span class="font-lato fs-11">June 29, 2017</span>
-									</a>
-
-								</li>
-								<li class="list-group-item">
-									<a href="#">
-										<span class="fs-13 text-muted float-right"></span> Title <br>
-										<span class="font-lato fs-11">June 29, 2017</span>
-									</a>
-
-								</li>
+								<?php foreach ($pedias as $pedia): ?>
+									<li class="list-group-item">
+										<a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">
+											<span class="fs-13 text-muted float-right"></span> <?= $pedia['title'];?> <br>
+										</a>
+									</li>
+								<?php endforeach; ?>
 							</ul>
 
 							<div class="side-nav-head mt-30" data-toggle="collapse" data-target="#archieve">
@@ -62,15 +56,14 @@
 
 							<ul id="archieve" class="list-group list-group-bordered list-group-noicon uppercase">
 								<li class="list-group-item active">
-									<a class="dropdown-toggle" href="#">2017</a>
+									<a class="dropdown-toggle" href="#">2019</a>
 									<ul>
 										<li class="list-group-item active">
-											<a class="dropdown-toggle" href="#">Dec (4)</a>
+											<a class="dropdown-toggle" href="#">Jan (4)</a>
 											<ul>
-												<li class="bullet-bar"><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Title</a></li>
-												<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Title</a></li>
-												<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Title</a></li>
-												<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Title</a></li>
+												<?php foreach ($pedias as $pedia): ?>
+													<li class="bullet-bar"><a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
+												<?php endforeach; ?>
 											</ul>
 										</li>
 									</ul>
@@ -84,75 +77,29 @@
 					<!-- RIGHT -->
 					<div class="col-md-9 col-sm-9">
 
-						<!-- POST ITEM -->
-						<div class="blog-post-item">
-							<!-- .blog-post-item-inverse = image right side [left on RTL] -->
+						<?php foreach ($pedias as $pedia): ?>
+							<!-- POST ITEM -->
+							<div class="blog-post-item">
+								<!-- .blog-post-item-inverse = image right side [left on RTL] -->
 
-							<!-- IMAGE -->
-							<figure class="blog-item-small-image mb-20">
-								<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
-							</figure>
+								<!-- IMAGE -->
+								<figure class="blog-item-small-image mb-20">
+									<img class="img-fluid" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" style="height: 117px; width: 300px;">
+								</figure>
 
-							<div class="blog-item-small-content">
+								<div class="blog-item-small-content">
 
-								<h2><a href="blog-single-default.html">BLOG IMAGE POST</a></h2>
+									<h2><a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><?= $pedia['title'];?></a></h2>
 
-								<ul class="blog-post-info list-inline">
-									<li>
-										<a href="#">
-											<i class="fa fa-clock-o"></i>
-											<span class="font-lato">June 29, 2017</span>
-										</a>
-									</li>
-								</ul>
 
-								<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-									in...</p>
+									<p><?= $pedia['sub_content'];?>...</p>
 
-								<a href="#" class="btn btn-reveal btn-oldblue b-0 mt-10">
-									<i class="fa fa-eye"></i>
-									<span>Read More</span>
-								</a>
+								</div>
 
 							</div>
+							<!-- /POST ITEM -->
+						<?php endforeach; ?>
 
-						</div>
-						<!-- /POST ITEM -->
-
-						<!-- POST ITEM -->
-						<div class="blog-post-item">
-							<!-- .blog-post-item-inverse = image right side [left on RTL] -->
-
-							<!-- IMAGE -->
-							<figure class="blog-item-small-image mb-20">
-								<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
-							</figure>
-
-							<div class="blog-item-small-content">
-
-								<h2><a href="blog-single-default.html">BLOG IMAGE POST</a></h2>
-
-								<ul class="blog-post-info list-inline">
-									<li>
-										<a href="#">
-											<i class="fa fa-clock-o"></i>
-											<span class="font-lato">June 29, 2017</span>
-										</a>
-									</li>
-								</ul>
-
-								<p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration
-									in...</p>
-
-								<a href="#" class="btn btn-reveal btn-oldblue b-0 mt-10">
-									<i class="fa fa-eye"></i>
-									<span>Read More</span>
-								</a>
-
-							</div>
-
-						</div>
-						<!-- /POST ITEM -->
 
 						<!-- PAGINATION -->
 						<div class="text-center">

@@ -7,11 +7,12 @@
                 <h1>PARTNERSHIP</h1>
 
                 <!-- breadcrumbs -->
-                <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Pages</a></li>
-                    <li class="active">Partnership</li>
-                </ol><!-- /breadcrumbs -->
+                <!--<ol class="breadcrumb">-->
+                <!--    <li><a href="#">Home</a></li>-->
+                <!--    <li><a href="#">Pages</a></li>-->
+                <!--    <li class="active">Partnership</li>-->
+                <!--</ol>-->
+                <!-- /breadcrumbs -->
 
             </div>
         </section>

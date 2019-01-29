@@ -64,9 +64,9 @@
                     <button type="button" id="sizePrice" class="btn btn-oldblue pull-right"><i class="fa fa-plus"></i>Add</button>
                   </div>
               </div>
-              <div class="row mb-3">
+              <div class="row">
                 <div class="col-md-12 cl-xs-12">
-                  <table id="table_sizePrice" class="table table-bordered table-striped">
+                  <table id="table_sizePrice" class="mb-10 table table-bordered table-striped">
                     <thead>
                       <th>Size</th>
                       <th>Price</th>
@@ -77,10 +77,10 @@
                 </div>
               </div>
               <div class="row mb-3">
-                <div class="col-md-12 cl-xs-12">
+                <div class="col-md-12 cl-xs-12 select2-input-field">
                   <label class="input mb-10">
                     <select class="form-control select2" id="spec" name="spec[]" multiple="multiple"
-                     data-placeholder="Select a spec" data-role="tagsinput">
+                     data-placeholder="Select a spec" data-role="tagsinput" style="width: 100%;">
                       <?php foreach ($specs as $spec): ?>
                         <option value="<?=$spec['id']?>"><?= $spec['name'];?></option>
                       <?php endforeach; ?>

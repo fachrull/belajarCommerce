@@ -6,11 +6,12 @@
 		<h1>CONTACT US</h1>
 
 		<!-- breadcrumbs -->
-		<ol class="breadcrumb  breadcrumb">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Pages</a></li>
-			<li class="active">Contact</li>
-		</ol><!-- /breadcrumbs -->
+		<!--<ol class="breadcrumb  breadcrumb">-->
+		<!--	<li><a href="#">Home</a></li>-->
+		<!--	<li><a href="#">Pages</a></li>-->
+		<!--	<li class="active">Contact</li>-->
+		<!--</ol>-->
+		<!-- /breadcrumbs -->
 
 	</div>
 </section>
