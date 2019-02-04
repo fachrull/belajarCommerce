@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 28, 2019 at 06:41 AM
+-- Generation Time: Feb 04, 2019 at 10:37 PM
 -- Server version: 5.7.25-0ubuntu0.18.04.2
 -- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
@@ -159,7 +159,10 @@ INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `description`, `im
 (10, 2, 1, 'Ophelia', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d6f7068656c69612e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:48:57'),
 (11, 2, 1, 'Suite Palais', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f70616c6169732e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:50:14'),
 (12, 2, 1, 'Suite Ambassadeur', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f616d6261737361646575722e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:51:24'),
-(13, 2, 1, 'Suite Viceroy', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f76696365726f792e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:52:43');
+(13, 2, 1, 'Suite Viceroy', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f76696365726f792e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:52:43'),
+(14, 2, 2, 'Harvey (Embroidery White)', '<p>Lorem ipsum</p>\r\n', 0x6b696e676b6f696c2d6265645f6c696e656e2d6861727665795f28656d62726f69646572795f7768697465292e6a7067, '2019-01-29 17:00:00', '2019-01-30 08:59:25'),
+(15, 2, 2, 'Madolva White (JQ SATEEN)', '<p>Lorem ipsum</p>\r\n', 0x6b696e676b6f696c2d6265645f6c696e656e2d6d61646f6c76615f77686974655f286a715f73617465656e292e6a7067, '2019-01-29 17:00:00', '2019-01-30 13:12:19'),
+(16, 3, 2, 'Madolva Red (JQ SATEEN)', '<p>lorem ipsum</p>\r\n', 0x666c6f72656e63652d6265645f6c696e656e2d6d61646f6c76615f7265645f286a715f73617465656e292e6a7067, '2019-01-29 17:00:00', '2019-01-30 13:24:01');
 
 -- --------------------------------------------------------
 
@@ -290,6 +293,8 @@ CREATE TABLE `tm_store_owner` (
   `sub_district` varchar(50) NOT NULL,
   `city` varchar(50) NOT NULL,
   `province` varchar(50) NOT NULL,
+  `latitude` double DEFAULT NULL,
+  `langtitude` double DEFAULT NULL,
   `postcode` varchar(25) DEFAULT NULL,
   `phone1` varchar(20) DEFAULT NULL,
   `fax` varchar(20) DEFAULT NULL,
@@ -300,9 +305,10 @@ CREATE TABLE `tm_store_owner` (
 -- Dumping data for table `tm_store_owner`
 --
 
-INSERT INTO `tm_store_owner` (`id`, `id_userlogin`, `company_name`, `address`, `address2`, `sub_district`, `city`, `province`, `postcode`, `phone1`, `fax`, `id_super_admin`) VALUES
-(5, 32, 'AGM JDC', 'Jl. Gatot Subroto No. 53, Jakarta Design Center Lantai 4 - 4SR081', 'Jakarta Design Center Lantai 4 - 4SR081', 'Mampang Prapatan', 'Jakarta', 'DKI Jakarta', '12780', '0215720533', '', 2),
-(6, 33, 'AGM Simpruk', 'Jl. Teuku Nyak Arief, Simpruk Garden Raya Blok G No.1, Permata Hijau', '', 'Kebayora Lama', 'Jakarta', 'DKI Jakarta', '12240', '02166676278', '', 2);
+INSERT INTO `tm_store_owner` (`id`, `id_userlogin`, `company_name`, `address`, `address2`, `sub_district`, `city`, `province`, `latitude`, `langtitude`, `postcode`, `phone1`, `fax`, `id_super_admin`) VALUES
+(5, 32, 'AGM JDC', 'Jl. Gatot Subroto No. 53, Jakarta Design Center Lantai 4 - 4SR081', 'Jakarta Design Center Lantai 4 - 4SR081', 'Mampang Prapatan', 'Jakarta', 'DKI Jakarta', -7.284841, 112.692888, '12780', '0215720533', '', 2),
+(6, 33, 'AGM Simpruk', 'Jl. Teuku Nyak Arief, Simpruk Garden Raya Blok G No.1, Permata Hijau', '', 'Kebayora Lama', 'Jakarta', 'DKI Jakarta', -6.234099, 106.786999, '12240', '02166676278', '', 2),
+(7, 34, 'AGM Emporium Pluit Mall', 'Jl. Pluit Selatan Raya No.5', 'Emporim Mall Pluit Lantai 3-23, 3-25, 3-26', 'Penjaringan', 'Jakarta', 'DKI Jakarta', -6.127242, 106.790272, '14440', '02166676278', '', 2);
 
 -- --------------------------------------------------------
 
@@ -378,19 +384,24 @@ CREATE TABLE `tr_product_size` (
 --
 
 INSERT INTO `tr_product_size` (`id`, `prod_id`, `size_id`, `price`) VALUES
-(1, 1, 4, ''),
-(2, 2, 3, ''),
-(3, 3, 5, ''),
-(4, 4, 2, ''),
-(5, 5, 1, ''),
-(6, 6, 2, ''),
-(7, 7, 5, ''),
-(8, 8, 4, ''),
-(9, 9, 2, ''),
-(10, 10, 5, ''),
-(11, 11, 3, ''),
-(12, 12, 1, ''),
-(13, 13, 5, '');
+(1, 1, 4, '1000000'),
+(2, 2, 3, '1000000'),
+(3, 3, 5, '1000000'),
+(4, 4, 2, '1000000'),
+(5, 5, 1, '1000000'),
+(6, 6, 2, '1000000'),
+(7, 7, 5, '1000000'),
+(8, 8, 4, '1000000'),
+(9, 9, 2, '1000000'),
+(10, 10, 5, '1000000'),
+(11, 11, 3, '1000000'),
+(12, 12, 1, '1000000'),
+(13, 13, 5, '1000000'),
+(14, 14, 1, '12233'),
+(15, 15, 1, '12233'),
+(16, 15, 3, '200000'),
+(17, 16, 1, '12233'),
+(18, 16, 5, '1000000');
 
 -- --------------------------------------------------------
 
@@ -421,7 +432,12 @@ INSERT INTO `tr_product_spec` (`id`, `prod_id`, `spec_id`) VALUES
 (10, 10, 3),
 (11, 11, 4),
 (12, 12, 5),
-(13, 13, 7);
+(13, 13, 7),
+(14, 14, 4),
+(15, 15, 2),
+(16, 15, 4),
+(17, 16, 4),
+(18, 16, 14);
 
 -- --------------------------------------------------------
 
@@ -461,7 +477,8 @@ INSERT INTO `user_login` (`user_id`, `username`, `password`, `email`, `user_type
 (27, 'someother', '$2y$10$JbV5GOIkW7j0EaI6n5FZ.e1tvwD2FIAcw5jrUvmdwdNxdlG2OZ9xu', 'someother@email.com', 2, 1, 26),
 (29, 'dummy', '$2y$10$6OLUFwLTmS2maUqXsIG.FOH8//BUfe3zAxikWqzTNkqmFWtbfRmyq', 'dummySA@email.com', 1, 1, 2),
 (32, 'agmJDC', '$2y$10$ypn0tqqvhahBZX5E3H2.ye.ewV6SxDlkeZrt7prrBeLnKUuZX9dky', 'agm.jdc@email.com', 3, 0, 2),
-(33, 'agmSimpruk', '$2y$10$jkK2KE1kCW8oKSTjqid1B..c0gOKptpwu3GTcZ23LqrtJwevDBIay', 'agm.simpruk@email.com', 3, 1, 2);
+(33, 'agmSimpruk', '$2y$10$jkK2KE1kCW8oKSTjqid1B..c0gOKptpwu3GTcZ23LqrtJwevDBIay', 'agm.simpruk@email.com', 3, 1, 2),
+(34, 'agmEmporiumPluitMall', '$2y$10$mODOvh1tdEKVaGPy5JIfcOmZHGvvnu51elqlcoTvEEi4REo2V4m.W', 'agm.emporium@email.com', 3, 1, 2);
 
 --
 -- Indexes for dumped tables
@@ -579,7 +596,7 @@ ALTER TABLE `tm_customer`
 -- AUTO_INCREMENT for table `tm_product`
 --
 ALTER TABLE `tm_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `tm_size`
 --
@@ -599,7 +616,7 @@ ALTER TABLE `tm_spec`
 -- AUTO_INCREMENT for table `tm_store_owner`
 --
 ALTER TABLE `tm_store_owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `tm_super_admin`
 --
@@ -614,17 +631,17 @@ ALTER TABLE `tr_product`
 -- AUTO_INCREMENT for table `tr_product_size`
 --
 ALTER TABLE `tr_product_size`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `tr_product_spec`
 --
 ALTER TABLE `tr_product_spec`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
