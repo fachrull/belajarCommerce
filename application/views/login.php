@@ -5,10 +5,11 @@
     <h1>LOGIN</h1>
 
     <!-- breadcrumbs -->
-    <ol class="breadcrumb">
-      <li><a href="<?=site_url();?>">Home</a></li>
-      <li class="active"><a href="<?= site_url('auth/login');?>">Login</a></li>
-    </ol><!-- /breadcrumbs -->
+    <!--<ol class="breadcrumb">-->
+    <!--  <li><a href="<?=site_url();?>">Home</a></li>-->
+    <!--  <li class="active"><a href="<?= site_url('auth/login');?>">Login</a></li>-->
+    <!--</ol>-->
+    <!-- /breadcrumbs -->
 
   </div>
 </section>

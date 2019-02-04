@@ -6,11 +6,12 @@
 		<h1>ORDER PLACED</h1>
 
 		<!-- breadcrumbs -->
-		<ol class="breadcrumb">
-			<li><a href="index-home-before-login.html">Home</a></li>
-			<li><a href="shop.html">Shop</a></li>
-			<li class="active">Checkout Final</li>
-		</ol><!-- /breadcrumbs -->
+		<!--<ol class="breadcrumb">-->
+		<!--	<li><a href="index-home-before-login.html">Home</a></li>-->
+		<!--	<li><a href="shop.html">Shop</a></li>-->
+		<!--	<li class="active">Checkout Final</li>-->
+		<!--</ol>-->
+		<!-- /breadcrumbs -->
 
 	</div>
 </section>

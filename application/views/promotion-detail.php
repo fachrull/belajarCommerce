@@ -7,11 +7,12 @@
                 <h1>PROMOTION DETAIL</h1>
 
                 <!-- breadcrumbs -->
-                <ol class="breadcrumb">
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Pages</a></li>
-                    <li class="active">Frequently Asked Questions</li>
-                </ol><!-- /breadcrumbs -->
+                <!--<ol class="breadcrumb">-->
+                <!--    <li><a href="#">Home</a></li>-->
+                <!--    <li><a href="#">Pages</a></li>-->
+                <!--    <li class="active">Frequently Asked Questions</li>-->
+                <!--</ol>-->
+                <!-- /breadcrumbs -->
 
             </div>
         </section>

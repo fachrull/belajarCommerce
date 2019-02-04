@@ -72,12 +72,17 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 4) {
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
+      $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
+
       $this->load->view('include/header');
       $this->load->view('home', $data);
       $this->load->view('include/footer');
     } elseif ($this->session->userdata('uType') == NULL) {
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
+      $data['stores'] = JSON_encode($this->mhome->getProducts(NULL, array('idField' => 'id',
+        'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
+        'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE));
 
       $this->load->view('include/header');
       $this->load->view('home', $data);
@@ -115,20 +120,35 @@ class Home extends CI_Controller{
     }
   }
 
-  public function shop(){
+  public function shop($brand, $category){
+    if($brand == 6){
+        $category = NULL;
+    }
+    $data['products'] = $this->mhome->getProduct_price($brand, $category);
+    $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('nameField' => 'name', 'idField' => 'id'),
+      'tm_brands', TRUE);
+    $data['category'] = $this->mhome->brand_categories($brand);
+    $data['brands'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
+      'tm_brands', FALSE);
+
     $this->load->view('include/header2');
-    $this->load->view('shop');
+    $this->load->view('shop', $data);
     $this->load->view('include/footer');
   }
 
   public function listArticle(){
+    $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
+      'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
+
     $this->load->view('include/header2');
-    $this->load->view('list-article');
+    $this->load->view('list-article', $data);
     $this->load->view('include/footer');
   }
 
   public function fullArticle($id){
-    $data['pedia'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_agmpedia', TRUE);
+    $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
+      'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
+    $data['article'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_agmpedia', TRUE);
 
     $this->load->view('include/header2');
     $this->load->view('full-article', $data);
@@ -216,6 +236,42 @@ class Home extends CI_Controller{
   public function promotionDetail(){
     $this->load->view('include/header2');
     $this->load->view('promotion-detail');
+    $this->load->view('include/footer');
+  }
+
+  public function bestSeller(){
+    $this->load->view('include/header2');
+    $this->load->view('best-seller');
+    $this->load->view('include/footer');
+  }
+
+  public function historyPage(){
+    $this->load->view('include/header2');
+    $this->load->view('history-page');
+    $this->load->view('include/footer');
+  }
+
+  public function wishlistPage(){
+    $this->load->view('include/header2');
+    $this->load->view('wishlist-page');
+    $this->load->view('include/footer');
+  }
+
+  public function transactionPage(){
+    $this->load->view('include/header2');
+    $this->load->view('transaction-page');
+    $this->load->view('include/footer');
+  }
+
+  public function profilePage(){
+    $this->load->view('include/header2');
+    $this->load->view('page-profile');
+    $this->load->view('include/footer');
+  }
+
+  public function profileSetting(){
+    $this->load->view('include/header2');
+    $this->load->view('page-profile-settings');
     $this->load->view('include/footer');
   }
 }

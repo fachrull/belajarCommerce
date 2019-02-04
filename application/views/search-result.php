@@ -6,11 +6,12 @@
 		<h1>SEARCH RESULT</h1>
 
 		<!-- breadcrumbs -->
-		<ol class="breadcrumb">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Pages</a></li>
-			<li class="active">Search Result</li>
-		</ol><!-- /breadcrumbs -->
+		<!--<ol class="breadcrumb">-->
+		<!--	<li><a href="#">Home</a></li>-->
+		<!--	<li><a href="#">Pages</a></li>-->
+		<!--	<li class="active">Search Result</li>-->
+		<!--</ol>-->
+		<!-- /breadcrumbs -->
 
 	</div>
 </section>

@@ -7,9 +7,14 @@
     <div class="row">
       <div class="box">
         <div class="box-body">
-          <table id="dataTable" class="table table-bordered table-striped">
-          <a href="<?= site_url('admin/addSpec');?>" class="btn btn-oldblue h-30">
+            <div class="row">
+                <div class="col-md-12">
+                    <a href="<?= site_url('admin/addSpec');?>" class="btn btn-oldblue h-30">
             <i class="fa fa-plus"></i>Spec</a>
+                </div>
+            </div>
+            <hr class="col-xs-12">
+          <table id="dataTable" class="table table-bordered table-striped">
             <thead>
               <th>No.</th>
               <th>Name</th>

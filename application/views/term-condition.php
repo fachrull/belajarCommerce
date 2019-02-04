@@ -7,11 +7,12 @@
 		<h1>Terms and Conditions</h1>
 
 		<!-- breadcrumbs -->
-		<ol class="breadcrumb">
-			<li><a href="#">Home</a></li>
-			<li><a href="#">Pages</a></li>
-			<li class="active">Terms and Conditions</li>
-		</ol><!-- /breadcrumbs -->
+		<!--<ol class="breadcrumb">-->
+		<!--	<li><a href="#">Home</a></li>-->
+		<!--	<li><a href="#">Pages</a></li>-->
+		<!--	<li class="active">Terms and Conditions</li>-->
+		<!--</ol>-->
+		<!-- /breadcrumbs -->
 
 	</div>
 </section>

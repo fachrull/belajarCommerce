@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 26, 2019 at 10:06 PM
+-- Generation Time: Jan 28, 2019 at 06:41 AM
 -- Server version: 5.7.25-0ubuntu0.18.04.2
 -- PHP Version: 7.2.10-0ubuntu0.18.04.1
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `koliho_cmrc`
+-- Database: `koliho_bcommerce`
 --
 
 -- --------------------------------------------------------
@@ -159,8 +159,7 @@ INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `description`, `im
 (10, 2, 1, 'Ophelia', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d6f7068656c69612e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:48:57'),
 (11, 2, 1, 'Suite Palais', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f70616c6169732e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:50:14'),
 (12, 2, 1, 'Suite Ambassadeur', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f616d6261737361646575722e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:51:24'),
-(13, 2, 1, 'Suite Viceroy', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f76696365726f792e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:52:43'),
-(14, 2, 3, 'dummyProduct', '<p>lorem ipsum</p>\r\n\r\n<p>lorem ipsum</p>\r\n', 0x6b696e676b6f696c2d70696c6c6f772d64756d6d7970726f647563742e6a7067, '2019-01-25 17:00:00', '2019-01-26 07:26:34');
+(13, 2, 1, 'Suite Viceroy', 'This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.', 0x6b696e676b6f696c2d6d617474726573732d73756974655f76696365726f792e6a7067, '2019-01-15 17:00:00', '2019-01-15 18:52:43');
 
 -- --------------------------------------------------------
 
@@ -391,10 +390,7 @@ INSERT INTO `tr_product_size` (`id`, `prod_id`, `size_id`, `price`) VALUES
 (10, 10, 5, ''),
 (11, 11, 3, ''),
 (12, 12, 1, ''),
-(13, 13, 5, ''),
-(14, 14, 1, '12233'),
-(15, 14, 3, '300000'),
-(16, 14, 5, '1000000');
+(13, 13, 5, '');
 
 -- --------------------------------------------------------
 
@@ -425,10 +421,7 @@ INSERT INTO `tr_product_spec` (`id`, `prod_id`, `spec_id`) VALUES
 (10, 10, 3),
 (11, 11, 4),
 (12, 12, 5),
-(13, 13, 7),
-(14, 14, 3),
-(15, 14, 19),
-(16, 14, 24);
+(13, 13, 7);
 
 -- --------------------------------------------------------
 

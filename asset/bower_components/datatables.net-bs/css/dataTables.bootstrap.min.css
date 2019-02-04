@@ -26,11 +26,13 @@ div.dataTables_wrapper div.dataTables_length label {
 	font-weight: normal;
 	text-align: left;
 	white-space: nowrap
+	height: 30px !important;
 }
 
 div.dataTables_wrapper div.dataTables_length select {
 	width: 75px;
 	display: inline-block;
+	height: 30px !important;
 }
 
 div.dataTables_wrapper div.dataTables_filter {
@@ -162,9 +164,10 @@ div.dataTables_scrollFoot table {
 @media screen and (max-width: 767px) {
 
 	div.dataTables_wrapper div.dataTables_length,
+	div.dataTables_wrapper div.dataTables_filter,
 	div.dataTables_wrapper div.dataTables_info,
 	div.dataTables_wrapper div.dataTables_paginate {
-		text-align: center
+		text-align: left
 	}
 }
 

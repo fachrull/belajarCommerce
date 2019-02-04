@@ -32,6 +32,8 @@
 	<link href="<?= base_url('asset/css/header-1.css');?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('asset/css/layout-shop.css')?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('asset/css/lightgrey.css');?>" rel="stylesheet" type="text/css" id="color_scheme" />
+	<link href="<?= base_url('asset/css/pack-megashop.css');?>" rel="stylesheet" type="text/css" />
+	
 </head>
 
 <body class="smoothscroll enable-animation">
@@ -57,92 +59,38 @@
 				<div class="container">
 
 					<!-- Mobile Menu Button -->
-					<button class="btn btn-mobile" data-toggle="collapse" data-target=".nav-main-collapse">
+					<button class="btn btn-mobile pl-0" data-toggle="collapse" data-target=".nav-main-collapse">
 						<i class="fa fa-bars"></i>
 					</button>
 
 					<!-- BUTTONS -->
-					<ul class="float-right nav nav-pills nav-second-main">
+					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-0 bl-0 pl-0">
+						<li class="header-button-arrow hidden-lg-down">
+							<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
+								<i class="fa fa-user"></i>
 
-						<!-- USER -->
-						<li>
-							<a data-toggle="modal" data-target=".login">
-								<i class=" fa fa-user"></i>
 							</a>
-							<div class="modal fade login" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-								<div class="modal-dialog modal-sm">
-									<div class="modal-content">
-
-										<!-- header modal -->
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-										</div>
-
-										<!-- body modal -->
-										<div class="modal-body">
-											<!-- login form -->
-											<form action="#" method="post" class="sky-form boxed">
-
-												<header class="fs-18 mb-20">
-													I'm a returning customer
-												</header>
-
-												<fieldset class="m-0">
-
-													<label class="input mb-10">
-														<i class="ico-append fa fa-envelope"></i>
-														<input required type="email" placeholder="Email address">
-														<b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
-													</label>
-
-													<label class="input mb-10">
-														<i class="ico-append fa fa-lock"></i>
-														<input required type="password" placeholder="Password">
-														<b class="tooltip tooltip-bottom-right">Only latin characters and numbers</b>
-													</label>
-
-													<div class="clearfix note mb-30">
-														<a class="float-right" href="#">Forgot Password?</a>
-													</div>
-
-													<label class="checkbox fw-300">
-														<input type="checkbox" name="checkbox-inline">
-														<i></i> Keep me logged in
-													</label>
-
-												</fieldset>
-
-											</form>
-											<!-- /login form -->
-
-											<!-- ALERT -->
-											<div class="alert alert-mini alert-danger mb-30">
-												<strong>Oh snap!</strong> Login Incorrect!
-											</div><!-- /ALERT -->
-
-										</div>
-										<!-- /LOGIN -->
-										<!-- Modal Footer -->
-										<div class="modal-footer">
-											<footer>
-												<button type="submit" class="btn btn-oldblue rad-0 float-right"><i class="fa fa-check"></i> OK, LOG IN</button>
-											</footer>
-										</div>
-									</div>
-
-
-								</div>
-							</div>
+							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/wishlistPage');?>">WISHLIST</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/transactionPage');?>">STATUS TRANSASKSI</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/profilePage');?>">PROFIL</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('auth/login');?>">LOGIN</a>
+								<!--<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">-->
+								<!--	<i class="fa fa-power-off"></i>-->
+								<!--	<b>LOG OUT</b>-->
+								<!--</a>-->
 						</li>
-						<!-- /USER -->
-
-						<!-- SEARCH -->
 						<li class="search">
-							<a href="javascript:;">
-								<i class="fa fa-search"></i>
+							<a href=" javascript:;">
+								<i class="fa fa-search h-60 line-height-60"></i>
 							</a>
 						</li>
-						<!-- /SEARCH -->
+					</ul>
+					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
+						<li>
+							<a href="#" class="h-30 line-height-30"></a>
+						</li>
 					</ul>
 					<!-- /BUTTONS -->
 
@@ -153,39 +101,39 @@
 					<div class="navbar-collapse collapse nav-main-collapse">
 						<nav class="nav-main text-center">
 							<ul id="topMain" class="nav nav-pills nav-main text-center">
-								<li class="dropdown active">
+								<li class="dropdown">
 									<!-- HOME -->
 									<a class="dropdown-toggle" href="#">
 										PRODUCT
 									</a>
 									<ul class="dropdown-menu">
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
+											<a class="fs-14" href="<?= base_url('home/shop/1/1');?>">
 												AIRELOOM
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
-												SERTA
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
-												FLORENCE
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
+											<a class="fs-14" href="<?= base_url('home/shop/2/1');?>">
 												KINGKOIL
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
+											<a class="fs-14" href="<?= base_url('home/shop/4/1');?>">
+												SERTA
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="<?= base_url('home/shop/5/1');?>">
 												TEMPUR
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
+											<a class="fs-14" href="<?= base_url('home/shop/3/1');?>">
+												FLORENCE
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="<?= base_url('home/shop/6/1');?>">
 												STRESSLESS
 											</a>
 										</li>
@@ -205,7 +153,7 @@
 								</li>
 								<li>
 									<!-- HOME -->
-									<a href="<?= base_url('');?>">
+									<a class="scrollTo" href="#location">
 										LOCATION
 									</a>
 								</li>
@@ -214,6 +162,39 @@
 									<a href="<?= base_url('home/partnership')?>">
 										PARTNERSHIP
 									</a>
+								</li>
+								<li class="dropdown active hidden-lg-up">
+									<!-- HOME -->
+									<a class="dropdown-toggle" href="#">
+										USERNAME
+									</a>
+									<ul class="dropdown-menu">
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												HISTORY
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												WISHLIST
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												PROFILE
+											</a>
+										</li>
+										<!--<li class="dropdown">-->
+										<!--	<a class="fs-14" href="shop.html">-->
+										<!--		LOREM-->
+										<!--	</a>-->
+										<!--</li>-->
+										<!--<li class="dropdown">-->
+										<!--	<a class="fs-14" href="shop.html">-->
+										<!--		LOGOUT-->
+										<!--	</a>-->
+										<!--</li>-->
+									</ul>
 								</li>
 							</ul>
 						</nav>

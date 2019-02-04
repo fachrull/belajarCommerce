@@ -11,14 +11,14 @@
         <div class="box">
           <div class="box-body">
             <div class="row">
-              <div class="col-md-6">
-                <a href="<?= site_url('admin/addProd');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i> Add Product</a>
+              <div class="col-md-4">
+                <a href="<?= site_url('admin/addProd');?>" class="mb-10 btn btn-oldblue h-30"><i class="fa fa-plus"></i> Add Product</a>
               </div>
-              <div class="col-md-6">
-                <form action="<?= site_url('admin/allProd')?>" method="post">
-                  <div class="row float-left">
-                    <div class="col-sm-4">
-                      <label class="input mb-10" style="width:100%;">
+              <div class="col-sm-8">
+                <form action="<?= site_url('admin/allProd')?>" method="post" class="m-0">
+                  <div class="row">
+                    <div class="col-sm-4 mb-10">
+                      <label class="input m-0 form-all-product">
                         <select class="form-control" name="brand" style="height:30px !important;">
                           <option value="0" selected>Brand</option>
                           <?php foreach($brands as $brand): ?>
@@ -27,8 +27,8 @@
                         </select>
                       </label>
                     </div>
-                    <div class="col-sm-6">
-                      <label class="input mb-10" style="width:100%;">
+                    <div class="col-sm-5 mb-10">
+                      <label class="input m-0 form-all-product">
                         <select class="form-control"  name="cat" style="height:30px !important;">
                           <option value="0" selected>Category</option>
                           <?php foreach($cats as $cat): ?>
@@ -37,8 +37,8 @@
                         </select>
                       </label>
                     </div>
-                    <div class="col-sm-2 pull-right">
-                      <button type="submit" name="submit" class="btn btn-oldblue h-30 ">
+                    <div class="col-sm-3 mb-10">
+                      <button type="submit" name="submit" class="btn btn-oldblue h-30 form-all-product">
                         <i class="fa fa-search"></i> Search
                       </button>
                     </div>
@@ -46,6 +46,7 @@
                 </form>
               </div>
             </div>
+            <hr class="col-xs-12 mt-10">
             <table id="dataTable" class="table table-bordered table-striped">
               <thead>
                 <th>No</th>

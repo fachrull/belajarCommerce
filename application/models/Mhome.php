@@ -113,4 +113,34 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+  
+  public function brand_categories($brand){
+    $this->db->select('a.id, a.name');
+    $this->db->from('tm_category a');
+    $this->db->join('tm_product b', 'b.cat_id = a.id', 'left');
+    $where = array('b.brand_id' => $brand);
+    $this->db->where($where);
+    $this->db->group_by('b.cat_id');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function getProduct_price($brand, $category){
+    $this->db->select('MAX(a.price), b.name, b.id, b.image');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $where = array('b.brand_id' => $brand, 'b.cat_id' => $category);
+    $this->db->where($where);
+    $this->db->group_by('a.prod_id');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
 }

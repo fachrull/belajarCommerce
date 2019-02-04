@@ -4,13 +4,13 @@
 				<h1>PROMOTION</h1>
 
 				<!-- breadcrumbs -->
-				<ol class="breadcrumb">
+				<!-- <ol class="breadcrumb">
 					<li><a href="#">Home</a></li>
 					<li><a href="#">Something</a></li>
 					<li><a href="#">Something</a></li>
 					<li class="active">Promotion</li>
-				</ol><!-- /breadcrumbs -->
-
+				</ol> -->
+				<!-- /breadcrumbs -->
 			</div>
 		</section>
 		<!-- /PAGE HEADER -->
