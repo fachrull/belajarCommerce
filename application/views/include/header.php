@@ -63,6 +63,7 @@
 
 					<!-- BUTTONS -->
 					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-0 bl-0 pl-0">
+<<<<<<< HEAD
 					<li class="list-inline-item header-button-arrow">
 						<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
 							<i class="fa fa-user"></i>
@@ -78,16 +79,44 @@
 							</a>
 					</li>
 					<li class="search">
+=======
+						<li class="header-button-arrow hidden-lg-down">
+							<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
+								<i class="fa fa-user"></i>
+
+							</a>
+							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">WISHLIST</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">STATUS TRANSASKSI</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">PROFIL</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('auth/login');?>">LOGIN</a>
+								<!--<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">-->
+								<!--	<i class="fa fa-power-off"></i>-->
+								<!--	<b>LOG OUT</b>-->
+								<!--</a>-->
+						</li>
+						<li class="search">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<a href=" javascript:;">
 								<i class="fa fa-search h-60 line-height-60"></i>
 							</a>
 						</li>
+<<<<<<< HEAD
 				</ul>
 				<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
 					<li>
 						<a href="#" class="h-30 line-height-30"></a>
 					</li>
 				</ul>
+=======
+					</ul>
+					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
+						<li>
+							<a href="#" class="h-30 line-height-30"></a>
+						</li>
+					</ul>
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 					<!-- /BUTTONS -->
 
 					<!-- Logo -->
@@ -104,32 +133,48 @@
 									</a>
 									<ul class="dropdown-menu">
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
+											<a class="fs-14" href="<?= base_url('home/shop/1/1');?>">
 												AIRELOOM
 											</a>
 										</li>
 										<li class="dropdown">
+<<<<<<< HEAD
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
+=======
+											<a class="fs-14" href="<?= base_url('home/shop/2/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												KINGKOIL
 											</a>
 										</li>
 										<li class="dropdown">
+<<<<<<< HEAD
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
+=======
+											<a class="fs-14" href="<?= base_url('home/shop/4/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												SERTA
 											</a>
 										</li>
 										<li class="dropdown">
+<<<<<<< HEAD
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
+=======
+											<a class="fs-14" href="<?= base_url('home/shop/5/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												TEMPUR
 											</a>
 										</li>
 										<li class="dropdown">
+<<<<<<< HEAD
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
+=======
+											<a class="fs-14" href="<?= base_url('home/shop/3/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												FLORENCE
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop');?>">
+											<a class="fs-14" href="<?= base_url('home/shop/6/1');?>">
 												STRESSLESS
 											</a>
 										</li>
@@ -158,6 +203,39 @@
 									<a href="<?= base_url('home/partnership')?>">
 										PARTNERSHIP
 									</a>
+								</li>
+								<li class="dropdown active hidden-lg-up">
+									<!-- HOME -->
+									<a class="dropdown-toggle" href="#">
+										USERNAME
+									</a>
+									<ul class="dropdown-menu">
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												HISTORY
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												WISHLIST
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												PROFILE
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												LOREM
+											</a>
+										</li>
+										<li class="dropdown">
+											<a class="fs-14" href="shop.html">
+												LOGOUT
+											</a>
+										</li>
+									</ul>
 								</li>
 							</ul>
 						</nav>

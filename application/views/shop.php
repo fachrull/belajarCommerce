@@ -3,7 +3,7 @@
 		<section class="page-header page-header-md">
 			<div class="container">
 
-				<h1>AIRELOOM</h1>
+				<h1><?= strtoupper($brand['name']);?></h1>
 
 				<!-- breadcrumbs -->
 				<!--<ol class="breadcrumb">-->
@@ -33,6 +33,7 @@
 								<h4>CATEGORIES</h4>
 							</div>
 
+<<<<<<< HEAD
 							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 								<li class="list-group-noicon active">
 									<a class="dropdown-toggle" href="#">MATTRESS</a>
@@ -42,9 +43,17 @@
 										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Conoration</a></li>
 										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Baron</a></li>
 									</ul>
+=======
+                            <?php if($category != NULL):?>
+							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
+							    <?php foreach($category as $category):?>
+								<li class="list-group-noicon active">
+									<a href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 								</li>
+								<?php endforeach;?>
 							</ul>
-
+                            <?php endif;?>
 						</div>
 						<!-- /CATEGORIES -->
 
@@ -57,12 +66,21 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
+<<<<<<< HEAD
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(21)</span> Aireloom</a></li>
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(44)</span> KingKoil</a></li>
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(2)</span> Serta</a></li>
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(18)</span> Tempur</a></li>
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(87)</span> Florence</a></li>
 								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(32)</span> Stressless</a></li>
+=======
+								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>"><span class="fs-11 text-muted float-right"></span>AIRELOOM</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>"><span class="fs-11 text-muted float-right"></span>KINGKOIL</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>"><span class="fs-11 text-muted float-right"></span>SERTA</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>"><span class="fs-11 text-muted float-right"></span>TEMPUR</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>"><span class="fs-11 text-muted float-right"></span>FLORENCE</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>"><span class="fs-11 text-muted float-right"></span>STRESSLESS</a></li>
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							</ul>
 
 						</div>
@@ -103,32 +121,35 @@
 					</div>
 
 					<!-- RIGHT -->
-					<div class="col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2">
+					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="8"
+					 data-pajinate-container=".pajinate-container">
+					    <?php if($products == NULL):?>
+                            <p align:"center">Product tidak tersedia</p>
+                        <?php else:?>
 						<!-- LIST OPTIONS -->
-						<div class="clearfix shop-list-options mb-20">
+						<div class="pajinate-nav clearfix shop-list-options mb-20">
 
+							<!-- Pagination Default -->
 							<ul class="pagination m-0 float-right">
-								<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+								<!-- pages added by pajinate plugin -->
 							</ul>
+							<!-- /Pagination Default -->
 
 							<div class="options-left">
 								<select>
-									<option value="name_asc">A-Z</option>
-									<option value="name_desc">Z-A</option>
-									<option value="price_asc">Price Low to High</option>
-									<option value="price_desc">Price High to Low</option>
-									<option value="pos_asc">Position ASC</option>
-									<option value="pos_desc">Position DESC</option>
+									<option value="pos_asc">A-Z</option>
+									<option value="pos_desc">Z-A</option>
+									<option value="name_asc">Price Low to High</option>
+									<option value="name_desc">Price High to Low</option>
+									<option value="price_asc">Position ASC</option>
+									<option value="price_desc">Position DESC</option>
 								</select>
 							</div>
+
 						</div>
 						<!-- /LIST OPTIONS -->
 
+<<<<<<< HEAD
 
 						<ul class="shop-item-list row list-inline m-0">
 
@@ -321,32 +342,50 @@
 										</div>
 										<!-- /product more info -->
 									</div>
+=======
+						<ul class="pajinate-container shop-item-list row list-inline m-0">
+							<?php foreach ($products as $product): ?>
+								<!-- ITEM -->
+								<li class="col-lg-6 col-sm-6">
 
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
+									<div class="shop-item">
 
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-5 fs-13">
-												<!-- rating-0 ... rating-5 -->
+										<div class="thumbnail">
+											<!-- product image(s) -->
+											<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
+												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="product name" />
+											</a>
+											<!-- /product image(s) -->
+
+											<!-- hover buttons -->
+											<div class="shop-option-over">
+												<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
+												<a class="btn btn-light add-wishlist" href="#" data-item-id="2" data-toggle="tooltip" title="Add To Wishlist"><i
+													class="fa fa-heart p-0"></i></a>
+												</div>
+												<!-- /hover buttons -->
 											</div>
-										</div>
-										<!-- /rating -->
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 
-										<!-- price -->
-										<div class="shop-item-price">
-											Rp. 2,000,000
-										</div>
-										<!-- /price -->
-									</div>
+											<div class="shop-item-summary text-center">
+												<h2><?= $product['name'];?> - <?= $product['id'];?></h2>
 
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
+												<!-- rating -->
+												<div class="shop-item-rating-line">
+													<div class="rating rating-0 fs-13">
+														<!-- rating-0 ... rating-5 -->
+													</div>
+												</div>
+												<!-- /rating -->
 
+												<!-- price -->
+												<div class="shop-item-price">
+													Rp. <?= number_format($product['MAX(a.price)'], 2, ",", ".");?>
+												</div>
+												<!-- /price -->
+											</div>
+
+<<<<<<< HEAD
 							</li>
 							<!-- /ITEM -->
 
@@ -385,8 +424,17 @@
 										<div class="shop-item-rating-line">
 											<div class="rating rating-4 fs-13">
 												<!-- rating-0 ... rating-5 -->
+=======
+											<!-- buttons -->
+											<div class="shop-item-buttons text-center">
+												<a class="btn btn-oldblue" href="http://agm-cmrc.koliho.com/home/shopCart">
+													<i class="fa fa-cart-plus"></i> Add to Cart
+												</a><!-- add .clean to remove css characteres -->
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 											</div>
+											<!-- /buttons -->
 										</div>
+<<<<<<< HEAD
 										<!-- /rating -->
 
 										<!-- price -->
@@ -675,25 +723,24 @@
 
 							</li>
 							<!-- /ITEM -->
+=======
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 
+									</li>
+							<?php endforeach; ?>
+                            <!-- /ITEM -->
 						</ul>
-
 						<hr />
 
 						<!-- Pagination Default -->
-						<div class="text-center">
+						<div class="pajinate-nav text-center">
 							<ul class="pagination">
-								<li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-								<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-								<li class="page-item"><a class="page-link" href="#">4</a></li>
-								<li class="page-item"><a class="page-link" href="#">5</a></li>
-								<li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
+								<!-- pages added by pajinate plugin -->
 							</ul>
 						</div>
 						<!-- /Pagination Default -->
-
+						
+                        <?php endif;?>
 					</div>
 
 				</div>

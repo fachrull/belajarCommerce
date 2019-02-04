@@ -12,8 +12,9 @@
                       <div class="alert alert-mini alert-danger mb-30">
                         <strong>Oh snap!</strong> <?= $this->session->userdata('error')?>
                       </div>
-                    <?php endif; ?>
-                <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
+                    <?php else: ?>
+                        <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
+                    <?php endif;?>                
               <!-- /ALERT -->
               <form class="m-0 sky-form" action="<?= site_url('auth/regisSO');?>" method="post">
                   <p class="register-box-msg">Register a new Store Owner</p>
@@ -67,6 +68,18 @@
                         <input name="fax" type="text" placeholder="Fax">
                       </label>
                     </div>
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-md-6">
+                          <label class="input mb-10">
+                              <input name="lat" type="text" placeholder="Latitude">
+                          </label>
+                      </div>
+                      <div class="col col-md-6 mb-10">
+                          <label class="input mb-10">
+                              <input name="lng" type="text" placeholder="Langtitude">
+                          </label>
+                      </div>
                   </div>
                 <div class="row">
                   <div class="col-md-12 text-right">

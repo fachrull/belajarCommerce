@@ -124,7 +124,7 @@ class Auth extends CI_Controller{
       $this->form_validation->set_rules('checkbox', 'Checkbox', 'required');
 
       if ($this->form_validation->run() === FALSE) {
-          $this->load->view('include/header');
+          $this->load->view('include/header2');
           $this->load->view('register');
           $this->load->view('include/footer');
       } else {
@@ -188,7 +188,7 @@ class Auth extends CI_Controller{
         redirect('admin/stores');
       }
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -202,7 +202,7 @@ class Auth extends CI_Controller{
     $this->form_validation->set_rules('pass', 'Password', 'required');
 
     if($this->form_validation->run() === FALSE){
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('forgot_pass');
       $this->load->view('include/footer');
     }else{

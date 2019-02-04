@@ -22,7 +22,7 @@ class Admin extends CI_Controller {
       $this->load->view('include/admin/footer');
 
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -69,7 +69,7 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -99,7 +99,7 @@ class Admin extends CI_Controller {
         redirect('admin/sa_brand', 'refresh');
       }
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -110,7 +110,7 @@ class Admin extends CI_Controller {
       $this->madmin->deleteData(array('id' => $brand), 'tm_brands');
       redirect('admin/sa_brand', 'refresh');
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -125,7 +125,7 @@ class Admin extends CI_Controller {
       $this->load->view('admin/sa_cat', $data);
       $this->load->view('include/admin/footer');
     }else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -180,7 +180,7 @@ class Admin extends CI_Controller {
         redirect('admin/sa_cat');
       }
     }else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -191,7 +191,7 @@ class Admin extends CI_Controller {
       $this->madmin->deleteData(array('id' => $cat), 'tm_category');
       redirect('admin/sa_cat', 'refresh');
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -236,7 +236,7 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -347,7 +347,7 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -435,7 +435,7 @@ class Admin extends CI_Controller {
       $this->load->view('admin/prodDetail', $data);
       $this->load->view('include/admin/footer');
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -449,7 +449,7 @@ class Admin extends CI_Controller {
       $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_spec');
       redirect('admin/allProd');
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -464,7 +464,7 @@ class Admin extends CI_Controller {
       $this->load->view('admin/sa_agmpedia', $data);
       $this->load->view('include/admin/footer');
     }else {
-        $this->load->view('include/header');
+        $this->load->view('include/header2');
         $this->load->view('un-authorise');
         $this->load->view('include/footer');
     }
@@ -518,7 +518,7 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -552,7 +552,7 @@ class Admin extends CI_Controller {
          redirect('admin/stores/'.$idSO);
        }
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -611,7 +611,7 @@ class Admin extends CI_Controller {
         }
       }
     }else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -626,7 +626,7 @@ class Admin extends CI_Controller {
       $this->load->view('admin/sa_slider', $data);
       $this->load->view('include/admin/footer');
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -655,7 +655,7 @@ class Admin extends CI_Controller {
         redirect('admin/sa_slider');
       }
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -666,7 +666,7 @@ class Admin extends CI_Controller {
       $this->madmin->deleteData(array('id' => $idSlider), 'tm_slide');
       redirect('admin/sa_slider');
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -681,7 +681,7 @@ class Admin extends CI_Controller {
       $this->load->view('admin/sa_spec', $data);
       $this->load->view('include/admin/footer');
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -727,7 +727,7 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -749,7 +749,7 @@ class Admin extends CI_Controller {
       $this->madmin->deleteData(array('id' => $specId), 'tm_spec');
       redirect('admin/sa_spec');
     }else{
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -764,7 +764,7 @@ class Admin extends CI_Controller {
       $this->load->view('admin/sa_size', $data);
       $this->load->view('include/admin/footer');
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -795,7 +795,7 @@ class Admin extends CI_Controller {
         redirect('admin/sa_size');
       }
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -832,7 +832,7 @@ class Admin extends CI_Controller {
       $this->madmin->deleteData(array('id' => $sizeId), 'tm_size');
       redirect('admin/sa_size');
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -862,7 +862,7 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }

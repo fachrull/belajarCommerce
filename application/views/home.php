@@ -1,75 +1,96 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-<!-- SLIDER -->
-<section id="slider" class="fullheight mobile-fullheight">
+		<!-- SLIDER -->
+		<section id="slider" class="fullheight mobile-fullheight">
 
-  <!--
-      SWIPPER SLIDER PARAMS
+			<div class="swiper-container" data-effect="slide" data-autoplay="false">
+				<div class="swiper-wrapper">
 
-      data-effect="slide|fade|coverflow"
-      data-autoplay="2500|false"
-    -->
-  <div class="swiper-container" data-effect="slide" data-autoplay="false">
-    <div class="swiper-wrapper">
+					<!-- SLIDE 1 -->
+					<div class="swiper-slide" style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']);?>);">
+						<div class="overlay dark-5">
+							<!-- dark overlay [1 to 9 opacity] -->
+						</div>
 
-      <!-- SLIDE 1 -->
-      <div class="swiper-slide" id="slide" style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']);?>);">
+						<div class="display-table">
+							<div class="display-table-cell vertical-align-middle">
+								<div class="container">
+									<div class="row">
+										<div class="text-center col-md-8 col-xs-12 offset-md-2">
+											<div class="fixed-bottom pb-35">
+												<a class="btn btn-lg btn-exp scrollTo b-0" href="#product">EXPLORE
+													<br><i class="fa fa-chevron-down"></i></a>
+											</div>
+										</div>
+									</div>
 
-        <div class="display-table">
-          <div class="display-table-cell vertical-align-middle">
-            <div class="container">
-              <div class="row">
-                <div class="text-center col-md-8 col-xs-12 offset-md-2 mt-100">
-                  <div class="fixed-bottom pb-35">
-                    <a class="btn btn-lg scrollTo btn-exp b-0" href="#product">EXPLORE
-                      <br><i class="fa fa-chevron-down"></i></a>
-                  </div>
-                </div>
-              </div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- /SLIDE 1 -->
 
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- /SLIDE 1 -->
+				</div>
+			</div>
 
-    </div>
-  </div>
-
-</section>
-<!-- /SLIDER -->
+		</section>
+		<!-- /SLIDER -->
 
 <!-- PRODUCT -->
 <section id="product" class="section-lg">
 			<div class="container">
 				<div class="row text-center">
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
+<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
+=======
+						<a href="<?= site_url('home/shop/1/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
+<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
+=======
+						<a href="<?= site_url('home/shop/2/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
+<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
+=======
+						<a href="<?= site_url('home/shop/4/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
+<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
+=======
+						<a href="<?= site_url('home/shop/5/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
+<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
+=======
+						<a href="<?= site_url('home/shop/3/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
+<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
+=======
+						<a href="<?= site_url('home/shop/6/1');?>">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
 						</a>
 					</div>
@@ -196,16 +217,25 @@
   <h3 class="text-center pb-30">OUR LOCATION</h3>
   <div class="row">
     <div class="col-12 col-md-6 pb-30">
-      <img class="img-fluid" src="<?= base_url('asset/content-images/slider-2-100x100.png');?>" alt="!#">
-      <div class="absolute pt-20">
-        <h3 class="text-white text-center">LISTS THE STORES</h3>
-      </div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="input-group">
+						<div class="input-group-addon"><i class="fa fa-search"></i></div>
+						<input id="filter-store" type="text" class="form-control" placeholder="Search">
+					</div>
+				</div>
+				<div class="col-md-12">
+					<div id="store" class="list-group margin-bottom-0"></div>
+				</div>
+			</div>
     </div>
     <div class="col-12 col-md-6 pb-30">
-      <img class="img-fluid" src="<?= base_url('asset/content-images/slider-1-100x100.png');?>" alt="!#">
-      <div class="absolute pt-20">
-        <h3 class="text-white text-center">MAP</h3>
-      </div>
+			<div class="form-group">
+	      <div class="absolute pt-20" id="maps" >
+					<input type="hidden" id="lat" />
+        	<input type="hidden" id="lng" />
+				</div>
+			</div>
     </div>
   </div>
 </section>
