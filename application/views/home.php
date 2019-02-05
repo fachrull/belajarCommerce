@@ -202,20 +202,29 @@
 	<h3 class="text-center pb-30">OUR LOCATION</h3>
   	<div class="row">
 			<div class="col-12 col-md-12 pb-30">
-				<div class="form-group h-450">
+				<div class="form-group h-400">
 					<div class="absolute" id="maps" >
 						<input type="hidden" id="lat" />
 						<input type="hidden" id="lng" />
 					</div>
-					<div class="col-12 col-md-6">
-						<div class="relative																																		">
-							<div class="input-group">
-								<div class="input-group-addon"><i class="fa fa-search"></i></div>
-								<input id="filter-store" type="text" class="form-control" placeholder="Search">
-							</div>
-							<div class="col-12 col-md-6">
-								<div id="store" class="list-group margin-bottom-0"></div>
-							</div>
+					<div class="col-12 col-md-5 float-right pr-50">
+						<div class="relative">
+
+						<div class="modal-dialog modal-lg">
+							<div class="modal-content">
+
+								<!-- header modal -->
+								<div class="modal-header">
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-search"></i></div>
+										<input id="filter-store" type="text" class="form-control" placeholder="Search">
+									</div>
+								</div>
+
+								<!-- body modal -->
+								<div class="modal-body">
+									<div id="store" class="list-group margin-bottom-0"></div>
+								</div>
 						</div>
 					</div>
 				</div>
@@ -233,7 +242,6 @@
 					</div>
 				</div>
 			</div> -->
-  	</div>
 	</div>
 </section>
 <!-- /LOCATION -->
