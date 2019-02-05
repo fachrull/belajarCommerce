@@ -3923,6 +3923,12 @@ body.boxed #topBar.dark ul.top-links>li {
 		display: block;
 	}
 
+	#topMain li a.small-search-icon {
+		color: #333 !important;
+		background-color: #fff !important;
+		border: 0;
+	}
+
 	#topNav ul.dropdown-menu {
 		border: 0;
 	}
@@ -10515,8 +10521,9 @@ footer.sticky {
 		margin-top: 80px !important;
 	}
 
+	/* edited */
 	section div.row>div {
-		margin-bottom: 60px;
+		/* margin-bottom: 60px; */
 	}
 
 	section div.row.lightbox>div {
@@ -11076,13 +11083,13 @@ input::placeholder {
 	height: 215px;
 	/* max-width: 100%; */
 	width: 460px;
-	content:'';
-  display:inline-block;
-  z-index:0;
-  left:0;
-  -webkit-filter: blur(15px);
-  -moz-filter: blur(15px);
-  filter: blur(15px);
+	content: '';
+	display: inline-block;
+	z-index: 0;
+	left: 0;
+	-webkit-filter: blur(15px);
+	-moz-filter: blur(15px);
+	filter: blur(15px);
 }
 
 .input-email {
@@ -11256,4 +11263,37 @@ div.tabbed>a:hover>div {
 
 .banner-rotator p:hover {
 	color: rgb(207, 207, 207);
+}
+
+/* location-form */
+.location-form .list-group {
+	max-height: 340px;
+	margin-bottom: 10px;
+	overflow: scroll;
+	-webkit-overflow-scrolling: touch;
+}
+
+@media only screen and (max-width: 767px) {
+	.location-form {
+		position: unset !important;
+	}
+
+	.location-form .location-form-small.row {
+		float: unset !important;
+	}
+
+	.location-form .location-form-small.col-12 {
+		margin-bottom: 10px;
+	}
+
+	.location-form div.modal-dialog {
+		position: unset !important;
+		width: 100% !important;
+		box-shadow: unset;
+		margin: 0px !important;
+	}
+
+	.location-form div.modal-content {
+		border: unset;
+	}
 }

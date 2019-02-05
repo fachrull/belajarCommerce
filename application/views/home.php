@@ -154,7 +154,7 @@
     <div class="col-12 col-md-5 pb-30 order-1 order-md-2">
       <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
         <div>
-          <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title">
+          <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title" style="width:100%;">
           <div class="absolute pt-20">
             <h4 class="text-white text-center">LOREM</h4>
             <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 1</h6>
@@ -167,11 +167,11 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-md-5 pb-5">
+    <div class="col-12 col-sm-5 pb-5">
       <?php foreach ($pedias as $pedia): ?>
       <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
         <div>
-            <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" alt="agmpedia title">
+            <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" alt="agmpedia title" style="width:100%;">
             <div class="absolute pt-20">
               <h4 class="text-white text-center"><?= $pedia['title'];?></h4>
               <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
@@ -197,51 +197,43 @@
 <hr>
 
 <!-- LOCATION -->
-<section id="location">
-	<div class="container">
-	<h3 class="text-center pb-30">OUR LOCATION</h3>
-  	<div class="row">
-			<div class="col-12 col-md-12 pb-30">
-				<div class="form-group h-400">
-					<div class="absolute" id="maps" >
-						<input type="hidden" id="lat" />
-						<input type="hidden" id="lng" />
-					</div>
-					<div class="col-12 col-md-5 float-right pr-50">
-						<div class="relative">
-
-						<div class="modal-dialog modal-lg">
-							<div class="modal-content">
-
-								<!-- header modal -->
-								<div class="modal-header">
-									<div class="input-group">
-										<div class="input-group-addon"><i class="fa fa-search"></i></div>
-										<input id="filter-store" type="text" class="form-control" placeholder="Search">
+<section id="location" class="mb-30">
+	<div class="container-fluid">
+	<h3 class="text-center mb-30">OUR LOCATION</h3>
+		<div class="location-form">
+			<div class="row location-form-small float-right">
+				<div class="col-12 location-form-small">
+					<div class="modal-dialog w-350 mr-60 absolute" style="z-index:1;">
+						<div class="modal-content">
+							<div class="modal-header">
+								<p>
+								Cari Lokasi Agen
+								</p>
+								<div class="input-group mt-0">
+									<div class="input-group-addon">
+									<i class="fa fa-search"></i>
 									</div>
+									<input id="filter-store" type="text" class="form-control" placeholder="Search">
 								</div>
-
-								<!-- body modal -->
-								<div class="modal-body">
-									<div id="store" class="list-group margin-bottom-0"></div>
+							<div class="modal-body px-0">
+								<div id="store" class="list-group margin-bottom-0 list-height">
 								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-			<!-- <div class="col-12 col-md-6 pb-30">
-				<div class="row">
-					<div class="col-md-12">
-						<div class="input-group">
-							<div class="input-group-addon"><i class="fa fa-search"></i></div>
-							<input id="filter-store" type="text" class="form-control" placeholder="Search">
-						</div>
-					</div>
-					<div class="col-md-12">
-						<div id="store" class="list-group margin-bottom-0"></div>
+		</div>
+  		<div class="row">
+			<div class="col-12 pb-30">
+				<div class="form-group h-500">
+					<div class="absolute" id="maps" >
+						<input type="hidden" id="lat" />
+						<input type="hidden" id="lng" />
 					</div>
 				</div>
-			</div> -->
+			</div>
+		</div>
 	</div>
 </section>
 <!-- /LOCATION -->
