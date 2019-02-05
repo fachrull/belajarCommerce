@@ -42,7 +42,7 @@
                 <li class="active"><a href="<?= site_url('admin/sa_spec');?>">Spec</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
                 <li class="active"><a href="<?= site_url();?>">Rating</a></li>
-                <li class="active"><a href="<?= site_url();?>">Best Order</a></li>
+                <li class="active"><a href="<?= site_url('admin/bestSeller');?>">Best Seller</a></li>
               </li>
             </ul>
           </li>
@@ -50,7 +50,7 @@
             <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Slider</span></a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-tag"></i><span> Promotion</span></a>
+          <a href="<?= site_url('admin/sa_promotion');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
           </li>
           <li>
             <a href="<?= site_url('admin/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>

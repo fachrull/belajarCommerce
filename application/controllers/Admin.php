@@ -868,4 +868,20 @@ class Admin extends CI_Controller {
     }
   }
 
+  public function bestSeller()
+  {
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/sa_bestseller');
+    $this->load->view('include/admin/footer');
+  }
+
+  public function sa_promotion()
+  {
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/sa_promotion');
+    $this->load->view('include/admin/footer');
+  }
+  
 }
