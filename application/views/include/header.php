@@ -63,11 +63,9 @@
 
 					<!-- BUTTONS -->
 					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-0 bl-0 pl-0">
-<<<<<<< HEAD
 					<li class="list-inline-item header-button-arrow">
 						<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
-							<i class="fa fa-user"></i>
-				
+							<i class="fa fa-eye"></i>
 						</a>
 						<div class="dropdown-menu dropdown-menu-right m-0 p-0">
 							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-wishlist.html">My Wishlist</a>
@@ -79,7 +77,7 @@
 							</a>
 					</li>
 					<li class="search">
-=======
+
 						<li class="header-button-arrow hidden-lg-down">
 							<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
 								<i class="fa fa-user"></i>
@@ -97,26 +95,22 @@
 								<!--</a>-->
 						</li>
 						<li class="search">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<a href=" javascript:;">
 								<i class="fa fa-search h-60 line-height-60"></i>
 							</a>
 						</li>
-<<<<<<< HEAD
 				</ul>
 				<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
 					<li>
 						<a href="#" class="h-30 line-height-30"></a>
 					</li>
 				</ul>
-=======
 					</ul>
 					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
 						<li>
 							<a href="#" class="h-30 line-height-30"></a>
 						</li>
 					</ul>
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 					<!-- /BUTTONS -->
 
 					<!-- Logo -->
@@ -138,38 +132,27 @@
 											</a>
 										</li>
 										<li class="dropdown">
-<<<<<<< HEAD
+
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
-=======
 											<a class="fs-14" href="<?= base_url('home/shop/2/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												KINGKOIL
 											</a>
 										</li>
 										<li class="dropdown">
-<<<<<<< HEAD
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
-=======
 											<a class="fs-14" href="<?= base_url('home/shop/4/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												SERTA
 											</a>
 										</li>
 										<li class="dropdown">
-<<<<<<< HEAD
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
-=======
 											<a class="fs-14" href="<?= base_url('home/shop/5/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												TEMPUR
 											</a>
 										</li>
 										<li class="dropdown">
-<<<<<<< HEAD
 											<a class="fs-14" href="<?= base_url('home/shop');?>">
-=======
 											<a class="fs-14" href="<?= base_url('home/shop/3/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 												FLORENCE
 											</a>
 										</li>

@@ -41,56 +41,38 @@
 			<div class="container">
 				<div class="row text-center">
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
-<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
-=======
 						<a href="<?= site_url('home/shop/1/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
-=======
 						<a href="<?= site_url('home/shop/2/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
-=======
 						<a href="<?= site_url('home/shop/4/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
-<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
-=======
 						<a href="<?= site_url('home/shop/5/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
-=======
 						<a href="<?= site_url('home/shop/3/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-<<<<<<< HEAD
 						<a href="<?= site_url('home/shop');?>">
-=======
 						<a href="<?= site_url('home/shop/6/1');?>">
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
 						</a>
 					</div>
@@ -159,8 +141,9 @@
 <hr>
 
 <!-- AGMPEDIA -->
-<section id="agmpedia" class="section-xs container">
-  <a href="list-article.html">
+<section id="agmpedia">
+	<div class="container">
+	<a href="list-article.html">
     <h3 class="text-center">AGMPEDIA</h3>
     <h5 class="text-center">lastest news of week</h5>
   </a>
@@ -207,36 +190,50 @@
     </div>
   <?php endforeach; ?>
   </div>
+	</div>
 </section>
 <!-- /AGMPEDIA -->
 
 <hr>
 
 <!-- LOCATION -->
-<section id="location" class="section-xs container">
-  <h3 class="text-center pb-30">OUR LOCATION</h3>
-  <div class="row">
-    <div class="col-12 col-md-6 pb-30">
-			<div class="row">
-				<div class="col-md-12">
-					<div class="input-group">
-						<div class="input-group-addon"><i class="fa fa-search"></i></div>
-						<input id="filter-store" type="text" class="form-control" placeholder="Search">
+<section id="location">
+	<div class="container">
+	<h3 class="text-center pb-30">OUR LOCATION</h3>
+  	<div class="row">
+			<div class="col-12 col-md-12 pb-30">
+				<div class="form-group h-450">
+					<div class="absolute" id="maps" >
+						<input type="hidden" id="lat" />
+						<input type="hidden" id="lng" />
+					</div>
+					<div class="col-12 col-md-6">
+						<div class="relative																																		">
+							<div class="input-group">
+								<div class="input-group-addon"><i class="fa fa-search"></i></div>
+								<input id="filter-store" type="text" class="form-control" placeholder="Search">
+							</div>
+							<div class="col-12 col-md-6">
+								<div id="store" class="list-group margin-bottom-0"></div>
+							</div>
+						</div>
 					</div>
 				</div>
-				<div class="col-md-12">
-					<div id="store" class="list-group margin-bottom-0"></div>
-				</div>
 			</div>
-    </div>
-    <div class="col-12 col-md-6 pb-30">
-			<div class="form-group">
-	      <div class="absolute pt-20" id="maps" >
-					<input type="hidden" id="lat" />
-        	<input type="hidden" id="lng" />
+			<!-- <div class="col-12 col-md-6 pb-30">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="input-group">
+							<div class="input-group-addon"><i class="fa fa-search"></i></div>
+							<input id="filter-store" type="text" class="form-control" placeholder="Search">
+						</div>
+					</div>
+					<div class="col-md-12">
+						<div id="store" class="list-group margin-bottom-0"></div>
+					</div>
 				</div>
-			</div>
-    </div>
-  </div>
+			</div> -->
+  	</div>
+	</div>
 </section>
 <!-- /LOCATION -->

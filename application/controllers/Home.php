@@ -73,11 +73,7 @@ class Home extends CI_Controller{
     } elseif ($this->session->userdata('uType') == 4) {
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
-<<<<<<< HEAD
-      
-=======
 
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
       $this->load->view('include/header');
       $this->load->view('home', $data);
       $this->load->view('include/footer');
@@ -143,11 +139,7 @@ class Home extends CI_Controller{
   public function listArticle(){
     $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
-<<<<<<< HEAD
-      
-=======
 
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
     $this->load->view('include/header2');
     $this->load->view('list-article', $data);
     $this->load->view('include/footer');
@@ -246,18 +238,13 @@ class Home extends CI_Controller{
     $this->load->view('promotion-detail');
     $this->load->view('include/footer');
   }
-<<<<<<< HEAD
-  
-=======
 
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
   public function bestSeller(){
     $this->load->view('include/header2');
     $this->load->view('best-seller');
     $this->load->view('include/footer');
   }
-<<<<<<< HEAD
-=======
+
 
   public function historyPage(){
     $this->load->view('include/header2');
@@ -288,5 +275,5 @@ class Home extends CI_Controller{
     $this->load->view('page-profile-settings');
     $this->load->view('include/footer');
   }
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
+
 }
