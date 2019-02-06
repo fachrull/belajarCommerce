@@ -169,10 +169,6 @@ function showLocation(mapOption, map, pos, km) {
 	};
 	this.Crcl = new google.maps.Circle(populationOption);
 }
-//
-// function drawMarkers(markerPoints) {
-//
-// }
 
 $.each(stores.features, function(index, store){
 	item = '<a class="list-group-item" data-toggle="outlet-item" data-target='+store.id+'>'+
@@ -185,22 +181,7 @@ $.each(stores.features, function(index, store){
 									'</p>'
 				 '</a>';
 	$('#store').append(item);
-})
-// function loadStore() {
-// 	console.log(stores);
-// 	$('#store').empty();
-// 	if(stores.total_rows == 0){
-// 		item = '<div class="list-group-item">'+
-// 							'<h4 class="list-group-item-heading text-center">Tidak ada toko yang ditemukan</h4>'+
-// 						'</div>';
-// 	  $('#store').append(item);
-// 	}else{
-// 		item = '<div class="list-group-item">'+
-// 							'<h4 class="list-group-item-heading text-center"> Jumlah toko '+stores.total_rows+'</h4>'+
-// 						'</div>';
-// 		$('#store').append(item);
-// 	}
-// }
+});
 </script>
 <script async defer type="text/javascript" src="//maps.google.com/maps/api/js?key=AIzaSyD7Bogq9RONZQpDo-E2gU37FsnQUSSRIFs&callback=initMap"></script>
 </body>
