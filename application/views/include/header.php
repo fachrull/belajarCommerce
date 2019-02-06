@@ -63,36 +63,25 @@
 
 					<!-- BUTTONS -->
 					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-0 bl-0 pl-0">
-					<li class="list-inline-item header-button-arrow">
-						<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
-							<i class="fa fa-eye"></i>
-						</a>
-						<div class="dropdown-menu dropdown-menu-right m-0 p-0">
-							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-wishlist.html">My Wishlist</a>
-							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">My Orders</a>
-							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">Account Settings</a>
-							<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">
-								<i class="fa fa-power-off"></i> 
-								<b>Log Out</b>
-							</a>
-					</li>
 					<li class="search">
-
 						<li class="header-button-arrow hidden-lg-down">
 							<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
 								<i class="fa fa-user"></i>
-
 							</a>
 							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">WISHLIST</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">STATUS TRANSASKSI</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">PROFIL</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('auth/login');?>">LOGIN</a>
-								<!--<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">-->
-								<!--	<i class="fa fa-power-off"></i>-->
-								<!--	<b>LOG OUT</b>-->
-								<!--</a>-->
+								<?php if ($this->session->userdata('uType') == 4): ?>
+									<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">
+										<i class="fa fa-power-off"></i>
+										<b>Log Out</b>
+									</a>
+								<?php else: ?>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">WISHLIST</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">STATUS TRANSASKSI</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">PROFIL</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('auth/login');?>">LOGIN</a>
+								<?php endif; ?>
+							</div>
 						</li>
 						<li class="search">
 							<a href=" javascript:;">
@@ -100,16 +89,6 @@
 							</a>
 						</li>
 				</ul>
-				<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
-					<li>
-						<a href="#" class="h-30 line-height-30"></a>
-					</li>
-				</ul>
-					</ul>
-					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-15 mr-0 p-0">
-						<li>
-							<a href="#" class="h-30 line-height-30"></a>
-						</li>
 					</ul>
 					<!-- /BUTTONS -->
 
