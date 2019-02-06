@@ -192,7 +192,7 @@
 <section id="location" class="section-xs container">
   <h3 class="text-center pb-30">OUR LOCATION</h3>
   <div class="row">
-    <div class="col-12 col-md-6 pb-30">
+    <div class="col-12 col-md-6 pb-30" style="width: 700px; height: 700px;">
 			<div class="row">
 				<div class="col-md-12">
 					<div class="input-group">
@@ -208,9 +208,9 @@
     <div class="col-12 col-md-6 pb-30">
 			<div class="form-group">
 	      <div class="absolute pt-20" id="maps" >
-					<input type="hidden" id="lat" />
-        	<input type="hidden" id="lng" />
 				</div>
+				<input type="hidden" id="lat" />
+				<input type="hidden" id="lng" />
 			</div>
     </div>
   </div>

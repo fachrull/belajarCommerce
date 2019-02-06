@@ -109,7 +109,7 @@
 <!-- PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('asset/javascript/demo.shop.js');?>"></script>
 <script>
-var stores = <?= JSON_encode($stores)?>;
+var stores = <?= $stores?>;
 var lat = document.getElementById('lat');
 var lng = document.getElementById('lng');
 var km = 30;
@@ -117,23 +117,24 @@ var map;
 var markers = [];
 var infoWindow; // markers information
 var locationSelect;
+var mapOption = {
+	center: {lat: -2.0372851958986224, lng: 117.06773251302911},
+	zoom: 5,
+	mapTypeId: 'roadmap'
+}
 
 function initMap() {
 	var indonesia = {lat: -2.0372851958986224, lng: 117.06773251302911};
-	map = new google.maps.Map(document.getElementById('maps'),{
-		center: indonesia,
-		zoom: 5,
-		mapTypeId: 'roadmap',
-		mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
-	});
-	infoWindow = new google.maps.InfoWindow();
+	map = new google.maps.Map(document.getElementById('maps'),mapOption);
+	infoWindow = new google.maps.InfoWindow({map: map});
+
+	map.data.addGeoJson(stores);
 
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position){
 			var pos = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude,
-				zoom: 11
 			};
 			lat.value = position.coords.latitude;
 			lng.value = position.coords.longitude;
@@ -143,11 +144,14 @@ function initMap() {
 			infoWindow.setContent('I\'m here.');
 
 			map.setCenter(pos);
+			map.setZoom(12);
+
+			showLocation(mapOption, map, pos, km);
 		}, function(){
-			handleLocationError(true, infoWindow, map.getCenter());
+			handleLocationError(true, map.getCenter());
 		});
 	}else{
-		handleLocationError(false, infoWindow, map.getCenter());
+		handleLocationError(false, map.getCenter());
 	}
 }
 
@@ -158,16 +162,30 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos){
 	'Error: Browser doesn\'t support.');
 }
 
+function showLocation(mapOption, map, pos, km) {
+	var populationOption = {
+		strokeOpacity: 0,
+		strokeWeight: 2,
+		fillOpacity: 0,
+		map: map,
+		center: pos,
+		radius: Math.sqrt(km*500) * 100
+	};
+	this.Crcl = new google.maps.Circle(populationOption);
+}
+//
+// function drawMarkers(markerPoints) {
+//
+// }
 
-
-$.each(JSON.parse(stores), function(index, store){
+$.each(stores.features, function(index, store){
 	item = '<a class="list-group-item" data-toggle="outlet-item" data-target='+store.id+'>'+
-								'<h4 class="list-group-item-heading">'+store.company_name+'</h4>'+
+								'<h4 class="list-group-item-heading">'+store.properties.company_name+'</h4>'+
 									'<p class="list-group-item-heading">'+
-										'<strong>Address : </strong>'+store.address+
+										'<strong>Address : </strong>'+store.properties.address+
 									'</p>'+
 									'<p class="list-group-item-heading">'+
-										'<strong>Phone : </strong>'+store.phone1+
+										'<strong>Phone : </strong>'+store.properties.phone+
 									'</p>'
 				 '</a>';
 	$('#store').append(item);
