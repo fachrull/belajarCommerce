@@ -70,15 +70,18 @@
 								<i class="fa fa-user"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/wishlistPage');?>">WISHLIST</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/transactionPage');?>">STATUS TRANSASKSI</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/profilePage');?>">PROFIL</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('auth/login');?>">LOGIN</a>
-								<!--<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">-->
-								<!--	<i class="fa fa-power-off"></i>-->
-								<!--	<b>LOG OUT</b>-->
-								<!--</a>-->
+								<?php if ($this->session->userdata('uType') == 4): ?>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/wishlistPage');?>">WISHLIST</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/transactionPage');?>">STATUS TRANSASKSI</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/profilePage');?>">PROFIL</a>
+									<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="<?= site_url('auth/logout');?>">
+										<i class="fa fa-power-off"></i>
+										<b>LOG OUT</b>
+									</a>
+								<?php else: ?>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('auth/login');?>">LOGIN</a>
+								<?php endif; ?>
 						</li>
 						<li class="search">
 							<a href=" javascript:;">

@@ -73,6 +73,7 @@ class Home extends CI_Controller{
     } elseif ($this->session->userdata('uType') == 4) {
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
+      $data['stores'] = $this->storesToGeoJson();
 
       $this->load->view('include/header');
       $this->load->view('home', $data);
@@ -80,9 +81,6 @@ class Home extends CI_Controller{
     } elseif ($this->session->userdata('uType') == NULL) {
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
-      // $data['stores'] = JSON_encode($this->mhome->getProducts(NULL, array('idField' => 'id',
-      //   'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
-      //   'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE));
       $data['stores'] = $this->storesToGeoJson();
 
       $this->load->view('include/header');

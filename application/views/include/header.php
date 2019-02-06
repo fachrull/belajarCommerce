@@ -70,15 +70,15 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
 								<?php if ($this->session->userdata('uType') == 4): ?>
-									<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="#">
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/wishlistPage');?>">WISHLIST</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/transactionPage');?>">STATUS TRANSASKSI</a>
+									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/profilePage');?>">PROFIL</a>
+									<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="<?= site_url('auth/logout');?>">
 										<i class="fa fa-power-off"></i>
 										<b>Log Out</b>
 									</a>
 								<?php else: ?>
-									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
-									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">WISHLIST</a>
-									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">STATUS TRANSASKSI</a>
-									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">PROFIL</a>
 									<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('auth/login');?>">LOGIN</a>
 								<?php endif; ?>
 							</div>

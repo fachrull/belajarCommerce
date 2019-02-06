@@ -171,7 +171,7 @@ function showLocation(mapOption, map, pos, km) {
 }
 
 $.each(stores.features, function(index, store){
-	item = '<a class="list-group-item" data-toggle="outlet-item" data-target='+store.id+'>'+
+	item = '<a href="#" class="list-group-item" data-toggle="outlet-item" data-target='+store.id+'>'+
 								'<h4 class="list-group-item-heading">'+store.properties.company_name+'</h4>'+
 									'<p class="list-group-item-heading">'+
 										'<strong>Address : </strong>'+store.properties.address+
@@ -181,6 +181,13 @@ $.each(stores.features, function(index, store){
 									'</p>'
 				 '</a>';
 	$('#store').append(item);
+});
+
+$(document).on('click', 'a[data-toggle="outlet-item"]', function(e){
+	e.preventDefault();
+	var target = $(this).data('target');
+	var marker = NULL;
+	$.each()
 });
 </script>
 <script async defer type="text/javascript" src="//maps.google.com/maps/api/js?key=AIzaSyD7Bogq9RONZQpDo-E2gU37FsnQUSSRIFs&callback=initMap"></script>
