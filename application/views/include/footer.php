@@ -87,13 +87,9 @@
 	</div>
 </footer>
 <!-- /FOOTER -->
-
-
-
 	</div>
 	<!-- SCROLL TO TOP -->
 	<a href="<?= site_url('#');?>" id="toTop"></a>
-
 <!-- JAVASCRIPT FILES -->
 <script>
 	var plugin_path = "<?= base_url('asset/plugins/');?>";

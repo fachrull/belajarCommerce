@@ -69,6 +69,13 @@
 							<a href="#" class="dropdown h-60 line-height-60" data-toggle="dropdown" data-hover="dropdown">
 								<i class="fa fa-user"></i>
 
+<<<<<<< HEAD
+						<!-- USER -->
+						<li>
+							<a href="<?= site_url('auth/login');?>">
+								<i class=" fa fa-user"></i>
+							</a>
+=======
 							</a>
 							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
@@ -80,6 +87,7 @@
 								<!--	<i class="fa fa-power-off"></i>-->
 								<!--	<b>LOG OUT</b>-->
 								<!--</a>-->
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 						</li>
 						<li class="search">
 							<a href=" javascript:;">
@@ -153,7 +161,11 @@
 								</li>
 								<li>
 									<!-- HOME -->
+<<<<<<< HEAD
+									<a href="<?= base_url('#location');?>">
+=======
 									<a class="scrollTo" href="#location">
+>>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 										LOCATION
 									</a>
 								</li>

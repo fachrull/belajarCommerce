@@ -485,14 +485,16 @@ function _topNav() {
 			jQuery("#topNav div.nav-main-collapse").show(0);
 			jQuery('body').append('<div id="menu-overlay"></div>');
 
-			if (!jQuery("#topMain").hasClass('nav-onepage') || window.width > 960) { /* onepage fix */
+			if (!jQuery("#topMain").hasClass('nav-onepage') || window.width > 960) {
+				/* onepage fix */
 				jQuery('html').addClass('noscroll');
 				window.currentScroll = jQuery(window).scrollTop();
 			}
 
 		} else {
 
-			if (!jQuery("#topMain").hasClass('nav-onepage') || window.width > 960) { /* onepage fix */
+			if (!jQuery("#topMain").hasClass('nav-onepage') || window.width > 960) {
+				/* onepage fix */
 				jQuery('html,body').animate({
 					scrollTop: currentScroll
 				}, 300, 'easeInOutExpo');
@@ -509,7 +511,7 @@ function _topNav() {
 
 		// Add dropup class
 		_header_el.addClass('dropup');
-		window.homeHeight = jQuery(window).outerHeight() - 55;
+		window.homeHeight = jQuery(window).outerHeight() - 0;
 
 
 		// sticky header

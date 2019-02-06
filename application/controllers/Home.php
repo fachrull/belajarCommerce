@@ -275,6 +275,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+
   public function historyPage(){
     $this->load->view('include/header2');
     $this->load->view('history-page');
@@ -304,4 +305,5 @@ class Home extends CI_Controller{
     $this->load->view('page-profile-settings');
     $this->load->view('include/footer');
   }
+
 }
