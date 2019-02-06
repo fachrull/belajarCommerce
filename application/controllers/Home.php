@@ -80,14 +80,44 @@ class Home extends CI_Controller{
     } elseif ($this->session->userdata('uType') == NULL) {
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
-      $data['stores'] = JSON_encode($this->mhome->getProducts(NULL, array('idField' => 'id',
-        'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
-        'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE));
+      // $data['stores'] = JSON_encode($this->mhome->getProducts(NULL, array('idField' => 'id',
+      //   'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
+      //   'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE));
+      $data['stores'] = $this->storesToGeoJson();
 
       $this->load->view('include/header');
       $this->load->view('home', $data);
       $this->load->view('include/footer');
     }
+  }
+
+  function storesToGeoJson() {
+    $geojson = array (
+      'type' => 'FeatureCollection',
+      'features' => array()
+    );
+
+    $stores = $this->mhome->getProducts(NULL, array('idField' => 'id',
+      'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
+      'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE);
+
+      foreach ($stores as $store) {
+        $feature =  array(
+          'id' => $store['id'],
+          'type' => 'Feature',
+          'geometry' => array(
+            'type' => 'Point',
+            'coordinates' => array($store['langtitude'], $store['latitude'])
+          ),
+          'properties' => array(
+            'company_name' => $store['company_name'],
+            'address' => $store['address'],
+            'phone' => $store['phone1']
+          )
+        );
+        array_push($geojson['features'], $feature);
+      }
+    return JSON_encode($geojson, JSON_NUMERIC_CHECK);
   }
 
   public function customer(){
