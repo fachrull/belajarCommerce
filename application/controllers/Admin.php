@@ -841,7 +841,18 @@ class Admin extends CI_Controller {
   public function stores($link = FALSE){
     if ($this->session->userdata('uType') == 1) {
       if($link === FALSE){
+        $data['provinces'] = [];
+        $data['cities'] = [];
+        $data['sub_districts'] = [];
         $data['posts'] = $this->madmin->getProducts(NULL, NULL, 'tm_store_owner', FALSE);
+        foreach ($data['posts'] as $store) {
+          $provinsi = $this->madmin->joinStoreProv($store['id']);
+          $kabupaten = $this->madmin->jointStoreKab($store['id']);
+          $kecamatan = $this->madmin->jointStoreKec($store['id']);
+          array_push($data['provinces'], $provinsi);
+          array_push($data['cities'], $kabupaten);
+          array_push($data['sub_districts'], $kecamatan);
+        }
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -852,6 +863,9 @@ class Admin extends CI_Controller {
         $id = $this->madmin->getProducts(array('id' => $link),
           array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
         $data['post'] = $this->madmin->getProducts(array('id' => $link),NULL, 'tm_store_owner', TRUE);
+        $data['province'] = $this->madmin->joinStoreProv($link);
+        $data['city'] = $this->madmin->jointStoreKab($link);
+        $data['sub_district'] = $this->madmin->jointStoreKec($link);
         $data['prime'] = $this->madmin->dataPrime($link);
         $data['storeId'] = $idStore;
         $data['products'] = $this->madmin->joinStoreProd($link);
@@ -883,5 +897,5 @@ class Admin extends CI_Controller {
     $this->load->view('admin/sa_promotion');
     $this->load->view('include/admin/footer');
   }
-  
+
 }
