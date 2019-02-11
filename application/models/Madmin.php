@@ -93,4 +93,43 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
+
+  public function joinStoreProv($store_id){
+    $this->db->select('a.nama as province');
+    $this->db->from('provinsi a');
+    $this->db->join('tm_store_owner b', 'b.province = a.id_prov', 'left');
+    $this->db->where('b.id', $store_id);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function jointStoreKab($store_id){
+    $this->db->select('a.nama as city');
+    $this->db->from('kabupaten a');
+    $this->db->join('tm_store_owner b', 'b.city = a.id_kab', 'left');
+    $this->db->where('b.id', $store_id);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function jointStoreKec($store_id){
+    $this->db->select('a.nama as sub_district');
+    $this->db->from('kecamatan a');
+    $this->db->join('tm_store_owner b', 'b.sub_district = a.id_kec', 'left');
+    $this->db->where('b.id', $store_id);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
 }
