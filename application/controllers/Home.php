@@ -105,7 +105,7 @@ class Home extends CI_Controller{
           'type' => 'Feature',
           'geometry' => array(
             'type' => 'Point',
-            'coordinates' => array($store['langtitude'], $store['latitude'])
+            'coordinates' => array($store['langtitude'], $store['latitude']),
           ),
           'properties' => array(
             'company_name' => $store['company_name'],
