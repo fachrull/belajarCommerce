@@ -14,28 +14,26 @@
               <th>No.</th>
               <th>Company Name</th>
               <th>Address</th>
-              <th>Sub District</th>
-              <th>City</th>
               <th>Province</th>
+              <th>City</th>
+              <th>Sub District</th>
               <th>Phone</th>
               <th>Detai</th>
             </tr>
           </thead>
           <tbody>
-            <?php $no=1; ?>
-            <?php foreach($posts as $post): ?>
+            <?php for($i = 0; $i < count($posts); $i++): ?>
               <tr>
-                <td><?= $no;?></td>
-                <td><?= $post['company_name'];?></td>
-                <td><?= $post['address'];?></td>
-                <td><?= $post['sub_district'];?></td>
-                <td><?= $post['city'];?></td>
-                <td><?= $post['province'];?></td>
-                <td><?= $post['phone1'];?></td>
-                <td><a href="<?=site_url('admin/stores/'.$post['id']);?>" type="submit" class="btn btn-oldblue text-white">Detail</a></td>
+                <td><?= $no=$i+1;?></td>
+                <td><?= $posts[$i]['company_name']?></td>
+                <td><?= $posts[$i]['address']?></td>
+                <td><?= $provinces[$i][0]['province']?></td>
+                <td><?= $cities[$i][0]['city']?></td>
+                <td><?= $sub_districts[$i][0]['sub_district']?></td>
+                <td><?= $posts[$i]['phone1']?></td>
+                <td><a href="<?=site_url('admin/stores/'.$posts[$i]['id']);?>" type="submit" class="btn btn-oldblue text-white">Detail</a></td>
               </tr>
-              <?php $no++; ?>
-            <?php endforeach; ?>
+            <?php endfor; ?>
             </tbody>
         </table>
       </div>

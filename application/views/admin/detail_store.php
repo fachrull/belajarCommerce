@@ -12,9 +12,9 @@
           <div class="box-header pb-0">
             <p>Email: <?= $prime['email'];?></p>
             <p>Address: <?= $post['address'];?></p>
-            <p>Province: <?= $post['province'];?></p>
-            <p>City: <?= $post['city'];?></p>
-            <p>Sub district: <?= $post['sub_district'];?></p>
+            <p>Province: <?= $province[0]['province'];?></p>
+            <p>City: <?= $city[0]['city']?></p>
+            <p>Sub district: <?= $sub_district[0]['sub_district']?></p>
             <p>Postcode: <?= $post['postcode'];?></p>
             <?php if ($post['phone1'] != NULL): ?>
               <p>Phone 1: <?=$post['phone1'];?></p>
@@ -33,8 +33,6 @@
               <thead>
                 <th>No.</th>
                 <th>Product</th>
-                <th>Price</th>
-                <th>Sub Price</th>
                 <th>Quantity</th>
               </thead>
               <tbody>
@@ -44,8 +42,6 @@
                     <tr>
                       <td><?= $no;?></td>
                       <td><?= $product['name'];?></td>
-                      <td><?= $product['price'];?></td>
-                      <td><?= $product['sub_price'];?></td>
                       <td><?= ($product['quantity'] != NULL? $product['quantity']:'-');?></td>
                       <td>
                         <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
