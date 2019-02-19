@@ -2,7 +2,6 @@
 
 <section class="page-header page-header-md">
 	<div class="container">
-
 		<h1><?= $product['name'];?></h1>
 
 		<!-- breadcrumbs -->
@@ -75,12 +74,12 @@
 							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
 							<div class="absolute mt-120">
 								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 1</p> 
+								<p>Best Seller 1</p>
 								</a>
-								</div>	
+								</div>
 							<div class="absolute position-bottom">
 								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p> 
+								<p>View Detail</p>
 								</a>
 								</div>
 							</div>
@@ -88,17 +87,17 @@
 							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
 							<div class="absolute mt-120">
 								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 2</p> 
+								<p>Best Seller 2</p>
 								</a>
-								</div>	
+								</div>
 							<div class="absolute position-bottom">
 								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p> 
+								<p>View Detail</p>
 								</a>
 								</div>
 							</div>
 						</div>
-					<!-- /BANNER ROTATOR -->				
+					<!-- /BANNER ROTATOR -->
 
 			</div>
 
@@ -147,12 +146,12 @@
 
 						<div class="shop-item-price">
 							<span class="pl-0 fs-18"><strong><?= $product['name'];?></strong></span>
-							
+
 						</div>
 
 						<hr />
 
-						
+
 
 						<div class="toggle">
 									<label>Checking the stocks</label>
@@ -192,10 +191,10 @@
 											<button id="checkStock" class="btn btn-oldblue btn-block" type="button">CHECK</button>
 										</form>
 									</div>
-									
+
 								</div>
-								
-								
+
+
 
 						<!-- short description -->
 						<p class="mt-10"><?= $product['description'];?></p>
@@ -207,10 +206,10 @@
 						<div id="shoppingForm" class="row text-center">
 							<form class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
 								<input type="hidden" id="product_id" name="product_id" value="<?= $product['id'];?>" />
-								<input type="hidden" name="product_name" value="<?= $product['name'];?>" /> 
+								<input type="hidden" name="product_name" value="<?= $product['name'];?>" />
 								<input type="hidden" id="price" name="price" />
 								<input type="hidden" id="size-name" name="size-name" />
-								
+
 								<div class="col-2 col-md-2 mb-8">&nbsp;Price:</div>
 								<div class="col-2 col-md-10 mb-10"><p class="text-left" id="price2"></p></div>
 								<div class="col-2 col-md-2 mb-10">Size:</div>
@@ -228,16 +227,16 @@
 									</div><!-- /btn-group -->
 								</div>
                                 <div class="col-4 col-md-12 float-right">
-								    <button type="submit" class="btn btn-oldblue float-left product-add-cart rad-0 p-0 w-130">ADD TO CART</button>	
+								    <button type="submit" class="btn btn-oldblue float-left product-add-cart rad-0 p-0 w-130">ADD TO CART</button>
 								</div>
 
 							</form>
-								
+
 								</div>
 							<!-- /FORM -->
-							
+
 							<hr>
-						
+
 
                             <!-- Share -->
 						<div class="float-right">

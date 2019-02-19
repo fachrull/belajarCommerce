@@ -152,7 +152,7 @@ class Mhome extends CI_Model{
     $this->db->where('b.id', $idProduct);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
-      return $query->result_array();
+      return $query->row_array();
     } else {
       return FALSE;
     }

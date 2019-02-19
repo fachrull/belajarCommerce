@@ -195,6 +195,8 @@ class Home extends CI_Controller{
     $prices = [];
     $sizes = [];
     $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
+    // print_r($data['product']);
+    // exit();
     $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
       'provinsi', FALSE);
     $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
