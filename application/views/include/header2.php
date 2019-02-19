@@ -33,7 +33,7 @@
 	<link href="<?= base_url('asset/css/layout-shop.css')?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('asset/css/lightgrey.css');?>" rel="stylesheet" type="text/css" id="color_scheme" />
 	<link href="<?= base_url('asset/css/pack-megashop.css');?>" rel="stylesheet" type="text/css" />
-	
+
 </head>
 
 <body class="smoothscroll enable-animation">

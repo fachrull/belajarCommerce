@@ -59,13 +59,14 @@ $.widget.bridge('uibutton', $.ui.button);
 <script>
     $(function () {
     $('#dataTable').DataTable({
-      'paging'      : true,
-      'lengthChange': true,
-      'ordering'    : true,
+      'paging'      : true, // harus ada
+      'lengthChange': true, // harus ada
+      'ordering'    : true, // harus ada
       'info'        : true,
-      'autoWidth'   : true,
+      'autoWidth'   : false,
       'searching'   : true,
       'processing'  : true,
+      // 'pageLength'  : 15,
       // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
     });
   });

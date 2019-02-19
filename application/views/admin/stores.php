@@ -14,9 +14,9 @@
               <th>No.</th>
               <th>Company Name</th>
               <th>Address</th>
-              <th>Sub District</th>
-              <th>City</th>
               <th>Province</th>
+              <th>City</th>
+              <th>Sub District</th>
               <th>Phone</th>
               <th>Detai</th>
             </tr>
