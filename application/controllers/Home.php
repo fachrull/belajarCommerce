@@ -60,7 +60,7 @@ class Home extends CI_Controller{
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
       $data['stores'] = $this->storesToGeoJson();
-      
+
       $this->load->view('include/header');
       $this->load->view('home', $data);
       $this->load->view('include/footer');
@@ -74,7 +74,7 @@ class Home extends CI_Controller{
       $this->load->view('include/footer');
     }
   }
-  
+
   function storesToGeoJson() {
     $geojson = array (
       'type' => 'FeatureCollection',
@@ -92,35 +92,6 @@ class Home extends CI_Controller{
           'geometry' => array(
             'type' => 'Point',
             'coordinates' => array($store['langtitude'], $store['latitude'])
-          ),
-          'properties' => array(
-            'company_name' => $store['company_name'],
-            'address' => $store['address'],
-            'phone' => $store['phone1']
-          )
-        );
-        array_push($geojson['features'], $feature);
-      }
-    return JSON_encode($geojson, JSON_NUMERIC_CHECK);
-  }
-
-  function storesToGeoJson() {
-    $geojson = array (
-      'type' => 'FeatureCollection',
-      'features' => array()
-    );
-
-    $stores = $this->mhome->getProducts(NULL, array('idField' => 'id',
-      'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
-      'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE);
-
-      foreach ($stores as $store) {
-        $feature =  array(
-          'id' => $store['id'],
-          'type' => 'Feature',
-          'geometry' => array(
-            'type' => 'Point',
-            'coordinates' => array($store['langtitude'], $store['latitude']),
           ),
           'properties' => array(
             'company_name' => $store['company_name'],
@@ -173,7 +144,7 @@ class Home extends CI_Controller{
     $data['category'] = $this->mhome->brand_categories($brand);
     $data['brands'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
       'tm_brands', FALSE);
-     
+
     $this->load->view('include/header2');
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
@@ -182,7 +153,7 @@ class Home extends CI_Controller{
   public function listArticle(){
     $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
-      
+
     $this->load->view('include/header2');
     $this->load->view('list-article', $data);
     $this->load->view('include/footer');
@@ -197,7 +168,7 @@ class Home extends CI_Controller{
     $this->load->view('full-article', $data);
     $this->load->view('include/footer');
   }
-  
+
   public function checkStockbyDistrict($idProduct, $idDistrict){
     $data = $this->mhome->checkStock_by_Distcit($idProduct, $idDistrict);
     if($data) {
@@ -207,9 +178,9 @@ class Home extends CI_Controller{
         print_r(json_encode($data));
     }
   }
-  
+
   public function checkPricebyProdSize($idProd, $idSize){
-      $data = $this->mhome->getProducts(array('prod_id'=>$idProd, 'id'=> $idSize), 
+      $data = $this->mhome->getProducts(array('prod_id'=>$idProd, 'id'=> $idSize),
         array('priceField'=>'price'), 'tr_product_size', TRUE);
       if($data){
         print_r(json_encode($data));
@@ -223,7 +194,7 @@ class Home extends CI_Controller{
     $specs = [];
     $prices = [];
     $sizes = [];
-    $data['product'] = $this->mhome->getProducts(array('id' => $idProduct),NULL, 'tm_product', TRUE);
+    $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
     $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
       'provinsi', FALSE);
     $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
@@ -254,7 +225,7 @@ class Home extends CI_Controller{
     $this->load->view('detail-product', $data);
     $this->load->view('include/footer');
   }
-  
+
   public function checkProv($idProvince){
     $province = $this->mhome->getProducts(array('id_prov' => $idProvince), array('id_kabField' => 'id_kab',
       'namaField'=> 'nama'), 'kabupaten', FALSE);
@@ -264,7 +235,7 @@ class Home extends CI_Controller{
         echo "Something went wrong";
     }
   }
-  
+
   public function checkSubDistrict($idCity){
     $subDistrict = $this->mhome->getProducts(array('id_kab' => $idCity), array('id_kecField' => 'id_kec',
       'namaField'=> 'nama'), 'kecamatan', FALSE);
@@ -279,7 +250,7 @@ class Home extends CI_Controller{
       $this->cart->destroy();
       redirect('home/shopCart');
   }
-  
+
   public function updateCart($cart_rowId){
       $this->cart->remove($cart_rowId);
       redirect('home/shopCart');
@@ -383,37 +354,37 @@ class Home extends CI_Controller{
     $this->load->view('promotion-detail');
     $this->load->view('include/footer');
   }
-  
+
   public function bestSeller(){
     $this->load->view('include/header2');
     $this->load->view('best-seller');
     $this->load->view('include/footer');
   }
-  
+
   public function historyPage(){
     $this->load->view('include/header2');
     $this->load->view('history-page');
     $this->load->view('include/footer');
   }
-  
+
   public function wishlistPage(){
     $this->load->view('include/header2');
     $this->load->view('wishlist-page');
     $this->load->view('include/footer');
   }
-  
+
   public function transactionPage(){
     $this->load->view('include/header2');
     $this->load->view('transaction-page');
     $this->load->view('include/footer');
   }
-  
+
   public function profilePage(){
     $this->load->view('include/header2');
     $this->load->view('page-profile');
     $this->load->view('include/footer');
   }
-  
+
   public function profileSetting(){
     $this->load->view('include/header2');
     $this->load->view('page-profile-settings');

@@ -113,7 +113,7 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
-  
+
   public function brand_categories($brand){
     $this->db->select('a.id, a.name');
     $this->db->from('tm_category a');
@@ -130,7 +130,7 @@ class Mhome extends CI_Model{
   }
 
   public function getProduct_price($brand, $category){
-    $this->db->select('MAX(a.price), b.name, b.id, b.image');
+    $this->db->select('MAX(a.price) as max_price, MIN(a.price)as min_price, b.name, b.id, b.image');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $where = array('b.brand_id' => $brand, 'b.cat_id' => $category);
@@ -143,7 +143,21 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
-  
+
+  public function getProduct_MaxMinPrice($idProduct){
+    $this->db->select('MAX(a.price) as max_price, MIN(a.price) as min_price, b.name, b.id, b.brand_id, b.cat_id,
+      b.description, b.image');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('b.id', $idProduct);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
   public function fetch_kabupaten($idProvince){
     $this->db->where('id_prov', $idProvince);
     $query = $this->db->get('kabupaten');
@@ -153,7 +167,7 @@ class Mhome extends CI_Model{
     }
     return $output;
   }
-  
+
   public function checkStock_by_Distcit($idProd, $idDistrict){
       $this->db->select('a.id_store, a.id_product, a.id_product_size, d.id, a.quantity, c.price, d.name, d.size');
       $this->db->from('tr_product a');
@@ -170,7 +184,7 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
-  
+
   public function sizeStock($id_stock_tr){
       $this->db->select('a.name as name_size, a.size as detail_size');
       $this->db->from('tm_size a');
