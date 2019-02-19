@@ -3,7 +3,7 @@
 <section class="page-header page-header-md">
 	<div class="container">
 
-		<h1>PRODUCT TITLE</h1>
+		<h1><?= $product['name'];?></h1>
 
 		<!-- breadcrumbs -->
 		<!--<ol class="breadcrumb">-->
@@ -113,59 +113,22 @@
 
 						<div class="thumbnail relative mb-3">
 							<figure id="zoom-primary" class="zoom" data-mode="mouseover">
-								<a class="lightbox bottom-right" href="<?= site_url('asset/content-images/01.jpg');?>" data-plugin-options='{"type":"image"}'><i
+								<a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'><i
 									 class="glyphicon glyphicon-search"></i></a>
-								<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="This is the product title" />
+								<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
 							</figure>
 
 						</div>
 
 						<div class="tabbed hidden-lg-down text-center">
-
+                                <?php foreach($specs as $spec):?>
 									<a href="1" id="1">
 										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/5-zone-pocket-spring.png.pagespeed.ce.MDUzM1LUYu.png" alt="">
 										<div class="text-center">
-											<h3>5-Zone Pocket Spring</h3>
-										</div>
-
-									</a>
-									<a href="2" id="2">
-										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/foam-encasement.png.pagespeed.ce.iLu1NYhomc.png" alt="">
-										<div class="text-center">
-											<h3>Foam Encasement</h3>
+											<h3><?= $spec['name'];?></h3>
 										</div>
 									</a>
-									<a href="3" id="3">
-										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/latex-layer.png.pagespeed.ce.cEw6speVi2.png" alt="">
-										<div class="text-center">
-											<h3>Latex Layer</h3>
-										</div>
-									</a>
-									<a href="4" id="4">
-										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/mega-pillow-top.png.pagespeed.ce.Qsl7aCiFS1.png" alt="">
-										<div class="text-center">
-											<h3>Mega Pillow Top</h3>
-										</div>
-									</a>
-									<a href="5" id="5">
-										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/plush-foam.png.pagespeed.ce.6KTnpPYD4F.png" alt="">
-										<div class="text-center">
-											<h3>Plush Foam</h3>
-										</div>
-									</a>
-									<a href="6" id="6">
-										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/premium-knit.png.pagespeed.ce.d6-d2Utu20.png" alt="">
-										<div class="text-center">
-											<h3>Premium Knit</h3>
-										</div>
-									</a>
-									<a href="7" id="7">
-										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/sleep-protection.png.pagespeed.ce.Mx0oz7h2WG.png" alt="">
-										<div class="text-center">
-											<h3>Sleep Protection</h3>
-										</div>
-									</a>
-
+								<?php endforeach;?>
 								</div>
 
 					</div>
@@ -182,155 +145,101 @@
 						</div>
 						<!-- /buttons -->
 
-						<!-- price -->
 						<div class="shop-item-price">
-							<span class="line-through pl-0">Rp. 2,000,000</span>
-							Rp. 1,800,000
+							<span class="pl-0 fs-18"><strong><?= $product['name'];?></strong></span>
+							
 						</div>
-						<!-- /price -->
 
 						<hr />
 
-						<div class="clearfix mb-30">
-							
-							<!--
-										<span class="float-right text-danger"><i class="fa fa-remove"></i> Out of Stock</span>
-										-->
-
-							<strong>Product Name</strong>
-						</div>
+						
 
 						<div class="toggle">
 									<label>Checking the stocks</label>
 
 									<div class="toggle-content">
 										<div class="clearfix mb-30">
-											<span class="float-right text-oldblue"><i class="fa fa-check"></i> In Stock</span>
+											<span id="stockDetail" class="float-right text-oldblue"><i id="stockIcon" class="fa fa-check"></i> In Stock</span>
 											<!--
 												<span class="float-right text-danger"><i class="fa fa-remove"></i> Out of Stock</span>
 												-->
 
-											<strong>Available in your location</strong>
+											<strong id="stockTitle">Choose your location first</strong>
 										</div>
 
 										<form action="#" method="post" class="m-0">
 											<label>Province</label>
-											<select id="cart-tax-country" name="cart-tax-country" class="form-control pointer mb-20">
+											<select id="province" name="province" class="form-control pointer mb-20">
 												<option value="Select" selected disabled> Select </option>
-												<option value="1">DKI Jakarta</option>
-												<option value="2">West Java</option>
-												<option value="2">...........</option>
+												<?php foreach ($provinces as $province): ?>
+													<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
+												<?php endforeach; ?>
 												<!-- add all here -->
 											</select>
 
 											<label>City</label>
-											<select id="cart-tax-state" name="cart-tax-state" class="form-control pointer mb-20">
+											<select id="city" name="city" class="form-control pointer mb-20">
 												<option value="Select" selected disabled> Select </option>
-												<option value="1">Jakarta</option>
-												<option value="2">Kota Bekasi</option>
-												<option value="2">...........</option>
-												<!-- add all here -->
+												<!-- add all here-->
 											</select>
 
 											<label>District</label>
-											<select id="cart-tax-state" name="cart-tax-state" class="form-control pointer mb-20">
+											<select id="sub_district" name="cart-tax-state" class="form-control pointer mb-20">
 												<option value="Select" selected disabled> Select </option>
-												<option value="1">Kebayoran Baru</option>
-												<option value="2">Jatiasih</option>
-												<option value="2">...........</option>
 												<!-- add all here -->
 											</select>
 
-											<button class="btn btn-oldblue btn-block" type="submit">SUBMIT</button>
+											<button id="checkStock" class="btn btn-oldblue btn-block" type="button">CHECK</button>
 										</form>
 									</div>
-
-
-									<div class="clearfix mb-20 mt-20">
-										<strong>Product Name</strong>
-									</div>
+									
 								</div>
+								
+								
 
 						<!-- short description -->
-						<p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-							Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+						<p class="mt-10"><?= $product['description'];?></p>
 						<!-- /short description -->
 
 						<hr />
 
 						<!-- FORM -->
-						<div class="row full-width justify-content-center">
-							<form class="clearfix form-inline m-0" method="get" action="<?= site_url('home/shopCart');?>">
-								<input type="hidden" name="product_id" value="1" />
-
-								<!-- see assets/js/view/demo.shop.js -->
-								<input type="hidden" id="qty" name="qty" value="1" />
-								<input type="hidden" id="size" name="size" value="5" />
-								<!-- see assets/js/view/demo.shop.js -->
-								<div class="col-4 px-0">
-									<div class="btn-group float-left product-opt-size">
-										<button type="button" class="btn btn-default dropdown-toggle product-size-dd rad-0" data-toggle="dropdown">
-
-											Size <small id="product-selected-size">(<span>5</span>)</small>
-										</button>
-
-										<!-- data-val = size value or size id -->
-										<ul id="product-size-dd" class="dropdown-menu" role="menu">
-											<li class="active"><a data-val="5" href="#">5</a></li>
-											<li><a data-val="5.5" href="#">5.5</a></li>
-											<li><a data-val="6" href="#">6</a></li>
-											<li><a data-val="6.5" href="#">6.5</a></li>
-											<li><a data-val="7" href="#">7</a></li>
-											<li><a data-val="7.5" href="#">7.7</a></li>
-											<li><a data-val="8" href="#">8</a></li>
-											<li><a data-val="8.5" href="#">8.5</a></li>
-											<li><a data-val="9" href="#">9</a></li>
-											<li><a data-val="9.5" href="#">9.5</a></li>
-											<li><a data-val="10" href="#">10</a></li>
-											<li><a data-val="10.5" href="#">10.5</a></li>
-											<li><a data-val="11" href="#">11</a></li>
-											<li><a data-val="11.5" href="#">11.5</a></li>
-											<li><a data-val="12" href="#">12</a></li>
-											<li><a data-val="13" href="#">13</a></li>
-											<li><a data-val="14" href="#">14</a></li>
-										</ul>
+						<div id="shoppingForm" class="row text-center">
+							<form class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
+								<input type="hidden" id="product_id" name="product_id" value="<?= $product['id'];?>" />
+								<input type="hidden" name="product_name" value="<?= $product['name'];?>" /> 
+								<input type="hidden" id="price" name="price" />
+								<input type="hidden" id="size-name" name="size-name" />
+								
+								<div class="col-2 col-md-2 mb-8">&nbsp;Price:</div>
+								<div class="col-2 col-md-10 mb-10"><p class="text-left" id="price2"></p></div>
+								<div class="col-2 col-md-2 mb-10">Size:</div>
+								<div class="col-4 col-md-10 mb-10">
+									<div>
+										<select class="form-control" name="size" id="size" style="width:100% !important;">
+											<option value="" selected disabled>Size</option>
+										</select>
+									</div>
+								</div>
+								<div class="col-2 col-md-2 mb-10">Qty:</div>
+								<div class="col-4 col-md-10 mb-10">
+									<div>
+										<input name="qty" type="text" value="1" min="0" max="1000" class="form-control stepper" style="width:100% !important;">
 									</div><!-- /btn-group -->
 								</div>
-								<div class="col-4 px-0">
-									<div class="btn-group float-left product-opt-qty">
-										<button type="button" class="btn btn-default dropdown-toggle product-qty-dd rad-0" data-toggle="dropdown">
-
-											Qty <small id="product-selected-qty">(<span>5</span>)</small>
-										</button>
-
-										<ul id="product-qty-dd" class="dropdown-menu clearfix" role="menu">
-											<li class="active"><a data-val="1" href="#">1</a></li>
-											<li><a data-val="2" href="#">2</a></li>
-											<li><a data-val="3" href="#">3</a></li>
-											<li><a data-val="4" href="#">4</a></li>
-											<li><a data-val="5" href="#">5</a></li>
-											<li><a data-val="6" href="#">6</a></li>
-											<li><a data-val="7" href="#">7</a></li>
-											<li><a data-val="8" href="#">8</a></li>
-											<li><a data-val="9" href="#">9</a></li>
-											<li><a data-val="10" href="#">10</a></li>
-										</ul>
-									</div><!-- /btn-group -->
-								</div>
-								<div class="col-4 px-0">
-								<a href="<?= site_url('home/shopCart');?>"><button class="btn btn-oldblue float-left product-add-cart rad-0 p-0 w-130">ADD TO CART</button></a>	
+                                <div class="col-4 col-md-12 float-right">
+								    <button type="submit" class="btn btn-oldblue float-left product-add-cart rad-0 p-0 w-130">ADD TO CART</button>	
 								</div>
 
 							</form>
-						</div>
+								
+								</div>
+							<!-- /FORM -->
+							
+							<hr>
+						
 
-						<!-- /FORM -->
-
-
-						<hr />
-
-
-						<!-- Share -->
+                            <!-- Share -->
 						<div class="float-right">
 
 							<a href="#" class="social-icon social-icon-sm social-icon-transparent social-facebook float-left" data-toggle="tooltip"

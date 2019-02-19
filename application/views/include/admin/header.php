@@ -99,7 +99,6 @@
               <li class="user-header">
                 <img src="<?= base_url('asset/dist/img/user.png');?>" class="img-circle" alt="User Image">
                 <p>Admin Name</p>
-                <p class="fs-12">adminname@keraton.id</p>
               </li>
               <!-- Menu Body -->
               <li class="user-body">

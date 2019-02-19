@@ -47,7 +47,9 @@
                         </div>
                     </div>
                 </div>
-
+<a href="<?= base_url('home/promotionPage');?>"><button class="btn btn-outline-secondary btn-oldblue mt-20">
+<i class="fa fa-arrow-left"></i>&nbsp Back
+</button></a>
             </div>
         </section>
 

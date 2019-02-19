@@ -53,9 +53,11 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?= base_url('asset/bower_components/datatables.net-bs/js/dataTables.bootstrap.js');?>"></script>
 <!-- Select2 -->
 <script type="text/javascript" src="<?= base_url('asset/bower_components/select2/dist/js/select2.full.min.js');?>"></script>
+<!-- AutoNumber -->
+<script type="text/javascript" src="https://unpkg.com/autonumeric"></script>
 <!-- page script -->
 <script>
-  $(function () {
+    $(function () {
     $('#dataTable').DataTable({
       'paging'      : true,
       'lengthChange': true,
@@ -67,6 +69,17 @@ $.widget.bridge('uibutton', $.ui.button);
       // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
     });
   });
+</script>
+<script>
+  const autoNumericOptionsIdr = {
+    digitGroupSeparator        : '.',
+    decimalCharacter           : ',',
+    decimalCharacterAlternative: '.',
+    decimalPlaces   : 0,
+    roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
+};
+    var inputPrice = new AutoNumeric('#price', autoNumericOptionsIdr);
+ 
   $(function () {
     // Replace the <textarea id="editor1"> with a CKEditor
     // instance, using default configuration.
@@ -81,19 +94,32 @@ $.widget.bridge('uibutton', $.ui.button);
     $('#sizePrice').click(function(){
       var size  = $("#size").val();
       var price = $("#price").val();
-      $("#table_sizePrice").find('tbody')
-      .append($('<tr>')
-        .append($('<td>')
-          .attr('class', 'size-value')
-            .append(size)
-        )
-        .append($('<td>')
-          .attr('class', 'price-value')
-          .append(price)
-        )
-      );
-      $("#size").val("");
-      $("#price").val("");
+      if(size){
+         $.ajax({
+             url: "<?= site_url('admin/sizeNameProduct/');?>"+size,
+             method: "GET",
+             dataType: "json",
+             success: function(response){
+                 $("#table_sizePrice").find('tbody')
+                    .append($('<tr>')
+                        .append($('<td>')
+                            .attr('class', 'size-value hide')
+                                .append(size)
+                        )
+                        .append($('<td>')
+                            .attr('class', 'size-name')
+                                .append(response.name)
+                        )
+                        .append($('<td>')
+                            .attr('class', 'price-value')
+                                .append(price)
+                        )
+                    );
+                    $("#size").val("");
+                    inputPrice.clear(true);
+             }
+         }) 
+      }
     });
 
     $('#submit').click(function(){
@@ -108,9 +134,82 @@ $.widget.bridge('uibutton', $.ui.button);
 
       // push each value of price to variable prices
       $("#table_sizePrice .price-value").each(function(){
+          price = $(this).html().split('.').join("")
         $("#addProd").append($('<input>')
                       .attr('type', 'hidden')
                       .attr('name', 'price[]')
+                      .val(price))
+      });
+
+      // add variable sizes to input tag name's sizes[]
+      // $("#sizes").val(JSON.stringify(sizes));
+
+      // add variable prices to input tag name's prices[]
+      // $("#prices").val(JSON.stringify(prices));
+
+    });
+  });
+</script>
+<script>
+    $(document).ready(function(){
+     $('#product').on('change', function(){
+		var productId = $('#product').val();
+		if(productId){
+			$.ajax({
+				url: "<?=site_url('admin/getIdProduct/')?>"+productId,
+				method: "GET",
+				dataType: "json",
+				success:function(response){
+					$("#size").attr('disabled', false);
+					$("#size").empty();
+					$.each(response, function(key, value){
+						$("#size").append(
+							'<option value='+value.id+'>'+value.name+' ('+value.size+') - Rp '+value.price+'</option>'
+						);
+					});
+				}
+			})
+		} else {
+		    console.log("An error occured")
+		}
+	});
+}); 
+</script>
+<script>
+  var sizes  = [];
+  $(function(){
+    $('#sizePriceStore').click(function(){
+      var size  = $("#size").val();
+      if(size){
+          $.ajax({
+             url: "<?= site_url('admin/sizeNameStore/')?>"+size,
+             method: "GET",
+             dataType: "json",
+             success: function(response){
+                 $("#table_sizePrice").find('tbody')
+                    .append($('<tr>')
+                        .append($('<td>')
+                            .attr('class', 'size-value hide')
+                                .append(size)
+                        )
+                        .append($('<td>')
+                            .attr('class', 'size-name')
+                                .append(response[0].name)
+                        )
+                    );
+                // $("#size").val("");
+             }
+          });
+      }
+    });
+
+    $('#submit').click(function(){
+      // push each value of size to variable sizes
+      $("#table_sizePrice .size-value").each(function(){
+        // sizes.push($(this).html())
+        $("#productToStore").append($('<input>')
+                      .attr('type', 'hidden')
+                      .attr('name', 'size[]')
                       .val($(this).html()))
       });
 
@@ -122,6 +221,50 @@ $.widget.bridge('uibutton', $.ui.button);
 
     });
   });
+</script>
+<script>
+    $(document).ready(function(){
+	$('#province').change(function(){
+		var province_id = $(this).val();
+		if(province_id){
+			$.ajax({
+				url: "<?=site_url('home/checkProv/')?>"+province_id,
+				method: "GET",
+				dataType: "json",
+				success:function(response){
+					$("#city").attr('disabled', false);
+					$("#city").empty();
+					$('#sub_district').empty();
+					$.each(response, function(key, value){
+						$("#city").append(
+							'<option value='+value.id_kab+'>'+value.nama+'</option>'
+						);
+					});
+				}
+			})
+		}
+	});
+	
+	$('#city').change(function(){
+		var city = $(this).val();
+		if(city){
+			$.ajax({
+				url: "<?=site_url('home/checkSubDistrict/')?>"+city,
+				method: "GET",
+				dataType: "json",
+				success:function(response){
+					$("#sub_district").attr('disabled', false);
+					$("#sub_district").empty();
+					$.each(response, function(key, value){
+						$("#sub_district").append(
+							'<option value='+value.id_kec+'>'+value.nama+'</option>'
+						);
+					});
+				}
+			})
+		}
+	});
+});
 </script>
 </body>
 </html>

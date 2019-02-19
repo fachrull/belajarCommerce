@@ -17,13 +17,8 @@
 
 					<!-- LEFT -->
 					<div class="col-md-3 col-sm-3">
-
-						<h2>Our Article</h2>
-
-						<hr />
-
 						<!-- side navigation -->
-						<div class="side-nav mb-60 mt-30">
+						<div class="side-nav mb-60 mt-5">
 
 							<div class="side-nav-head" data-toggle="collapse" data-target="#rp">
 								<button class="fa fa-bars btn btn-mobile"></button>
@@ -139,20 +134,18 @@
 						<!-- /SHARE POST -->
 
 
-						<div class="divider">
+						<?php if(count($pedias) > 1) { ?>
+							<div class="divider">
 							<!-- divider -->
-						</div>
-
-
-						<ul class="pager">
-							<li class="previous"><a class="b-0" href="#">&larr; Previous Post</a></li>
-							<li class="next"><a class="b-0" href="#">Next Post &rarr;</a></li>
-						</ul>
-
-
-						<div class="divider">
-							<!-- divider -->
-						</div>
+							</div>
+							<ul class="pager">
+								<li class="previous"><a class="b-0" href="#">&larr; Previous Post</a></li>
+								<li class="next"><a class="b-0" href="#">Next Post &rarr;</a></li>
+							</ul>
+							<div class="divider">
+								<!-- divider -->
+							</div>
+						<?php } ?>
 
 					</div>
 

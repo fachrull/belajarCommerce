@@ -17,12 +17,6 @@
         <h3>Category: <?= $cat['name'];?></h3>
       </div>
       <div class="col-sm-12">
-        <h5>Price : Rp. <?= $product['price'];?></h5>
-      </div>
-      <div class="col-sm-12">
-        <h5>Sub Price : Rp <?=$product['sub_price'];?></h5>
-      </div>
-      <div class="col-sm-12">
         <h5>Specification : <?=$spec['name'];?></h5>
       </div>
       <div class="col-sm-12">

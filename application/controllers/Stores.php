@@ -10,6 +10,7 @@ class Stores extends CI_Controller{
 
     $this->load->helper('url');
     $this->load->model('Mstore', 'mstore');
+    $this->load->model('Mhome', 'mhome');
   }
 
   public function confirmProduct($idStore, $idProd){
@@ -105,6 +106,19 @@ class Stores extends CI_Controller{
       $this->load->view('include/footer');
     }
 
+  }
+
+  public function inbound() {
+        $idStore = $this->mhome->getProducts(array('id_userlogin' => $this->session->userdata('uId')),
+          array('idField' => 'id'), 'tm_store_owner', TRUE);
+        $data['products'] = $this->mhome->joinStoreProd($idStore['id']);
+        $id = array('idStore' => $idStore['id']);
+        $this->session->set_userdata($id);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('storeOwner/myStore', $data);
+        $this->load->view('include/admin/footer');
   }
 
 }

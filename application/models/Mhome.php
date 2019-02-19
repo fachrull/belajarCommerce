@@ -143,4 +143,44 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+  
+  public function fetch_kabupaten($idProvince){
+    $this->db->where('id_prov', $idProvince);
+    $query = $this->db->get('kabupaten');
+    $output = '<option value="">Pilih Kabupaten</option>';
+    foreach ($query->result() as $row) {
+      $output .= '<option value="'.$row->id_kab.'">'.$row->nama.'</option>';
+    }
+    return $output;
+  }
+  
+  public function checkStock_by_Distcit($idProd, $idDistrict){
+      $this->db->select('a.id_store, a.id_product, a.id_product_size, d.id, a.quantity, c.price, d.name, d.size');
+      $this->db->from('tr_product a');
+      $this->db->join('tm_store_owner b', 'b.id = a.id_store', 'left');
+      $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
+      $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
+      $this->db->group_by('a.id_product_size');
+      $where = array('b.sub_district' => $idDistrict, 'a.id_product' => $idProd);
+      $this->db->where($where);
+      $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+  
+  public function sizeStock($id_stock_tr){
+      $this->db->select('a.name as name_size, a.size as detail_size');
+      $this->db->from('tm_size a');
+      $this->db->join('tr_product_size c', 'c.size_id = a.id', 'left');
+      $this->db->where('c.id', $id_stock_tr);
+      $query = $this->db->get();
+      if($query->num_rows()!=0){
+          return $query->result_array();
+      }else{
+          return FALSE;
+      }
+  }
 }

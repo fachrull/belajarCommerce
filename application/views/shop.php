@@ -33,23 +33,11 @@
 								<h4>CATEGORIES</h4>
 							</div>
 
-<<<<<<< HEAD
-							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
-								<li class="list-group-noicon active">
-									<a class="dropdown-toggle" href="#">MATTRESS</a>
-									<ul>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Imperial Heritage</a></li>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Royal Souvergin</a></li>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Conoration</a></li>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Baron</a></li>
-									</ul>
-=======
                             <?php if($category != NULL):?>
 							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
 								<li class="list-group-noicon active">
 									<a href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 								</li>
 								<?php endforeach;?>
 							</ul>
@@ -66,21 +54,12 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-<<<<<<< HEAD
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(21)</span> Aireloom</a></li>
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(44)</span> KingKoil</a></li>
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(2)</span> Serta</a></li>
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(18)</span> Tempur</a></li>
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(87)</span> Florence</a></li>
-								<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(32)</span> Stressless</a></li>
-=======
 								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>"><span class="fs-11 text-muted float-right"></span>AIRELOOM</a></li>
 								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>"><span class="fs-11 text-muted float-right"></span>KINGKOIL</a></li>
 								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>"><span class="fs-11 text-muted float-right"></span>SERTA</a></li>
 								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>"><span class="fs-11 text-muted float-right"></span>TEMPUR</a></li>
 								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>"><span class="fs-11 text-muted float-right"></span>FLORENCE</a></li>
 								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>"><span class="fs-11 text-muted float-right"></span>STRESSLESS</a></li>
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 							</ul>
 
 						</div>
@@ -149,200 +128,6 @@
 						</div>
 						<!-- /LIST OPTIONS -->
 
-<<<<<<< HEAD
-
-						<ul class="shop-item-list row list-inline m-0">
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name" />
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="1" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-
-										<!-- product more info -->
-										<div class="shop-item-info">
-											<span class="badge badge-success">NEW</span>
-											<span class="badge badge-danger">SALE</span>
-										</div>
-										<!-- /product more info -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-4 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											<span class="line-through">Rp. 2,000,000</span>
-											Rp. 1,800,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name" />
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="2" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-0 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											Rp. 2,000,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<span class="out-of-stock clean">out of stock</span><!-- add .clean to remove css characteres -->
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name" />
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="3" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-
-										<!-- countdown -->
-										<div class="shop-item-counter">
-											<div class="countdown" data-from="January 31, 2020 15:03:26" data-labels="years,months,weeks,days,hour,min,sec">
-												<!-- Example Date From: December 31, 2018 15:03:26 -->
-											</div>
-										</div>
-										<!-- /countdown -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-1 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											Rp. 2,000,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-												<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name">
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="4" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-
-										<!-- product more info -->
-										<div class="shop-item-info">
-											<span class="badge badge-success">NEW</span>
-										</div>
-										<!-- /product more info -->
-									</div>
-=======
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
 							<?php foreach ($products as $product): ?>
 								<!-- ITEM -->
@@ -352,7 +137,7 @@
 
 										<div class="thumbnail">
 											<!-- product image(s) -->
-											<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
+											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
 												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="product name" />
 											</a>
 											<!-- /product image(s) -->
@@ -365,7 +150,6 @@
 												</div>
 												<!-- /hover buttons -->
 											</div>
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 
 											<div class="shop-item-summary text-center">
 												<h2><?= $product['name'];?> - <?= $product['id'];?></h2>
@@ -385,346 +169,14 @@
 												<!-- /price -->
 											</div>
 
-<<<<<<< HEAD
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name">
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="5" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-
-
-										<!-- product more info -->
-										<div class="shop-item-info">
-											<span class="badge badge-danger">SALE</span>
-										</div>
-										<!-- /product more info -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-4 fs-13">
-												<!-- rating-0 ... rating-5 -->
-=======
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-												<a class="btn btn-oldblue" href="http://agm-cmrc.koliho.com/home/shopCart">
+												<a class="btn btn-oldblue" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
 													<i class="fa fa-cart-plus"></i> Add to Cart
 												</a><!-- add .clean to remove css characteres -->
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 											</div>
 											<!-- /buttons -->
 										</div>
-<<<<<<< HEAD
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											<span class="line-through">Rp. 2,000,000</span>
-											Rp. 1,800,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/01.jpg');?>" alt="product name">
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="6" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-
-										<!-- countdown -->
-										<div class="shop-item-counter">
-											<div class="countdown" data-from="December 31, 2020 08:22:01" data-labels="years,months,weeks,days,hour,min,sec">
-												<!-- Example Date From: December 31, 2018 15:03:26 -->
-											</div>
-										</div>
-										<!-- /countdown -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-4 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											Rp. 2,000,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="8" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-4 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											Rp. 2,000,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="11" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-
-										<!-- countdown -->
-										<div class="shop-item-counter">
-											<div class="countdown" data-from="January 12, 2018 12:34:55" data-labels="years,months,weeks,days,hour,min,sec">
-												<!-- Example Date From: December 31, 2018 15:03:26 -->
-											</div>
-										</div>
-										<!-- /countdown -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-4 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											Rp. 2,000,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="10" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-4 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											Rp. 2,000,000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-
-							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
-
-								<div class="shop-item">
-
-									<div class="thumbnail">
-										<!-- product image(s) -->
-										<a class="shop-item-image" href="<?= site_url('home/detailProduct');?>">
-											<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name">
-										</a>
-										<!-- /product image(s) -->
-
-										<!-- hover buttons -->
-										<div class="shop-option-over">
-											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-											<a class="btn btn-light add-wishlist" href="#" data-item-id="12" data-toggle="tooltip" title="Add To Wishlist"><i
-												 class="fa fa-heart p-0"></i></a>
-										</div>
-										<!-- /hover buttons -->
-
-										<!-- product more info -->
-										<div class="shop-item-info">
-											<span class="badge badge-success">NEW</span>
-											<span class="badge badge-danger">SALE</span>
-										</div>
-										<!-- /product more info -->
-									</div>
-
-									<div class="shop-item-summary text-center">
-										<h2>Product Name</h2>
-
-										<!-- rating -->
-										<div class="shop-item-rating-line">
-											<div class="rating rating-4 fs-13">
-												<!-- rating-0 ... rating-5 -->
-											</div>
-										</div>
-										<!-- /rating -->
-
-										<!-- price -->
-										<div class="shop-item-price">
-											<span class="line-through">Rp. 2,000,000</span>
-											Rp. 1,800.000
-										</div>
-										<!-- /price -->
-									</div>
-
-									<!-- buttons -->
-									<div class="shop-item-buttons text-center">
-										<a class="btn btn-oldblue" href="<?= site_url('home/shopCart');?>"><i class="fa fa-cart-plus"></i> Add to Cart</a>
-									</div>
-									<!-- /buttons -->
-								</div>
-
-							</li>
-							<!-- /ITEM -->
-=======
->>>>>>> c90d821c990fc704273606204cee34ee117bd26c
 
 									</li>
 							<?php endforeach; ?>

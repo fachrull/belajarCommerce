@@ -33,30 +33,27 @@
                   <label class="input mb-10">
                     <input name="add2" type="text" placeholder="Address 2">
                   </label>
-                  <div class="row mb-3">
-                    <div class="col-md-6">
-                      <label class="input mb-10">
-                        <input name="province" type="text" placeholder="Province">
-                      </label>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="input mb-10">
-                        <input name="city" type="text" placeholder="City">
-                      </label>
-                    </div>
-                  </div>
-                  <div class="row mb-3">
-                    <div class="col-md-6">
-                      <label class="input mb-10">
-                        <input name="sub_district" type="text" placeholder="Sub District">
-                      </label>
-                    </div>
-                    <div class="col-md-6">
-                      <label class="input mb-10">
-                        <input name="pCode" type="text" placeholder="Postcode">
-                      </label>
-                    </div>
-                  </div>
+                  <label class="input mb-10">
+                    <select class="form-control" name="province" id="province">
+                      <option selected disabled>Province</option>
+												<?php foreach ($provinces as $province): ?>
+													<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
+												<?php endforeach; ?>
+                    </select>
+                  </label>
+                  <label class="input mb-10">
+                    <select class="form-control" name="city" id="city">
+                      <option selected disabled>City</option>
+                    </select>
+                  </label>
+                  <label class="input mb-10">
+                    <select class="form-control" name="sub_district" id="sub_district">
+                      <option selected disabled>Sub District</option>
+                    </select>
+                  </label>
+                  <label class="input mb-10">
+                    <input name="pCode" type="text" placeholder="Postcode">
+                  </label>
                   <div class="row mb-3">
                     <div class="col-md-6">
                       <label class="input mb-10">

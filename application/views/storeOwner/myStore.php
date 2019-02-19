@@ -13,8 +13,6 @@
           <thead>
             <th>No.</th>
             <th>Product</th>
-            <th>Price</th>
-            <th>Sub Price</th>
             <th>Quantity</th>
             <th>Action</th>
           </thead>
@@ -25,8 +23,6 @@
                 <tr>
                   <td><?= $no;?></td>
                   <td><?= $product['name'];?></td>
-                  <td>Rp <?= $product['price'];?></td>
-                  <td>Rp <?= $product['sub_price'];?></td>
                   <td><?= ($product['quantity'] != NULL? $product['quantity'] : '-')?></td>
                   <td>
                     <a href="<?= site_url('stores/confirmProduct/'.$product['id_store'].'/'.$product['id_product']);?>"><i class="btn btn-success fa fa-check"></i></a>

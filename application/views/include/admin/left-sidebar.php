@@ -34,8 +34,10 @@
             </a>
             <ul class="treeview-menu">
               <li>
-                <a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i><span> Admin</span></a>
-                <li><a href="<?=site_url('auth/regisSO');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
+                <li class="active"><a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i><span> Admin</span></a></li>
+                <li class="active"><a href="<?=site_url('auth/regisSO');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
+                <li class="active"><a href="<?= site_url('admin/listAdmin');?>">List Admin</a></li>
+                <li class="active"><a href="<?= site_url('admin/listStoreOwner')?>">List Store Owner</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_brand');?>">Brands</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_cat');?>">Categories</a></li>
                 <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
@@ -84,10 +86,13 @@
         <?php endif; ?>
         <?php if ($this->session->userdata('uType') == 3): ?>
           <li>
-            <a href="#">Invoice</a>
+            <a href="<?= site_url('stores/inbound')?>">Inbound Product</a>
           </li>
           <li>
             <a href="<?= site_url('stores/storeProduct')?>">Product</a>
+          </li>
+          <li>
+            <a href="#">Invoice</a>
           </li>
         <?php endif; ?>
       </ul>

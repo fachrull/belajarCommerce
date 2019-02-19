@@ -34,12 +34,7 @@
 									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="product name">
 								</figure>
 
-								<h2><a href="detail-product.html">THE PRODUCT NAME IS ON SALE</a></h2>
-
-								<a href="<?= base_url('home/promotionDetail');?>" class="btn btn-reveal btn-oldblue mt-20">
-									<i class="fa fa-eye"></i>
-									<span>Detail</span>
-								</a>
+								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
 
 							</div>
 							<!-- /POST ITEM -->
@@ -53,12 +48,7 @@
 									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
 								</figure>
 
-								<h2><a href="detail-product.html">THE PRODUCT NAME IS ON SALE</a></h2>
-
-								<a href="<?= base_url('home/promotionDetail');?>" class="btn btn-reveal btn-oldblue mt-20">
-									<i class="fa fa-eye"></i>
-									<span>Detail</span>
-								</a>
+								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
 
 							</div>
 							<!-- /POST ITEM -->
@@ -72,12 +62,7 @@
 									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
 								</figure>
 
-								<h2><a href="promotion-detail.html">THE PRODUCT NAME IS ON SALE</a></h2>
-
-								<a href="<?= base_url('home/promotionDetail');?>" class="btn btn-reveal btn-oldblue mt-20">
-									<i class="fa fa-eye"></i>
-									<span>Detail</span>
-								</a>
+								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
 
 							</div>
 							<!-- /POST ITEM -->
@@ -91,12 +76,7 @@
 									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
 								</figure>
 
-								<h2><a href="promotion-detail.html">THE PRODUCT NAME IS ON SALE</a></h2>
-
-								<a href="<?= base_url('home/promotionDetail');?>" class="btn btn-reveal btn-oldblue mt-20">
-									<i class="fa fa-eye"></i>
-									<span>Detail</span>
-								</a>
+								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
 
 							</div>
 							<!-- /POST ITEM -->
@@ -110,12 +90,7 @@
 									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
 								</figure>
 
-								<h2><a href="promotion-page.html">THE PRODUCT NAME IS ON SALE</a></h2>
-
-								<a href="<?= base_url('home/promotionDetail');?>" class="btn btn-reveal btn-oldblue mt-20">
-									<i class="fa fa-eye"></i>
-									<span>Detail</span>
-								</a>
+								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
 
 							</div>
 							<!-- /POST ITEM -->
@@ -129,12 +104,7 @@
 									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
 								</figure>
 
-								<h2><a href="promotion-page.html">THE PRODUCT NAME IS ON SALE</a></h2>
-
-								<a href="<?= base_url('home/promotionDetail');?>" class="btn btn-reveal btn-oldblue mt-20">
-									<i class="fa fa-eye"></i>
-									<span>Detail</span>
-								</a>
+								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
 
 							</div>
 							<!-- /POST ITEM -->

@@ -41,37 +41,31 @@
 			<div class="container">
 				<div class="row text-center">
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
-						<a href="<?= site_url('home/shop');?>">
 						<a href="<?= site_url('home/shop/1/1');?>">
 							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="<?= site_url('home/shop');?>">
 						<a href="<?= site_url('home/shop/2/1');?>">
 							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="<?= site_url('home/shop');?>">
 						<a href="<?= site_url('home/shop/4/1');?>">
 							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
-						<a href="<?= site_url('home/shop');?>">
 						<a href="<?= site_url('home/shop/5/1');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="<?= site_url('home/shop');?>">
 						<a href="<?= site_url('home/shop/3/1');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-2 pb-70">
-						<a href="<?= site_url('home/shop');?>">
 						<a href="<?= site_url('home/shop/6/1');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
 						</a>
@@ -141,9 +135,8 @@
 <hr>
 
 <!-- AGMPEDIA -->
-<section id="agmpedia">
-	<div class="container">
-	<a href="list-article.html">
+<section id="agmpedia" class="section-xs container">
+  <a href="list-article.html">
     <h3 class="text-center">AGMPEDIA</h3>
     <h5 class="text-center">lastest news of week</h5>
   </a>
@@ -154,7 +147,7 @@
     <div class="col-12 col-md-5 pb-30 order-1 order-md-2">
       <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
         <div>
-          <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" alt="agmpedia title" style="width:100%;">
+          <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" style="width:100%;" alt="agmpedia title">
           <div class="absolute pt-20">
             <h4 class="text-white text-center">LOREM</h4>
             <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 1</h6>
@@ -167,11 +160,11 @@
         </div>
       </div>
     </div>
-    <div class="col-12 col-sm-5 pb-5">
+    <div class="col-12 col-md-5 pb-5">
       <?php foreach ($pedias as $pedia): ?>
       <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
         <div>
-            <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" alt="agmpedia title" style="width:100%;">
+            <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" style="width:100%;" alt="agmpedia title">
             <div class="absolute pt-20">
               <h4 class="text-white text-center"><?= $pedia['title'];?></h4>
               <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
@@ -190,7 +183,6 @@
     </div>
   <?php endforeach; ?>
   </div>
-	</div>
 </section>
 <!-- /AGMPEDIA -->
 
@@ -231,7 +223,6 @@
 						<input type="hidden" id="lat" />
 						<input type="hidden" id="lng" />
 					</div>
-				</div>
 			</div>
 		</div>
 	</div>

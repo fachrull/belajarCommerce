@@ -17,18 +17,10 @@ class Home extends CI_Controller{
       if ($this->session->userdata('uNew') == 1) {
         redirect('auth/completing_profile');
       }else{
-        if ($link === FALSE) {
-          $data['posts'] = $this->mhome->getDataIndex();
-
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/home_admin', $data);
+          $this->load->view('admin/home');
           $this->load->view('include/admin/footer');
-        }else{
-          $this->load->view('include/header');
-          echo "<h1>This feature will be updated soon.</h1>";
-          $this->load->view('include/footer');
-        }
       }
     } elseif ($this->session->userdata('uType') == 2) {
       if($this->session->userdata('uNew') == 1){
@@ -59,35 +51,57 @@ class Home extends CI_Controller{
       if ($this->session->userdata('uNew') == 1) {
         redirect('auth/completing_profile');
       }else{
-        $idStore = $this->mhome->getProducts(array('id_userlogin' => $this->session->userdata('uId')),
-          array('idField' => 'id'), 'tm_store_owner', TRUE);
-        $data['products'] = $this->mhome->joinStoreProd($idStore['id']);
-        $id = array('idStore' => $idStore['id']);
-        $this->session->set_userdata($id);
-
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('storeOwner/myStore', $data);
+        $this->load->view('admin/home');
         $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
-
+      $data['stores'] = $this->storesToGeoJson();
+      
       $this->load->view('include/header');
       $this->load->view('home', $data);
       $this->load->view('include/footer');
     } elseif ($this->session->userdata('uType') == NULL) {
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
-      $data['stores'] = JSON_encode($this->mhome->getProducts(NULL, array('idField' => 'id',
-        'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
-        'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE));
+      $data['stores'] = $this->storesToGeoJson();
 
       $this->load->view('include/header');
       $this->load->view('home', $data);
       $this->load->view('include/footer');
     }
+  }
+  
+  function storesToGeoJson() {
+    $geojson = array (
+      'type' => 'FeatureCollection',
+      'features' => array()
+    );
+
+    $stores = $this->mhome->getProducts(NULL, array('idField' => 'id',
+      'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
+      'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE);
+
+      foreach ($stores as $store) {
+        $feature =  array(
+          'id' => $store['id'],
+          'type' => 'Feature',
+          'geometry' => array(
+            'type' => 'Point',
+            'coordinates' => array($store['langtitude'], $store['latitude'])
+          ),
+          'properties' => array(
+            'company_name' => $store['company_name'],
+            'address' => $store['address'],
+            'phone' => $store['phone1']
+          )
+        );
+        array_push($geojson['features'], $feature);
+      }
+    return JSON_encode($geojson, JSON_NUMERIC_CHECK);
   }
 
   public function customer(){
@@ -130,7 +144,7 @@ class Home extends CI_Controller{
     $data['category'] = $this->mhome->brand_categories($brand);
     $data['brands'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
       'tm_brands', FALSE);
-
+     
     $this->load->view('include/header2');
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
@@ -139,7 +153,7 @@ class Home extends CI_Controller{
   public function listArticle(){
     $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
-
+      
     $this->load->view('include/header2');
     $this->load->view('list-article', $data);
     $this->load->view('include/footer');
@@ -154,16 +168,118 @@ class Home extends CI_Controller{
     $this->load->view('full-article', $data);
     $this->load->view('include/footer');
   }
+  
+  public function checkStockbyDistrict($idProduct, $idDistrict){
+    $data = $this->mhome->checkStock_by_Distcit($idProduct, $idDistrict);
+    if($data) {
+        print_r(json_encode($data));
+    } else {
+        $data = array();
+        print_r(json_encode($data));
+    }
+  }
+  
+  public function checkPricebyProdSize($idProd, $idSize){
+      $data = $this->mhome->getProducts(array('prod_id'=>$idProd, 'id'=> $idSize), 
+        array('priceField'=>'price'), 'tr_product_size', TRUE);
+      if($data){
+        print_r(json_encode($data));
+      }else{
+          $data = array();
+          print_r(json_encode($data));
+      }
+  }
 
-  public function detailProduct(){
+  public function detailProduct($idProduct){
+    $specs = [];
+    $prices = [];
+    $sizes = [];
+    $data['product'] = $this->mhome->getProducts(array('id' => $idProduct),NULL, 'tm_product', TRUE);
+    $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
+      'provinsi', FALSE);
+    $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
+    $data['sub_districts'] = $this->mhome->getProducts(NULL, NULL, 'kecamatan', FALSE);
+    $idSpec = $this->mhome->getProducts(array('prod_id' => $idProduct),
+       array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
+    $idSize = $this->mhome->getProducts(array('prod_id' => $idProduct),
+       array('idField' => 'size_id', 'priceField' => 'price'), 'tr_product_size', FALSE);
+
+    for ($i=0; $i < count($idSpec) ; $i++) {
+        array_push($specs, $this->mhome->getProducts(array('id' => $idSpec[$i]['spec_id']),
+         array('nameField' => 'name'), 'tm_spec', TRUE));
+      }
+    $data['specs'] = $specs;
+
+    for ($i=0; $i < count($idSize); $i++) {
+        array_push($prices, $idSize[$i]['price']);
+      }
+      $data['prices'] = $prices;
+
+      for ($i=0; $i < count($idSize); $i++) {
+        array_push($sizes, $this->mhome->getProducts(array('id' => $idSize[$i]['size_id']),
+         array('nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE));
+      }
+      $data['sizes'] = $sizes;
+
     $this->load->view('include/header2');
-    $this->load->view('detail-product');
+    $this->load->view('detail-product', $data);
     $this->load->view('include/footer');
+  }
+  
+  public function checkProv($idProvince){
+    $province = $this->mhome->getProducts(array('id_prov' => $idProvince), array('id_kabField' => 'id_kab',
+      'namaField'=> 'nama'), 'kabupaten', FALSE);
+    if($province) {
+        print_r(json_encode($province));
+    } else {
+        echo "Something went wrong";
+    }
+  }
+  
+  public function checkSubDistrict($idCity){
+    $subDistrict = $this->mhome->getProducts(array('id_kab' => $idCity), array('id_kecField' => 'id_kec',
+      'namaField'=> 'nama'), 'kecamatan', FALSE);
+    if($subDistrict) {
+        print_r(json_encode($subDistrict));
+    } else {
+        echo "Something went wrong";
+    }
+  }
+
+  public function deleteCart(){
+      $this->cart->destroy();
+      redirect('home/shopCart');
+  }
+  
+  public function updateCart($cart_rowId){
+      $this->cart->remove($cart_rowId);
+      redirect('home/shopCart');
+  }
+
+  public function addToCart() {
+    $size_name = $this->mhome->sizeStock($this->input->post('size'));
+    $product = $this->mhome->getProducts(array('id'=>$this->input->post('product_id')), NULL, 'tm_product', TRUE);
+    $data = array(
+      'id'          => $this->input->post('product_id'),
+      'image'       => $product['image'],
+      'qty'         => $this->input->post('qty'),
+      'price'       => $this->input->post('price'),
+      'name'        => $this->input->post('product_name'),
+      'sizeName'    => $size_name[0]['name_size'],
+      'detailSize'  => $size_name[0]['detail_size'],
+      'options' => array('Size' => $this->input->post('size'))
+    );
+    $this->cart->insert($data);
+    // print_r($this->cart->contents());
+    // echo "</br>";
+    // print_r($data);
+    redirect('home/shopCart');
   }
 
   public function shopCart(){
+    $data['cart'] = $this->cart->contents();
     $this->load->view('include/header2');
-    $this->load->view('shop-cart');
+    $this->load->view('shop-cart', $data);
     $this->load->view('include/footer');
   }
 
@@ -238,42 +354,40 @@ class Home extends CI_Controller{
     $this->load->view('promotion-detail');
     $this->load->view('include/footer');
   }
-
+  
   public function bestSeller(){
     $this->load->view('include/header2');
     $this->load->view('best-seller');
     $this->load->view('include/footer');
   }
-
-
+  
   public function historyPage(){
     $this->load->view('include/header2');
     $this->load->view('history-page');
     $this->load->view('include/footer');
   }
-
+  
   public function wishlistPage(){
     $this->load->view('include/header2');
     $this->load->view('wishlist-page');
     $this->load->view('include/footer');
   }
-
+  
   public function transactionPage(){
     $this->load->view('include/header2');
     $this->load->view('transaction-page');
     $this->load->view('include/footer');
   }
-
+  
   public function profilePage(){
     $this->load->view('include/header2');
     $this->load->view('page-profile');
     $this->load->view('include/footer');
   }
-
+  
   public function profileSetting(){
     $this->load->view('include/header2');
     $this->load->view('page-profile-settings');
     $this->load->view('include/footer');
   }
-
 }

@@ -10,12 +10,13 @@
         <h1>Product list</h1>
       </div>
       <div class="box-body">
-        <table id="dataTable" class="table table-bordered table-striped">
+            <?php if($products == NULL):?>
+                <p class="text-center">Tidak ada product yang di tambahkan.</p>
+            <?php else:?>
+            <table id="dataTable" class="table table-bordered table-striped">
           <thead>
             <th>No.</th>
             <th>Product</th>
-            <th>Price</th>
-            <th>Sub Price</th>
             <th>Quantity</th>
             <th>Action</th>
           </thead>
@@ -25,15 +26,13 @@
               <tr>
                 <td><?= $no;?></td>
                 <td><?= $product['name'];?></td>
-                <td>Rp <?= $product['price'];?></td>
-                <td>Rp <?= $product['sub_price'];?></td>
                 <td>
                   <div class="row">
                     <div class="col-sm-6">
                       <?= ($product['quantity'] != NULL? $product['quantity'] : '-')?>
                     </div>
                     <div class="col-sm-6">
-                      <a href="<?= site_url('stores/addQuantity/'.$product['id_store'].'/'.$product['id_product']);?>" class="btn btn-oldblue"><i class="fa fa-plus"></i> Quantity</a>
+                      <a href="<?= site_url('stores/addQuantity/'.$product['id_store'].'/'.$product['id_product']);?>" class="btn btn-oldblue"><i class="fa fa-plus"></i></a>
                     </div>
                   </div>
                 </td>
@@ -43,6 +42,7 @@
               </tr>
               <?php $no++; ?>
             <?php endforeach; ?>
+            <?php endif;?>
           </tbody>
         </table>
       </div>

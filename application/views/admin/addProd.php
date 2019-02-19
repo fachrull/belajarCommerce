@@ -44,7 +44,7 @@
                   <input name="pName" type="text" placeholder="Product Name">
               </label>
               <div class="row mb-3">
-                  <div class="col col-md-5 col-xs-12">
+                  <div class="col col-md-6 col-xs-12">
                       <label class="input">
                         <select class="form-control" id="size" name="size">
                           <option value=""selected disabled>Size</option>
@@ -54,9 +54,9 @@
                         </select>
                       </label>
                   </div>
-                  <div class="col col-md-6 col-xs-12">
+                  <div class="col col-md-5 col-xs-12">
                       <label class="input">
-                          <input id="price" name="price" type="number"
+                          <input id="price" name="price" type="text"
                             placeholder="Price (e.g 100000)">
                       </label>
                   </div>
@@ -68,6 +68,7 @@
                 <div class="col-md-12 cl-xs-12">
                   <table id="table_sizePrice" class="mb-10 table table-bordered table-striped">
                     <thead>
+                      <th class="hide">Id</th>
                       <th>Size</th>
                       <th>Price</th>
                     </thead>
@@ -92,6 +93,7 @@
                 <textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description"></textarea>
               </div>
               <label class="input mb-10"><b>Upload product image</b>
+              <p class="help-block text-danger fs-12">Max. Size 2 MB and Resolution 700 x 670 pixels</p>
                 <input type="file" class="mt-5" name="productPict" />
               </label>
             <div class="row">

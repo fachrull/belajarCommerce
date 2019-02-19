@@ -23,7 +23,9 @@
 <!-- CART -->
 <section>
 	<div class="container">
-
+	<?php
+		if(!$cart) {
+	?>
 
 		<!-- EMPTY CART -->
 		<div class="card card-default">
@@ -36,7 +38,11 @@
 		</div>
 		<!-- /EMPTY CART -->
 
+	<?php
+		}
+		else {
 
+	?>
 
 		<!-- CART -->
 		<div class="row">
@@ -58,59 +64,33 @@
 							<span class="qty fs-13 bold">QUANTITY</span>
 						</div>
 						<!-- /cart header -->
+						<?php
+							foreach ($cart as $item) {
 
+						?>
 						<!-- cart item -->
 						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name"
+							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
 								 width="80" /></div>
-							<a href="#" class="product_name">
-								<span>Product Name</span>
-								<small>Size: XL</small>
+							<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
+								<span><?=$item['name']?></span>
+								<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
 							</a>
-							<a href="#" class="remove_item"><i class="fa fa-times"></i></a>
-							<div class="total_price">Rp. <span>2,000,000</span></div>
-							<div class="qty"><input type="number" value="1" name="qty" maxlength="3" max="999" min="1" /> &times; Rp.
-								2,000,000</div>
+							<a href="<?= site_url('home/updateCart/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
+							<div class="total_price">Rp. <span><?=$item['subtotal']?></span></div>
+							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty" maxlength="3" max="999" min="1" /> &times; Rp.
+								<?=$item['price']?></div>
 							<div class="clearfix"></div>
 						</div>
 						<!-- /cart item -->
 
-						<!-- cart item -->
-						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name"
-								 width="80" /></div>
-							<a href="#" class="product_name">
-								<span>Product Name</span>
-								<small>Size: 8.5</small>
-							</a>
-							<a href="#" class="remove_item"><i class="fa fa-times"></i></a>
-							<div class="total_price">Rp. <span>2,000,000</span></div>
-							<div class="qty"><input type="number" value="1" name="qty" maxlength="3" max="999" min="1" /> &times; Rp.
-								2,000,000</div>
-							<div class="clearfix"></div>
-						</div>
-						<!-- /cart item -->
-
-						<!-- cart item -->
-						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" alt="product name"
-								 width="80" /></div>
-							<a href="#" class="product_name">
-								<span>Product Name</span>
-								<small>Size: 6.5</small>
-							</a>
-							<a href="#" class="remove_item"><i class="fa fa-times"></i></a>
-							<div class="total_price">Rp. <span>2,000,000</span></div>
-							<div class="qty"><input type="number" value="1" name="qty" maxlength="3" max="999" min="1" /> &times; Rp.
-								2,000,000</div>
-							<div class="clearfix"></div>
-						</div>
-						<!-- /cart item -->
-
+						<?php
+							}
+						?>
 
 						<!-- update cart -->
 						<button class="btn btn-oldblue mt-20 mr-10 float-right"><i class="glyphicon glyphicon-ok"></i> UPDATE CART</button>
-						<button class="btn btn-quitered mt-20 mr-10 float-right"><i class="fa fa-remove"></i> CLEAR CART</button>
+						<a href="<?= site_url('home/deleteCart');?>" class="btn btn-quitered mt-20 mr-10 float-right"><i class="fa fa-remove"></i> CLEAR CART</a>
 						<!-- /update cart -->
 
 						<div class="clearfix"></div>
@@ -182,7 +162,7 @@
 						<div class="toggle-content">
 
 							<span class="clearfix">
-								<span class="float-right">Rp. 6,000,000</span>
+								<span class="float-right">Rp. <?=$this->cart->total()?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
 							<span class="clearfix">
@@ -197,7 +177,7 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. 6,000,000</span>
+								<span class="float-right fs-20">Rp. <?=$this->cart->total()?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 
@@ -213,7 +193,9 @@
 
 		</div>
 		<!-- /CART -->
-
+	<?php
+		}
+	?>
 	</div>
 </section>
 <!-- /CART -->

@@ -11,6 +11,39 @@ class Admin extends CI_Controller {
     $this->load->helper('url');
     $this->load->model('Madmin', 'madmin');
   }
+  
+  public function listAdmin($link = FALSE){
+      if ($this->session->userdata('uType') == 1) {
+        if ($link === FALSE) {
+          $data['posts'] = $this->madmin->getProducts(NULL, NULL, 'tm_super_admin', FALSE);
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/home_admin', $data);
+          $this->load->view('include/admin/footer');
+        }else{
+          $this->load->view('include/header');
+          echo "<h1>This feature will be updated soon.</h1>";
+          $this->load->view('include/footer');
+        }
+      }
+  }
+  
+  
+  public function listStoreOwner(){
+      if ($this->session->userdata('uType') == 1) {
+          $data['posts'] = $this->madmin->joinDetailStore();
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/listStoreOwner', $data);
+          $this->load->view('include/admin/footer');
+      }else{
+       $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');   
+      }
+  }
 
   public function sa_brand($link = FALSE, $add = FALSE){
     if ($this->session->userdata('uType') == 1) {
@@ -206,7 +239,7 @@ class Admin extends CI_Controller {
       $this->form_validation->set_rules('cat', 'Category', 'required');
 
       if ($this->form_validation->run() == FALSE){
-        $data['products'] = $this->madmin->getProducts(NULL, NULL, 'tm_product', FALSE);
+        $data['products'] = $this->madmin->allProducts(NULL, NULL, 'tm_product', FALSE);
         $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
         $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
 
@@ -218,14 +251,14 @@ class Admin extends CI_Controller {
         $idBrand = $this->input->post('brand');
         $idCat = $this->input->post('cat');
         if ($idBrand != 0 && $idCat != 0) {
-          $data['products'] = $this->madmin->getProducts(array('brand_id' => $idBrand,
+          $data['products'] = $this->madmin->allProducts(array('brand_id' => $idBrand,
           'cat_id' => $idCat), NULL, 'tm_product', FALSE);
         }elseif($idBrand != 0 && $idCat == 0){
-          $data['products'] = $this->madmin->getProducts(array('brand_id' => $idBrand), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->allProducts(array('brand_id' => $idBrand), NULL, 'tm_product', FALSE);
         }elseif ($idBrand == 0 && $idCat != 0) {
-          $data['products'] = $this->madmin->getProducts(array('cat_id' => $idCat), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->allProducts(array('cat_id' => $idCat), NULL, 'tm_product', FALSE);
         }elseif ($idBrand == 0 && $idCat == 0) {
-          $data['products'] = $this->madmin->getProducts(NULL, NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->allProducts(NULL, NULL, 'tm_product', FALSE);
         }
         $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
         $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
@@ -353,49 +386,9 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function test(){
-    $this->load->helper('form');
-    $this->load->library('form_validation');
-
-    if ($this->form_validation->run() == FALSE) {
-      $data = array(
-        'brand' => $this->input->post('brand'),
-        'category' => $this->input->post('cat'),
-        'product_name' => $this->input->post('pName'),
-        'size' => $this->input->post('size[]'),
-        'price' => $this->input->post('price[]'),
-        'spec' => $this->input->post('spec[]'),
-        'desc' => $this->input->post('desc')
-      );
-
-      $count_SizePrice = count($this->input->post('size[]'));
-      print_r($data);
-      echo "<br>";
-      print_r($count_SizePrice);
-      echo "<br>";
-      for ($i=0; $i < $count_SizePrice ; $i++) {
-        print_r($data['size'][$i]);
-        echo "<br>";
-        print_r($data['price'][$i]);
-        echo "<br>";
-      }
-      // foreach($data['size'] as $size){
-      //   print_r($size);
-      //   echo "<br>";
-      // }
-    } else {
-      $data = array(
-        'brand' => $this->input->post('brand'),
-        'category' => $this->input->post('cat'),
-        'product_name' => $this->input->post('pName'),
-        'size' => $this->input->post('sizes[]'),
-        'price' => $this->input->post('prices[]'),
-        'spec' => $this->input->post('spec[]'),
-        'desc' => $this->input->post('desc')
-      );
-      print_r($data);
-    }
-
+  public function test($idProduct, $idDistrict){
+    $data = $this->madmin->checkStock_by_Distcit($idProduct, $idDistrict);
+    print_r($data);
   }
 
   public function detailProd($idProd){
@@ -542,19 +535,37 @@ class Admin extends CI_Controller {
          $this->load->view('admin/storeProd', $data);
          $this->load->view('include/admin/footer');
        }else{
-         $items= array(
-           'id_store'     => $idSO,
-           'id_product'   => $this->input->post('product'),
-           'new'          => 1,
-           'id_admin'     => $this->session->userdata('uId')
-         );
-         $this->madmin->inputData('tr_product', $items);
+         // input for each size and price
+          $count_SizePrice = count($this->input->post('size[]'));
+          $data_SizePrice = array(
+            'size' => $this->input->post('size[]'),
+          );
+          for ($i=0; $i < $count_SizePrice; $i++) {
+            $prodSizePrice = array(
+              'id_store'           => $idSO,
+              'id_product'         => $this->input->post('product'),
+              'id_product_size'    => $data_SizePrice['size'][$i],
+              'new'                => 1,
+              'id_admin'           => $this->session->userdata('uId')
+            );
+            // input size and price
+            $this->madmin->inputData('tr_product', $prodSizePrice);
+          }
          redirect('admin/stores/'.$idSO);
        }
     }else{
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
+    }
+  }
+  
+  public function getIdProduct($idProd){
+      $sizes = $this->madmin->joinSizeProduct($idProd);
+       if($sizes) {
+        print_r(json_encode($sizes));
+    } else {
+        echo "Something went wrong";
     }
   }
 
@@ -841,8 +852,19 @@ class Admin extends CI_Controller {
   public function stores($link = FALSE){
     if ($this->session->userdata('uType') == 1) {
       if($link === FALSE){
+        $data['provinces'] = [];
+        $data['cities'] = [];
+        $data['sub_districts'] = [];
         $data['posts'] = $this->madmin->getProducts(NULL, NULL, 'tm_store_owner', FALSE);
-
+        foreach ($data['posts'] as $store) {
+          $provinsi = $this->madmin->joinStoreProv($store['id']);
+          $kabupaten = $this->madmin->jointStoreKab($store['id']);
+          $kecamatan = $this->madmin->jointStoreKec($store['id']);
+          array_push($data['provinces'], $provinsi);
+          array_push($data['cities'], $kabupaten);
+          array_push($data['sub_districts'], $kecamatan);
+        }
+        
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/stores', $data);
@@ -852,7 +874,7 @@ class Admin extends CI_Controller {
         $id = $this->madmin->getProducts(array('id' => $link),
           array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
         $data['post'] = $this->madmin->getProducts(array('id' => $link),NULL, 'tm_store_owner', TRUE);
-        $data['prime'] = $this->madmin->dataPrime($link);
+        $data['prime'] = $this->madmin->emailStore($link);
         $data['storeId'] = $idStore;
         $data['products'] = $this->madmin->joinStoreProd($link);
 
@@ -867,7 +889,7 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
-
+  
   public function bestSeller()
   {
     $this->load->view('include/admin/header');
@@ -883,5 +905,22 @@ class Admin extends CI_Controller {
     $this->load->view('admin/sa_promotion');
     $this->load->view('include/admin/footer');
   }
+
+  public function sizeNameStore($idSize){
+      $sizeName = $this->madmin->getSizeName($idSize);
+      if($sizeName) {
+        print_r(json_encode($sizeName));
+      } else {
+        echo "Something went wrong";
+      }
+  }
   
+  public function sizeNameProduct($idSize){
+      $sizeName = $this->madmin->getSizeNameProduct($idSize);
+      if($sizeName) {
+        print_r(json_encode($sizeName));
+      } else {
+        echo "Something went wrong";
+      }
+  }
 }

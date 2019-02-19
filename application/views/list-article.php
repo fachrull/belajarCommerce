@@ -3,7 +3,7 @@
 <section class="page-header page-header-md">
 			<div class="container">
 
-				<h1>ARCTILE</h1>
+				<h1>ARTICLE</h1>
 
 				<!-- breadcrumbs -->
 				<!-- <ol class="breadcrumb">
@@ -26,13 +26,8 @@
 
 					<!-- LEFT -->
 					<div class="col-md-3 col-sm-3">
-
-						<h2>Our Article</h2>
-
-						<hr />
-
 						<!-- side navigation -->
-						<div class="side-nav mb-60 mt-30">
+						<div class="side-nav mb-60">
 
 							<div class="side-nav-head" data-toggle="collapse" data-target="#rp">
 								<button class="fa fa-bars btn btn-mobile"></button>
@@ -79,12 +74,12 @@
 
 						<?php foreach ($pedias as $pedia): ?>
 							<!-- POST ITEM -->
-							<div class="blog-post-item">
+							<div class="blog-post-item" style="height:220px">
 								<!-- .blog-post-item-inverse = image right side [left on RTL] -->
 
 								<!-- IMAGE -->
 								<figure class="blog-item-small-image mb-20">
-									<img class="img-fluid" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" style="height: 117px; width: 300px;">
+									<img class="img-fluid" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" style="height: 200px; width: 300px;">
 								</figure>
 
 								<div class="blog-item-small-content">

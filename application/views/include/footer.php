@@ -87,9 +87,13 @@
 	</div>
 </footer>
 <!-- /FOOTER -->
+
+
+		
 	</div>
 	<!-- SCROLL TO TOP -->
 	<a href="<?= site_url('#');?>" id="toTop"></a>
+
 <!-- JAVASCRIPT FILES -->
 <script>
 	var plugin_path = "<?= base_url('asset/plugins/');?>";
@@ -105,7 +109,8 @@
 <!-- PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('asset/javascript/demo.shop.js');?>"></script>
 <script>
-var stores = <?= JSON_encode($stores)?>;
+    
+var stores = <?= $stores?>;
 var lat = document.getElementById('lat');
 var lng = document.getElementById('lng');
 var km = 30;
@@ -113,37 +118,91 @@ var map;
 var markers = [];
 var infoWindow; // markers information
 var locationSelect;
+var mapOption = {
+	center: {lat: -2.0372851958986224, lng: 117.06773251302911},
+	zoom: 5,
+	mapTypeId: 'roadmap'
+}
+
+for (var i = 0; i < stores.length; i++) {
+	console.log(stores[i]);
+}
 
 function initMap() {
 	var indonesia = {lat: -2.0372851958986224, lng: 117.06773251302911};
-	map = new google.maps.Map(document.getElementById('maps'),{
-		center: indonesia,
-		zoom: 5,
-		mapTypeId: 'roadmap',
-		mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU}
+	map = new google.maps.Map(document.getElementById('maps'),mapOption);
+	infoWindow = new google.maps.InfoWindow({map: map});
+
+	map.data.addGeoJson(stores);
+	map.data.setStyle(function(feature){
+		return {
+			icon: '<?= base_url('asset/logo-agm/favicon.png');?>',
+			title: feature.getProperty('company_name')
+		}
+	})
+
+	map.data.addListener('click', function(e){
+		console.log($(this))
+		var company_nameField = e.feature.getProperty('company_name');
+		var addressField = e.feature.getProperty('address');
+		var logo = "<?= base_url('asset/logo-agm/favicon.png');?>";
+		infoWindow.setContent("<div style='width: 150px;'><img src='"
+			+logo+
+			"'/><h4>"
+			+company_nameField+
+			"</h4><p>"
+			+addressField+
+			"</p></div>");
+		infoWindow.setPosition(e.feature.getGeometry().get());
+		infoWindow.setOptions({pixelOffest: new google.maps.Size(0,-30)});
+		infoWindow.open(map);
+		console.log(e.feature.getGeometry().get());
+	})
+
+	$.each(stores.features, function(index, store){
+		item = '<a href="#" class="list-group-item" data-toggle="outlet-item" data-target='+store.id+'>'+
+									'<h4 class="list-group-item-heading">'+store.properties.company_name+'</h4>'+
+										'<p class="list-group-item-heading">'+
+											'<strong>Address : </strong>'+store.properties.address+
+										'</p>'+
+										'<p class="list-group-item-heading">'+
+											'<strong>Phone : </strong>'+store.properties.phone+
+										'</p>'
+					 '</a>';
+		$('#store').append(item);
 	});
-	infoWindow = new google.maps.InfoWindow();
+
+	$('a[data-toggle="outlet-item"]').click(function(e){
+		e.preventDefault()
+		var target = $(this).data('target');
+		var result = $.grep(stores.features, function(e){ return e.id == target; });
+		$('div[title="'+result[0].properties.company_name+'"]').click()
+	})
 
 	if (navigator.geolocation) {
 		navigator.geolocation.getCurrentPosition(function(position){
 			var pos = {
 				lat: position.coords.latitude,
 				lng: position.coords.longitude,
-				zoom: 11
 			};
 			lat.value = position.coords.latitude;
 			lng.value = position.coords.longitude;
 			// info.nodeValue = position.coords.longitude;
 
-			infoWindow.setPosition(pos);
-			infoWindow.setContent('I\'m here.');
-
+			var marker = new google.maps.Marker({
+				position: new google.maps.LatLng(pos),
+				map: map,
+				animation: google.maps.Animation.BOUNCE,
+			})
 			map.setCenter(pos);
+			map.setZoom(12);
+
+			// showLocation(mapOption, map, pos, km);
 		}, function(){
-			handleLocationError(true, infoWindow, map.getCenter());
+			handleLocationError(true, map.getCenter());
 		});
 	}else{
-		handleLocationError(false, infoWindow, map.getCenter());
+		handleLocationError(false, map.getCenter());
 	}
 }
 
@@ -154,37 +213,129 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos){
 	'Error: Browser doesn\'t support.');
 }
 
+function infoMarker(marker, info_marker) {
+	var infoWindow = new google.maps.InfoWindow({
+		content: info_marker
+	});
 
+	marker.addListener('click',function(){
+		infoWindow.open(marker.get('map'), marker);
+	});
+}
 
-$.each(JSON.parse(stores), function(index, store){
-	item = '<a class="list-group-item" data-toggle="outlet-item" data-target='+store.id+'>'+
-								'<h4 class="list-group-item-heading">'+store.company_name+'</h4>'+
-									'<p class="list-group-item-heading">'+
-										'<strong>Address : </strong>'+store.address+
-									'</p>'+
-									'<p class="list-group-item-heading">'+
-										'<strong>Phone : </strong>'+store.phone1+
-									'</p>'
-				 '</a>';
-	$('#store').append(item);
-})
-// function loadStore() {
-// 	console.log(stores);
-// 	$('#store').empty();
-// 	if(stores.total_rows == 0){
-// 		item = '<div class="list-group-item">'+
-// 							'<h4 class="list-group-item-heading text-center">Tidak ada toko yang ditemukan</h4>'+
-// 						'</div>';
-// 	  $('#store').append(item);
-// 	}else{
-// 		item = '<div class="list-group-item">'+
-// 							'<h4 class="list-group-item-heading text-center"> Jumlah toko '+stores.total_rows+'</h4>'+
-// 						'</div>';
-// 		$('#store').append(item);
-// 	}
-// }
 </script>
 <script async defer type="text/javascript" src="//maps.google.com/maps/api/js?key=AIzaSyD7Bogq9RONZQpDo-E2gU37FsnQUSSRIFs&callback=initMap"></script>
+<script>
+    $(document).ready(function(){
+	$('#province').change(function(){
+		var province_id = $(this).val();
+		if(province_id){
+			$.ajax({
+				url: "<?=site_url('home/checkProv/')?>"+province_id,
+				method: "GET",
+				dataType: "json",
+				success:function(response){
+					$("#city").attr('disabled', false);
+					$("#city").empty();
+					$("#city").append(
+							'<option value="Select" selected disabled> Select </option>'
+						);
+					$('#sub_district').empty();
+					$("#sub_district").append(
+							'<option value="Select" selected disabled> Select </option>'
+						);
+					$.each(response, function(key, value){
+						$("#city").append(
+							'<option value='+value.id_kab+'>'+value.nama+'</option>'
+						);
+					});
+				}
+			})
+		}
+	});
+	
+	$('#city').change(function(){
+		var city = $(this).val();
+		if(city){
+			$.ajax({
+				url: "<?=site_url('home/checkSubDistrict/')?>"+city,
+				method: "GET",
+				dataType: "json",
+				success:function(response){
+					$("#sub_district").attr('disabled', false);
+					$("#sub_district").empty();
+					$("#sub_district").append(
+							'<option value="Select" selected disabled> Select </option>'
+						);
+					$.each(response, function(key, value){
+						$("#sub_district").append(
+							'<option value='+value.id_kec+'>'+value.nama+'</option>'
+						);
+					});
+				}
+			})
+		}
+	});
+});
+</script>
+<script>
+    $(document).ready(function(){
+        $('#stockDetail').hide();
+        $('#shoppingForm').hide();
+    	$('#checkStock').on('click', function(){
+    		var subDistrict = $('#sub_district').val();
+    		var productId = $('#product_id').val();
+    		if(subDistrict){
+    			$.ajax({
+    				url: "<?=site_url('home/checkStockbyDistrict/')?>"+productId+"/"+subDistrict,
+    				method: "GET",
+    				dataType: "json",
+    				success:function(response){
+    				    console.log(response);
+    					if(response != '') {
+    					    $("#stockTitle").html("Available in your location");
+    					    $('#stockDetail').show();
+    					    $('#shoppingForm').show();
+    					    $("#size").attr('disabled', false);
+    					    $("#size").empty();
+    						$("#price2").html("Rp. " + response[0].price);
+    						$("#price").val(response[0].price);
+    					    $.each(response, function(key, value){
+    						$("#size").append(
+    							'<option value='+value.id_product_size+'>'+value.name+' ('+value.size+')</option>'
+    						);
+    					});
+    					} else {
+    					    $('#stockDetail').hide();
+    					    $('#shoppingForm').hide();
+    					    $("#size").empty();
+    						$("#stockTitle").html("Not available in your location");
+    					}
+    					
+    				}
+    			})
+    		}
+    	});
+    	
+    	$('#size').on('change', function(){
+    	    var size = $("#size").val();
+    	    var productId = $('#product_id').val();
+    	    console.log(productId)
+    	    if (size) {
+    	        $.ajax({
+    	           url:  "<?=site_url('home/checkPricebyProdSize/')?>"+productId+"/"+size,
+    	           method: "GET",
+    	           dataType: "json",
+    	           success:function(response) {
+    	               console.log(response);
+    	               $("#price2").html("Rp. " + response.price);
+    	               $("#price").val(response.price);
+    	           }
+    	        });
+    	    }
+    	});
+});
+</script>
 </body>
 
 </html>

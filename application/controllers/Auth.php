@@ -7,6 +7,7 @@ class Auth extends CI_Controller{
     parent::__construct();
     $this->load->helper('url');
     $this->load->model('Mauth', 'mauth');
+    $this->load->model('Mhome', 'mhome');
   }
 
   public function login(){
@@ -179,9 +180,11 @@ class Auth extends CI_Controller{
       $this->form_validation->set_rules('pCode', 'Postcode', 'required');
 
       if($this->form_validation->run() === FALSE){
+          $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
+      'provinsi', FALSE);
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/registerSO');
+        $this->load->view('admin/registerSO', $data);
         $this->load->view('include/admin/footer');
       } else{
         $this->mauth->regisSO();

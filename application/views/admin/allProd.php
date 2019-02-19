@@ -53,8 +53,7 @@
                 <th>Product</th>
                 <th>Price</th>
                 <th>Sub Price</th>
-                <th>Detail</th>
-                <th>Delete</th>
+                <th>Action</th>
               </thead>
               <tbody>
                 <?php $no=1; ?>
@@ -66,8 +65,6 @@
                     <td>-</td>
                     <td>
                       <a href="<?= site_url('admin/detailProd/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
-                    </td>
-                    <td>
                       <a href="<?= site_url('admin/deleteProd/'.$product['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                     </td>
                   </tr>

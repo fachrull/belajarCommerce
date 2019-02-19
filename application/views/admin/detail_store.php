@@ -10,22 +10,46 @@
       <div class="col-xs">
         <div class="box">
           <div class="box-header pb-0">
-            <p>Email: <?= $prime['email'];?></p>
-            <p>Address: <?= $post['address'];?></p>
-            <p>Province: <?= $post['province'];?></p>
-            <p>City: <?= $post['city'];?></p>
-            <p>Sub district: <?= $post['sub_district'];?></p>
-            <p>Postcode: <?= $post['postcode'];?></p>
-            <?php if ($post['phone1'] != NULL): ?>
-              <p>Phone 1: <?=$post['phone1'];?></p>
-            <?php else: ?>
-              <p>Phone 1: -</p>
-            <?php endif; ?>
-            <?php if ($post['fax'] != NULL): ?>
-              <p>Fax: <?=$post['fax'];?></p>
-            <?php else: ?>
-              <p>Fax: -</p>
-            <?php endif; ?>
+            <div class="table-responsive">
+              <table class="table">
+                <tr>
+                  <th>Email</th>
+                  <td><?= $prime[0]['email'];?></td>
+                </tr>
+                <tr>
+                  <th>Address</th>
+                  <td class="word-wrap"><?= $post['address'];?></td>
+                </tr>
+                <tr>
+                  <th>Address 2</th>
+                  <td class="word-wrap"><?php echo ($post['address2'] == NULL? "-" : $post['address2']); ?></td>
+                </tr>
+                <tr>
+                  <th>Province</th>
+                  <td><?= $post['province'];?></td>
+                </tr>
+                <tr>
+                  <th>City</th>
+                  <td><?= $post['city'];?></td>
+                </tr>
+                <tr>
+                  <th>Sub district</th>
+                  <td><?= $post['sub_district'];?></td>
+                </tr>
+                <tr>
+                  <th>Postcode</th>
+                  <td><?= $post['postcode'];?></td>
+                </tr>
+                <tr>
+                  <th>Phone 1</th>
+                  <td><?php echo ($post['phone1'] == NULL? "-" : $post['phone1']);?></td>
+                </tr>
+                <tr>
+                  <th>Fax</th>
+                  <td><?php echo ($post['fax'] == NULL? "-" : $post['fax']);?></td>
+                </tr>
+              </table>
+            </div>
             <a href="<?= site_url('admin/storeProd/'.$post['id']);?>" class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add product</a>
           </div>
           <div class="box-body">
@@ -33,9 +57,9 @@
               <thead>
                 <th>No.</th>
                 <th>Product</th>
-                <th>Price</th>
-                <th>Sub Price</th>
+                <th id="sizeProduct">Size</th>
                 <th>Quantity</th>
+                <th>Action</th>
               </thead>
               <tbody>
                 <?php if(is_array($products)): ?>
@@ -43,9 +67,8 @@
                   <?php foreach($products as $product): ?>
                     <tr>
                       <td><?= $no;?></td>
-                      <td><?= $product['name'];?></td>
-                      <td><?= $product['price'];?></td>
-                      <td><?= $product['sub_price'];?></td>
+                      <td><?= $product['product_name'];?></td>
+                      <td><?=$product['size_name'];?> (<?= $product['size']; ?>)</td>
                       <td><?= ($product['quantity'] != NULL? $product['quantity']:'-');?></td>
                       <td>
                         <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
