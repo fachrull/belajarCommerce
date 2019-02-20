@@ -72,7 +72,6 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">WISHLIST</a>
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">STATUS TRANSASKSI</a>
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">PROFIL</a>
 								<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="<?= site_url('auth/logout');?>">
