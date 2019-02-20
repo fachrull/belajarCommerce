@@ -3,7 +3,7 @@
 <section class="page-header page-header-md">
 			<div class="container">
 
-				<h1>ARTICLE</h1>
+				<h1>AGMPEDIA</h1>
 
 				<!-- breadcrumbs -->
 				<!-- <ol class="breadcrumb">

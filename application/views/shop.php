@@ -162,9 +162,9 @@
 												<!-- /rating -->
 
 												<!-- price -->
-												<div class="shop-item-price">
+												<!-- <div class="shop-item-price">
 													Rp. <?= number_format($product['MAX(a.price)'], 2, ",", ".");?>
-												</div>
+												</div> -->
 												<!-- /price -->
 											</div>
 

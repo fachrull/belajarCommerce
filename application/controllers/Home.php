@@ -286,15 +286,23 @@ class Home extends CI_Controller{
   }
 
   public function shopCheckout(){
-    $this->load->view('include/header2');
-    $this->load->view('shop-checkout');
-    $this->load->view('include/footer');
+    if($this->session->userdata('uType') == 4){
+      $this->load->view('include/header2');
+      $this->load->view('shop-checkout');
+      $this->load->view('include/footer');
+    }else{
+      redirect('auth/login');
+    }
   }
 
   public function checkoutDone(){
-    $this->load->view('include/header2');
-    $this->load->view('checkout-done');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $this->load->view('include/header2');
+      $this->load->view('checkout-done');
+      $this->load->view('include/footer');
+    }else{
+      redirect('auth/login');
+    }
   }
 
   public function promotionPage(){
@@ -382,14 +390,24 @@ class Home extends CI_Controller{
   }
 
   public function profilePage(){
-    $this->load->view('include/header2');
-    $this->load->view('page-profile');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $data['profile'] = $this->mhome->detailProfileCustomer($this->session->userdata('uId'));
+      $this->load->view('include/header2');
+      $this->load->view('page-profile', $data);
+      $this->load->view('include/footer');
+    } else {
+      redirect('auth/login');
+    }
   }
 
   public function profileSetting(){
-    $this->load->view('include/header2');
-    $this->load->view('page-profile-settings');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $this->load->view('include/header2');
+      $this->load->view('page-profile-settings');
+      $this->load->view('include/footer');
+    } else {
+      redirect('auth/login');
+    }
+
   }
 }

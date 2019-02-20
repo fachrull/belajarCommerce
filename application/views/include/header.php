@@ -62,7 +62,7 @@
 					</button>
 
 					<!-- BUTTONS -->
-					
+
 					<ul class="list-inline header-buttons float-right nav nav-pills nav-second-main mt-0 bl-0 pl-0">
 					    <?php if($this->session->userdata('uType') == 4): ?>
 						<li class="header-button-arrow hidden-lg-down">
@@ -73,7 +73,7 @@
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-orders.html">WISHLIST</a>
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">STATUS TRANSASKSI</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="pack-megashop-account-settings.html">PROFIL</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('home/profilePage');?>">PROFIL</a>
 								<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="<?= site_url('auth/logout');?>">
 									<i class="fa fa-power-off"></i>
 									<b>LOG OUT</b>
@@ -87,7 +87,7 @@
 							</a>
 						</li>
 								<?php endif;?>
-						
+
 						<li class="search">
 							<a href=" javascript:;">
 								<i class="fa fa-search h-60 line-height-60"></i>
