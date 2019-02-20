@@ -201,7 +201,14 @@
 						<!-- /short description -->
 
 						<hr />
-
+						
+						<div class="mb-15 pl-0">
+							<p class="text-center bold fs-20" id="price2">
+							Rp. <span class="minprice"><?= $product['min_price'];?></span>
+							-
+							Rp. <span class="maxprice"><?= $product['max_price'];?></span>
+							</p>
+						</div>
 						<!-- FORM -->
 						<div id="shoppingForm" class="row text-center">
 							<form class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
@@ -210,8 +217,8 @@
 								<input type="hidden" id="price" name="price" />
 								<input type="hidden" id="size-name" name="size-name" />
 
-								<div class="col-2 col-md-2 mb-8">&nbsp;Price:</div>
-								<div class="col-2 col-md-10 mb-10"><p class="text-left" id="price2"></p></div>
+								<!-- <div class="col-2 col-md-2 mb-8">&nbsp;Price:</div> -->
+								<!-- <div class="col-2 col-md-10 mb-10"><p class="text-left" id="price2"></p></div> -->
 								<div class="col-2 col-md-2 mb-10">Size:</div>
 								<div class="col-4 col-md-10 mb-10">
 									<div>

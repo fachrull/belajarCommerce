@@ -106,6 +106,9 @@
 <!-- STYLESWITCHER - REMOVE -->
 <!-- <script async type="text/javascript" src="demo_files/styleswitcher/styleswitcher.js"></script> -->
 
+<!-- AutoNumber -->
+<script type="text/javascript" src="https://unpkg.com/autonumeric"></script>
+
 <!-- PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('asset/javascript/demo.shop.js');?>"></script>
 <script>
@@ -335,6 +338,18 @@ function infoMarker(marker, info_marker) {
     	    }
     	});
 });
+</script>
+<script>
+  const autoNumericOptionsIdr = {
+    digitGroupSeparator        : '.',
+    decimalCharacter           : ',',
+    decimalCharacterAlternative: '.',
+    decimalPlaces   : 0,
+    roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
+};
+    var inputPrice = new AutoNumeric('.maxprice', autoNumericOptionsIdr);
+	var inputPrice = new AutoNumeric('.minprice', autoNumericOptionsIdr);
+
 </script>
 </body>
 
