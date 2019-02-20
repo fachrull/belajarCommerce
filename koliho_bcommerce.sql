@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Feb 19, 2019 at 11:04 PM
--- Server version: 5.6.41
--- PHP Version: 7.2.7
+-- Host: 127.0.0.1
+-- Generation Time: Feb 20, 2019 at 05:05 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -7809,11 +7809,6 @@ CREATE TABLE `tm_customer` (
   `id_userlogin` int(11) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `address` text,
-  `sub_district` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  `province` varchar(50) DEFAULT NULL,
-  `postcode` varchar(25) DEFAULT NULL,
   `gender` char(1) NOT NULL,
   `phone` varchar(20) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -7822,10 +7817,33 @@ CREATE TABLE `tm_customer` (
 -- Dumping data for table `tm_customer`
 --
 
-INSERT INTO `tm_customer` (`id`, `id_userlogin`, `first_name`, `last_name`, `address`, `sub_district`, `city`, `province`, `postcode`, `gender`, `phone`) VALUES
-(1, 15, 'dummy', 'customer2', NULL, '', NULL, NULL, NULL, 'm', NULL),
-(2, 3, 'Frist', 'Customer', 'Jl. Durian No. H23 RT003/003 Kelapa Dua Wetan, Ciracas', '', 'Jakarta Timur', 'DKI Jakarta', '13730', 'm', '02187701150'),
-(3, 16, 'customer', 'coba', NULL, '', NULL, NULL, NULL, 'm', NULL);
+INSERT INTO `tm_customer` (`id`, `id_userlogin`, `first_name`, `last_name`, `gender`, `phone`) VALUES
+(1, 15, 'dummy', 'customer2', 'm', '085712345678'),
+(2, 3, 'Frist', 'Customer', 'm', '02187701150'),
+(3, 16, 'customer', 'coba', 'm', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_customer_detail`
+--
+
+CREATE TABLE `tm_customer_detail` (
+  `id` int(11) NOT NULL,
+  `id_userlogin` int(11) NOT NULL,
+  `address` text NOT NULL,
+  `province` int(11) NOT NULL,
+  `city` int(11) NOT NULL,
+  `sub_district` int(11) NOT NULL,
+  `postcode` varchar(25) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_customer_detail`
+--
+
+INSERT INTO `tm_customer_detail` (`id`, `id_userlogin`, `address`, `province`, `city`, `sub_district`, `postcode`) VALUES
+(1, 15, 'Jl. Sesama No.123', 31, 3174, 317403, '12780');
 
 -- --------------------------------------------------------
 
@@ -8156,11 +8174,11 @@ CREATE TABLE `tr_product` (
 --
 
 INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `id_product_size`, `quantity`, `new`, `id_admin`) VALUES
-(4, 1, 45, 77, 0, 0, 2),
-(5, 1, 45, 78, 0, 0, 2),
+(4, 1, 45, 77, 100, 0, 2),
+(5, 1, 45, 78, 1, 0, 2),
 (8, 4, 128, 246, 0, 1, 2),
-(9, 1, 30, 46, 0, 1, 2),
-(10, 1, 30, 45, 0, 1, 2);
+(9, 1, 30, 46, 0, 0, 2),
+(10, 1, 30, 45, 0, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -8738,6 +8756,12 @@ ALTER TABLE `tm_customer`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `tm_customer_detail`
+--
+ALTER TABLE `tm_customer_detail`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `tm_product`
 --
 ALTER TABLE `tm_product`
@@ -8826,6 +8850,12 @@ ALTER TABLE `tm_customer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `tm_customer_detail`
+--
+ALTER TABLE `tm_customer_detail`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `tm_product`
 --
 ALTER TABLE `tm_product`
@@ -8883,7 +8913,7 @@ ALTER TABLE `tr_product_spec`
 -- AUTO_INCREMENT for table `user_login`
 --
 ALTER TABLE `user_login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
