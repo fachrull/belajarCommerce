@@ -37,10 +37,10 @@
 								<li class="list-group-noicon active">
 									<a class="dropdown-toggle" href="#">MATTRESS</a>
 									<ul>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Imperial Heritage</a></li>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Royal Souvergin</a></li>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Conoration</a></li>
-										<li><a href="#"><span class="fs-11 text-muted float-right">(10)</span> Baron</a></li>
+										<li><a href="#"> Imperial Heritage</a></li>
+										<li><a href="#"> Royal Souvergin</a></li>
+										<li><a href="#"> Conoration</a></li>
+										<li><a href="#"> Baron</a></li>
 									</ul>
 								</li>
 							</ul>
@@ -57,12 +57,12 @@
 					</div>
 
 					<ul id="brands" class="list-group list-unstyled">
-						<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(21)</span> Aireloom</a></li>
-						<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(44)</span> KingKoil</a></li>
-						<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(2)</span> Serta</a></li>
-						<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(18)</span> Tempur</a></li>
-						<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(87)</span> Stressless</a></li>
-						<li class="list-group-item"><a href="#"><span class="fs-11 text-muted float-right">(32)</span> Florence</a></li>
+						<li class="list-group-item"><a href="#"> Aireloom</a></li>
+						<li class="list-group-item"><a href="#"> KingKoil</a></li>
+						<li class="list-group-item"><a href="#"> Serta</a></li>
+						<li class="list-group-item"><a href="#"> Tempur</a></li>
+						<li class="list-group-item"><a href="#"> Stressless</a></li>
+						<li class="list-group-item"><a href="#"> Florence</a></li>
 					</ul>
 
 				</div>
@@ -174,10 +174,14 @@
 											<strong id="stockTitle">Choose your location first</strong>
 										</div>
 
+										<div id="pageloader">
+											<img src="<?= base_url('asset/content-images/4.gif');?>" alt="">
+										</div>
+
 										<form action="#" method="post" class="m-0">
 											<label>Province</label>
 											<select id="province" name="province" class="form-control pointer mb-20">
-												<option value="Select" selected disabled> Select Province </option>
+												<option value="Select" selected disabled> Select </option>
 												<?php foreach ($provinces as $province): ?>
 													<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
 												<?php endforeach; ?>
@@ -186,17 +190,16 @@
 
 											<label>City</label>
 											<select id="city" name="city" class="form-control pointer mb-20">
-												<option value="Select" selected disabled> Select City </option>
+												<option value="Select" selected disabled> Select </option>
 												<!-- add all here-->
 											</select>
 
 											<label>District</label>
 											<select id="sub_district" name="cart-tax-state" class="form-control pointer mb-20">
-												<option value="Select" selected disabled> Select District </option>
+												<option value="Select" selected disabled> Select </option>
 												<!-- add all here -->
 											</select>
 
-											<button id="checkStock" class="btn btn-oldblue btn-block" type="button">CHECK</button>
 										</form>
 									</div>
 
