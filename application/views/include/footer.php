@@ -282,6 +282,7 @@ function infoMarker(marker, info_marker) {
 });
 </script>
 <script>
+	// process quantity or size item
     $(document).ready(function(){
         $('#stockDetail').hide();
         $('#shoppingForm').hide();
@@ -301,7 +302,8 @@ function infoMarker(marker, info_marker) {
     					    $('#shoppingForm').show();
     					    $("#size").attr('disabled', false);
     					    $("#size").empty();
-    						$("#price2").html("Rp. " + response[0].price);
+    						$("#price2").html("Rp.");
+							$('#price2').append('<span class="minprice" value='+response[0].price+'>'+response[0].price+'</span>');
     						$("#price").val(response[0].price);
     					    $.each(response, function(key, value){
     						$("#size").append(
@@ -331,7 +333,7 @@ function infoMarker(marker, info_marker) {
     	           dataType: "json",
     	           success:function(response) {
     	               console.log(response);
-    	               $("#price2").html("Rp. " + response.price);
+						$("#price2").html("Rp. " + response.price);
     	               $("#price").val(response.price);
     	           }
     	        });
@@ -349,6 +351,7 @@ function infoMarker(marker, info_marker) {
 };
     var inputPrice = new AutoNumeric('.maxprice', autoNumericOptionsIdr);
 	var inputPrice = new AutoNumeric('.minprice', autoNumericOptionsIdr);
+	var inputPrice = new AutoNumeric('.totalprice', autoNumericOptionsIdr);
 
 </script>
 <!-- <script>
