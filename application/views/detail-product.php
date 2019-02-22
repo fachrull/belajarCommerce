@@ -169,7 +169,7 @@
 										<form action="#" method="post" class="m-0">
 											<label>Province</label>
 											<select id="province" name="province" class="form-control pointer mb-20">
-												<option value="Select" selected disabled> Select </option>
+												<option value="Select" selected disabled> Select Province </option>
 												<?php foreach ($provinces as $province): ?>
 													<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
 												<?php endforeach; ?>
@@ -178,13 +178,13 @@
 
 											<label>City</label>
 											<select id="city" name="city" class="form-control pointer mb-20">
-												<option value="Select" selected disabled> Select </option>
+												<option value="Select" selected disabled> Select City </option>
 												<!-- add all here-->
 											</select>
 
 											<label>District</label>
 											<select id="sub_district" name="cart-tax-state" class="form-control pointer mb-20">
-												<option value="Select" selected disabled> Select </option>
+												<option value="Select" selected disabled> Select District </option>
 												<!-- add all here -->
 											</select>
 
@@ -201,7 +201,7 @@
 						<!-- /short description -->
 
 						<hr />
-						
+
 						<div class="mb-15 pl-0">
 							<p class="text-center bold fs-20" id="price2">
 							Rp. <span class="minprice"><?= $product['min_price'];?></span>

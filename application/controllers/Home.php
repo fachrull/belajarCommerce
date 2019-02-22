@@ -280,6 +280,9 @@ class Home extends CI_Controller{
 
   public function shopCart(){
     $data['cart'] = $this->cart->contents();
+
+    print_r($data['cart']);
+    // exit();
     $this->load->view('include/header2');
     $this->load->view('shop-cart', $data);
     $this->load->view('include/footer');
@@ -287,9 +290,29 @@ class Home extends CI_Controller{
 
   public function shopCheckout(){
     if($this->session->userdata('uType') == 4){
-      $this->load->view('include/header2');
-      $this->load->view('shop-checkout');
-      $this->load->view('include/footer');
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      if ($this->form_validation->run() === FALSE) {
+        $data['alamat_default'] = $this->mhome->detailProfileCustomer($this->session->userdata('uId'));
+        $data['historicals'] = $this->mhome->historicalShipping($this->session->userdata('uId'));
+        $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
+          'provinsi', FALSE);
+        $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
+        $data['sub_districts'] = $this->mhome->getProducts(NULL, NULL, 'kecamatan', FALSE);
+
+        $this->load->view('include/header2');
+        $this->load->view('shop-checkout', $data);
+        $this->load->view('include/footer');
+      } else {
+        // if ($this->input->post('idShippingHistory') != NULL) {
+        //
+        // } else {
+        //   // code...
+        // }
+        echo "mantap";
+      }
+
     }else{
       redirect('auth/login');
     }
@@ -392,6 +415,7 @@ class Home extends CI_Controller{
   public function profilePage(){
     if ($this->session->userdata('uType') == 4) {
       $data['profile'] = $this->mhome->detailProfileCustomer($this->session->userdata('uId'));
+
       $this->load->view('include/header2');
       $this->load->view('page-profile', $data);
       $this->load->view('include/footer');

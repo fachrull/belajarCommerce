@@ -89,7 +89,7 @@
 <!-- /FOOTER -->
 
 
-		
+
 	</div>
 	<!-- SCROLL TO TOP -->
 	<a href="<?= site_url('#');?>" id="toTop"></a>
@@ -112,7 +112,7 @@
 <!-- PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('asset/javascript/demo.shop.js');?>"></script>
 <script>
-    
+
 var stores = <?= $stores?>;
 var lat = document.getElementById('lat');
 var lng = document.getElementById('lng');
@@ -241,11 +241,11 @@ function infoMarker(marker, info_marker) {
 					$("#city").attr('disabled', false);
 					$("#city").empty();
 					$("#city").append(
-							'<option value="Select" selected disabled> Select </option>'
+							'<option value="Select" selected disabled> Select City </option>'
 						);
 					$('#sub_district').empty();
 					$("#sub_district").append(
-							'<option value="Select" selected disabled> Select </option>'
+							'<option value="Select" selected disabled> Select District </option>'
 						);
 					$.each(response, function(key, value){
 						$("#city").append(
@@ -256,7 +256,7 @@ function infoMarker(marker, info_marker) {
 			})
 		}
 	});
-	
+
 	$('#city').change(function(){
 		var city = $(this).val();
 		if(city){
@@ -268,7 +268,7 @@ function infoMarker(marker, info_marker) {
 					$("#sub_district").attr('disabled', false);
 					$("#sub_district").empty();
 					$("#sub_district").append(
-							'<option value="Select" selected disabled> Select </option>'
+							'<option value="Select" selected disabled> Sub district </option>'
 						);
 					$.each(response, function(key, value){
 						$("#sub_district").append(
@@ -314,12 +314,12 @@ function infoMarker(marker, info_marker) {
     					    $("#size").empty();
     						$("#stockTitle").html("Not available in your location");
     					}
-    					
+
     				}
     			})
     		}
     	});
-    	
+
     	$('#size').on('change', function(){
     	    var size = $("#size").val();
     	    var productId = $('#product_id').val();
@@ -351,6 +351,32 @@ function infoMarker(marker, info_marker) {
 	var inputPrice = new AutoNumeric('.minprice', autoNumericOptionsIdr);
 
 </script>
+<!-- <script>
+	jQuery("#shipswitch").bind("click",function(){jQuery('#shipping').slideToggle(200,function(){if(jQuery('#shipping').is(":visible")){_scrollTo('#shipping',150);}});});
+
+	jQuery("#shipswitch").bind("click", function(){
+		jQuery("#historyshipping").slideToggle(200, function(){
+			if(jQuery("#historyshipping").is(":visible")){
+				_scrollTo("#historyshipping", 150);
+				$("#shippinghistory").show();
+				jQuery("#shipswitch1").bind("click", function(){
+					jQuery("#shipping").slideToggle(200, function(){
+						if(jQuery("#shipping").is(":visible")){
+							_scrollTo("#shipping",150);
+							$("default_address").hide();
+							$("#historyshipping").hide();
+						}else{
+							$("default_address").show();
+							$("#historyshipping").hide();
+						}
+					});
+				});
+			}else{
+				$("#historyshipping").hide();
+			}
+		})
+	})
+</script> -->
 </body>
 
 </html>

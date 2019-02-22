@@ -49,7 +49,7 @@
 							<!-- PERSONAL INFO TAB -->
 							<div class="col-12 col-md-12">
 								<a class="fs-13 btn btn-sm btn-oldblue" href="<?= base_url('home/profileSetting');?>"><i class="fa fa-info-circle"></i>Change</a>
-								<h3 class="mb-10 mt-10">Sherlock Holmes</h3>
+								<h3 class="mb-10 mt-10"><?= $profile['first_name']." ".$profile['last_name']?></h3>
 								<div class="block"><i class="glyphicon glyphicon-envelope pr-5 line-height-40"></i><?= $profile['email']?></div>
 								<div class="block"><i class="fa fa-phone pr-5 line-height-40"></i><?= $profile['phone']?></div>
 								<div class="block"><i class="fa fa-home pr-5 line-height-40"></i><?= $profile['address']?></div>

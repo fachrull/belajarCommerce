@@ -43,14 +43,40 @@
 					<h4>Billing &amp; Shipping to</h4>
 				</div>
 
-
 				<!-- BILLING -->
-				<div class="col-md-6 col-sm-6">
-					<div class="block">Name: Sherlock Holmes </div>
-					<div class="block">Company: Independent Consulting Detective</div>
-					<div class="block">Street Address: 221B Baker Street</div>
-					<div class="block">City, Zip Code: London, NW1 6XE</div>
-					<div class="block">Phone: +4487536136</div>
+				<div id="default_address" class="col-md-6 col-sm-6">
+					<div class="table-responsive">
+						<table class="table">
+							<tr class="block">
+								<td>Name:</td>
+								<td><?= $alamat_default['username'];?></td>
+							</tr>
+							<tr class="block">
+								<td>Company name:</td>
+								<td><?php echo($alamat_default['company_name'] == NULL? "-": $alamat_default['company_name'])?></td>
+							</tr>
+							<tr class="block">
+								<td>Address:</td>
+								<td><?= $alamat_default['address'].", ".$alamat_default['kecamatan']?></td>
+							</tr>
+							<tr class="block">
+								<td>Province: </td>
+								<td><?= $alamat_default['provinsi']?></td>
+							</tr>
+							<tr class="block">
+								<td>City: </td>
+								<td><?= $alamat_default['kabupaten']?></td>
+							</tr>
+							<tr class="block">
+								<td>Postcode: </td>
+								<td><?= $alamat_default['postcode']?></td>
+							</tr>
+							<tr class="block">
+								<td>Phone:</td>
+								<td><?= $alamat_default['phone']?></td>
+							</tr>
+						</table>
+					</div>
 					<hr>
 				</div>
 
@@ -66,6 +92,35 @@
 						</label>
 					</div>
 
+				</div>
+
+				<fieldset id="historyshipping" class="mt-80 hide">
+					<h4>Shipping History</h4>
+					<hr />
+
+					<div class="row">
+						<div class="col-md-6 col-sm-6">
+							<label for="history_billing">Shipping History</label>
+							<select class="form-control" name="idShippingHistory">
+								<option value="Select" selected disabled>Select Historical Shipping</option>
+								<?php foreach ($historicals as $historical): ?>
+									<option value="<?= $historical['id']?>">
+										<?= $historical['username'].", ".$historical['address'].", ".$historical['kecamatan']." (".$historical['postcode'].")"?>
+									</option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+					</div>
+				</fieldset>
+
+				<div class="row hide" id="shippinghistory">
+					<div class="col-lg-12 m-0 clearfix">
+						<label class="checkbox float-left">
+							<!-- see assets/js/view/demo.shop.js - CHECKOUT section -->
+							<input id="shipswitch1" name="shipping[same_as_billing]" type="checkbox" value="1" />
+							<i></i> <span class="fw-300">Ship to new address</span>
+						</label>
+					</div>
 				</div>
 
 				<!-- SHIPPING -->
@@ -93,19 +148,31 @@
 
 					<div class="row">
 						<div class="col-md-6 col-sm-6">
-							<label for="billing_city">City *</label>
-							<input id="billing_city" name="billing[city]" type="text" class="form-control required" />
+							<label>Province</label>
+							<select id="province" name="province" class="form-control pointer mb-20">
+								<option value="Select" selected disabled> Select Province </option>
+								<?php foreach ($provinces as $province): ?>
+									<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
+								<?php endforeach; ?>
+								<!-- add all here -->
+							</select>
 						</div>
 						<div class="col-md-6 col-sm-6">
-							<label for="billing_city">State/Province *</label>
-							<input id="billing_city" name="billing[state]" type="text" class="form-control required" />
+							<label>City</label>
+							<select id="city" name="city" class="form-control pointer mb-20">
+								<option value="Select" selected disabled> Select City </option>
+								<!-- add all here-->
+							</select>
 						</div>
 					</div>
 
 					<div class="row">
 						<div class="col-md-6 col-sm-6">
-							<label for="billing_zipcode">Sub District *</label>
-							<input id="billing_zipcode" name="billing[subdistrict]" type="text" class="form-control required" />
+							<label>District</label>
+							<select id="sub_district" name="cart-tax-state" class="form-control pointer mb-20">
+								<option value="Select" selected disabled> Select District </option>
+								<!-- add all here -->
+							</select>
 						</div>
 						<div class="col-md-6 col-sm-6">
 							<label for="billing_zipcode">Zip Code *</label>
@@ -165,7 +232,7 @@
 
 
 				<!-- CREDIT CARD PAYMENT -->
-				<fieldset id="ccPayment" class="mt-30 hide">
+				<fieldset id="ccPayment" class="mt-30">
 
 					<div class="toggle-transparent toggle-bordered-full clearfix">
 						<div class="toggle active">
@@ -289,7 +356,7 @@
 
 							<a href="<?= site_url('home/checkoutDone');?>">
 							<button class="btn btn-oldblue btn-lg btn-block fs-15">
-								<i class="fa fa-mail-forward"></i> 
+								<i class="fa fa-mail-forward"></i>
 								Place Order Now
 							</button>
 							</a>
