@@ -34,7 +34,8 @@ class Stores extends CI_Controller{
   public function storeProduct( $idProd = FALSE,$idStore = FALSE){
     if ($this->session->userdata('uType') == 3) {
       if ($idStore === FALSE && $idProd === FALSE) {
-        $data['products'] = $this->mstore->productAcceptStore($this->session->userdata('idStore'));
+        $idStore = $this->mstore->getProducts(array('id_userlogin' => $this->session->userdata('uId')), array('idField' => 'id'), 'tm_store_owner', TRUE);
+        $data['products'] = $this->mstore->productAcceptStore($idStore['id']);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -75,7 +76,7 @@ class Stores extends CI_Controller{
     }
   }
 
-  public function addQuantity($idStore, $idProd){
+  public function addQuantity($idStore, $idProd, $idProdSize){
     if ($this->session->userdata('uType') == 3) {
       $this->load->helper('form');
       $this->load->library('form_validation');
@@ -83,9 +84,11 @@ class Stores extends CI_Controller{
       $this->form_validation->set_rules('quantity','Quantity','required');
 
       if ($this->form_validation->run() === FALSE) {
-        $id = array('idStore' => $idStore, 'idProd' => $idProd);
+        $id = array('idStore' => $idStore, 'idProd' => $idProd, 'idProdSize' => $idProdSize);
         $data['id'] = $id;
         $data['product'] = $this->mstore->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
+        $data['quantity'] = $this->mstore->getProducts(array('id_store' => $idStore, 'id_product' => $idProd, 'id_product_size' => $idProdSize),
+          array('quantityField' => 'quantity'), 'tr_product', TRUE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -94,8 +97,9 @@ class Stores extends CI_Controller{
       } else {
         $items = array('quantity' => $this->input->post('quantity'));
         $condition = array(
-          'id_store'    => $idStore,
-          'id_product'  => $idProd
+          'id_store'        => $idStore,
+          'id_product'      => $idProd,
+          'id_product_size' => $idProdSize
         );
         $this->mstore->updateData($condition, $items, 'tr_product');
         redirect('stores/storeProduct');
