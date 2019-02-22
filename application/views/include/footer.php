@@ -241,11 +241,11 @@ function infoMarker(marker, info_marker) {
 					$("#city").attr('disabled', false);
 					$("#city").empty();
 					$("#city").append(
-							'<option value="Select" selected disabled> Select City </option>'
+							'<option value="Select" selected disabled> Select </option>'
 						);
 					$('#sub_district').empty();
 					$("#sub_district").append(
-							'<option value="Select" selected disabled> Select District </option>'
+							'<option value="Select" selected disabled> Select </option>'
 						);
 					$.each(response, function(key, value){
 						$("#city").append(
@@ -268,7 +268,7 @@ function infoMarker(marker, info_marker) {
 					$("#sub_district").attr('disabled', false);
 					$("#sub_district").empty();
 					$("#sub_district").append(
-							'<option value="Select" selected disabled> Sub district </option>'
+							'<option value="Select" selected disabled> Select </option>'
 						);
 					$.each(response, function(key, value){
 						$("#sub_district").append(
@@ -286,9 +286,12 @@ function infoMarker(marker, info_marker) {
     $(document).ready(function(){
         $('#stockDetail').hide();
         $('#shoppingForm').hide();
-    	$('#checkStock').on('click', function(){
+    	$('#sub_district').on('change', function(){
     		var subDistrict = $('#sub_district').val();
     		var productId = $('#product_id').val();
+			$('#pageloader').fadeIn(150, function () {
+				$('#pageloader').hide();
+			});
     		if(subDistrict){
     			$.ajax({
     				url: "<?=site_url('home/checkStockbyDistrict/')?>"+productId+"/"+subDistrict,
