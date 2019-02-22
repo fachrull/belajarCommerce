@@ -136,22 +136,30 @@
 					<!-- ITEM DESC -->
 					<div class="col-lg-6 col-sm-6">
 
-						<!-- buttons -->
-						<div class="float-right">
-							<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
-							<a class="btn btn-light add-wishlist" href="#" data-item-id="1" data-toggle="tooltip" title="Add To Wishlist"><i
-								 class="fa fa-heart p-0"></i></a>
+						<div class="shop-item-price mt-0">
+							<span class="pl-0 bold fs-24 mt-0"><strong><?= $product['name'];?></strong></span>
+							<!-- rating -->
+						<div class="rating rating-4 fs-17 mt-10 fw-100 float-right">
+							<!-- rating-0 ... rating-5 -->
 						</div>
-						<!-- /buttons -->
+						<!-- /rating -->
+						</div>
 
-						<div class="shop-item-price">
-							<span class="pl-0 fs-18"><strong><?= $product['name'];?></strong></span>
-
+						<div class="mb-15 pl-0">
+							<p class="text-left fs-18 bold" id="price2">
+							Rp. <span class="minprice"><?= $product['min_price'];?></span>
+							-
+							Rp. <span class="maxprice"><?= $product['max_price'];?></span>
+							</p>
 						</div>
 
 						<hr />
 
+						<!-- short description -->
+						<p class="mt-10"><?= $product['description'];?></p>
+						<!-- /short description -->
 
+						<hr />
 
 						<div class="toggle">
 									<label>Checking the stocks</label>
@@ -193,22 +201,12 @@
 									</div>
 
 								</div>
-
-
-
-						<!-- short description -->
-						<p class="mt-10"><?= $product['description'];?></p>
-						<!-- /short description -->
-
-						<hr />
 						
-						<div class="mb-15 pl-0">
-							<p class="text-center bold fs-20" id="price2">
-							Rp. <span class="minprice"><?= $product['min_price'];?></span>
-							-
-							Rp. <span class="maxprice"><?= $product['max_price'];?></span>
-							</p>
-						</div>
+					
+
+						
+						
+						
 						<!-- FORM -->
 						<div id="shoppingForm" class="row text-center">
 							<form class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
@@ -234,7 +232,7 @@
 									</div><!-- /btn-group -->
 								</div>
                                 <div class="col-4 col-md-12 float-right">
-								    <button type="submit" class="btn btn-oldblue float-left product-add-cart rad-0 p-0 w-130">ADD TO CART</button>
+								    <button type="submit" class="btn align-middle btn-oldblue float-right product-add-cart h-45 rad-0 p-0 w-130">ADD TO CART</button>
 								</div>
 
 							</form>
@@ -244,43 +242,7 @@
 
 							<hr>
 
-
-                            <!-- Share -->
-						<div class="float-right">
-
-							<a href="#" class="social-icon social-icon-sm social-icon-transparent social-facebook float-left" data-toggle="tooltip"
-							 data-placement="top" title="Facebook">
-								<i class="icon-facebook"></i>
-								<i class="icon-facebook"></i>
-							</a>
-
-							<a href="#" class="social-icon social-icon-sm social-icon-transparent social-twitter float-left" data-toggle="tooltip"
-							 data-placement="top" title="Twitter">
-								<i class="icon-twitter"></i>
-								<i class="icon-twitter"></i>
-							</a>
-
-							<a href="#" class="social-icon social-icon-sm social-icon-transparent social-instagram float-left" data-toggle="tooltip"
-							 data-placement="top" title="Instagram">
-								<i class="icon-instagram2"></i>
-								<i class="icon-instagram2"></i>
-							</a>
-
-							<a href="#" class="social-icon social-icon-sm social-icon-transparent social-whatsapp float-left" data-toggle="tooltip"
-							 data-placement="top" title="Whatsapp">
-								<i class="icon-call"></i>
-								<i class="icon-call"></i>
-							</a>
-
-						</div>
-						<!-- /Share -->
-
-
-						<!-- rating -->
-						<div class="rating rating-4 fs-13 mt-10 fw-100">
-							<!-- rating-0 ... rating-5 -->
-						</div>
-						<!-- /rating -->
+						
 
 					</div>
 					<!-- /ITEM DESC -->

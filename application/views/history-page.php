@@ -38,10 +38,6 @@
 								    </a>
 								</li>
 								<li class="fs-13">
-								    <a href="<?= base_url('home/wishlistPage');?>"> Wishlist
-								    </a>
-								</li>
-								<li class="fs-13">
 								    <a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
 								    </a>
 								</li>
