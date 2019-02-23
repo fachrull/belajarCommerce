@@ -280,9 +280,6 @@ class Home extends CI_Controller{
 
   public function shopCart(){
     $data['cart'] = $this->cart->contents();
-
-    print_r($data['cart']);
-    // exit();
     $this->load->view('include/header2');
     $this->load->view('shop-cart', $data);
     $this->load->view('include/footer');

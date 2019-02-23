@@ -44,34 +44,34 @@
 				</div>
 
 				<!-- BILLING -->
-				<div id="default_address" class="col-md-6 col-sm-6">
+				<div id="default_address" class="col-md-12 col-sm-12">
 					<div class="table-responsive">
 						<table class="table">
-							<tr class="block">
+							<tr>
 								<td>Name:</td>
 								<td><?= $alamat_default['username'];?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Company name:</td>
 								<td><?php echo($alamat_default['company_name'] == NULL? "-": $alamat_default['company_name'])?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Address:</td>
 								<td><?= $alamat_default['address'].", ".$alamat_default['kecamatan']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Province: </td>
 								<td><?= $alamat_default['provinsi']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>City: </td>
 								<td><?= $alamat_default['kabupaten']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Postcode: </td>
 								<td><?= $alamat_default['postcode']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Phone:</td>
 								<td><?= $alamat_default['phone']?></td>
 							</tr>
@@ -199,12 +199,12 @@
 
 
 			<div class="col-lg-5 col-sm-5">
-				<div class="heading-title">
+				<div class="heading-title mb-10">
 					<h4>Payment Method</h4>
 				</div>
 
 				<!-- PAYMENT METHOD -->
-				<fieldset class="mt-60">
+				<fieldset class="mt-30">
 					<div class="toggle-transparent toggle-bordered-full clearfix">
 						<div class="toggle active">
 							<div class="toggle-content">
@@ -232,7 +232,7 @@
 
 
 				<!-- CREDIT CARD PAYMENT -->
-				<fieldset id="ccPayment" class="mt-30">
+				<fieldset id="ccPayment" class="mt-30 hide">
 
 					<div class="toggle-transparent toggle-bordered-full clearfix">
 						<div class="toggle active">
