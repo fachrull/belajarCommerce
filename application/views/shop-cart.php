@@ -118,7 +118,7 @@
 							<form action="#" method="post" class="m-0">
 								<input type="text" id="cart-code" name="cart-code" class="form-control text-center mb-10" placeholder="Voucher Code"
 								 required="required">
-								<button class="btn btn-oldblue btn-block" type="submit">APPLY</button>
+								<button class="btn btn-oldblue btn-block" type="submit">SUBMIT</button>
 							</form>
 						</div>
 					</div>

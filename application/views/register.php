@@ -37,7 +37,7 @@
                             <input name="email" type="text" placeholder="Email address">
                             <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
                         </label>
-                        <?php if ($this->session->userdata('isLogin') === NULL): ?>
+                        <?php if ($this->session->userdata('isLogin') == NULL): ?>
                           <label class="input mb-10">
                               <i class="ico-append fa fa-lock"></i>
                               <input name="password" type="password" placeholder="Password">
@@ -60,8 +60,8 @@
                                   </label>
                               </div>
                           </div>
-                          <label class="input mb-10">
-                              <select class="form-control" name="gender">
+                          <label class="select mb-10">
+                              <select class="custom-control-input" name="gender">
                                   <label class="input">
                                     <option value="0" selected disabled>Gender</option>
                                   </label>
@@ -72,35 +72,6 @@
                                     <option value="f">Female</option>
                                   </label>
                               </select>
-                          </label>
-                          <label class="input mb-10">
-                            <i class="ico-append fa fa-phone"></i>
-                            <input type="text" name="phone" placeholder="Phone Number">
-                          </label>
-                          <label class="input mb-10">
-                            <i class="ico-append fa fa-home"></i>
-                            <input type="text" name="add" placeholder="Address">
-                          </label>
-                          <label class="input mb-10">
-                            <select id="province" name="province" class="form-control" name="">
-                              <option value="Select" selected disabled> Province </option>
-      												<?php foreach ($provinces as $province): ?>
-      													<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
-      												<?php endforeach; ?>
-                            </select>
-                          </label>
-                          <label class="input mb-10">
-                            <select class="form-control" name="city" id="city">
-                              <option value="Select" selected disabled> City </option>
-                            </select>
-                          </label>
-                          <label class="input mb-10">
-                            <select class="form-control" name="sub_district" id="sub_district">
-                              <option value="Select" selected disabled> Sub district </option>
-                            </select>
-                          </label>
-                          <label class="input mb-10">
-                            <input type="text" name="postcode" placeholder="Postcode">
                           </label>
                           <div class="mt-30">
                               <label class="checkbox m-0"><input class="checked-agree" type="checkbox" name="checkbox"><i></i>I

@@ -86,10 +86,13 @@
         <?php endif; ?>
         <?php if ($this->session->userdata('uType') == 3): ?>
           <li>
+            <a href="<?= site_url('stores/inbound')?>">Inbound Product</a>
+          </li>
+          <li>
             <a href="<?= site_url('stores/storeProduct')?>">Product</a>
           </li>
           <li>
-            <a href="#">History Transaction</a>
+            <a href="#">Invoice</a>
           </li>
         <?php endif; ?>
       </ul>

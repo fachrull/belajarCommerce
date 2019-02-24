@@ -141,6 +141,15 @@
 											</a>
 											<!-- /product image(s) -->
 
+											<!-- hover buttons -->
+											<div class="shop-option-over">
+												<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
+												<a class="btn btn-light add-wishlist" href="#" data-item-id="2" data-toggle="tooltip" title="Add To Wishlist"><i
+													class="fa fa-heart p-0"></i></a>
+												</div>
+												<!-- /hover buttons -->
+											</div>
+
 											<div class="shop-item-summary text-center">
 												<h2><?= $product['name'];?> - <?= $product['id'];?></h2>
 
@@ -153,9 +162,9 @@
 												<!-- /rating -->
 
 												<!-- price -->
-												<!-- <div class="shop-item-price">
+												<div class="shop-item-price">
 													Rp. <?= number_format($product['MAX(a.price)'], 2, ",", ".");?>
-												</div> -->
+												</div>
 												<!-- /price -->
 											</div>
 

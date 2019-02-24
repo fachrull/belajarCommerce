@@ -130,7 +130,7 @@ class Mhome extends CI_Model{
   }
 
   public function getProduct_price($brand, $category){
-    $this->db->select('MAX(a.price), b.name, b.id, b.image');
+    $this->db->select('MAX(a.price) as max_price, MIN(a.price)as min_price, b.name, b.id, b.image');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $where = array('b.brand_id' => $brand, 'b.cat_id' => $category);
@@ -175,47 +175,9 @@ class Mhome extends CI_Model{
       $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
       $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
       $this->db->group_by('a.id_product_size');
-      $where = array('b.sub_district' => $idDistrict, 'a.id_product' => $idProd, 'a.quantity >' => 3);
+      $where = array('b.sub_district' => $idDistrict, 'a.id_product' => $idProd);
       $this->db->where($where);
       $query = $this->db->get();
-    if ($query->num_rows() != 0) {
-      return $query->result_array();
-    } else {
-      return FALSE;
-    }
-  }
-
-  public function detailProfileCustomer($idUserLogin){
-    $this->db->select('c.id, a.email, b.first_name, b.last_name, b.phone, c.username, c.company_name,
-     c.address, c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
-    $this->db->from('user_login a');
-    $this->db->join('tm_customer b', 'b.id_userlogin = a.user_id', 'left');
-    $this->db->join('tm_customer_detail c', 'c.id_userlogin = b.id_userlogin', 'left');
-    $this->db->join('provinsi d', 'd.id_prov = c.province', 'left');
-    $this->db->join('kabupaten e', 'e.id_kab = c.city', 'left');
-    $this->db->join('kecamatan f', 'f.id_kec = c.sub_district', 'left');
-    $where = array(
-      'a.user_id' => $idUserLogin,
-      'c.default_address' => 1
-    );
-    $this->db->where('a.user_id', $idUserLogin);
-    $query = $this->db->get();
-    if ($query->num_rows() != 0) {
-      return $query->row_array();
-    } else {
-      return FALSE;
-    }
-  }
-
-  public function historicalShipping($idUserLogin){
-    $this->db->select("a.id, a.username, a.address, a.postcode, b.nama as kecamatan");
-    $this->db->from('tm_customer_detail a');
-    $this->db->join('kecamatan b', 'b.id_kec = a.sub_district', 'left');
-    $where = array(
-      'a.id_userlogin'    => $idUserLogin
-    );
-    $this->db->where($where);
-    $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
     } else {

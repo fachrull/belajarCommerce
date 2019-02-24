@@ -79,28 +79,6 @@ class Mauth extends CI_Model{
     );
   }
 
-  public function getProducts($condition = NULL, $selection = NULL, $table, $singleRowResult =  FALSE){
-    if ($condition != NULL) {
-      foreach ($condition as $key => $value) {
-        $this->db->where($key, $value);
-      }
-    }
-
-    if ($selection != NULL) {
-      foreach ($selection as $key => $value) {
-        $this->db->select($value);
-      }
-    }
-
-    $query =  $this->db->get($table);
-
-    if ($singleRowResult === TRUE) {
-      return $query->row_array();
-    }else {
-      return $query->result_array();
-    }
-  }
-
   public function getData($condition=NULL, $selection=NULL, $singleRowResult = FALSE){
 
     // if we are selecting some condition
@@ -147,30 +125,14 @@ class Mauth extends CI_Model{
         'id_userLogin'  => $id,
         'first_name'    => $this->input->post('fname'),
         'last_name'     => $this->input->post('lname'),
-        'gender'        => $this->input->post('gender'),
-        'phone'         => $this->input->post('phone')
+        'gender'        => $this->input->post('gender')
       );
 
       $queryCustomer = $this->db->insert('tm_customer', $dataCustomer);
 
-      $data_detailCustomer = array(
-        'id_userlogin'    => $id,
-        'username'        => $this->input->post('fname')." ".$this->input->post('lname'),
-        'phone'           => $this->input->post('phone'),
-        'address'         => $this->input->post('add'),
-        'province'        => $this->input->post('province'),
-        'city'            => $this->input->post('city'),
-        'sub_district'    => $this->input->post('sub_district'),
-        'postcode'        => $this->input->post('postcode'),
-        'default_address' => 1
-      );
-
-      $query_CustomerDetail = $this->db->insert('tm_customer_detail', $data_detailCustomer);
-
       return array(
-        'queryULoging'          => $queryULoging,
-        'queryCustomer'         => $queryCustomer,
-        'query_CustomerDetail'  => $query_CustomerDetail
+        'queryULoging'  => $queryULoging,
+        'queryCustomer' => $queryCustomer
       );
     } elseif($this->session->userdata('uType') == 2) {
         $uType = 3;

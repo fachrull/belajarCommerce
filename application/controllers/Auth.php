@@ -122,22 +122,11 @@ class Auth extends CI_Controller{
       $this->form_validation->set_rules('fname', 'First name', 'required');
       $this->form_validation->set_rules('lname', 'Last name', 'required');
       $this->form_validation->set_rules('gender', 'Gender', 'required');
-      $this->form_validation->set_rules('phone', 'Phone number', 'required');
-      $this->form_validation->set_rules('add', 'Address', 'required');
-      $this->form_validation->set_rules('province', 'Province', 'required');
-      $this->form_validation->set_rules('city', 'City', 'required');
-      $this->form_validation->set_rules('sub_district','Sub district', 'required');
-      $this->form_validation->set_rules('postcode', 'Postcode', 'required');
       $this->form_validation->set_rules('checkbox', 'Checkbox', 'required');
 
       if ($this->form_validation->run() === FALSE) {
-          $data['provinces'] = $this->mauth->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
-          'provinsi', FALSE);
-          $data['cities'] = $this->mauth->getProducts(NULL, NULL, 'kabupaten', FALSE);
-          $data['sub_districts'] = $this->mauth->getProducts(NULL, NULL, 'kecamatan', FALSE);
-
           $this->load->view('include/header2');
-          $this->load->view('register', $data);
+          $this->load->view('register');
           $this->load->view('include/footer');
       } else {
         $this->mauth->regis();

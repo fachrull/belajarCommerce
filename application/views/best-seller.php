@@ -88,7 +88,13 @@
 										</a>
 										<!-- /product image(s) -->
 
-										
+										<!-- hover buttons -->
+										<div class="shop-option-over">
+											<!-- replace data-item-id width the real item ID - used by js/view/demo.shop.js -->
+											<a class="btn btn-light add-wishlist" href="#" data-item-id="1" data-toggle="tooltip" title="Add To Wishlist"><i
+												 class="fa fa-heart p-0"></i></a>
+										</div>
+										<!-- /hover buttons -->
 
 										<!-- product more info -->
 										<div class="shop-item-info">
