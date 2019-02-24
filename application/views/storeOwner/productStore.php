@@ -32,7 +32,7 @@
                       <?= ($product['quantity'] != NULL? $product['quantity'] : '-')?>
                     </div>
                     <div class="col-sm-6">
-                      <a href="<?= site_url('stores/addQuantity/'.$product['id_store'].'/'.$product['id_product']);?>" class="btn btn-oldblue"><i class="fa fa-plus"></i></a>
+                      <a href="<?= site_url('stores/addQuantity/'.$product['id_store'].'/'.$product['id_product'].'/'.$product['id_product_size']);?>" class="btn btn-oldblue"><i class="fa fa-plus"></i></a>
                     </div>
                   </div>
                 </td>

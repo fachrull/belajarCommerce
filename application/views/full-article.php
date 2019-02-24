@@ -3,7 +3,7 @@
 <section class="page-header page-header-xs">
 			<div class="container">
 
-				<h1>Article</h1>
+				<h1>AGMPEDIA</h1>
 
 			</div>
 		</section>
