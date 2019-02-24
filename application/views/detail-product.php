@@ -162,7 +162,7 @@
 						<hr />
 
 						<div class="toggle">
-									<label>Checking the stocks</label>
+									<label  id="stockLabel">Checking the stocks</label>
 
 									<div class="toggle-content">
 										<div class="clearfix mb-30">

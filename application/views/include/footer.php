@@ -300,7 +300,8 @@ function infoMarker(marker, info_marker) {
     				success:function(response){
     				    console.log(response);
     					if(response != '') {
-    					    $("#stockTitle").html("Available in your location");
+                            $("div.toggle.active > label").trigger("click");
+                            $("#stockLabel").html('<i id="stockIcon" class="fa fa-check text-oldblue"></i> In Stock');
     					    $('#stockDetail').show();
     					    $('#shoppingForm').show();
     					    $("#size").attr('disabled', false);
@@ -312,6 +313,7 @@ function infoMarker(marker, info_marker) {
     						$("#size").append(
     							'<option value='+value.id_product_size+'>'+value.name+' ('+value.size+')</option>'
     						);
+                                $("div.toggle.active > label").trigger("click");
     					});
     					} else {
     					    $('#stockDetail').hide();
