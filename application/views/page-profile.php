@@ -13,24 +13,20 @@
 
 							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
 								<button class="fa fa-bars btn btn-mobile"></button>
-								<h4>NAVIGATION</h4>
+								<h4>STATUS</h4>
 							</div>
 
-							<ul id="categories" class="list-group list-group-bordered list-group-noicon uppercase">
+							<ul id="categories" class="list-group list-unstyled">
 
-								<li class="fs-13 bullet-bar">
-								    <a href="<?= base_url('home/historyPage');?>"> Riwayat
+								<li class="fs-13 list-group-item">
+									<a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
+									</a>
+								</li>
+								<li class="fs-13 list-group-item">
+								    <a href="<?= base_url('home/historyPage');?>"> History
 								    </a>
 								</li>
-								<li class="fs-13">
-								    <a href="<?= base_url('home/wishlistPage');?>"> Wishlist
-								    </a>
-								</li>
-								<li class="fs-13">
-								    <a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
-								    </a>
-								</li>
-								<li class="fs-13">
+								<li class="fs-13 list-group-item">
 								    <a href="<?= base_url('home/profilePage');?>"> Profil
 								    </a>
 								</li>
@@ -53,11 +49,10 @@
 							<!-- PERSONAL INFO TAB -->
 							<div class="col-12 col-md-12">
 								<a class="fs-13 btn btn-sm btn-oldblue" href="<?= base_url('home/profileSetting');?>"><i class="fa fa-info-circle"></i>Change</a>
-								<h3 class="mb-10 mt-10">Sherlock Holmes</h3>
-								<div class="block"><i class="glyphicon glyphicon-envelope pr-5 line-height-40"></i> mrholmes@gmail.com </div>
-								<div class="block"><i class="fa fa-phone pr-5 line-height-40"></i> +4487536136</div>
-								<div class="block"><i class="fa fa-calendar pr-5 line-height-40"></i> 6 January 1854</div>
-								<div class="block"><i class="fa fa-home pr-5 line-height-40"></i> 221B Baker Street</div>
+								<h3 class="mb-10 mt-10"><?= $profile['first_name']." ".$profile['last_name']?></h3>
+								<div class="block"><i class="glyphicon glyphicon-envelope pr-5 line-height-40"></i><?= $profile['email']?></div>
+								<div class="block"><i class="fa fa-phone pr-5 line-height-40"></i><?= $profile['phone']?></div>
+								<div class="block"><i class="fa fa-home pr-5 line-height-40"></i><?= $profile['address']?></div>
 							</div>
 							<hr>
 						</div>

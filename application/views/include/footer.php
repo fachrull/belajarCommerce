@@ -89,7 +89,7 @@
 <!-- /FOOTER -->
 
 
-		
+
 	</div>
 	<!-- SCROLL TO TOP -->
 	<a href="<?= site_url('#');?>" id="toTop"></a>
@@ -112,7 +112,7 @@
 <!-- PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('asset/javascript/demo.shop.js');?>"></script>
 <script>
-    
+
 var stores = <?= $stores?>;
 var lat = document.getElementById('lat');
 var lng = document.getElementById('lng');
@@ -256,7 +256,7 @@ function infoMarker(marker, info_marker) {
 			})
 		}
 	});
-	
+
 	$('#city').change(function(){
 		var city = $(this).val();
 		if(city){
@@ -282,12 +282,16 @@ function infoMarker(marker, info_marker) {
 });
 </script>
 <script>
+	// process quantity or size item
     $(document).ready(function(){
         $('#stockDetail').hide();
         $('#shoppingForm').hide();
-    	$('#checkStock').on('click', function(){
+    	$('#sub_district').on('change', function(){
     		var subDistrict = $('#sub_district').val();
     		var productId = $('#product_id').val();
+			$('#pageloader').fadeIn(150, function () {
+				$('#pageloader').hide();
+			});
     		if(subDistrict){
     			$.ajax({
     				url: "<?=site_url('home/checkStockbyDistrict/')?>"+productId+"/"+subDistrict,
@@ -296,17 +300,20 @@ function infoMarker(marker, info_marker) {
     				success:function(response){
     				    console.log(response);
     					if(response != '') {
-    					    $("#stockTitle").html("Available in your location");
+                            $("div.toggle.active > label").trigger("click");
+                            $("#stockLabel").html('<i id="stockIcon" class="fa fa-check text-oldblue"></i> In Stock');
     					    $('#stockDetail').show();
     					    $('#shoppingForm').show();
     					    $("#size").attr('disabled', false);
     					    $("#size").empty();
-    						$("#price2").html("Rp. " + response[0].price);
+    						$("#price2").html("Rp.");
+							$('#price2').append('<span class="minprice" value='+response[0].price+'>'+response[0].price+'</span>');
     						$("#price").val(response[0].price);
     					    $.each(response, function(key, value){
     						$("#size").append(
     							'<option value='+value.id_product_size+'>'+value.name+' ('+value.size+')</option>'
     						);
+                                $("div.toggle.active > label").trigger("click");
     					});
     					} else {
     					    $('#stockDetail').hide();
@@ -314,12 +321,12 @@ function infoMarker(marker, info_marker) {
     					    $("#size").empty();
     						$("#stockTitle").html("Not available in your location");
     					}
-    					
+
     				}
     			})
     		}
     	});
-    	
+
     	$('#size').on('change', function(){
     	    var size = $("#size").val();
     	    var productId = $('#product_id').val();
@@ -331,7 +338,7 @@ function infoMarker(marker, info_marker) {
     	           dataType: "json",
     	           success:function(response) {
     	               console.log(response);
-    	               $("#price2").html("Rp. " + response.price);
+						$("#price2").html("Rp. " + response.price);
     	               $("#price").val(response.price);
     	           }
     	        });
@@ -349,8 +356,35 @@ function infoMarker(marker, info_marker) {
 };
     var inputPrice = new AutoNumeric('.maxprice', autoNumericOptionsIdr);
 	var inputPrice = new AutoNumeric('.minprice', autoNumericOptionsIdr);
+	var inputPrice = new AutoNumeric('.totalprice', autoNumericOptionsIdr);
 
 </script>
+<!-- <script>
+	jQuery("#shipswitch").bind("click",function(){jQuery('#shipping').slideToggle(200,function(){if(jQuery('#shipping').is(":visible")){_scrollTo('#shipping',150);}});});
+
+	jQuery("#shipswitch").bind("click", function(){
+		jQuery("#historyshipping").slideToggle(200, function(){
+			if(jQuery("#historyshipping").is(":visible")){
+				_scrollTo("#historyshipping", 150);
+				$("#shippinghistory").show();
+				jQuery("#shipswitch1").bind("click", function(){
+					jQuery("#shipping").slideToggle(200, function(){
+						if(jQuery("#shipping").is(":visible")){
+							_scrollTo("#shipping",150);
+							$("default_address").hide();
+							$("#historyshipping").hide();
+						}else{
+							$("default_address").show();
+							$("#historyshipping").hide();
+						}
+					});
+				});
+			}else{
+				$("#historyshipping").hide();
+			}
+		})
+	})
+</script> -->
 </body>
 
 </html>

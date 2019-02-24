@@ -9,36 +9,32 @@
                     <!-- CATEGORIES -->
                     <div class="col-12 col-md-3 order-md-1 order-lg-1">
 
-                        <div class="side-nav mb-60">
+						<div class="side-nav mb-60">
 
-                            <div class="side-nav-head" data-toggle="collapse" data-target="#categories">
-                                <button class="fa fa-bars btn btn-mobile"></button>
-                                <h4>NAVIGASI</h4>
-                            </div>
+							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
+								<button class="fa fa-bars btn btn-mobile"></button>
+								<h4>STATUS</h4>
+							</div>
 
-                            <ul id="categories" class="list-group list-group-bordered list-group-noicon uppercase">
+							<ul id="categories" class="list-group list-unstyled">
 
-                                <li class="fs-13 bullet-bar">
-								    <a href="<?= base_url('home/historyPage');?>"> Riwayat
+								<li class="fs-13 list-group-item">
+									<a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
+									</a>
+								</li>
+								<li class="fs-13 list-group-item">
+								    <a href="<?= base_url('home/historyPage');?>"> History
 								    </a>
 								</li>
-								<li class="fs-13">
-								    <a href="<?= base_url('home/wishlistPage');?>"> Wishlist
-								    </a>
-								</li>
-								<li class="fs-13">
-								    <a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
-								    </a>
-								</li>
-								<li class="fs-13">
+								<li class="fs-13 list-group-item">
 								    <a href="<?= base_url('home/profilePage');?>"> Profil
 								    </a>
 								</li>
 
-                            </ul>
+							</ul>
 
-                        </div>
-                    </div>
+						</div>
+					</div>
                     <!-- /CATEGORIES -->
 
                     <!-- RIGHT -->
@@ -49,7 +45,7 @@
                             <div class="row">
                                 <div class="col-12 col-md-12">
                                     <h2 class="fs-16 font-regular mb-20 mt-6">
-                                        <i class="fa fa-bar-chart-o mr-10"></i> MY HISTORIES
+                                        <i class="fa fa-bar-chart-o mr-10"></i> Status Transaksi
                                         <span class="text-muted">(4)</span>
                                     </h2>
 

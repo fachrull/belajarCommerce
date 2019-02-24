@@ -10,10 +10,10 @@
               <!-- ALERT -->
               <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
               <!-- /ALERT -->
-              <form class="m-0 sky-form" action="<?= site_url('stores/addQuantity/'.$id['idStore'].'/'.$id['idProd']);?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+              <form class="m-0 sky-form" action="<?= site_url('stores/addQuantity/'.$id['idStore'].'/'.$id['idProd'].'/'.$id['idProdSize']);?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                 <p class="register-box-msg">Add quantity</p>
                 <label class="input mb-10">
-                  <input name="quantity" type="number" placeholder="Quantity">
+                  <input name="quantity" type="number" value="<?= $quantity['quantity']?>" placeholder="Quantity">
                 </label>
                 <div class="row">
                   <div class="col-md-12 text-right">
