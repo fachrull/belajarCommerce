@@ -73,7 +73,7 @@
                                 </tr>
                               </tbody>
                             </table>
-                            <hr>
+                            <hr><br>
                             <table>
                               <thead>
                                 <tr>

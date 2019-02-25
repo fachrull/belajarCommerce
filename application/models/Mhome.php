@@ -256,6 +256,7 @@ class Mhome extends CI_Model{
     $this->db->select('a.id, a.order_number, a.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
       f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
+      
     $this->db->from('tm_order a');
     $this->db->join('tr_product b', 'b.id = a.id_trProduct', 'left');
     $this->db->join('tm_product c', 'c.id = b.id_product', 'left');

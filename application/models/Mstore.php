@@ -63,7 +63,7 @@ class Mstore extends CI_Model{
     }
   }
 
-  public function detailProd($idStore, $idProd){
+  public function detailProd($idStore, $idPxrod){
     $this->db->select('*');
     $this->db->from('tm_product a');
     $this->db->join('tr_product b', 'b.id_product = a.id', 'left');
@@ -99,6 +99,7 @@ class Mstore extends CI_Model{
     $where = array('b.prod_id' => $idProd);
     $this->db->where($where);
     $query = $this->db->get();
+    
     if($query->num_rows() != 0){
       return $query->result_array();
     }else{

@@ -113,6 +113,7 @@ class Stores extends CI_Controller{
   }
 
   // public function inbound() {
+  //
   //       $idStore = $this->mhome->getProducts(array('id_userlogin' => $this->session->userdata('uId')),
   //         array('idField' => 'id'), 'tm_store_owner', TRUE);
   //       $data['products'] = $this->mhome->joinStoreProd($idStore['id']);
