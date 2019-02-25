@@ -36,8 +36,8 @@
                             <?php if($category != NULL):?>
 							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
-								<li class="list-group-noicon active">
-									<a href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
+								<li class="list-group-item">
+									<a class="text-capitalize pt-4 pb-4 pl-0 pr-0" href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
 								</li>
 								<?php endforeach;?>
 							</ul>
@@ -54,12 +54,12 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>"><span class="fs-11 text-muted float-right"></span>AIRELOOM</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>"><span class="fs-11 text-muted float-right"></span>KINGKOIL</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>"><span class="fs-11 text-muted float-right"></span>SERTA</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>"><span class="fs-11 text-muted float-right"></span>TEMPUR</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>"><span class="fs-11 text-muted float-right"></span>FLORENCE</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>"><span class="fs-11 text-muted float-right"></span>STRESSLESS</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>">Aireloom</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>">Kingkoil</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>">Serta</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>">Tempur</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>">Florence</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>">Stressless</a></li>
 							</ul>
 
 						</div>

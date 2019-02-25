@@ -71,8 +71,8 @@
 								<i class="fa fa-user"></i>
 							</a>
 							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
-								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('home/transactionPage');?>">STATUS TRANSASKSI</a>
+							<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('home/transactionPage');?>">STATUS TRANSASKSI</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">HISTORY</a>
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('home/profilePage')?>">PROFIL</a>
 								<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="<?= site_url('auth/logout');?>">
 									<i class="fa fa-power-off"></i>
@@ -114,33 +114,33 @@
 									</a>
 									<ul class="dropdown-menu">
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop/1/1');?>">
-												AIRELOOM
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/1/1');?>">
+												Aireloom
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop/2/1');?>">
-												KINGKOIL
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/2/1');?>">
+												Kingkoil
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop/4/1');?>">
-												SERTA
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4/1');?>">
+												Serta
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop/5/1');?>">
-												TEMPUR
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5/1');?>">
+												Tempur
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop/3/1');?>">
-												FLORENCE
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3/1');?>">
+												Florence
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14" href="<?= base_url('home/shop/6/1');?>">
-												STRESSLESS
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/6/1');?>">
+												Stressless
 											</a>
 										</li>
 									</ul>

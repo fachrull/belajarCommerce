@@ -169,10 +169,10 @@
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Discount:</span>
 							</span>
-							<span class="clearfix">
+							<!-- <span class="clearfix">
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Shipping:</span>
-							</span>
+							</span> -->
 
 							<hr />
 

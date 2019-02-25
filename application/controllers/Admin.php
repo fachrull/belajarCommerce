@@ -22,7 +22,7 @@ class Admin extends CI_Controller {
           $this->load->view('admin/home_admin', $data);
           $this->load->view('include/admin/footer');
         }else{
-          $this->load->view('include/header2');
+          $this->load->view('include/header');
           echo "<h1>This feature will be updated soon.</h1>";
           $this->load->view('include/footer');
         }

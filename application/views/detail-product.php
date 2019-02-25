@@ -2,7 +2,7 @@
 
 <section class="page-header page-header-md">
 	<div class="container">
-		<h1><?= $product['name'];?></h1>
+		<h1 class="text-uppercase"><?= $product['name'];?></h1>
 
 		<!-- breadcrumbs -->
 		<!--<ol class="breadcrumb">-->
@@ -36,11 +36,11 @@
 					<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 								<li class="list-group-noicon active">
 									<a class="dropdown-toggle" href="#">MATTRESS</a>
-									<ul>
-										<li><a href="#"> Imperial Heritage</a></li>
-										<li><a href="#"> Royal Souvergin</a></li>
-										<li><a href="#"> Conoration</a></li>
-										<li><a href="#"> Baron</a></li>
+									<ul class="text-capitalize list-group list-unstyled">
+										<li class="list-group-item"><a class="fs-15 pt-4 pb-4 pl-0 pr-0" href="#"> Imperial Heritage</a></li>
+										<li class="list-group-item"><a class="fs-15 pt-4 pb-4 pl-0 pr-0" href="#"> Royal Souvergin</a></li>
+										<li class="list-group-item"><a class="fs-15 pt-4 pb-4 pl-0 pr-0" href="#"> Conoration</a></li>
+										<li class="list-group-item"><a class="fs-15 pt-4 pb-4 pl-0 pr-0" href="#"> Baron</a></li>
 									</ul>
 								</li>
 							</ul>

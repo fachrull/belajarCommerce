@@ -13,20 +13,20 @@
 
 							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
 								<button class="fa fa-bars btn btn-mobile"></button>
-								<h4>NAVIGATION</h4>
+								<h4>STATUS</h4>
 							</div>
 
-							<ul id="categories" class="list-group list-group-bordered list-group-noicon uppercase">
+							<ul id="categories" class="list-group list-unstyled">
 
-								<li class="fs-13 bullet-bar">
-								    <a href="<?= base_url('home/historyPage');?>"> Riwayat
+								<li class="fs-13 list-group-item">
+									<a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
+									</a>
+								</li>
+								<li class="fs-13 list-group-item">
+								    <a href="<?= base_url('home/historyPage');?>"> History
 								    </a>
 								</li>
-								<li class="fs-13">
-								    <a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
-								    </a>
-								</li>
-								<li class="fs-13">
+								<li class="fs-13 list-group-item">
 								    <a href="<?= base_url('home/profilePage');?>"> Profil
 								    </a>
 								</li>
