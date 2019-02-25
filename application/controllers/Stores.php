@@ -25,7 +25,7 @@ class Stores extends CI_Controller{
       $this->mstore->updateData($condition, $accept, 'tr_product');
       redirect();
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -70,7 +70,7 @@ class Stores extends CI_Controller{
         $this->load->view('include/admin/footer');
       }
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -105,7 +105,7 @@ class Stores extends CI_Controller{
         redirect('stores/storeProduct');
       }
     } else {
-      $this->load->view('include/header');
+      $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }

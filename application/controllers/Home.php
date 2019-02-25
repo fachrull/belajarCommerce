@@ -407,9 +407,30 @@ class Home extends CI_Controller{
   }
 
   public function transactionPage(){
-    $this->load->view('include/header2');
-    $this->load->view('transaction-page');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $idCustomer = $this->session->userdata('uId');
+      $data['orderList'] = $this->mhome->listOrderCustomer($idCustomer);
+
+      $this->load->view('include/header2');
+      $this->load->view('transaction-page', $data);
+      $this->load->view('include/footer');
+    } else {
+      redirect('auth/login');
+    }
+  }
+
+  public function detail_transaction($idOrder){
+    if ($this->session->userdata('uType') == 4) {
+      $idCustomer = $this->session->userdata('uId');
+      $data['detailOrder'] = $this->mhome->detailOrder($idOrder, $idCustomer);
+
+      $this->load->view('include/header2');
+      $this->load->view('detail-transaction-page', $data);
+      $this->load->view('include/footer');
+    } else {
+      redirect('auth/login');
+    }
+
   }
 
   public function profilePage(){

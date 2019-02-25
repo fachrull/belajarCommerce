@@ -51,8 +51,8 @@ class Mstore extends CI_Model{
 
   public function productAcceptStore($store_id){
     $this->db->select('*');
-    $this->db->from('tr_product a');
     $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
+    $this->db->from('tr_product a');
     $where = array('a.id_store'=>$store_id);
     $this->db->where($where);
     $query = $this->db->get();
