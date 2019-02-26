@@ -25,11 +25,11 @@
 		<!-- CHECKOUT FINAL MESSAGE -->
 		<div class="card card-default">
 			<div class="card-block">
-				<h3>Thank you, Sherlock Holmes.</h3>
+				<h3>Thank you, <?= $uName['username']?>.</h3>
 
 				<p>
 					Your order has been placed. In a few moments you will receive an order confirmation email from us.<br />
-					If you like, you can explore more <a href="shop.html">AGM products</a>.
+					If you like, you can explore more <a href="<?= site_url('#product');?>">AGM products</a>.
 				</p>
 
 				<hr />

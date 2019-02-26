@@ -354,11 +354,11 @@
 
 							<hr />
 
-							<a href="<?= site_url('home/checkoutDone');?>">
-							<button class="btn btn-oldblue btn-lg btn-block fs-15">
+							<a class="btn btn-oldblue btn-lg btn-block fs-15" href="<?= site_url('home/saveAddressOrder');?>">
+							<!-- <button class="btn btn-oldblue btn-lg btn-block fs-15"> -->
 								<i class="fa fa-mail-forward"></i>
 								Place Order Now
-							</button>
+							<!-- </button> -->
 							</a>
 						</div>
 					</div>

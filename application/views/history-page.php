@@ -24,31 +24,31 @@
 					<!-- CATEGORIES -->
 					<div class="col-12 col-md-3 order-md-1 order-lg-1">
 
-						<div class="side-nav mb-60">
+							<div class="side-nav mb-60">
 
-							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
-								<button class="fa fa-bars btn btn-mobile"></button>
-								<h4>NAVIGASI</h4>
+								<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
+									<button class="fa fa-bars btn btn-mobile"></button>
+									<h4>STATUS</h4>
+								</div>
+
+								<ul id="categories" class="list-group list-unstyled">
+
+									<li class="fs-13 list-group-item">
+										<a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
+										</a>
+									</li>
+									<li class="fs-13 list-group-item">
+									    <a href="<?= base_url('home/historyPage');?>"> History
+									    </a>
+									</li>
+									<li class="fs-13 list-group-item">
+									    <a href="<?= base_url('home/profilePage');?>"> Profil
+									    </a>
+									</li>
+
+								</ul>
+
 							</div>
-
-							<ul id="categories" class="list-group list-group-bordered list-group-noicon uppercase">
-
-								                                <li class="fs-13 bullet-bar">
-								    <a href="<?= base_url('home/historyPage');?>"> Riwayat
-								    </a>
-								</li>
-								<li class="fs-13">
-								    <a href="<?= base_url('home/transactionPage');?>"> Status Transaksi
-								    </a>
-								</li>
-								<li class="fs-13">
-								    <a href="<?= base_url('home/profilePage');?>"> Profil
-								    </a>
-								</li>
-
-							</ul>
-
-						</div>
 					</div>
 					<!-- /CATEGORIES -->
 

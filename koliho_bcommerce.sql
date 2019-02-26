@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2019 at 03:17 AM
+-- Generation Time: Feb 26, 2019 at 05:47 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.14
 
@@ -7885,27 +7885,28 @@ CREATE TABLE IF NOT EXISTS `tm_order` (
   `order_number` varchar(100) NOT NULL,
   `id_userlogin` int(11) NOT NULL,
   `id_trProduct` int(11) NOT NULL,
+  `rowId` varchar(100) NOT NULL,
   `quantity` int(11) NOT NULL,
   `subtotal` varchar(100) NOT NULL,
   `total` varchar(100) NOT NULL,
   `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `adress_detail` int(11) DEFAULT NULL,
+  `address_detail` int(11) DEFAULT NULL,
   `status_order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `adress_detail` (`adress_detail`),
+  KEY `adress_detail` (`address_detail`),
   KEY `id_userlogin` (`id_userlogin`),
   KEY `id_trProduct` (`id_trProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_order`
 --
 
-INSERT INTO `tm_order` (`id`, `order_number`, `id_userlogin`, `id_trProduct`, `quantity`, `subtotal`, `total`, `order_date`, `adress_detail`, `status_order`) VALUES
-(1, 'AGM230219001', 40, 4, 3, '3000000', '', '2019-02-23 07:36:52', 3, 1),
-(4, 'AGM230219002', 40, 5, 3, '66666666', '', '2019-02-23 09:45:52', 2, 2),
-(6, 'AGM260219xxx', 40, 4, 2, '2000000', '68666666', '2019-02-26 02:06:53', NULL, 4),
-(7, 'AGM260219xxx', 40, 5, 3, '66666666', '68666666', '2019-02-26 02:06:53', NULL, 4);
+INSERT INTO `tm_order` (`id`, `order_number`, `id_userlogin`, `id_trProduct`, `rowId`, `quantity`, `subtotal`, `total`, `order_date`, `address_detail`, `status_order`) VALUES
+(38, 'AGM260219653', 40, 9, 'b26beb262c7da3cf6d55dd49e25aaa1a', 3, '6000000', '13000000', '2019-02-26 16:31:22', 2, 2),
+(39, 'AGM260219653', 40, 4, 'f979f0b60d786f28c448698b1d4318fe', 7, '7000000', '13000000', '2019-02-26 16:31:22', 1, 2),
+(40, 'AGM26021910', 15, 4, 'f979f0b60d786f28c448698b1d4318fe', 7, '7000000', '51444444', '2019-02-26 16:33:55', 1, 2),
+(41, 'AGM26021910', 15, 5, 'a501126fd1dbd049803620103c7ce7dc', 2, '44444444', '51444444', '2019-02-26 16:33:56', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -8279,9 +8280,9 @@ CREATE TABLE IF NOT EXISTS `tr_product` (
 --
 
 INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `id_product_size`, `quantity`, `new`, `id_admin`) VALUES
-(4, 1, 45, 77, 100, 0, 2),
-(5, 1, 45, 78, 15, 0, 2),
-(9, 1, 30, 46, 5, 0, 2),
+(4, 1, 45, 77, 86, 0, 2),
+(5, 1, 45, 78, 13, 0, 2),
+(9, 1, 30, 46, 2, 0, 2),
 (10, 1, 30, 45, 1, 0, 2);
 
 -- --------------------------------------------------------
@@ -8857,7 +8858,7 @@ ALTER TABLE `tm_customer_detail`
 -- Constraints for table `tm_order`
 --
 ALTER TABLE `tm_order`
-  ADD CONSTRAINT `tm_order_ibfk_1` FOREIGN KEY (`adress_detail`) REFERENCES `tm_customer_detail` (`id`),
+  ADD CONSTRAINT `tm_order_ibfk_1` FOREIGN KEY (`address_detail`) REFERENCES `tm_customer_detail` (`id`),
   ADD CONSTRAINT `tm_order_ibfk_4` FOREIGN KEY (`id_userlogin`) REFERENCES `user_login` (`user_id`),
   ADD CONSTRAINT `tm_order_ibfk_5` FOREIGN KEY (`id_trProduct`) REFERENCES `tr_product` (`id`);
 

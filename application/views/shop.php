@@ -54,12 +54,12 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>"><span class="fs-11 text-muted float-right"></span>AIRELOOM</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>"><span class="fs-11 text-muted float-right"></span>KINGKOIL</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>"><span class="fs-11 text-muted float-right"></span>SERTA</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>"><span class="fs-11 text-muted float-right"></span>TEMPUR</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>"><span class="fs-11 text-muted float-right"></span>FLORENCE</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>"><span class="fs-11 text-muted float-right"></span>STRESSLESS</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>"><span class="fs-11 text-muted float-right"></span>Aireloom</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>"><span class="fs-11 text-muted float-right"></span>Kingkoil</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>"><span class="fs-11 text-muted float-right"></span>Serta</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>"><span class="fs-11 text-muted float-right"></span>Tempur</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>"><span class="fs-11 text-muted float-right"></span>Florence</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>"><span class="fs-11 text-muted float-right"></span>Stressless</a></li>
 							</ul>
 
 						</div>
@@ -142,7 +142,7 @@
 											<!-- /product image(s) -->
 
 											<div class="shop-item-summary text-center">
-												<h2><?= $product['name'];?> - <?= $product['id'];?></h2>
+												<h2><?= $product['name'];?></h2>
 
 												<!-- rating -->
 												<div class="shop-item-rating-line">

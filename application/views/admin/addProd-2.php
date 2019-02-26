@@ -18,7 +18,7 @@
 							<?php endif;?>
 							<!-- /ALERT -->
 							<?= form_open_multipart('admin/addProd', array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
-							<p class="register-box-msg">Add a new product</p>
+							<!-- <p class="register-box-msg">Add a new product</p> -->
 							<div class="row mb-3">
 								<div class="col-md-12 col-xs-12 mb-10">
 									<div class="form-group">
@@ -66,7 +66,7 @@
 								<div class="col col-md-12 col-xs-12 mb-10">
 									<div class="form-group">
 										<label for=""><strong>Price</strong></label>
-										<input id="price" name="price" class="form-control" type="number" placeholder="Price (e.g 100000)">
+										<input id="price" name="price" class="form-control" type="text" placeholder="Price (e.g 100000)">
 									</div>
 								</div>
 								<div class="col col-md-12 col-xs-12 mb-20">

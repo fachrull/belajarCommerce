@@ -35,13 +35,7 @@
 
 					<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 								<li class="list-group-noicon active">
-									<a class="dropdown-toggle" href="#">MATTRESS</a>
-									<ul>
-										<li><a href="#"> Imperial Heritage</a></li>
-										<li><a href="#"> Royal Souvergin</a></li>
-										<li><a href="#"> Conoration</a></li>
-										<li><a href="#"> Baron</a></li>
-									</ul>
+									<a href="#">MATTRESS</a>
 								</li>
 							</ul>
 
@@ -204,7 +198,7 @@
 									</div>
 
 								</div>
-								
+
 						<!-- FORM -->
 						<div id="shoppingForm" class="row text-center">
 							<form class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
