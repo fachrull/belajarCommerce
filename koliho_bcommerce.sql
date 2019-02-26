@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 23, 2019 at 07:13 AM
+-- Generation Time: Feb 26, 2019 at 03:17 AM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.14
 
@@ -7884,18 +7884,28 @@ CREATE TABLE IF NOT EXISTS `tm_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_number` varchar(100) NOT NULL,
   `id_userlogin` int(11) NOT NULL,
-  `id_store` int(11) NOT NULL,
-  `adress_detail` int(11) NOT NULL,
-  `id_product` int(11) NOT NULL,
-  `id_product_size` int(11) NOT NULL,
+  `id_trProduct` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `subtotal` varchar(100) NOT NULL,
+  `total` varchar(100) NOT NULL,
+  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `adress_detail` int(11) DEFAULT NULL,
   `status_order` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `adress_detail` (`adress_detail`),
-  KEY `id_product` (`id_product`),
-  KEY `id_store` (`id_store`),
   KEY `id_userlogin` (`id_userlogin`),
-  KEY `id_product_size` (`id_product_size`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `id_trProduct` (`id_trProduct`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_order`
+--
+
+INSERT INTO `tm_order` (`id`, `order_number`, `id_userlogin`, `id_trProduct`, `quantity`, `subtotal`, `total`, `order_date`, `adress_detail`, `status_order`) VALUES
+(1, 'AGM230219001', 40, 4, 3, '3000000', '', '2019-02-23 07:36:52', 3, 1),
+(4, 'AGM230219002', 40, 5, 3, '66666666', '', '2019-02-23 09:45:52', 2, 2),
+(6, 'AGM260219xxx', 40, 4, 2, '2000000', '68666666', '2019-02-26 02:06:53', NULL, 4),
+(7, 'AGM260219xxx', 40, 5, 3, '66666666', '68666666', '2019-02-26 02:06:53', NULL, 4);
 
 -- --------------------------------------------------------
 
@@ -8154,6 +8164,30 @@ INSERT INTO `tm_spec` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tm_status_order`
+--
+
+DROP TABLE IF EXISTS `tm_status_order`;
+CREATE TABLE IF NOT EXISTS `tm_status_order` (
+  `id` int(11) NOT NULL,
+  `class` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_status_order`
+--
+
+INSERT INTO `tm_status_order` (`id`, `class`, `status`) VALUES
+(1, 'btn-success', 'Sampai Tujuan'),
+(2, 'btn-warning', 'Menunggu Konfirmasi'),
+(3, 'btn-danger', 'Dibatalkan'),
+(4, 'btn-secondary', 'Order Belum Lengkap');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tm_store_owner`
 --
 
@@ -8174,7 +8208,7 @@ CREATE TABLE IF NOT EXISTS `tm_store_owner` (
   `fax` varchar(20) DEFAULT NULL,
   `id_super_admin` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_store_owner`
@@ -8824,10 +8858,8 @@ ALTER TABLE `tm_customer_detail`
 --
 ALTER TABLE `tm_order`
   ADD CONSTRAINT `tm_order_ibfk_1` FOREIGN KEY (`adress_detail`) REFERENCES `tm_customer_detail` (`id`),
-  ADD CONSTRAINT `tm_order_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `tm_product` (`id`),
-  ADD CONSTRAINT `tm_order_ibfk_3` FOREIGN KEY (`id_store`) REFERENCES `tm_store_owner` (`id`),
   ADD CONSTRAINT `tm_order_ibfk_4` FOREIGN KEY (`id_userlogin`) REFERENCES `user_login` (`user_id`),
-  ADD CONSTRAINT `tm_order_ibfk_5` FOREIGN KEY (`id_product_size`) REFERENCES `tr_product_size` (`id`);
+  ADD CONSTRAINT `tm_order_ibfk_5` FOREIGN KEY (`id_trProduct`) REFERENCES `tr_product` (`id`);
 
 --
 -- Constraints for table `tm_product`

@@ -47,31 +47,31 @@
 				<div id="default_address" class="col-md-6 col-sm-6">
 					<div class="table-responsive">
 						<table class="table">
-							<tr class="block">
+							<tr>
 								<td>Name:</td>
 								<td><?= $alamat_default['username'];?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Company name:</td>
 								<td><?php echo($alamat_default['company_name'] == NULL? "-": $alamat_default['company_name'])?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Address:</td>
 								<td><?= $alamat_default['address'].", ".$alamat_default['kecamatan']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Province: </td>
 								<td><?= $alamat_default['provinsi']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>City: </td>
 								<td><?= $alamat_default['kabupaten']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Postcode: </td>
 								<td><?= $alamat_default['postcode']?></td>
 							</tr>
-							<tr class="block">
+							<tr>
 								<td>Phone:</td>
 								<td><?= $alamat_default['phone']?></td>
 							</tr>
@@ -333,22 +333,22 @@
 						<div class="toggle-content">
 
 							<span class="clearfix">
-								<span class="float-right">Rp. 2,000,000</span>
+								<span class="float-right">Rp. <?= $this->cart->total();?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
 							<span class="clearfix">
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Discount:</span>
 							</span>
-							<span class="clearfix">
+							<!-- <span class="clearfix">
 								<span class="float-right">Rp. 500,000</span>
 								<span class="float-left">Shipping:</span>
-							</span>
+							</span> -->
 
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. 2,500,000</span>
+								<span class="float-right fs-20">Rp. <?= $this->cart->total();?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 

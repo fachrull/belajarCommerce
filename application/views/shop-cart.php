@@ -169,10 +169,10 @@
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Discount:</span>
 							</span>
-							<span class="clearfix">
+							<!-- <span class="clearfix">
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Shipping:</span>
-							</span>
+							</span> -->
 
 							<hr />
 
@@ -183,7 +183,7 @@
 
 							<hr />
 
-							<a href="<?= site_url('home/shopCheckout');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
+							<a href="<?= site_url('home/saveCart');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
 								Check Out</a>
 						</div>
 					</div>

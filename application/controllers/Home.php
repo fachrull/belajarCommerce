@@ -260,6 +260,9 @@ class Home extends CI_Controller{
 
   public function addToCart() {
     $size_name = $this->mhome->sizeStock($this->input->post('size'));
+    $idTrProduct['id_trProduct'] = $this->mhome->getProducts(array('id_product' => $this->input->post('product_id'),
+      'id_product_size' => $this->input->post('size')), array('idField' => 'id'), 'tr_product', TRUE);
+    $idUserLogin = $this->session->userdata('uId');
     $product = $this->mhome->getProducts(array('id'=>$this->input->post('product_id')), NULL, 'tm_product', TRUE);
     $data = array(
       'id'          => $this->input->post('product_id'),
@@ -267,25 +270,50 @@ class Home extends CI_Controller{
       'qty'         => $this->input->post('qty'),
       'price'       => $this->input->post('price'),
       'name'        => $this->input->post('product_name'),
+      'id_trProduct'=> $idTrProduct['id_trProduct']['id'],
+      'id_userlogin'=> $idUserLogin,
       'sizeName'    => $size_name[0]['name_size'],
       'detailSize'  => $size_name[0]['detail_size'],
       'options' => array('Size' => $this->input->post('size'))
     );
     $this->cart->insert($data);
-    // print_r($this->cart->contents());
-    // echo "</br>";
-    // print_r($data);
     redirect('home/shopCart');
   }
 
   public function shopCart(){
     $data['cart'] = $this->cart->contents();
 
-    print_r($data['cart']);
-    // exit();
     $this->load->view('include/header2');
     $this->load->view('shop-cart', $data);
     $this->load->view('include/footer');
+  }
+
+  public function saveCart(){
+    if ($this->session->userdata('uType') == 4) {
+      $data['cart'] = $this->cart->contents();
+      print_r($data['cart']);
+      echo "</br>";
+      foreach ($data['cart'] as $cart) {
+        $save_to_Order = array(
+          'order_number'  => 'AGM'.date("dmy")."xxx",
+          'id_userlogin'  => $cart['id_userlogin'],
+          'id_trProduct'  => $cart['id_trProduct'],
+          'quantity'      => $cart['qty'],
+          'subtotal'      => $cart['subtotal'],
+          'total'         => $this->cart->total(),
+          'status_order'  => 2
+        );
+        $this->mhome->inputData('tm_order', $save_to_Order);
+      }
+      // print_r($this->cart->total());
+      redirect('home/shopCheckout');
+    } else {
+      redirect();
+    }
+  }
+
+  public function test(){
+    echo date("dmy");
   }
 
   public function shopCheckout(){
@@ -409,7 +437,7 @@ class Home extends CI_Controller{
   public function transactionPage(){
     if ($this->session->userdata('uType') == 4) {
       $idCustomer = $this->session->userdata('uId');
-      
+
       $data['orderList'] = $this->mhome->listOrderCustomer($idCustomer);
 
       $this->load->view('include/header2');

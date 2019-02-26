@@ -72,6 +72,7 @@
 							</a>
 							<div class="dropdown-menu dropdown-menu-right m-0 p-0">
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/historyPage');?>">RIWAYAT</a>
+								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= base_url('home/shopCart');?>">CART</a>
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('home/transactionPage');?>">STATUS TRANSASKSI</a>
 								<a class="dropdown-item fs-14 text-muted uppercase mb-3" href="<?= site_url('home/profilePage')?>">PROFIL</a>
 								<a class="dropdown-item fs-14 text-muted uppercase dropdown-custom-icon dropdown-myaccount-logout" href="<?= site_url('auth/logout');?>">
