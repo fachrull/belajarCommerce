@@ -23,7 +23,7 @@
                   <td>Kelep</td>
                   <td>12.000.000</td>
                   <td>
-                    <a href="#"><i class="btn btn-primary fa fa-info"></i></a>
+                    <a href="<?= site_url('stores/detailTransaction');?>"><i class="btn btn-primary fa fa-info"></i></a>
                   </td>
                 </tr>
           </tbody>
