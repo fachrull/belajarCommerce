@@ -923,4 +923,20 @@ class Admin extends CI_Controller {
         echo "Something went wrong";
       }
   }
+
+  public function voucher()
+  {
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/sa_voucher');
+    $this->load->view('include/admin/footer');
+  }
+
+  public function addVoucher()
+  {
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/addVoucher');
+    $this->load->view('include/admin/footer');
+  }
 }
