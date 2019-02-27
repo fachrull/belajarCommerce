@@ -90,6 +90,17 @@ class Mhome extends CI_Model{
     $this->db->update('tm_agmpedia');
   }
 
+  public function updateData($condition, $data, $table){
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+    $this->db->set($data);
+
+    return $this->db->update($table);
+  }
+
   public function deletePedia($id)
   {
     $this->db->where('id',$id);
@@ -196,5 +207,46 @@ class Mhome extends CI_Model{
       }else{
           return FALSE;
       }
+  }
+
+  public function listOrderCustomer($idUserLogin){
+    $this->db->select('a.id, a.order_number, a.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status');
+    $this->db->from('tm_order a');
+    $this->db->join('tr_product b', 'b.id = a.id_trProduct', 'left');
+    $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
+    $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
+    $where = array('id_userlogin' => $idUserLogin);
+    $this->db->where($where);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detailOrder($idOrder, $idCustomer){
+    $this->db->select('a.id, a.order_number, a.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
+      f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
+      k.name as size_name, k.size');
+
+    $this->db->from('tm_order a');
+    $this->db->join('tr_product b', 'b.id = a.id_trProduct', 'left');
+    $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
+    $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
+    $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
+    $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
+    $this->db->join('kabupaten h', 'h.id_kab = f.city', 'left');
+    $this->db->join('kecamatan i', 'i.id_kec = f.sub_district', 'left');
+    $this->db->join('tr_product_size j', 'j.id = b.id_product_size', 'left');
+    $this->db->join('tm_size k', 'k.id = j.size_id', 'left');
+    $where = array('a.id' => $idOrder, 'a.id_userLogin' => $idCustomer);
+    $this->db->where($where);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
   }
 }

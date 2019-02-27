@@ -17,6 +17,7 @@
           <thead>
             <th>No.</th>
             <th>Product</th>
+            <th>Size</th>
             <th>Quantity</th>
             <th>Action</th>
           </thead>
@@ -25,19 +26,27 @@
             <?php foreach($products as $product): ?>
               <tr>
                 <td><?= $no;?></td>
-                <td><?= $product['name'];?></td>
+                <td><?= $product['product_name'];?></td>
+                <td><?= $product['size_name'].'('.$product['size_product'].')'?></td>
                 <td>
                   <div class="row">
                     <div class="col-sm-6">
                       <?= ($product['quantity'] != NULL? $product['quantity'] : '-')?>
                     </div>
                     <div class="col-sm-6">
-                      <a href="<?= site_url('stores/addQuantity/'.$product['id_store'].'/'.$product['id_product'].'/'.$product['id_product_size']);?>" class="btn btn-oldblue"><i class="fa fa-plus"></i></a>
+
                     </div>
                   </div>
                 </td>
                 <td>
-                  <a href="<?= site_url('stores/storeProduct/'.$product['id_store'].'/'.$product['id_product']);?>"><i class="btn btn-success fa fa-info"></i></a>
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <a href="<?= site_url('stores/addQuantity/'.$product['id_store'].'/'.$product['id_product'].'/'.$product['id_product_size']);?>" class="btn btn-oldblue"><i class="fa fa-plus"></i> Quantity</a>
+                    </div>
+                    <div class="col-sm-6">
+                      <a href="<?= site_url('stores/storeProduct/'.$product['id_store'].'/'.$product['id_product']);?>"><i class="btn btn-success fa fa-info"></i></a>
+                    </div>
+                  </div>
                 </td>
               </tr>
               <?php $no++; ?>

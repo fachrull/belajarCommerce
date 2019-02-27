@@ -260,6 +260,9 @@ class Home extends CI_Controller{
 
   public function addToCart() {
     $size_name = $this->mhome->sizeStock($this->input->post('size'));
+    $idTrProduct['id_trProduct'] = $this->mhome->getProducts(array('id_product' => $this->input->post('product_id'),
+      'id_product_size' => $this->input->post('size')), array('idField' => 'id'), 'tr_product', TRUE);
+    $idUserLogin = $this->session->userdata('uId');
     $product = $this->mhome->getProducts(array('id'=>$this->input->post('product_id')), NULL, 'tm_product', TRUE);
     $data = array(
       'id'          => $this->input->post('product_id'),
@@ -267,14 +270,13 @@ class Home extends CI_Controller{
       'qty'         => $this->input->post('qty'),
       'price'       => $this->input->post('price'),
       'name'        => $this->input->post('product_name'),
+      'id_trProduct'=> $idTrProduct['id_trProduct']['id'],
+      'id_userlogin'=> $idUserLogin,
       'sizeName'    => $size_name[0]['name_size'],
       'detailSize'  => $size_name[0]['detail_size'],
       'options' => array('Size' => $this->input->post('size'))
     );
     $this->cart->insert($data);
-    // print_r($this->cart->contents());
-    // echo "</br>";
-    // print_r($data);
     redirect('home/shopCart');
   }
 
@@ -285,16 +287,115 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  public function saveCart(){
+    if ($this->session->userdata('uType') == 4) {
+      $data['cart'] = $this->cart->contents();
+      print_r($data['cart']);
+      echo "</br>";
+      $rand = rand(1, 999);
+      foreach ($data['cart'] as $cart) {
+        $save_to_Order = array(
+          'order_number'  => 'AGM'.date("dmy").$rand,
+          'id_userlogin'  => $cart['id_userlogin'],
+          'id_trProduct'  => $cart['id_trProduct'],
+          'quantity'      => $cart['qty'],
+          'subtotal'      => $cart['subtotal'],
+          'total'         => $this->cart->total(),
+          'rowId'         => $cart['rowid'],
+          'status_order'  => 2
+        );
+        $this->mhome->inputData('tm_order', $save_to_Order);
+      }
+      // print_r($this->cart->total());
+      redirect('home/shopCheckout');
+    } else {
+      redirect('auth/login');
+    }
+  }
+
+  public function test(){
+    echo date("dmy");
+    $rand = rand(1,999);
+    echo "</br>";
+    print_r($rand);
+  }
+
   public function shopCheckout(){
     $this->load->view('include/header2');
     $this->load->view('shop-checkout');
     $this->load->view('include/footer');
   }
 
+  public function saveAddressOrder(){
+    if ($this->session->userdata('uType') == 4) {
+      $data['cart'] = $this->cart->contents();
+      print_r($data['cart']);
+      $userId = $this->session->userdata('uId');
+      echo "</br>";
+      foreach ($data['cart'] as $cart) {
+        $rowId = $cart['rowid'];
+        $orderNumber = $this->mhome->getProducts(array('rowId' => $rowId), array('orderNumberField' => 'order_number'), 'tm_order', TRUE);
+        $defaultAdd = $this->mhome->getProducts(array('id_userlogin' => $userId, 'default_address' => 1),
+           array('idField' => 'id'), 'tm_customer_detail', TRUE);
+        $qtyStore = $this->mhome->getProducts(array('id' => $cart['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
+        $newQuanStore = $qtyStore['quantity'] - $cart['qty'];
+        $inputQtyStore = array('quantity' => $newQuanStore);
+        $data = array('address_detail' => $defaultAdd['id']);
+
+        print_r($rowId);
+        echo "</br>";
+        print_r($orderNumber['order_number']);
+        echo "</br>";
+        print_r($defaultAdd['id']);
+        echo "</br>";
+        print_r($qtyStore['quantity']);
+        echo "</br>";
+        print_r($newQuanStore);
+        echo "</br>";
+        print_r($inputQtyStore);
+        echo "</br>";
+        print_r($data);
+        echo "</br>";
+
+        $this->mhome->updateData(array('rowId' => $rowId, 'order_number' => $orderNumber['order_number']), $data, 'tm_order');
+        $this->mhome->updateData(array('id' => $cart['id_trProduct']), $inputQtyStore, 'tr_product');
+      }
+      $this->cart->destroy();
+      redirect('home/checkoutDone');
+      // foreach ($data['cart'] as $cart) {
+      //   $rowId = $cart['rowid'];
+      //   $orderNumber = $this->mhome->getProducts(array('rowId' => $rowId), array('orderNumberField' => 'order_number'), 'tm_order', TRUE);
+      //   $defaultAdd = $this->mhome->getProducts(array('id_userlogin' => $this->session->userdata('uId'), 'default_address' => 1),
+      //     array('idField' => 'id'), 'tm_customer_detail', TRUE);
+      //   $data = array('address_detail' => $defaultAdd['id']);
+      //   print_r($this->session->userdata('uId'));
+      //   echo "</br>";
+      //   print_r($rowId);
+      //   echo "</br>";
+      //   print_r($orderNumber['order_number']);
+      //   echo "</br>";
+      //   print_r($defaultAdd['id']);
+      //   echo "</br>";
+      //   print_r($data);
+      //   // $this->mhome->updateData(array('rowId' => $rowId, 'order_number' => $orderNumber['order_number']), $data, 'tm_order');
+      //   exit();
+      // }
+      // redirect('home/checkoutDone');
+    } else {
+      redirect('auth/login');
+    }
+
+  }
+
   public function checkoutDone(){
-    $this->load->view('include/header2');
-    $this->load->view('checkout-done');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $data['uName'] = $this->mhome->getProducts(array('user_id' => $this->session->userdata('uId')), array('usernameField' => 'username'), 'user_login', TRUE);
+      $this->load->view('include/header2');
+      $this->load->view('checkout-done', $data);
+      $this->load->view('include/footer');
+    }else{
+      redirect('auth/login');
+    }
   }
 
   public function promotionPage(){
@@ -376,9 +477,31 @@ class Home extends CI_Controller{
   }
 
   public function transactionPage(){
-    $this->load->view('include/header2');
-    $this->load->view('transaction-page');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $idCustomer = $this->session->userdata('uId');
+
+      $data['orderList'] = $this->mhome->listOrderCustomer($idCustomer);
+
+      $this->load->view('include/header2');
+      $this->load->view('transaction-page', $data);
+      $this->load->view('include/footer');
+    } else {
+      redirect('auth/login');
+    }
+  }
+
+  public function detail_transaction($idOrder){
+    if ($this->session->userdata('uType') == 4) {
+      $idCustomer = $this->session->userdata('uId');
+      $data['detailOrder'] = $this->mhome->detailOrder($idOrder, $idCustomer);
+
+      $this->load->view('include/header2');
+      $this->load->view('detail-transaction-page', $data);
+      $this->load->view('include/footer');
+    } else {
+      redirect('auth/login');
+    }
+
   }
 
   public function profilePage(){

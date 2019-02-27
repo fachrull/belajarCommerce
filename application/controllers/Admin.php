@@ -11,7 +11,7 @@ class Admin extends CI_Controller {
     $this->load->helper('url');
     $this->load->model('Madmin', 'madmin');
   }
-  
+
   public function listAdmin($link = FALSE){
       if ($this->session->userdata('uType') == 1) {
         if ($link === FALSE) {
@@ -28,8 +28,8 @@ class Admin extends CI_Controller {
         }
       }
   }
-  
-  
+
+
   public function listStoreOwner(){
       if ($this->session->userdata('uType') == 1) {
           $data['posts'] = $this->madmin->joinDetailStore();
@@ -41,7 +41,7 @@ class Admin extends CI_Controller {
       }else{
        $this->load->view('include/header2');
       $this->load->view('un-authorise');
-      $this->load->view('include/footer');   
+      $this->load->view('include/footer');
       }
   }
 
@@ -314,7 +314,7 @@ class Admin extends CI_Controller {
 
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/addProd', $data);
+          $this->load->view('admin/addProd-2', $data);
           $this->load->view('include/admin/footer');
         }else {
           // $data = array('upload_data' => $this->upload->data());
@@ -376,7 +376,7 @@ class Admin extends CI_Controller {
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/addProd', $data);
+        $this->load->view('admin/addProd-2', $data);
         $this->load->view('include/admin/footer');
       }
     }else{
@@ -559,7 +559,7 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
-  
+
   public function getIdProduct($idProd){
       $sizes = $this->madmin->joinSizeProduct($idProd);
        if($sizes) {
@@ -864,7 +864,7 @@ class Admin extends CI_Controller {
           array_push($data['cities'], $kabupaten);
           array_push($data['sub_districts'], $kecamatan);
         }
-        
+
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/stores', $data);
@@ -889,7 +889,7 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
-  
+
   public function bestSeller()
   {
     $this->load->view('include/admin/header');
@@ -914,7 +914,7 @@ class Admin extends CI_Controller {
         echo "Something went wrong";
       }
   }
-  
+
   public function sizeNameProduct($idSize){
       $sizeName = $this->madmin->getSizeNameProduct($idSize);
       if($sizeName) {

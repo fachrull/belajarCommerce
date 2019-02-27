@@ -24,7 +24,7 @@
 					<!-- CATEGORIES -->
 					<div class="col-12 col-md-3 order-md-1 order-lg-1">
 
-						<div class="side-nav mb-60">
+							<div class="side-nav mb-60">
 
 							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
 								<button class="fa fa-bars btn btn-mobile"></button>
@@ -46,9 +46,9 @@
 								    </a>
 								</li>
 
-							</ul>
+								</ul>
 
-						</div>
+							</div>
 					</div>
 					<!-- /CATEGORIES -->
 

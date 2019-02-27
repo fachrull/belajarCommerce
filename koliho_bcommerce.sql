@@ -2,10 +2,10 @@
 -- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Feb 19, 2019 at 11:04 PM
--- Server version: 5.6.41
--- PHP Version: 7.2.7
+-- Host: 127.0.0.1
+-- Generation Time: Feb 26, 2019 at 05:47 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -7830,6 +7830,76 @@ INSERT INTO `tm_customer` (`id`, `id_userlogin`, `first_name`, `last_name`, `add
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tm_customer_detail`
+--
+
+DROP TABLE IF EXISTS `tm_customer_detail`;
+CREATE TABLE IF NOT EXISTS `tm_customer_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_userlogin` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `company_name` varchar(100) DEFAULT NULL,
+  `phone` varchar(20) NOT NULL,
+  `address` text NOT NULL,
+  `province` char(2) NOT NULL,
+  `city` char(4) NOT NULL,
+  `sub_district` char(6) NOT NULL,
+  `postcode` varchar(25) NOT NULL,
+  `default_address` int(11) NOT NULL DEFAULT '0' COMMENT 'active = 1; inactive = 0',
+  PRIMARY KEY (`id`),
+  KEY `city` (`city`),
+  KEY `id_userlogin` (`id_userlogin`),
+  KEY `province` (`province`),
+  KEY `sub_district` (`sub_district`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_customer_detail`
+--
+
+INSERT INTO `tm_customer_detail` (`id`, `id_userlogin`, `username`, `company_name`, `phone`, `address`, `province`, `city`, `sub_district`, `postcode`, `default_address`) VALUES
+(1, 15, 'dummy customer2', '', '085712345678', 'Jl. Sesama No.123', '31', '3174', '317403', '12780', 1),
+(2, 40, 'fachrul fandi', NULL, '085712345678', 'Jl. Sesama No.123', '31', '3175', '317509', '13730', 1),
+(3, 40, 'Another Fachrul', 'Fachrul Company', '085787654321', 'Jl. Tidak Sesama No.321', '31', '3174', '317403', '12780', 0);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tm_order`
+--
+
+DROP TABLE IF EXISTS `tm_order`;
+CREATE TABLE IF NOT EXISTS `tm_order` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_number` varchar(100) NOT NULL,
+  `id_userlogin` int(11) NOT NULL,
+  `id_trProduct` int(11) NOT NULL,
+  `rowId` varchar(100) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  `subtotal` varchar(100) NOT NULL,
+  `total` varchar(100) NOT NULL,
+  `order_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `address_detail` int(11) DEFAULT NULL,
+  `status_order` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `adress_detail` (`address_detail`),
+  KEY `id_userlogin` (`id_userlogin`),
+  KEY `id_trProduct` (`id_trProduct`)
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_order`
+--
+
+INSERT INTO `tm_order` (`id`, `order_number`, `id_userlogin`, `id_trProduct`, `rowId`, `quantity`, `subtotal`, `total`, `order_date`, `address_detail`, `status_order`) VALUES
+(38, 'AGM260219653', 40, 9, 'b26beb262c7da3cf6d55dd49e25aaa1a', 3, '6000000', '13000000', '2019-02-26 16:31:22', 2, 2),
+(39, 'AGM260219653', 40, 4, 'f979f0b60d786f28c448698b1d4318fe', 7, '7000000', '13000000', '2019-02-26 16:31:22', 1, 2),
+(40, 'AGM26021910', 15, 4, 'f979f0b60d786f28c448698b1d4318fe', 7, '7000000', '51444444', '2019-02-26 16:33:55', 1, 2),
+(41, 'AGM26021910', 15, 5, 'a501126fd1dbd049803620103c7ce7dc', 2, '44444444', '51444444', '2019-02-26 16:33:56', 1, 2);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tm_product`
 --
 
@@ -8074,6 +8144,30 @@ INSERT INTO `tm_spec` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tm_status_order`
+--
+
+DROP TABLE IF EXISTS `tm_status_order`;
+CREATE TABLE IF NOT EXISTS `tm_status_order` (
+  `id` int(11) NOT NULL,
+  `class` varchar(100) NOT NULL,
+  `status` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_status_order`
+--
+
+INSERT INTO `tm_status_order` (`id`, `class`, `status`) VALUES
+(1, 'btn-success', 'Sampai Tujuan'),
+(2, 'btn-warning', 'Menunggu Konfirmasi'),
+(3, 'btn-danger', 'Dibatalkan'),
+(4, 'btn-secondary', 'Order Belum Lengkap');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tm_store_owner`
 --
 
@@ -8091,8 +8185,9 @@ CREATE TABLE `tm_store_owner` (
   `postcode` varchar(25) DEFAULT NULL,
   `phone1` varchar(20) DEFAULT NULL,
   `fax` varchar(20) DEFAULT NULL,
-  `id_super_admin` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `id_super_admin` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_store_owner`
@@ -8156,11 +8251,10 @@ CREATE TABLE `tr_product` (
 --
 
 INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `id_product_size`, `quantity`, `new`, `id_admin`) VALUES
-(4, 1, 45, 77, 0, 0, 2),
-(5, 1, 45, 78, 0, 0, 2),
-(8, 4, 128, 246, 0, 1, 2),
-(9, 1, 30, 46, 0, 1, 2),
-(10, 1, 30, 45, 0, 1, 2);
+(4, 1, 45, 77, 86, 0, 2),
+(5, 1, 45, 78, 13, 0, 2),
+(9, 1, 30, 46, 2, 0, 2),
+(10, 1, 30, 45, 1, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -8728,8 +8822,10 @@ ALTER TABLE `tm_brands`
 --
 -- Indexes for table `tm_category`
 --
-ALTER TABLE `tm_category`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tm_order`
+  ADD CONSTRAINT `tm_order_ibfk_1` FOREIGN KEY (`address_detail`) REFERENCES `tm_customer_detail` (`id`),
+  ADD CONSTRAINT `tm_order_ibfk_4` FOREIGN KEY (`id_userlogin`) REFERENCES `user_login` (`user_id`),
+  ADD CONSTRAINT `tm_order_ibfk_5` FOREIGN KEY (`id_trProduct`) REFERENCES `tr_product` (`id`);
 
 --
 -- Indexes for table `tm_customer`

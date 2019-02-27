@@ -333,7 +333,7 @@
 						<div class="toggle-content">
 
 							<span class="clearfix">
-								<span class="float-right">Rp. 2,000,000</span>
+								<span class="float-right">Rp. <?= $this->cart->total();?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
 							<span class="clearfix">
@@ -348,17 +348,17 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. 2,500,000</span>
+								<span class="float-right fs-20">Rp. <?= $this->cart->total();?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 
 							<hr />
 
-							<a href="<?= site_url('home/checkoutDone');?>">
-							<button class="btn btn-oldblue btn-lg btn-block fs-15">
+							<a class="btn btn-oldblue btn-lg btn-block fs-15" href="<?= site_url('home/saveAddressOrder');?>">
+							<!-- <button class="btn btn-oldblue btn-lg btn-block fs-15"> -->
 								<i class="fa fa-mail-forward"></i>
 								Place Order Now
-							</button>
+							<!-- </button> -->
 							</a>
 						</div>
 					</div>
