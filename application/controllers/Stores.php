@@ -128,4 +128,11 @@ class Stores extends CI_Controller{
         $this->load->view('include/admin/footer');
   }
 
+  public function detailTransaction(){
+    $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('storeOwner/detail-transaction');
+        $this->load->view('include/admin/footer');
+  }
+
 }
