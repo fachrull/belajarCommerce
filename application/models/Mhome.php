@@ -196,6 +196,44 @@ class Mhome extends CI_Model{
     }
   }
 
+  public function detailProfileCustomer($idUserLogin){
+    $this->db->select('c.id, a.email, b.first_name, b.last_name, b.phone, c.username, c.company_name,
+     c.address, c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
+    $this->db->from('user_login a');
+    $this->db->join('tm_customer b', 'b.id_userlogin = a.user_id', 'left');
+    $this->db->join('tm_customer_detail c', 'c.id_userlogin = b.id_userlogin', 'left');
+    $this->db->join('provinsi d', 'd.id_prov = c.province', 'left');
+    $this->db->join('kabupaten e', 'e.id_kab = c.city', 'left');
+    $this->db->join('kecamatan f', 'f.id_kec = c.sub_district', 'left');
+    $where = array(
+      'a.user_id' => $idUserLogin,
+      'c.default_address' => 1
+    );
+    $this->db->where('a.user_id', $idUserLogin);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function historicalShipping($idUserLogin){
+   $this->db->select("a.id, a.username, a.address, a.postcode, b.nama as kecamatan");
+   $this->db->from('tm_customer_detail a');
+   $this->db->join('kecamatan b', 'b.id_kec = a.sub_district', 'left');
+   $where = array(
+     'a.id_userlogin'    => $idUserLogin
+   );
+   $this->db->where($where);
+   $query = $this->db->get();
+   if ($query->num_rows() != 0) {
+     return $query->result_array();
+   } else {
+     return FALSE;
+   }
+ }
+
   public function sizeStock($id_stock_tr){
       $this->db->select('a.name as name_size, a.size as detail_size');
       $this->db->from('tm_size a');

@@ -16,16 +16,18 @@
             <th>Action</th>
           </thead>
           <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>123456</td>
-                  <td>24 Februari 2019</td>
-                  <td>Kelep</td>
-                  <td>12.000.000</td>
-                  <td>
-                    <a href="<?= site_url('stores/detailTransaction');?>"><i class="btn btn-primary fa fa-info"></i></a>
-                  </td>
-                </tr>
+                <?php $no = 1;foreach ($transactions as $transaction): ?>
+                  <tr>
+                    <td><?= $no?></td>
+                    <td><?= $transaction['order_number']?></td>
+                    <td><?= $transaction['order_date']?></td>
+                    <td><?= $transaction['username']?></td>
+                    <td><?= 'Rp '.$transaction['total']?></td>
+                    <td>
+                      <a href="<?= site_url('stores/detailTransaction');?>"><i class="btn btn-primary fa fa-info"></i></a>
+                    </td>
+                  </tr>
+                <?php $no++; endforeach; ?>
           </tbody>
         </table>
       </div>

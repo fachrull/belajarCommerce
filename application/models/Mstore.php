@@ -109,4 +109,21 @@ class Mstore extends CI_Model{
       return FALSE;
     }
   }
+
+  public function order_list($idStore){
+    $this->db->select('a.order_number, a.order_date, a.total, b.username');
+    $this->db->from('tm_order as a');
+    $this->db->join('user_login as b', 'b.user_id = a.id_userlogin', 'left');
+    $this->db->join('tr_product as c', 'c.id = a.id_trProduct', 'left');
+    $this->db->group_by('a.order_number');
+    $where = array('c.id_store' => $idStore);
+    $this->db->where($where);
+    $query = $this->db->get();
+
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
 }

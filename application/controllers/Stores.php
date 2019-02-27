@@ -34,7 +34,8 @@ class Stores extends CI_Controller{
   public function storeProduct( $idProd = FALSE,$idStore = FALSE){
     if ($this->session->userdata('uType') == 3) {
       if ($idStore === FALSE && $idProd === FALSE) {
-        $data['products'] = $this->mstore->productAcceptStore($this->session->userdata('idStore'));
+        $idStore = $this->mstore->getProducts(array('id_userlogin' => $this->session->userdata('uId')), array('idField' => 'id'), 'tm_store_owner', TRUE);
+        $data['products'] = $this->mstore->productAcceptStore($idStore['id']);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -122,10 +123,21 @@ class Stores extends CI_Controller{
   }
 
   public function transaction(){
-    $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('storeOwner/transaction');
-        $this->load->view('include/admin/footer');
+    if ($this->session->userdata('uType') == 3) {
+      $idStore = $this->session->userdata('uId');
+      $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore), array('idField' => 'id'), 'tm_store_owner', TRUE);
+      $data['transactions'] = $this->mstore->order_list($idStOwner['id']);
+      
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('storeOwner/transaction', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+
   }
 
   public function detailTransaction(){
