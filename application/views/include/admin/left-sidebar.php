@@ -89,7 +89,7 @@
             <a href="<?= site_url('stores/storeProduct')?>">Product</a>
           </li>
           <li>
-            <a href="#">History Transaction</a>
+            <a href="<?= site_url('stores/transaction')?>">History Transaction</a>
           </li>
         <?php endif; ?>
       </ul>

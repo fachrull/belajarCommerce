@@ -121,4 +121,11 @@ class Stores extends CI_Controller{
         $this->load->view('include/admin/footer');
   }
 
+  public function transaction(){
+    $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('storeOwner/transaction');
+        $this->load->view('include/admin/footer');
+  }
+
 }

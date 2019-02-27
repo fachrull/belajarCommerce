@@ -307,7 +307,7 @@ function infoMarker(marker, info_marker) {
     					    $("#size").attr('disabled', false);
     					    $("#size").empty();
     						$("#price2").html("Rp.");
-							$('#price2').append('<span class="minprice" value='+response[0].price+'>'+response[0].price+'</span>');
+							$('#price2').append('<span class="totalprice" value='+response[0].price+'>'+response[0].price+'</span>');
     						$("#price").val(response[0].price);
     					    $.each(response, function(key, value){
     						$("#size").append(
@@ -346,19 +346,7 @@ function infoMarker(marker, info_marker) {
     	});
 });
 </script>
-<script>
-  const autoNumericOptionsIdr = {
-    digitGroupSeparator        : '.',
-    decimalCharacter           : ',',
-    decimalCharacterAlternative: '.',
-    decimalPlaces   : 0,
-    roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
-};
-    var inputPrice = new AutoNumeric('.maxprice', autoNumericOptionsIdr);
-	var inputPrice = new AutoNumeric('.minprice', autoNumericOptionsIdr);
-	var inputPrice = new AutoNumeric('.totalprice', autoNumericOptionsIdr);
 
-</script>
 <!-- <script>
 	jQuery("#shipswitch").bind("click",function(){jQuery('#shipping').slideToggle(200,function(){if(jQuery('#shipping').is(":visible")){_scrollTo('#shipping',150);}});});
 

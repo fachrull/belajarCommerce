@@ -140,11 +140,15 @@
 						</div>
 
 						<div class="mb-15 pl-0">
-							<p class="text-left fs-18 bold" id="price2">
+							<p class="text-left fs-18 bold">
 							Rp. <span class="minprice"><?= $product['min_price'];?></span>
 							-
 							Rp. <span class="maxprice"><?= $product['max_price'];?></span>
 							</p>
+							<p id="price2">
+							
+							</p>
+							
 						</div>
 
 						<hr />
