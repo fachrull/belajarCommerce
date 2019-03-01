@@ -16,7 +16,7 @@
 </section>
 <!-- /PAGE HEADER -->
 
-<section>
+<section class="pt-0">
 	<div class="container">
 
 		<div class="row">
@@ -36,7 +36,7 @@
 					<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 								<li class="list-group-noicon active">
 									<a class="dropdown-toggle" href="#">MATTRESS</a>
-									<ul class="text-capitalize list-group list-unstyled">
+									<ul class="text-capitalize list-group-noicon list-unstyled">
 										<li class="list-group-item"><a class="fs-15 pt-4 pb-4 pl-0 pr-0" href="#"> Imperial Heritage</a></li>
 										<li class="list-group-item"><a class="fs-15 pt-4 pb-4 pl-0 pr-0" href="#"> Royal Souvergin</a></li>
 										<li class="list-group-item"><a class="fs-15 pt-4 pb-4 pl-0 pr-0" href="#"> Conoration</a></li>
@@ -175,7 +175,7 @@
 												<span class="float-right text-danger"><i class="fa fa-remove"></i> Out of Stock</span>
 												-->
 
-											<strong id="stockTitle">Choose your location first</strong>
+											<strong id="stockTitle">Pilih Lokasi Pengiriman</strong>
 										</div>
 
 										<div id="pageloader">

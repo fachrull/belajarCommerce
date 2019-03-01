@@ -16,7 +16,7 @@
 		</section>
 		<!-- /PAGE HEADER -->
 
-		<section>
+		<section class="pt-0">
 			<div class="container">
 
 				<div class="row">
@@ -34,7 +34,7 @@
 							</div>
 
                             <?php if($category != NULL):?>
-							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
+							<ul id="categories" class="list-group list-group-bordered list-group-noicon uppercase">
 							    <?php foreach($category as $category):?>
 								<li class="list-group-item">
 									<a class="text-capitalize pt-4 pb-4 pl-0 pr-0" href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
