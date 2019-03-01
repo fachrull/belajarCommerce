@@ -20,22 +20,22 @@
 				<!-- Social Icons -->
 				<div class="pt-15">
 					<div class="clearfix">
-						<a href="<?= site_url('!#');?>" class="social-icon social-icon-border social-icon-round social-facebook float-left" data-toggle="tooltip"
+						<a href="https://facebook.com" class="social-icon social-icon-border social-icon-round social-facebook float-left" data-toggle="tooltip"
 						 data-placement="top" title="Facebook">
 							<i class="icon-facebook"></i>
 							<i class="icon-facebook"></i>
 						</a>
-						<a href="<?= site_url('!#');?>" class="social-icon social-icon-border social-icon-round social-twitter float-left" data-toggle="tooltip"
+						<a href="https://twitter.com" class="social-icon social-icon-border social-icon-round social-twitter float-left" data-toggle="tooltip"
 						 data-placement="top" title="Twitter">
 							<i class="icon-twitter"></i>
 							<i class="icon-twitter"></i>
 						</a>
-						<a href="<?= site_url('!#');?>" class="social-icon social-icon-border social-icon-round social-instagram float-left" data-toggle="tooltip"
+						<a href="https://instagram.com" class="social-icon social-icon-border social-icon-round social-instagram float-left" data-toggle="tooltip"
 						 data-placement="top" title="Instagram">
 							<i class="icon-instagram2"></i>
 							<i class="icon-instagram2"></i>
 						</a>
-						<a href="<?= site_url('!#');?>" class="social-icon social-icon-border social-icon-round social-whatsapp float-left" data-toggle="tooltip"
+						<a href="https://web.whatsapp.com" class="social-icon social-icon-border social-icon-round social-whatsapp float-left" data-toggle="tooltip"
 						 data-placement="top" title="Whatsapp">
 							<i class="icon-call"></i>
 							<i class="icon-call"></i>
@@ -52,12 +52,12 @@
 					<div class="col-md-4 col-4 pt-5">
 						<h4 class="letter-spacing-1 footer-zero">SHOP</h4>
 						<ul class="list-unstyled footer-list half-paddings b-0">
-							<li><a class="block" href="<?= site_url('');?>home/Shop">Aireloom</a></li>
-							<li><a class="block" href="<?= site_url('');?>home/Shop">Serta</a></li>
-							<li><a class="block" href="<?= site_url('');?>home/Shop">Florence</a></li>
-							<li><a class="block" href="<?= site_url('');?>home/Shop">Kingkoil</a></li>
-							<li><a class="block" href="<?= site_url('');?>home/Shop">Tempur</a></li>
-							<li><a class="block" href="<?= site_url('');?>home/Shop">Stressless</a></li>
+							<li><a class="block" href="<?= site_url('home/shop/1/1');?>">Aireloom</a></li>
+							<li><a class="block" href="<?= site_url('home/shop/2/1');?>">Kingkoil</a></li>
+							<li><a class="block" href="<?= site_url('home/shop/4/1');?>">Serta</a></li>
+							<li><a class="block" href="<?= site_url('home/shop/5/1');?>">Tempur</a></li>
+							<li><a class="block" href="<?= site_url('home/shop/3/1');?>">Florence</a></li>
+							<li><a class="block" href="<?= site_url('home/shop/6/1');?>">Stressless</a></li>
 						</ul>
 					</div>
 					<div class="col-md-4 col-4 pt-5">

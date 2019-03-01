@@ -440,7 +440,7 @@ class Home extends CI_Controller{
   public function pageFaq(){
     $this->load->view('include/header2');
     $this->load->view('page-faq');
-    $this->load->view('include/footer2');
+    $this->load->view('include/footer');
   }
 
   public function termCondition(){

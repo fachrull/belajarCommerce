@@ -314,7 +314,7 @@ class Admin extends CI_Controller {
 
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/addProd-2', $data);
+          $this->load->view('admin/addProd', $data);
           $this->load->view('include/admin/footer');
         }else {
           // $data = array('upload_data' => $this->upload->data());
@@ -376,7 +376,7 @@ class Admin extends CI_Controller {
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/addProd-2', $data);
+        $this->load->view('admin/addProd', $data);
         $this->load->view('include/admin/footer');
       }
     }else{
