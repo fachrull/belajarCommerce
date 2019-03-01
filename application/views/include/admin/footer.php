@@ -55,6 +55,8 @@ $.widget.bridge('uibutton', $.ui.button);
 <script type="text/javascript" src="<?= base_url('asset/bower_components/select2/dist/js/select2.full.min.js');?>"></script>
 <!-- AutoNumber -->
 <script type="text/javascript" src="https://unpkg.com/autonumeric"></script>
+<!-- Bootstrap Toggle -->
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <!-- page script -->
 <script>
     $(function () {

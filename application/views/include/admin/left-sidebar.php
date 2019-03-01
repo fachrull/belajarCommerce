@@ -45,6 +45,7 @@
                 <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
                 <li class="active"><a href="<?= site_url();?>">Rating</a></li>
                 <li class="active"><a href="<?= site_url('admin/bestSeller');?>">Best Seller</a></li>
+                <li class="active"><a href="<?= site_url('admin/voucher');?>">Voucher</a></li>
               </li>
             </ul>
           </li>

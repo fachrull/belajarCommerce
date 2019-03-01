@@ -48,6 +48,8 @@
   <link rel="stylesheet" href="<?= base_url('asset/css/custom.css')?>">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
+  <!-- Bootstrap Toggle -->
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 
 
 
