@@ -32,7 +32,20 @@ class Madmin extends CI_Model {
       return $query->result_array();
     }
   }
-  
+
+  public function listProduct(){
+    $this->db->select('a.id, a.name as product, b.price');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $this->db->order_by('a.id', 'desc');
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
   public function allProducts($condition = NULL, $selection = NULL, $table, $singleRowResult =  FALSE){
     if ($condition != NULL) {
       foreach ($condition as $key => $value) {
@@ -45,7 +58,7 @@ class Madmin extends CI_Model {
         $this->db->select($value);
       }
     }
-    
+
     $this->db->order_by("id", "desc");
     $query =  $this->db->get($table);
 
@@ -103,7 +116,7 @@ class Madmin extends CI_Model {
     $query = $this->db->get_where('user_login', array('user_id' =>$id));
     return $query->row_array();
   }
-  
+
   public function emailStore($idStore){
       $this->db->select('a.email');
       $this->db->from('user_login a');
@@ -131,7 +144,7 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
-  
+
   public function joinSizeProduct($prod_id){
       $this->db->select('b.id, a.name, a.size, b.price');
       $this->db->from('tm_size a');
@@ -144,7 +157,7 @@ class Madmin extends CI_Model {
           return FALSE;
       }
   }
-  
+
   public function joinStoreProv($store_id){
     $this->db->select('a.nama as province');
     $this->db->from('provinsi a');
@@ -183,7 +196,7 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
-  
+
   public function joinDetailStore(){
       $this->db->select('b.company_name, a.username, a.email');
       $this->db->from('user_login a');
@@ -196,7 +209,7 @@ class Madmin extends CI_Model {
         return FALSE;
     }
   }
-  
+
   public function getSizeName($idSize){
       $this->db->select('a.name');
       $this->db->from('tm_size a');
@@ -209,11 +222,34 @@ class Madmin extends CI_Model {
         return FALSE;
     }
   }
-  
+
   public function getSizeNameProduct($idSize){
       $this->db->select('name, size');
       $this->db->where('id', $idSize);
       $query = $this->db->get('tm_size');
       return $query->row_array();
+  }
+
+  public function getProduct_orderBy($condition = NULL, $selection = NULL, $table, $orderby, $singleRowResult=FALSE){
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+
+    if ($selection != NULL) {
+      foreach ($selection as $key => $value) {
+        $this->db->select($value);
+      }
+    }
+
+    $this->db->group_by($orderby);
+    $query =  $this->db->get($table);
+
+    if ($singleRowResult === TRUE) {
+      return $query->row_array();
+    }else {
+      return $query->result_array();
+    }
   }
 }

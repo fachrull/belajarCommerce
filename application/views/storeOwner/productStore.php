@@ -17,6 +17,8 @@
           <thead>
             <th>No.</th>
             <th>Product</th>
+            <th>Brand</th>
+            <th>Category</th>
             <th>Size</th>
             <th>Quantity</th>
             <th>Action</th>
@@ -27,6 +29,8 @@
               <tr>
                 <td><?= $no;?></td>
                 <td><?= $product['product_name'];?></td>
+                <td><?= $product['brand']?></td>
+                <td><?= $product['category']?></td>
                 <td><?= $product['size_name'].'('.$product['size_product'].')'?></td>
                 <td>
                   <div class="row">

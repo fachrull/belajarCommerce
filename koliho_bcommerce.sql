@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 26, 2019 at 05:47 PM
+-- Generation Time: Mar 05, 2019 at 05:36 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.14
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `koliho_bcommerce`
 --
+CREATE DATABASE IF NOT EXISTS `koliho_bcommerce` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `koliho_bcommerce`;
 
 -- --------------------------------------------------------
 
@@ -28,11 +30,14 @@ SET time_zone = "+00:00";
 -- Table structure for table `kabupaten`
 --
 
-CREATE TABLE `kabupaten` (
+DROP TABLE IF EXISTS `kabupaten`;
+CREATE TABLE IF NOT EXISTS `kabupaten` (
   `id_kab` char(4) NOT NULL,
   `id_prov` char(2) NOT NULL,
   `nama` tinytext NOT NULL,
-  `id_jenis` int(11) NOT NULL
+  `id_jenis` int(11) NOT NULL,
+  PRIMARY KEY (`id_kab`),
+  KEY `id_prov` (`id_prov`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -561,10 +566,13 @@ INSERT INTO `kabupaten` (`id_kab`, `id_prov`, `nama`, `id_jenis`) VALUES
 -- Table structure for table `kecamatan`
 --
 
-CREATE TABLE `kecamatan` (
+DROP TABLE IF EXISTS `kecamatan`;
+CREATE TABLE IF NOT EXISTS `kecamatan` (
   `id_kec` char(6) NOT NULL,
   `id_kab` char(4) NOT NULL,
-  `nama` tinytext NOT NULL
+  `nama` tinytext NOT NULL,
+  PRIMARY KEY (`id_kec`),
+  KEY `id_kab` (`id_kab`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -7677,9 +7685,11 @@ INSERT INTO `kecamatan` (`id_kec`, `id_kab`, `nama`) VALUES
 -- Table structure for table `provinsi`
 --
 
-CREATE TABLE `provinsi` (
+DROP TABLE IF EXISTS `provinsi`;
+CREATE TABLE IF NOT EXISTS `provinsi` (
   `id_prov` char(2) NOT NULL,
-  `nama` tinytext NOT NULL
+  `nama` tinytext NOT NULL,
+  PRIMARY KEY (`id_prov`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -7728,8 +7738,9 @@ INSERT INTO `provinsi` (`id_prov`, `nama`) VALUES
 -- Table structure for table `tm_agmpedia`
 --
 
-CREATE TABLE `tm_agmpedia` (
-  `id` int(15) NOT NULL,
+DROP TABLE IF EXISTS `tm_agmpedia`;
+CREATE TABLE IF NOT EXISTS `tm_agmpedia` (
+  `id` int(15) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
   `sub_content` varchar(125) NOT NULL,
   `content` text NOT NULL,
@@ -7737,8 +7748,10 @@ CREATE TABLE `tm_agmpedia` (
   `thumbnail` blob NOT NULL,
   `photo` blob NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0' COMMENT 'active = 1, 2; inactive = 0',
-  `user_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_agmpedia`
@@ -7753,13 +7766,15 @@ INSERT INTO `tm_agmpedia` (`id`, `title`, `sub_content`, `content`, `date`, `thu
 -- Table structure for table `tm_brands`
 --
 
-CREATE TABLE `tm_brands` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_brands`;
+CREATE TABLE IF NOT EXISTS `tm_brands` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `logo` blob NOT NULL,
   `description` text NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; 0 = inactive'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; 0 = inactive',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_brands`
@@ -7779,12 +7794,14 @@ INSERT INTO `tm_brands` (`id`, `name`, `logo`, `description`, `status`) VALUES
 -- Table structure for table `tm_category`
 --
 
-CREATE TABLE `tm_category` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_category`;
+CREATE TABLE IF NOT EXISTS `tm_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `description` text NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive = 0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive = 0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_category`
@@ -7804,28 +7821,24 @@ INSERT INTO `tm_category` (`id`, `name`, `description`, `status`) VALUES
 -- Table structure for table `tm_customer`
 --
 
-CREATE TABLE `tm_customer` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_customer`;
+CREATE TABLE IF NOT EXISTS `tm_customer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_userlogin` int(11) NOT NULL,
   `first_name` varchar(100) NOT NULL,
   `last_name` varchar(100) NOT NULL,
-  `address` text,
-  `sub_district` varchar(50) DEFAULT NULL,
-  `city` varchar(50) DEFAULT NULL,
-  `province` varchar(50) DEFAULT NULL,
-  `postcode` varchar(25) DEFAULT NULL,
   `gender` char(1) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `phone` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_customer`
 --
 
-INSERT INTO `tm_customer` (`id`, `id_userlogin`, `first_name`, `last_name`, `address`, `sub_district`, `city`, `province`, `postcode`, `gender`, `phone`) VALUES
-(1, 15, 'dummy', 'customer2', NULL, '', NULL, NULL, NULL, 'm', NULL),
-(2, 3, 'Frist', 'Customer', 'Jl. Durian No. H23 RT003/003 Kelapa Dua Wetan, Ciracas', '', 'Jakarta Timur', 'DKI Jakarta', '13730', 'm', '02187701150'),
-(3, 16, 'customer', 'coba', NULL, '', NULL, NULL, NULL, 'm', NULL);
+INSERT INTO `tm_customer` (`id`, `id_userlogin`, `first_name`, `last_name`, `gender`, `phone`) VALUES
+(1, 15, 'dummy', 'customer2', 'm', '085712345678'),
+(5, 40, 'fachrul', 'fandi', 'm', '085712345678');
 
 -- --------------------------------------------------------
 
@@ -7885,17 +7898,23 @@ CREATE TABLE IF NOT EXISTS `tm_order` (
   KEY `adress_detail` (`address_detail`),
   KEY `id_userlogin` (`id_userlogin`),
   KEY `id_trProduct` (`id_trProduct`)
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_order`
 --
 
 INSERT INTO `tm_order` (`id`, `order_number`, `id_userlogin`, `id_trProduct`, `rowId`, `quantity`, `subtotal`, `total`, `order_date`, `address_detail`, `status_order`) VALUES
-(38, 'AGM260219653', 40, 9, 'b26beb262c7da3cf6d55dd49e25aaa1a', 3, '6000000', '13000000', '2019-02-26 16:31:22', 2, 2),
-(39, 'AGM260219653', 40, 4, 'f979f0b60d786f28c448698b1d4318fe', 7, '7000000', '13000000', '2019-02-26 16:31:22', 1, 2),
+(38, 'AGM260219653', 40, 9, 'b26beb262c7da3cf6d55dd49e25aaa1a', 3, '6000000', '13000000', '2019-02-26 16:31:22', 1, 2),
+(39, 'AGM260219653', 40, 4, 'f979f0b60d786f28c448698b1d4318fe', 7, '7000000', '13000000', '2019-02-26 16:31:22', 2, 2),
 (40, 'AGM26021910', 15, 4, 'f979f0b60d786f28c448698b1d4318fe', 7, '7000000', '51444444', '2019-02-26 16:33:55', 1, 2),
-(41, 'AGM26021910', 15, 5, 'a501126fd1dbd049803620103c7ce7dc', 2, '44444444', '51444444', '2019-02-26 16:33:56', 1, 2);
+(41, 'AGM26021910', 15, 5, 'a501126fd1dbd049803620103c7ce7dc', 2, '44444444', '51444444', '2019-02-26 16:33:56', 1, 2),
+(42, 'AGM27021987', 40, 10, '984bf2ca6009280c90e66977691ff97c', 3, '3000000', '8000000', '2019-02-27 03:45:35', 2, 2),
+(43, 'AGM27021987', 40, 4, 'f979f0b60d786f28c448698b1d4318fe', 5, '5000000', '8000000', '2019-02-27 03:45:35', 2, 2),
+(44, 'AGM270219914', 15, 9, 'b26beb262c7da3cf6d55dd49e25aaa1a', 1, '2000000', '2000000', '2019-02-27 07:43:13', NULL, 2),
+(45, 'AGM270219942', 15, 9, 'b26beb262c7da3cf6d55dd49e25aaa1a', 1, '2000000', '2000000', '2019-02-27 07:43:46', NULL, 2),
+(46, 'AGM270219692', 15, 4, 'f979f0b60d786f28c448698b1d4318fe', 1, '1000000', '1000000', '2019-02-27 08:59:34', NULL, 2),
+(47, 'AGM280219853', 40, 4, 'f979f0b60d786f28c448698b1d4318fe', 1, '1000000', '1000000', '2019-02-28 04:06:19', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -7903,16 +7922,20 @@ INSERT INTO `tm_order` (`id`, `order_number`, `id_userlogin`, `id_trProduct`, `r
 -- Table structure for table `tm_product`
 --
 
-CREATE TABLE `tm_product` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_product`;
+CREATE TABLE IF NOT EXISTS `tm_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_id` int(11) NOT NULL,
   `cat_id` int(11) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
   `description` text NOT NULL,
   `image` blob NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `brand_id` (`brand_id`),
+  KEY `cat_id` (`cat_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_product`
@@ -8025,7 +8048,8 @@ INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `description`, `im
 (124, 6, NULL, 'City Chair High Back Std Base', '<p>This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.</p>', 0x7374726573736c6573732d2d636974795f63686169725f686967685f6261636b5f7374645f626173652e6a7067, '2019-01-30 17:00:00', '2019-02-06 17:20:31'),
 (125, 6, NULL, 'City Chair Low Back Standard Base', '<p>This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.</p>', 0x7374726573736c6573732d2d636974795f63686169725f6c6f775f6261636b5f7374616e646172645f626173652e6a7067, '2019-01-30 17:00:00', '2019-02-06 17:20:31'),
 (127, 4, 2, 'Dummy', '<p>Lorem Ipsum</p>\r\n', 0x73657274612d6265645f6c696e656e2d64756d6d792e706e67, '2019-02-11 17:00:00', '2019-02-13 04:37:07'),
-(128, 1, 1, 'Dummy 2', '<p>Description</p>\r\n', 0x616972656c6f6f6d2d6d617474726573732d64756d6d795f322e706e67, '2019-02-11 17:00:00', '2019-02-13 06:33:06');
+(128, 1, 1, 'Dummy 2', '<p>Description</p>\r\n', 0x616972656c6f6f6d2d6d617474726573732d64756d6d795f322e706e67, '2019-02-11 17:00:00', '2019-02-13 06:33:06'),
+(129, 3, 3, 'Test Product', '<p>Deskripsi Product Test</p>\r\n', 0x666c6f72656e63652d70696c6c6f772d746573745f70726f647563742e6a7067, '2019-02-26 17:00:00', '2019-02-27 07:54:58');
 
 -- --------------------------------------------------------
 
@@ -8033,14 +8057,16 @@ INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `description`, `im
 -- Table structure for table `tm_size`
 --
 
-CREATE TABLE `tm_size` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_size`;
+CREATE TABLE IF NOT EXISTS `tm_size` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `size` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive =0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive =0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_size`
@@ -8059,12 +8085,14 @@ INSERT INTO `tm_size` (`id`, `name`, `size`, `created_at`, `updated_at`, `status
 -- Table structure for table `tm_slide`
 --
 
-CREATE TABLE `tm_slide` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_slide`;
+CREATE TABLE IF NOT EXISTS `tm_slide` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `slide` blob NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_slide`
@@ -8079,13 +8107,15 @@ INSERT INTO `tm_slide` (`id`, `slide`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `tm_spec`
 --
 
-CREATE TABLE `tm_spec` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_spec`;
+CREATE TABLE IF NOT EXISTS `tm_spec` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
   `status` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive = 0',
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_spec`
@@ -8144,6 +8174,31 @@ INSERT INTO `tm_spec` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUE
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tm_special_package`
+--
+
+DROP TABLE IF EXISTS `tm_special_package`;
+CREATE TABLE IF NOT EXISTS `tm_special_package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `image` blob NOT NULL,
+  `description` text NOT NULL,
+  `active` char(1) NOT NULL COMMENT 'active = 1; inactive = 0',
+  `price` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_special_package`
+--
+
+INSERT INTO `tm_special_package` (`id`, `name`, `image`, `description`, `active`, `price`) VALUES
+(7, 'Test Special Package', 0x7370656369616c5f7061636b6167652d746573745f7370656369616c5f7061636b6167652e6a7067, '<p>Special Package Description</p>\r\n', '1', '1000000');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tm_status_order`
 --
 
@@ -8171,15 +8226,16 @@ INSERT INTO `tm_status_order` (`id`, `class`, `status`) VALUES
 -- Table structure for table `tm_store_owner`
 --
 
-CREATE TABLE `tm_store_owner` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_store_owner`;
+CREATE TABLE IF NOT EXISTS `tm_store_owner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_userlogin` int(11) NOT NULL,
   `company_name` varchar(100) NOT NULL,
   `address` text NOT NULL,
   `address2` text,
-  `sub_district` int(11) NOT NULL,
-  `city` int(11) NOT NULL,
-  `province` int(11) NOT NULL,
+  `sub_district` char(6) NOT NULL,
+  `city` char(4) NOT NULL,
+  `province` char(2) NOT NULL,
   `latitude` double DEFAULT NULL,
   `langtitude` double DEFAULT NULL,
   `postcode` varchar(25) DEFAULT NULL,
@@ -8194,9 +8250,9 @@ CREATE TABLE `tm_store_owner` (
 --
 
 INSERT INTO `tm_store_owner` (`id`, `id_userlogin`, `company_name`, `address`, `address2`, `sub_district`, `city`, `province`, `latitude`, `langtitude`, `postcode`, `phone1`, `fax`, `id_super_admin`) VALUES
-(1, 36, 'AGM JDC', 'Jl. Gatot Subroto No. 53, Jakarta Design Center Lantai 4 - 4SR081', 'Jakarta Design Center Lantai 4 - 4SR081', 317403, 3174, 31, -6.201671, 106.80097, '12780', '0215720533', '', 2),
-(2, 37, 'AGM Simpruk', 'Jl. Teuku Nyak Arief, Simpruk Garden Raya Blok G No.1, Permata Hijau', 'Jakarta Design Center Lantai 4 - 4SR081', 317405, 3174, 31, -6.234099, 106.786999, '12220', '0217254363', '', 2),
-(3, 38, 'AGM Emporium Pluit Mall', 'Jl. Pluit Selatan Raya No.5', 'Emporim Mall Pluit Lantai 3-23, 3-25, 3-26', 317201, 3172, 31, -6.127242, 106.790272, '14440', '02166676278', '', 2);
+(1, 36, 'AGM JDC', 'Jl. Gatot Subroto No. 53, Jakarta Design Center Lantai 4 - 4SR081', 'Jakarta Design Center Lantai 4 - 4SR081', '317403', '3174', '31', -6.201671, 106.80097, '12780', '0215720533', '', 2),
+(2, 37, 'AGM Simpruk', 'Jl. Teuku Nyak Arief, Simpruk Garden Raya Blok G No.1, Permata Hijau', 'Jakarta Design Center Lantai 4 - 4SR081', '317405', '3174', '31', -6.234099, 106.786999, '12220', '0217254363', '', 2),
+(3, 38, 'AGM Emporium Pluit Mall', 'Jl. Pluit Selatan Raya No.5', 'Emporim Mall Pluit Lantai 3-23, 3-25, 3-26', '317201', '3172', '31', -6.127242, 106.790272, '14440', '02166676278', '', 2);
 
 -- --------------------------------------------------------
 
@@ -8204,13 +8260,15 @@ INSERT INTO `tm_store_owner` (`id`, `id_userlogin`, `company_name`, `address`, `
 -- Table structure for table `tm_super_admin`
 --
 
-CREATE TABLE `tm_super_admin` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tm_super_admin`;
+CREATE TABLE IF NOT EXISTS `tm_super_admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_userlogin` int(11) NOT NULL,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `phone` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tm_super_admin`
@@ -8233,28 +8291,61 @@ INSERT INTO `tm_super_admin` (`id`, `id_userlogin`, `first_name`, `last_name`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tm_voucher`
+--
+
+DROP TABLE IF EXISTS `tm_voucher`;
+CREATE TABLE IF NOT EXISTS `tm_voucher` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `kode_voucher` char(12) NOT NULL,
+  `name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `bonus` int(11) DEFAULT NULL,
+  `discount` decimal(10,2) DEFAULT NULL,
+  `jumlah` int(11) NOT NULL,
+  `active` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tm_voucher`
+--
+
+INSERT INTO `tm_voucher` (`id`, `kode_voucher`, `name`, `description`, `bonus`, `discount`, `jumlah`, `active`) VALUES
+(7, 'AGM_VCR0001', 'Voucher Pertama', '<p>Test Voucher Pertama</p>\r\n', 2, '0.70', 100, 1),
+(8, 'AGM_VCR0001', 'Voucher Pertama', '<p>Test Voucher Pertama</p>\r\n', 8, '0.70', 100, 1),
+(9, 'AGM_VCR0001', 'Voucher Pertama', '<p>Test Voucher Pertama</p>\r\n', 20, '0.70', 100, 1);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tr_product`
 --
 
-CREATE TABLE `tr_product` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tr_product`;
+CREATE TABLE IF NOT EXISTS `tr_product` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_store` int(11) NOT NULL,
   `id_product` int(11) NOT NULL,
   `id_product_size` int(11) NOT NULL,
   `quantity` int(11) DEFAULT '0',
   `new` int(11) NOT NULL DEFAULT '1' COMMENT 'active = 1; inactive = 0',
-  `id_admin` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_admin` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_product` (`id_product`),
+  KEY `id_product_size` (`id_product_size`),
+  KEY `id_store` (`id_store`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tr_product`
 --
 
 INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `id_product_size`, `quantity`, `new`, `id_admin`) VALUES
-(4, 1, 45, 77, 86, 0, 2),
-(5, 1, 45, 78, 13, 0, 2),
-(9, 1, 30, 46, 2, 0, 2),
-(10, 1, 30, 45, 1, 0, 2);
+(4, 1, 45, 77, 98, 0, 2),
+(5, 1, 45, 78, 15, 0, 2),
+(9, 1, 30, 46, 4, 0, 2),
+(10, 1, 30, 45, 5, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -8262,12 +8353,16 @@ INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `id_product_size`, `qu
 -- Table structure for table `tr_product_size`
 --
 
-CREATE TABLE `tr_product_size` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tr_product_size`;
+CREATE TABLE IF NOT EXISTS `tr_product_size` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
   `size_id` int(11) NOT NULL,
-  `price` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `price` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prod_id` (`prod_id`),
+  KEY `size_id` (`size_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=248 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tr_product_size`
@@ -8481,7 +8576,8 @@ INSERT INTO `tr_product_size` (`id`, `prod_id`, `size_id`, `price`) VALUES
 (243, 127, 1, '100'),
 (244, 127, 2, '1000'),
 (245, 128, 1, '10000000'),
-(246, 128, 3, '20000000');
+(246, 128, 3, '20000000'),
+(247, 129, 1, '1000000');
 
 -- --------------------------------------------------------
 
@@ -8489,11 +8585,15 @@ INSERT INTO `tr_product_size` (`id`, `prod_id`, `size_id`, `price`) VALUES
 -- Table structure for table `tr_product_spec`
 --
 
-CREATE TABLE `tr_product_spec` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tr_product_spec`;
+CREATE TABLE IF NOT EXISTS `tr_product_spec` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
-  `spec_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `spec_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prod_id` (`prod_id`),
+  KEY `spec_id` (`spec_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=286 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tr_product_spec`
@@ -8743,7 +8843,51 @@ INSERT INTO `tr_product_spec` (`id`, `prod_id`, `spec_id`) VALUES
 (278, 125, 8),
 (281, 127, 2),
 (282, 128, 4),
-(283, 128, 5);
+(283, 128, 5),
+(284, 129, 2),
+(285, 129, 5);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tr_special_package`
+--
+
+DROP TABLE IF EXISTS `tr_special_package`;
+CREATE TABLE IF NOT EXISTS `tr_special_package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_special_package` int(11) NOT NULL,
+  `id_product` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_special_package` (`id_special_package`),
+  KEY `tr_special_package_ibfk_2` (`id_product`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tr_special_package`
+--
+
+INSERT INTO `tr_special_package` (`id`, `id_special_package`, `id_product`) VALUES
+(4, 7, 2),
+(5, 7, 7),
+(6, 7, 10);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tr_storeowner_special_package`
+--
+
+DROP TABLE IF EXISTS `tr_storeowner_special_package`;
+CREATE TABLE IF NOT EXISTS `tr_storeowner_special_package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_special_package` int(11) NOT NULL,
+  `id_store_owner` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_special_package` (`id_special_package`),
+  KEY `id_store_owner` (`id_store_owner`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -8751,15 +8895,17 @@ INSERT INTO `tr_product_spec` (`id`, `prod_id`, `spec_id`) VALUES
 -- Table structure for table `user_login`
 --
 
-CREATE TABLE `user_login` (
-  `user_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `user_login`;
+CREATE TABLE IF NOT EXISTS `user_login` (
+  `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(225) NOT NULL,
   `user_type` int(11) DEFAULT NULL,
   `newer` int(11) NOT NULL,
-  `created` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created` int(11) DEFAULT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user_login`
@@ -8767,10 +8913,8 @@ CREATE TABLE `user_login` (
 
 INSERT INTO `user_login` (`user_id`, `username`, `password`, `email`, `user_type`, `newer`, `created`) VALUES
 (2, 'superAdmin', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'super.admin@keraton.com', 1, 0, NULL),
-(3, 'dummyCS', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'dummy@koliho.com', 4, 0, NULL),
 (5, 'admin', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'admin@keraton.com', 2, 0, NULL),
 (15, 'dummyCS2', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'dummycs2@koliho.com', 4, 0, NULL),
-(16, 'customer', '$2y$10$mQvf0Gt2XHJyC0pTYoGecOPwLzAuPJ8HN.cMlVA79lTywQRC9bzmS', 'customer@koliho.com', 4, 0, NULL),
 (19, 'dummyAdmin', '$2y$10$W/sG5VErS3a0NfdusDEH4O8tX.cvnd8chHplNqkYGHEn1WQ3pHppa', 'dummy.admin@keraton.com', 2, 0, 2),
 (20, 'superAdmin2', '$2y$10$UpBl3Zp.q4Iro9owkbQeuuvW.fzFKaxO99FBDeQLlGvxzUU8P9wuC', 'super.admin.dua@keraton.com', 1, 0, 2),
 (21, 'superadmin3', '$2y$10$LiyCsq8jBT3X2ccWbxKdsOe7bOIxBdjXczSWoLbc9/K9WwrZ49jT6', 'superadmin3@koliho.com', 1, 0, 2),
@@ -8783,44 +8927,42 @@ INSERT INTO `user_login` (`user_id`, `username`, `password`, `email`, `user_type
 (29, 'dummy', '$2y$10$6OLUFwLTmS2maUqXsIG.FOH8//BUfe3zAxikWqzTNkqmFWtbfRmyq', 'dummySA@email.com', 1, 1, 2),
 (36, 'agmJDC', '$2y$10$0JwOc/wJ81bQR5DDPjgBPuXFkFsGIk6g7JG8KKAN8RFxz7TFbZhG2', 'agm.jdc@email.com', 3, 0, 2),
 (37, 'agmSimpruk', '$2y$10$lynTs3dNF.DR2RU2fWZ9l.OPf7p8GZIXTBdgDyk/054FWFpCM4uz6', 'agm.simpruk@email.com', 3, 1, 2),
-(38, 'agmEmporiumPluitMall', '$2y$10$VONYYKftLV0CTxt2r7wBEesIlrAaVUA7Rt0KtaZAKvg7rrtW1Ii1S', 'agm.emporium@email.com', 3, 1, 2);
+(38, 'agmEmporiumPluitMall', '$2y$10$VONYYKftLV0CTxt2r7wBEesIlrAaVUA7Rt0KtaZAKvg7rrtW1Ii1S', 'agm.emporium@email.com', 3, 1, 2),
+(40, 'fachrul', '$2y$10$dVMsMIUSpeYVmzKWsIIh2e2/VeaAP87wkDr4WvmshYDSdRxerodaO', 'fachrul@email.com', 4, 0, NULL);
 
 --
--- Indexes for dumped tables
+-- Constraints for dumped tables
 --
 
 --
--- Indexes for table `kabupaten`
+-- Constraints for table `kabupaten`
 --
 ALTER TABLE `kabupaten`
-  ADD PRIMARY KEY (`id_kab`);
+  ADD CONSTRAINT `kabupaten_ibfk_1` FOREIGN KEY (`id_prov`) REFERENCES `provinsi` (`id_prov`);
 
 --
--- Indexes for table `kecamatan`
+-- Constraints for table `kecamatan`
 --
 ALTER TABLE `kecamatan`
-  ADD PRIMARY KEY (`id_kec`);
+  ADD CONSTRAINT `kecamatan_ibfk_1` FOREIGN KEY (`id_kab`) REFERENCES `kabupaten` (`id_kab`);
 
 --
--- Indexes for table `provinsi`
---
-ALTER TABLE `provinsi`
-  ADD PRIMARY KEY (`id_prov`);
-
---
--- Indexes for table `tm_agmpedia`
+-- Constraints for table `tm_agmpedia`
 --
 ALTER TABLE `tm_agmpedia`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `tm_agmpedia_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user_login` (`user_id`);
 
 --
--- Indexes for table `tm_brands`
+-- Constraints for table `tm_customer_detail`
 --
-ALTER TABLE `tm_brands`
-  ADD PRIMARY KEY (`id`);
+ALTER TABLE `tm_customer_detail`
+  ADD CONSTRAINT `tm_customer_detail_ibfk_1` FOREIGN KEY (`city`) REFERENCES `kabupaten` (`id_kab`),
+  ADD CONSTRAINT `tm_customer_detail_ibfk_2` FOREIGN KEY (`id_userlogin`) REFERENCES `user_login` (`user_id`),
+  ADD CONSTRAINT `tm_customer_detail_ibfk_3` FOREIGN KEY (`province`) REFERENCES `provinsi` (`id_prov`),
+  ADD CONSTRAINT `tm_customer_detail_ibfk_4` FOREIGN KEY (`sub_district`) REFERENCES `kecamatan` (`id_kec`);
 
 --
--- Indexes for table `tm_category`
+-- Constraints for table `tm_order`
 --
 ALTER TABLE `tm_order`
   ADD CONSTRAINT `tm_order_ibfk_1` FOREIGN KEY (`address_detail`) REFERENCES `tm_customer_detail` (`id`),
@@ -8828,158 +8970,47 @@ ALTER TABLE `tm_order`
   ADD CONSTRAINT `tm_order_ibfk_5` FOREIGN KEY (`id_trProduct`) REFERENCES `tr_product` (`id`);
 
 --
--- Indexes for table `tm_customer`
---
-ALTER TABLE `tm_customer`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tm_product`
+-- Constraints for table `tm_product`
 --
 ALTER TABLE `tm_product`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `tm_product_ibfk_1` FOREIGN KEY (`brand_id`) REFERENCES `tm_brands` (`id`),
+  ADD CONSTRAINT `tm_product_ibfk_2` FOREIGN KEY (`cat_id`) REFERENCES `tm_category` (`id`);
 
 --
--- Indexes for table `tm_size`
---
-ALTER TABLE `tm_size`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tm_slide`
---
-ALTER TABLE `tm_slide`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tm_spec`
---
-ALTER TABLE `tm_spec`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tm_store_owner`
---
-ALTER TABLE `tm_store_owner`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tm_super_admin`
---
-ALTER TABLE `tm_super_admin`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `tr_product`
+-- Constraints for table `tr_product`
 --
 ALTER TABLE `tr_product`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `tr_product_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `tm_product` (`id`),
+  ADD CONSTRAINT `tr_product_ibfk_2` FOREIGN KEY (`id_product_size`) REFERENCES `tr_product_size` (`id`),
+  ADD CONSTRAINT `tr_product_ibfk_3` FOREIGN KEY (`id_store`) REFERENCES `tm_store_owner` (`id`);
 
 --
--- Indexes for table `tr_product_size`
+-- Constraints for table `tr_product_size`
 --
 ALTER TABLE `tr_product_size`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `tr_product_size_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `tm_product` (`id`),
+  ADD CONSTRAINT `tr_product_size_ibfk_2` FOREIGN KEY (`size_id`) REFERENCES `tm_size` (`id`);
 
 --
--- Indexes for table `tr_product_spec`
+-- Constraints for table `tr_product_spec`
 --
 ALTER TABLE `tr_product_spec`
-  ADD PRIMARY KEY (`id`);
+  ADD CONSTRAINT `tr_product_spec_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `tm_product` (`id`),
+  ADD CONSTRAINT `tr_product_spec_ibfk_2` FOREIGN KEY (`spec_id`) REFERENCES `tm_spec` (`id`);
 
 --
--- Indexes for table `user_login`
+-- Constraints for table `tr_special_package`
 --
-ALTER TABLE `user_login`
-  ADD PRIMARY KEY (`user_id`);
+ALTER TABLE `tr_special_package`
+  ADD CONSTRAINT `tr_special_package_ibfk_1` FOREIGN KEY (`id_special_package`) REFERENCES `tm_special_package` (`id`),
+  ADD CONSTRAINT `tr_special_package_ibfk_2` FOREIGN KEY (`id_product`) REFERENCES `tm_product` (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Constraints for table `tr_storeowner_special_package`
 --
-
---
--- AUTO_INCREMENT for table `tm_agmpedia`
---
-ALTER TABLE `tm_agmpedia`
-  MODIFY `id` int(15) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT for table `tm_brands`
---
-ALTER TABLE `tm_brands`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `tm_category`
---
-ALTER TABLE `tm_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT for table `tm_customer`
---
-ALTER TABLE `tm_customer`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `tm_product`
---
-ALTER TABLE `tm_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
-
---
--- AUTO_INCREMENT for table `tm_size`
---
-ALTER TABLE `tm_size`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT for table `tm_slide`
---
-ALTER TABLE `tm_slide`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT for table `tm_spec`
---
-ALTER TABLE `tm_spec`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
-
---
--- AUTO_INCREMENT for table `tm_store_owner`
---
-ALTER TABLE `tm_store_owner`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `tm_super_admin`
---
-ALTER TABLE `tm_super_admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
-
---
--- AUTO_INCREMENT for table `tr_product`
---
-ALTER TABLE `tr_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
---
--- AUTO_INCREMENT for table `tr_product_size`
---
-ALTER TABLE `tr_product_size`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=247;
-
---
--- AUTO_INCREMENT for table `tr_product_spec`
---
-ALTER TABLE `tr_product_spec`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=284;
-
---
--- AUTO_INCREMENT for table `user_login`
---
-ALTER TABLE `user_login`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+ALTER TABLE `tr_storeowner_special_package`
+  ADD CONSTRAINT `tr_storeowner_special_package_ibfk_1` FOREIGN KEY (`id_special_package`) REFERENCES `tm_special_package` (`id`),
+  ADD CONSTRAINT `tr_storeowner_special_package_ibfk_2` FOREIGN KEY (`id_store_owner`) REFERENCES `tm_store_owner` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

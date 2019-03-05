@@ -43,6 +43,8 @@
                 <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_spec');?>">Spec</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
+                <li class="active"><a href="<?= site_url('admin/allVoucher')?>">Voucher</a></li>
+                <li class="active"><a href="<?= site_url('admin/special_package');?>">Special Package</a></li>
                 <li class="active"><a href="<?= site_url();?>">Rating</a></li>
                 <li class="active"><a href="<?= site_url('admin/bestSeller');?>">Best Seller</a></li>
               </li>

@@ -239,7 +239,7 @@ class Admin extends CI_Controller {
       $this->form_validation->set_rules('cat', 'Category', 'required');
 
       if ($this->form_validation->run() == FALSE){
-        $data['products'] = $this->madmin->allProducts(NULL, NULL, 'tm_product', FALSE);
+        $data['products'] = $this->madmin->listProduct();
         $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
         $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
 
@@ -922,5 +922,201 @@ class Admin extends CI_Controller {
       } else {
         echo "Something went wrong";
       }
+  }
+
+  public function special_package(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['specialPackages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name',
+       'priceField' => 'price', 'activeField' => 'active'), 'tm_special_package', FALSE);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/specialPackage', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function addSpecial_package(){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('name', 'Special Package Name', 'required|callback_checkingSPackage');
+      $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
+      // $this->form_validation->set_rules('promo_date');
+      $this->form_validation->set_rules('price', 'Special Package Price', 'required');
+      $this->form_validation->set_rules('product[]', 'Special Package Products', 'required');
+
+      if ($this->form_validation->run() === TRUE) {
+        $file_name = strtolower('special_package-'.$this->input->post('name'));
+
+        $config['upload_path'] = './asset/upload/special-package/';
+        $config['allowed_types'] = 'jpg|jpeg|png';
+        $config['file_name'] = $file_name;
+
+        $this->load->library('upload', $config);
+        if (! $this->upload->do_upload('imageSP')) {
+          $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
+
+          $this->session->set_flashdata('error', $this->upload->display_errors());
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/addSpecial_Package', $data);
+          $this->load->view('include/admin/footer');
+        } else {
+          $sp_name = $this->upload->data();
+
+          $data = array(
+            'name'        => $this->input->post('name'),
+            'image'       => $sp_name['orig_name'],
+            'description' => $this->input->post('desc'),
+            'active'      => 1,
+            'price'       => $this->input->post('price')
+          );
+
+          $this->madmin->inputData('tm_special_package', $data);
+
+          $idSP = $this->madmin->getProducts(array('name' => $this->input->post('name')), array('idField' => 'id'), 'tm_special_package', TRUE);
+          // print_r($idSP);
+          // exit();
+
+          $prods = $this->input->post('product[]');
+          foreach ($prods as $prod) {
+            $dataRelation_SpecialPackage = array(
+              'id_special_package' => $idSP['id'],
+              'id_product'         => $prod
+            );
+
+            $this->madmin->inputData('tr_special_package', $dataRelation_SpecialPackage);
+          }
+          redirect('admin/special_package');
+        }
+      } else {
+        $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addSpecial_Package', $data);
+        $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingSPackage($nameSP){
+    $specialPackage_name = $this->madmin->getProducts(array('name'=>$nameSP), array('nameField' => 'name'), 'tm_special_package', TRUE);
+    if (isset($specialPackage_name)) {
+      $this->session->set_flashdata('error', 'Special package name has already been created');
+      return FALSE;
+    } else {
+      return TRUE;
+    }
+  }
+
+  public function activeSpecialPackage($idSP){
+    if ($this->session->userdata('uType') == 1) {
+      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active'), 'tm_special_package', TRUE);
+      if ($isActive['active'] == 1) {
+        echo "this is active";
+        $item = array('active' => 0);
+        $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
+      } else {
+        echo "this is inactive";
+        $item = array('active' => 1);
+        $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
+      }
+      redirect('admin/special_package');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function allVoucher(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['vouchers'] = $this->madmin->getProduct_orderBy(NULL, NULL, 'tm_voucher', 'kode_voucher', FALSE);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/allVoucher', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function addVoucher(){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('kVoucher', 'Kode Voucher', 'required');
+      $this->form_validation->set_rules('name', 'Name', 'required');
+      $this->form_validation->set_rules('desc', 'Description', 'required');
+      $this->form_validation->set_rules('jumlah', 'Limit Voucher', 'required');
+
+      if ($this->form_validation->run() === FALSE) {
+        $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addVoucher', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $bonus = $this->input->post('bonus[]');
+        print_r($bonus);
+        echo "</br></br>";
+        echo "<hr>";
+        foreach ($bonus as $bonus) {
+          $data = array(
+            'kode_voucher' => $this->input->post('kVoucher'),
+            'name'         => $this->input->post('name'),
+            'description'  => $this->input->post('desc'),
+            'bonus'        => $bonus,
+            'discount'     => $this->input->post('discount'),
+            'jumlah'       => $this->input->post('jumlah'),
+            'active'       => 1
+          );
+          print_r($data);
+          echo "</br></br>";
+          echo "<hr>";
+          $this->madmin->inputData('tm_voucher', $data);
+        }
+        // exit();
+        redirect('admin/allVoucher');
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function active_voucher($kode_voucher, $active){
+    if ($this->session->userdata('uType') == 1) {
+      if ($active == 1) {
+        $items = array('active' => 0);
+        $this->madmin->updateData(array('kode_voucher' => $kode_voucher), 'tm_voucher', $items);
+      } else {
+        $items = array('active' => 1);
+        $this->madmin->updateData(array('kode_voucher' => $kode_voucher), 'tm_voucher', $items);
+      }
+      redirect('admin/allVoucher');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
   }
 }
