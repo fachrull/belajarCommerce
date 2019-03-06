@@ -1,5 +1,4 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
-<?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="content-wrapper">
   <section class="content-header">
     Store Owner
