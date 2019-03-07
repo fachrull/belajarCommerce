@@ -34,7 +34,7 @@
                       <td><?= $voucher['jumlah']?></td>
                       <td><?= $voucher['discount'].'%'?></td>
                       <td>
-                        <a href="<?= site_url('');?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                        <a href="<?= site_url('admin/detail_voucher');?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                         <?php if ($voucher['active'] == 1): ?>
                           <a href="<?= site_url('admin/active_voucher/'.$voucher['kode_voucher'].'/'.$voucher['active']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
                         <?php else: ?>

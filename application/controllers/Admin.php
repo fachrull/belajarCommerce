@@ -1119,4 +1119,10 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
+  public function detail_voucher(){
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/detail_voucher');
+    $this->load->view('include/admin/footer');
+  }
 }
