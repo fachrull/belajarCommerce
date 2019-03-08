@@ -7,7 +7,7 @@
   </section>
   <section class="content">
     <div class="row">
-      <div class="col-xs">
+      <div class="col-xs-12">
         <div class="box">
           <div class="box-header pb-0">
             <div class="table-responsive">
@@ -50,9 +50,34 @@
                 </tr>
               </table>
             </div>
-            <a href="<?= site_url('admin/storeProd/'.$post['id']);?>" class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add product</a>
           </div>
           <div class="box-body">
+          <hr class="col-xs-12">
+          <a href="#"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i>Add Cluster</button></a>
+          <hr class="mt-50" style="width:100%; height:0px">
+          <table id="dataTable1" class="table table-bordered table-striped">
+              <thead>
+                <th>No.</th>
+                <th>Provinsi</th>
+                <th>Kabupaten</th>
+                <th>Kecamatan</th>
+                <th>Action</th>
+              </thead>
+              <tbody>
+                    <tr>
+                      <td>1</td>
+                      <td>Kalimantan Tengah</td>
+                      <td>Kotawaringin Timur</td>
+                      <td>Baamang Tengah</td>
+                      <td>
+                        <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
+                      </td>
+                    </tr>
+              </tbody>
+            </table>
+            <hr class="col-xs-12">
+            <a href="<?= site_url('admin/storeProd/'.$post['id']);?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i>Add Product</button></a>
+            <hr class="mt-50" style="width:100%; height:0px">
             <table id="dataTable" class="table table-bordered table-striped">
               <thead>
                 <th>No.</th>
