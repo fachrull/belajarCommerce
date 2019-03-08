@@ -7,19 +7,19 @@
   </section>
   <section class="content">
     <div class="row">
-      <div class="col-xs-12">
+      <div class="col-xs-6 col-xs-offset-3">
         <div class="box">
           <div class="box-body">
           <h2 class="text-center mb-20">
             Admin Name
             </h2>
           <div class="row text-center mb-20">
-            <div class="col-xs-6 col-xs-offset-3 mb-20">
+            <div class="col-xs-12 mb-20">
             <img style="width:100px !important; height:100px;" src="<?= base_url('asset/dist/img/user.png');?>">
             </div>
           </div>
           <div class="row mb-20">
-            <div class="col-xs-6 col-xs-offset-3 mb-20">
+            <div class="col-xs-12 mb-20">
               <div class="product-detail">
                 <div class="col-xs-12 mb-20">
                   <div class="table-responsive">
