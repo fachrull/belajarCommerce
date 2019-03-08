@@ -150,6 +150,7 @@ $(function(){
     });
   });
   $(function () {
+<<<<<<< HEAD
     $('#dataTable1').DataTable({
       'paging'      : true, // harus ada
       'lengthChange': true, // harus ada
@@ -162,6 +163,20 @@ $(function(){
       // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
     });
   });
+=======
+   $('#dataTable1').DataTable({
+     'paging'      : true, // harus ada
+     'lengthChange': true, // harus ada
+     'ordering'    : true, // harus ada
+     'info'        : true,
+     'autoWidth'   : false,
+     'searching'   : true,
+     'processing'  : true,
+     // 'pageLength'  : 15,
+     // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
+   });
+ })
+>>>>>>> fcr
 </script>
 <script>
   const autoNumericOptionsIdr = {
