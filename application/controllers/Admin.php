@@ -437,9 +437,9 @@ class Admin extends CI_Controller {
 
   public function deleteProd($idProd){
     if ($this->session->userdata('uType') == 1) {
-      $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
-      $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_size');
       $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_spec');
+      $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_size');
+      $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
       redirect('admin/allProd');
     } else {
       $this->load->view('include/header2');
