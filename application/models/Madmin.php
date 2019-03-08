@@ -279,4 +279,33 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
+
+  public function detailAddress_store($idStore){
+    $this->db->select('a.city, a.province, b.nama as city_name, c.nama as prov_name');
+    $this->db->from('tm_store_owner a');
+    $this->db->join('kabupaten b', 'b.id_kab = a.city', 'left');
+    $this->db->join('provinsi c', 'b.id_prov = a.province', 'left');
+    $this->db->where('a.id', $idStore);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->row_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function detailCluster($idStore){
+    $this->db->select('a.id_store, a.sub_district, b.nama as prov_name, c.nama as city_name, d.nama as sub_name');
+    $this->db->from('tr_store_owner_cluster a');
+    $this->db->join('provinsi b', 'b.id_prov = a.province', 'left');
+    $this->db->join('kabupaten c', 'c.id_kab = a.city', 'left');
+    $this->db->join('kecamatan d', 'd.id_kec = a.sub_district', 'left');
+    $this->db->where('a.id_store', $idStore);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
 }

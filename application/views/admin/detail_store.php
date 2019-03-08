@@ -7,7 +7,7 @@
   </section>
   <section class="content">
     <div class="row">
-      <div class="col-xs">
+      <div class="col-xs-12">
         <div class="box">
           <div class="box-header pb-0">
             <div class="table-responsive">
@@ -50,35 +50,64 @@
                 </tr>
               </table>
             </div>
-            <a href="<?= site_url('admin/storeProd/'.$post['id']);?>" class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add product</a>
           </div>
           <div class="box-body">
-            <table id="dataTable" class="table table-bordered table-striped">
+            <hr class="col-xs-12">
+          <a href="<?= site_url('admin/addCluster/'.$post['id'])?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i>Add Cluster</button></a>
+          <hr class="mt-50" style="width:100%; height:0px">
+          <table id="dataTable1" class="table table-bordered table-striped">
               <thead>
                 <th>No.</th>
-                <th>Product</th>
-                <th id="sizeProduct">Size</th>
-                <th>Quantity</th>
+                <th>Provinsi</th>
+                <th>Kabupaten</th>
+                <th>Kecamatan</th>
                 <th>Action</th>
               </thead>
               <tbody>
-                <?php if(is_array($products)): ?>
-                  <?php $no=1; ?>
-                  <?php foreach($products as $product): ?>
-                    <tr>
-                      <td><?= $no;?></td>
-                      <td><?= $product['product_name'];?></td>
-                      <td><?=$product['size_name'];?> (<?= $product['size']; ?>)</td>
-                      <td><?= ($product['quantity'] != NULL? $product['quantity']:'-');?></td>
-                      <td>
-                        <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
-                      </td>
-                    </tr>
-                    <?php $no++; ?>
-                  <?php endforeach; ?>
-                <?php endif; ?>
+                    <?php $no = 1;foreach ($clusters as $cluster): ?>
+                      <tr>
+                        <td><?= $no.'.'?></td>
+                        <td><?= $cluster['prov_name']?></td>
+                        <td><?= $cluster['city_name']?></td>
+                        <td><?= $cluster['sub_name']?></td>
+                        <td>
+                          <a href="<?= site_url('admin/deleteCluster_Store/'.$post['id'].'/'.$cluster['sub_district'])?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                            <i class="fa fa-trash"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    <?php $no++;endforeach; ?>
               </tbody>
             </table>
+            <hr class="col-xs-12">
+            <a href="<?= site_url('admin/storeProd/'.$post['id']);?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i>Add Product</button></a>
+            <hr class="mt-50" style="width:100%; height:0px">
+                <table id="dataTable" class="table table-bordered table-striped">
+                  <thead>
+                    <th>No.</th>
+                    <th>Product</th>
+                    <th id="sizeProduct">Size</th>
+                    <th>Quantity</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <?php if(is_array($products)): ?>
+                      <?php $no=1; ?>
+                      <?php foreach($products as $product): ?>
+                        <tr>
+                          <td><?= $no;?></td>
+                          <td><?= $product['product_name'];?></td>
+                          <td><?=$product['size_name'];?> (<?= $product['size']; ?>)</td>
+                          <td><?= ($product['quantity'] != NULL? $product['quantity']:'-');?></td>
+                          <td>
+                            <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
+                          </td>
+                        </tr>
+                        <?php $no++; ?>
+                      <?php endforeach; ?>
+                    <?php endif; ?>
+                  </tbody>
+                </table>
           </div>
         </div>
       </div>

@@ -899,11 +899,81 @@ class Admin extends CI_Controller {
         $data['prime'] = $this->madmin->emailStore($link);
         $data['storeId'] = $idStore;
         $data['products'] = $this->madmin->joinStoreProd($link);
+        $data['clusters'] = $this->madmin->detailCluster($link);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/detail_store', $data);
         $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function addCluster($idStore){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('sub_district', 'Kecamatan', 'required|callback_checkingClusterSub');
+
+      if ($this->form_validation->run() == FALSE) {
+        $data['id_store'] = $idStore;
+        $data['address'] = $this->madmin->detailAddress_store($idStore);
+        $data['sub_districts'] = $this->madmin->getProducts(array('id_kab' => $data['address']['city']),
+          array('id_kecField' => 'id_kec', 'namaField' => 'nama'), 'kecamatan', FALSE);
+
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addCluster', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $dataCluster = array(
+          'id_store'      => $this->input->post('id_store'),
+          'province'      => $this->input->post('province'),
+          'city'          => $this->input->post('city'),
+          'sub_district'  => $this->input->post('sub_district')
+        );
+        print_r($dataCluster);
+        $this->madmin->inputData('tr_store_owner_cluster', $dataCluster);
+        redirect('admin/stores/'.$idStore);
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function deleteCluster_Store($idStore, $sub){
+    if ($this->session->userdata('uType') == 1) {
+      $dataCluster_Store = array(
+        'id_store'      => $idStore,
+        'sub_district'  => $sub
+      );
+      $this->madmin->deleteData($dataCluster_Store, 'tr_store_owner_cluster');
+      redirect('admin/stores/'.$idStore);
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingClusterSub($subDistrict){
+    if ($this->session->userdata('uType') == 1) {
+      $idStore = $this->input->post('id_store');
+      $hasSub = $this->madmin->getProducts(NULL, array('subField' => 'sub_district'),
+        'tr_store_owner_cluster', TRUE);
+      if (isset($hasSub)) {
+        $this->session->set_flashdata('error', 'Kecamatan sudah ditambahkan atau terdapat pada cluster toko lain');
+        return FALSE;
+      } else {
+        return TRUE;
       }
     } else {
       $this->load->view('include/header2');
