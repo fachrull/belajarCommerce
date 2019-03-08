@@ -184,6 +184,12 @@ class Mauth extends CI_Model{
         'newer'     => $newAdmin,
         'created'   => $created
       );
+      // print_r($pass);
+      // echo "</br></br>";
+      // print_r(password_hash($pass, PASSWORD_DEFAULT));
+      // echo "</br></br>";
+      // print_r($dataUserLogin);
+      // exit();
       $queryULoging = $this->db->insert('user_login', $dataUserLogin);
       $userId = $this->getData(array('username' => $this->input->post('uname')),
         array('userIdField' => 'user_id'), TRUE);

@@ -37,6 +37,7 @@ class Madmin extends CI_Model {
     $this->db->select('a.id, a.name as product, b.price');
     $this->db->from('tm_product a');
     $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $this->db->group_by('a.id');
     $this->db->order_by('a.id', 'desc');
     $query = $this->db->get();
     if($query->num_rows() != 0){
