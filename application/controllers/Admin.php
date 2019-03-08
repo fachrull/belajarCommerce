@@ -22,13 +22,35 @@ class Admin extends CI_Controller {
           $this->load->view('admin/home_admin', $data);
           $this->load->view('include/admin/footer');
         }else{
-          $this->load->view('include/header');
-          echo "<h1>This feature will be updated soon.</h1>";
-          $this->load->view('include/footer');
+          $data['detail_admin'] = $this->madmin->detail_admin($link);
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/detailAdmin', $data);
+          $this->load->view('include/admin/footer');
         }
+      }else {
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
       }
   }
 
+  public function resetPassword($idUserlogin){
+    if ($this->session->userdata('uType') == 1) {
+      $resetPass = "admin_agm";
+      $newPassword = array(
+        'password' => password_hash(($resetPass), PASSWORD_DEFAULT),
+        'newer'    => 1
+      );
+      $this->madmin->updateData(array('user_id' => $idUserlogin), 'user_login', $newPassword);
+      redirect('admin/listAdmin/'.$idUserlogin);
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
 
   public function listStoreOwner(){
       if ($this->session->userdata('uType') == 1) {
@@ -1075,25 +1097,31 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       } else {
         $bonus = $this->input->post('bonus[]');
-        print_r($bonus);
+        $primeVoucher = array(
+          'kode_voucher' => $this->input->post('kVoucher'),
+          'name'         => $this->input->post('name'),
+          'description'  => $this->input->post('desc'),
+          'discount'     => $this->input->post('discount'),
+          'jumlah'       => $this->input->post('jumlah'),
+          'active'       => 1
+        );
+        $this->madmin->inputData('tm_voucher', $primeVoucher);
+        print_r($primeVoucher);
         echo "</br></br>";
         echo "<hr>";
+        $kode_voucher = $this->input->post('kVoucher');
+        $idVoucher = $this->madmin->getProducts(array('kode_voucher' => $kode_voucher), array('idField' => 'id'),
+          'tm_voucher', TRUE);
         foreach ($bonus as $bonus) {
-          $data = array(
-            'kode_voucher' => $this->input->post('kVoucher'),
-            'name'         => $this->input->post('name'),
-            'description'  => $this->input->post('desc'),
-            'bonus'        => $bonus,
-            'discount'     => $this->input->post('discount'),
-            'jumlah'       => $this->input->post('jumlah'),
-            'active'       => 1
+          $dataBonus = array(
+            'id_voucher'  =>  $idVoucher['id'],
+            'bonus'       =>  $bonus
           );
-          print_r($data);
+          print_r($dataBonus);
           echo "</br></br>";
           echo "<hr>";
-          $this->madmin->inputData('tm_voucher', $data);
+          $this->madmin->inputData('tr_bonus_voucher', $dataBonus);
         }
-        // exit();
         redirect('admin/allVoucher');
       }
     } else {
@@ -1103,14 +1131,14 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function active_voucher($kode_voucher, $active){
+  public function active_voucher($idVoucher, $active){
     if ($this->session->userdata('uType') == 1) {
       if ($active == 1) {
         $items = array('active' => 0);
-        $this->madmin->updateData(array('kode_voucher' => $kode_voucher), 'tm_voucher', $items);
+        $this->madmin->updateData(array('id' => $idVoucher), 'tm_voucher', $items);
       } else {
         $items = array('active' => 1);
-        $this->madmin->updateData(array('kode_voucher' => $kode_voucher), 'tm_voucher', $items);
+        $this->madmin->updateData(array('id' => $idVoucher), 'tm_voucher', $items);
       }
       redirect('admin/allVoucher');
     } else {
@@ -1119,10 +1147,21 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
-  public function detail_voucher(){
-    $this->load->view('include/admin/header');
-    $this->load->view('include/admin/left-sidebar');
-    $this->load->view('admin/detail_voucher');
-    $this->load->view('include/admin/footer');
+  public function detail_voucher($idVoucher){
+    if ($this->session->userdata('uType') == 1) {
+      $data['voucher'] = $this->madmin->getProducts(array('id' => $idVoucher), NULL, 'tm_voucher', TRUE);
+      $data['detail_voucher'] = $this->madmin->detail_voucher($idVoucher);
+      // print_r($data['voucher']);
+      // exit();
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/detail_voucher', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
   }
 }

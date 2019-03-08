@@ -253,4 +253,30 @@ class Madmin extends CI_Model {
       return $query->result_array();
     }
   }
+
+  public function detail_voucher($idVoucher){
+    $this->db->select('b.name, b.image');
+    $this->db->from('tr_bonus_voucher a');
+    $this->db->join('tm_product b', 'b.id = a.bonus', 'left');
+    $this->db->where('a.id_voucher', $idVoucher);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function detail_admin($idAdmin){
+    $this->db->select('b.user_id, a.first_name, a.last_name, a.phone, b.username, b.email, b.user_type');
+    $this->db->from('tm_super_admin a');
+    $this->db->join('user_login b', 'b.user_id = a.id_userlogin', 'left');
+    $this->db->where('a.id_userlogin', $idAdmin);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->row_array();
+    }else{
+      return FALSE;
+    }
+  }
 }
