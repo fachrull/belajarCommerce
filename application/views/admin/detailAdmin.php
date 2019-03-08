@@ -10,16 +10,18 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-body">
-          <h2>
+          <h2 class="text-center mb-20">
             Admin Name
             </h2>
-          <div class="row">
-            <div class="col-xs-6 mb-20">
-            <img src="<?= base_url('asset/dist/img/user.png');?>">
+          <div class="row text-center mb-20">
+            <div class="col-xs-6 col-xs-offset-3 mb-20">
+            <img style="width:100px !important; height:100px;" src="<?= base_url('asset/dist/img/user.png');?>">
             </div>
-            <div class="col-xs-6 mb-20">
+          </div>
+          <div class="row mb-20">
+            <div class="col-xs-6 col-xs-offset-3 mb-20">
               <div class="product-detail">
-                <div class="col-xs-12">
+                <div class="col-xs-12 mb-20">
                   <div class="table-responsive">
                     <table class="table">
                       <tr>
@@ -44,19 +46,21 @@
                       </tr>
                       <tr>
                         <th>Role</th>
-
                         <td><?= ($detail_admin['user_type'] == 1 ? 'Super Admin':'Admin')?></td>
                       </tr>
                     </table>
                   </div>
                 </div>
-                <div class="col-xs-12">
-                  <a href="<?= site_url('admin/resetPassword/'.$detail_admin['user_id']);?>" class="btn btn-oldblue btn-default" style="float:right;">Reset Password</a>
+                <div class="col-xs-6">
+                <a href="<?= site_url('admin/listAdmin');?>"><button class="btn btn-oldblue btn-default" style="float:left;">Back</button></a>
+                </div>
+                <div class="col-xs-6">
+                <a href="<?= site_url('admin/resetPassword/'.$detail_admin['user_id']);?>"><button class="btn btn-oldblue btn-default" style="float:right;">Reset Password</button></a>
                 </div>
               </div>
             </div>
+            </div>
           </div>
-          <a href="<?= site_url('admin/listAdmin');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
         </div>
       </div>
     </div>
