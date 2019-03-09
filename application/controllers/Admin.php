@@ -967,7 +967,7 @@ class Admin extends CI_Controller {
   public function checkingClusterSub($subDistrict){
     if ($this->session->userdata('uType') == 1) {
       $idStore = $this->input->post('id_store');
-      $hasSub = $this->madmin->getProducts(NULL, array('subField' => 'sub_district'),
+      $hasSub = $this->madmin->getProducts(array('sub_district' => $subDistrict), array('subField' => 'sub_district'),
         'tr_store_owner_cluster', TRUE);
       if (isset($hasSub)) {
         $this->session->set_flashdata('error', 'Kecamatan sudah ditambahkan atau terdapat pada cluster toko lain');

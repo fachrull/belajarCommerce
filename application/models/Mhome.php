@@ -179,21 +179,39 @@ class Mhome extends CI_Model{
     return $output;
   }
 
-  public function checkStock_by_Distcit($idProd, $idDistrict){
-      $this->db->select('a.id_store, a.id_product, a.id_product_size, d.id, a.quantity, c.price, d.name, d.size');
-      $this->db->from('tr_product a');
-      $this->db->join('tm_store_owner b', 'b.id = a.id_store', 'left');
-      $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
-      $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
-      $this->db->group_by('a.id_product_size');
-      $where = array('b.sub_district' => $idDistrict, 'a.id_product' => $idProd);
-      $this->db->where($where);
-      $query = $this->db->get();
+  // public function checkStock_by_Distcit($idProd, $idDistrict){
+  //     $this->db->select('a.id_store, a.id_product, a.id_product_size, d.id, a.quantity, c.price, d.name, d.size');
+  //     $this->db->from('tr_product a');
+  //     $this->db->join('tm_store_owner b', 'b.id = a.id_store', 'left');
+  //     $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
+  //     $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
+  //     $this->db->group_by('a.id_product_size');
+  //     $where = array('b.sub_district' => $idDistrict, 'a.id_product' => $idProd);
+  //     $this->db->where($where);
+  //     $query = $this->db->get();
+  //   if ($query->num_rows() != 0) {
+  //     return $query->result_array();
+  //   } else {
+  //     return FALSE;
+  //   }
+  // }
+
+  public function checkStock_by_District($idProd, $idDistrict){
+    $this->db->select('a.id_store, a.id_product, a.id_product_size, a.quantity, b.price, c.id, c.name, c.size');
+    $this->db->from('tr_product a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_product_size', 'left');
+    $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
+    $this->db->join('tr_store_owner_cluster d', 'd.id_store = a.id_store', 'left');
+    $this->db->group_by('a.id_product_size');
+    $where = array('d.sub_district' => $idDistrict, 'a.id_product' => $idProd, 'a.quantity >' => 3);
+    $this->db->where($where);
+    $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
     } else {
       return FALSE;
     }
+
   }
 
   public function detailProfileCustomer($idUserLogin){

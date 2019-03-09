@@ -170,7 +170,7 @@ class Home extends CI_Controller{
   }
 
   public function checkStockbyDistrict($idProduct, $idDistrict){
-    $data = $this->mhome->checkStock_by_Distcit($idProduct, $idDistrict);
+    $data = $this->mhome->checkStock_by_District($idProduct, $idDistrict);
     if($data) {
         print_r(json_encode($data));
     } else {
