@@ -254,6 +254,7 @@ class Mhome extends CI_Model{
     $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
     $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
     $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
+    $this->db->order_by('a.order_date', 'DESC');
     $where = array('id_userlogin' => $idUserLogin);
     $this->db->where($where);
     $query = $this->db->get();
@@ -265,7 +266,7 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
+    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, aa.id_tr_product, c.name, c.image, d.class, d.status,
       f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
 

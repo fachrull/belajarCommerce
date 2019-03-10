@@ -327,7 +327,18 @@ class Home extends CI_Controller{
   public function cancelOrder($id) {
       if($this->session->userdata('uType') ==  4) {
           $statusOrder = array('status_order' => 3);
+          $idCustomer = $this->session->userdata('uId');
           $this->mhome->updateData(array('id' => $id), $statusOrder, 'tm_order');
+          $data['detailOrder'] = $this->mhome->detailOrder($id, $idCustomer);
+
+          foreach ($data['detailOrder'] as $item) {
+              $id = $item->id_tr_product;
+              $qty = $item->quantity;
+              $qtyStore = $this->mhome->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $newQuanStore = $qtyStore['quantity'] + $qty;
+              $quantity = array('quantity' => $newQuanStore);
+              $this->mhome->updateData(array('id' => $id), $quantity, 'tr_product');
+          }
           redirect('home/transactionPage');
       }
   }

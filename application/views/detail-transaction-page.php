@@ -98,7 +98,7 @@
                             <?php endforeach;?>
                             <!-- /item -->
                             <hr>
-                              <?php if($detailOrder[0]->status === "Menunggu Konfirmasi") {
+                              <?php if($detailOrder[0]->status === "Menunggu Pembayaran") {
                                   echo "<button type='button' class='btn btn-danger-secondary btn-block' data-toggle='modal' data-target='#cancelOrderModal' data-id='".$detailOrder[0]->id."'>Batalkan Pesanan</button>";
                               }?>
                               <div class="modal fade bs-example-modal-lg" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
