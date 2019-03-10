@@ -266,9 +266,10 @@ class Mhome extends CI_Model{
   }
 
   public function listOrderCustomer($idUserLogin){
-    $this->db->select('a.id, a.order_number, a.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status');
+    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status');
     $this->db->from('tm_order a');
-    $this->db->join('tr_product b', 'b.id = a.id_trProduct', 'left');
+    $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+    $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
     $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
     $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
     $where = array('id_userlogin' => $idUserLogin);
@@ -282,13 +283,14 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
+    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
       f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
 
     $this->db->from('tm_order a');
-    $this->db->join('tr_product b', 'b.id = a.id_trProduct', 'left');
-    $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
+    $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+    $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
+    $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
     $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
     $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
     $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
@@ -300,7 +302,7 @@ class Mhome extends CI_Model{
     $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
-      return $query->row_array();
+      return $query->result();
     } else {
       return FALSE;
     }
