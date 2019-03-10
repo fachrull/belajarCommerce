@@ -453,6 +453,8 @@ class Home extends CI_Controller{
 
       $data['orderList'] = $this->mhome->listOrderCustomer($idCustomer);
 
+//      print_r($data);
+
       $this->load->view('include/header2');
       $this->load->view('transaction-page', $data);
       $this->load->view('include/footer');
@@ -466,6 +468,8 @@ class Home extends CI_Controller{
       $idCustomer = $this->session->userdata('uId');
       $data['detailOrder'] = $this->mhome->detailOrder($idOrder, $idCustomer);
 
+//      print_r($data['detailOrder'][0]->order_number);
+//
       $this->load->view('include/header2');
       $this->load->view('detail-transaction-page', $data);
       $this->load->view('include/footer');
