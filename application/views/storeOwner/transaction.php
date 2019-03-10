@@ -24,7 +24,7 @@
                     <td><?= $transaction['username']?></td>
                     <td><?= 'Rp '.$transaction['total']?></td>
                     <td>
-                      <a href="<?= site_url('stores/detailTransaction');?>"><i class="btn btn-primary fa fa-info"></i></a>
+                      <a href="<?= site_url('stores/detailTransaction/'.$transaction['id'].'/'.$transaction['id_userlogin']);?>"><i class="btn btn-primary fa fa-info"></i></a>
                     </td>
                   </tr>
                 <?php $no++; endforeach; ?>

@@ -140,10 +140,11 @@ class Stores extends CI_Controller{
 
   }
 
-  public function detailTransaction(){
-    $this->load->view('include/admin/header');
+  public function detailTransaction($idOrder, $idCustomer){
+        $this->load->view('include/admin/header');
+        $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('storeOwner/detail-transaction');
+        $this->load->view('storeOwner/detail-transaction', $data);
         $this->load->view('include/admin/footer');
   }
 
