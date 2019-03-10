@@ -324,11 +324,12 @@ class Home extends CI_Controller{
       }
   }
 
-  public function test(){
-    echo date("dmy");
-    $rand = rand(1,999);
-    echo "</br>";
-    print_r($rand);
+  public function cancelOrder($id) {
+      if($this->session->userdata('uType') ==  4) {
+          $statusOrder = array('status_order' => 3);
+          $this->mhome->updateData(array('id' => $id), $statusOrder, 'tm_order');
+          redirect('home/transactionPage');
+      }
   }
 
   public function shopCheckout(){
