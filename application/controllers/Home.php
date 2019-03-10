@@ -258,7 +258,7 @@ class Home extends CI_Controller{
       redirect('home/shopCart');
   }
 
-  public function addToCart() {
+  public function addToCart($idDistrict) {
     $size_name = $this->mhome->sizeStock($this->input->post('size'));
     $idTrProduct['id_trProduct'] = $this->mhome->getProducts(array('id_product' => $this->input->post('product_id'),
       'id_product_size' => $this->input->post('size')), array('idField' => 'id'), 'tr_product', TRUE);
@@ -274,9 +274,15 @@ class Home extends CI_Controller{
       'id_userlogin'=> $idUserLogin,
       'sizeName'    => $size_name[0]['name_size'],
       'detailSize'  => $size_name[0]['detail_size'],
+      'sub_district'=> $idDistrict,
       'options' => array('Size' => $this->input->post('size'))
     );
+    // print_r($this->session->userdata());
+    // print_r($data);
+    // exit();
     $this->cart->insert($data);
+    // print_r($this->cart->contents());
+    // exit();
     redirect('home/shopCart');
   }
 

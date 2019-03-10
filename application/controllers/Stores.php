@@ -76,7 +76,7 @@ class Stores extends CI_Controller{
     }
   }
 
-  public function addQuantity($idStore, $idProd){
+  public function addQuantity($idStore, $idProd, $idProdSize){
     if ($this->session->userdata('uType') == 3) {
       $this->load->helper('form');
       $this->load->library('form_validation');
@@ -84,9 +84,13 @@ class Stores extends CI_Controller{
       $this->form_validation->set_rules('quantity','Quantity','required');
 
       if ($this->form_validation->run() === FALSE) {
-        $id = array('idStore' => $idStore, 'idProd' => $idProd);
+        $id = array('idStore' => $idStore, 'idProd' => $idProd, 'idProdSize' => $idProdSize);
         $data['id'] = $id;
         $data['product'] = $this->mstore->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
+        $data['quantity'] = $this->mstore->getProducts(array('id_store' => $idStore, 'id_product' => $idProd, 'id_product_size' => $idProdSize),
+         array('qtyField' => 'quantity'),'tr_product', TRUE);
+        // print_r($data);
+        // exit();
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -95,8 +99,9 @@ class Stores extends CI_Controller{
       } else {
         $items = array('quantity' => $this->input->post('quantity'));
         $condition = array(
-          'id_store'    => $idStore,
-          'id_product'  => $idProd
+          'id_store'        => $idStore,
+          'id_product'      => $idProd,
+          'id_product_size' => $idProdSize
         );
         $this->mstore->updateData($condition, $items, 'tr_product');
         redirect('stores/storeProduct');
@@ -127,7 +132,7 @@ class Stores extends CI_Controller{
       $idStore = $this->session->userdata('uId');
       $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore), array('idField' => 'id'), 'tm_store_owner', TRUE);
       $data['transactions'] = $this->mstore->order_list($idStOwner['id']);
-      
+
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');
       $this->load->view('storeOwner/transaction', $data);

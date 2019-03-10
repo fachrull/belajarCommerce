@@ -279,6 +279,13 @@ function infoMarker(marker, info_marker) {
 			})
 		}
 	});
+
+	$('#sub_district').change(function(){
+		var selectedDistrict = $(this).children("option:selected").val();
+		var url = "<?= site_url('home/addToCart/');?>"+selectedDistrict
+		$('#cart_form').attr('action', url);
+		console.log(url);
+	})
 });
 </script>
 <script>
@@ -330,6 +337,7 @@ function infoMarker(marker, info_marker) {
     	$('#size').on('change', function(){
     	    var size = $("#size").val();
     	    var productId = $('#product_id').val();
+					var id_district = $('#')
     	    console.log(productId)
     	    if (size) {
     	        $.ajax({

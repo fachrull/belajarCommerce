@@ -190,7 +190,7 @@
 											</select>
 
 											<label>District</label>
-											<select id="sub_district" name="cart-tax-state" class="form-control pointer mb-20">
+											<select id="sub_district" name="sub_district" class="form-control pointer mb-20">
 												<option value="Select" selected disabled> Select </option>
 												<!-- add all here -->
 											</select>
@@ -202,7 +202,7 @@
 
 						<!-- FORM -->
 						<div id="shoppingForm" class="row text-center">
-							<form class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
+							<form id="cart_form" class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
 								<input type="hidden" id="product_id" name="product_id" value="<?= $product['id'];?>" />
 								<input type="hidden" name="product_name" value="<?= $product['name'];?>" />
 								<input type="hidden" id="price" name="price" />
