@@ -179,21 +179,39 @@ class Mhome extends CI_Model{
     return $output;
   }
 
-  public function checkStock_by_Distcit($idProd, $idDistrict){
-      $this->db->select('a.id_store, a.id_product, a.id_product_size, d.id, a.quantity, c.price, d.name, d.size');
-      $this->db->from('tr_product a');
-      $this->db->join('tm_store_owner b', 'b.id = a.id_store', 'left');
-      $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
-      $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
-      $this->db->group_by('a.id_product_size');
-      $where = array('b.sub_district' => $idDistrict, 'a.id_product' => $idProd);
-      $this->db->where($where);
-      $query = $this->db->get();
+  // public function checkStock_by_Distcit($idProd, $idDistrict){
+  //     $this->db->select('a.id_store, a.id_product, a.id_product_size, d.id, a.quantity, c.price, d.name, d.size');
+  //     $this->db->from('tr_product a');
+  //     $this->db->join('tm_store_owner b', 'b.id = a.id_store', 'left');
+  //     $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
+  //     $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
+  //     $this->db->group_by('a.id_product_size');
+  //     $where = array('b.sub_district' => $idDistrict, 'a.id_product' => $idProd);
+  //     $this->db->where($where);
+  //     $query = $this->db->get();
+  //   if ($query->num_rows() != 0) {
+  //     return $query->result_array();
+  //   } else {
+  //     return FALSE;
+  //   }
+  // }
+
+  public function checkStock_by_District($idProd, $idDistrict){
+    $this->db->select('a.id_store, a.id_product, a.id_product_size, a.quantity, b.price, c.id, c.name, c.size');
+    $this->db->from('tr_product a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_product_size', 'left');
+    $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
+    $this->db->join('tr_store_owner_cluster d', 'd.id_store = a.id_store', 'left');
+    $this->db->group_by('a.id_product_size');
+    $where = array('d.sub_district' => $idDistrict, 'a.id_product' => $idProd, 'a.quantity >' => 3);
+    $this->db->where($where);
+    $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
     } else {
       return FALSE;
     }
+
   }
 
   public function detailProfileCustomer($idUserLogin){
@@ -248,9 +266,10 @@ class Mhome extends CI_Model{
   }
 
   public function listOrderCustomer($idUserLogin){
-    $this->db->select('a.id, a.order_number, a.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status');
+    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status');
     $this->db->from('tm_order a');
-    $this->db->join('tr_product b', 'b.id = a.id_trProduct', 'left');
+    $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+    $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
     $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
     $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
     $where = array('id_userlogin' => $idUserLogin);
@@ -264,13 +283,14 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
+    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
       f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
 
     $this->db->from('tm_order a');
-    $this->db->join('tr_product b', 'b.id = a.id_trProduct', 'left');
-    $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
+    $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+    $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
+    $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
     $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
     $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
     $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
@@ -282,7 +302,7 @@ class Mhome extends CI_Model{
     $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
-      return $query->row_array();
+      return $query->result();
     } else {
       return FALSE;
     }

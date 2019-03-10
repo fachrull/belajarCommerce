@@ -55,49 +55,75 @@
                             <div class="row ml-0 mr-0">
                               <div class="col-6 col-md-6">
                                 <label class="fs-12 mb-0">Nomor Transaksi</label>
-                                <label class="pt-0 fs-16"><?= $detailOrder['order_number']?></label>
+                                <label class="pt-0 fs-16"><?= $detailOrder[0]->order_number?></label>
                               </div>
                               <div class="col-6 col-md-6 pt-10">
-                                <a class="btn <?= $detailOrder['class']?> btn-sm float-right"><?= $detailOrder['status']?></a>
+                                <p class="btn <?= $detailOrder[0]->class?> btn-sm float-right"><?= $detailOrder[0]->status?></p>
                               </div>
                             </div>
 
                             <hr>
 
                             <label class="fs-12 mb-0">Tanggal Order</label>
-                            <label class="pt-0 fs-16"><?= $detailOrder['order_date']?></label>
+                            <label class="pt-0 fs-16"><?= $detailOrder[0]->order_date?></label>
 
                             <hr>
 
                             <label class="fs-12 mb-0">Alamat Pengiriman</label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder['address']?></label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder['kecamatan'].', '.$detailOrder['kabupaten']?></label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder['provinsi'].','.$detailOrder['postcode']?></label>
-                            <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder['phone']?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->address?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->kecamatan.', '.$detailOrder[0]->kabupaten?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->kabupaten.','.$detailOrder[0]->postcode?></label>
+                            <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder[0]->phone?></label>
 
                             <hr>
 
                             <!-- item -->
                             <label class="fs-12 mb-10">Daftar Barang</label>
-                            <div class="card card-success rad-0 mb-20">
-                              <div class="card-heading">
-                                <p class="card-title mb-0 mt-0"><strong><?= $detailOrder['name']?></strong></p>
-                              </div>
-                              <a href="#">
-                                <div class="testimonial">
-                                  <figure class="float-left ml-15">
-                                    <img class="square" src="<?= base_url('asset/upload/'.$detailOrder['image'])?>" alt="" />
-                                  </figure>
-                                  <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle">
-                                    <p>Jumlah: <?= $detailOrder['quantity']?></p>
-                                    <p>Size: <?= $detailOrder['size_name'].' ('.$detailOrder['size'].')'?></p>
-                                    <p>Harga Total: Rp. <?= $detailOrder['total']?></p>
-                                  </div>
+                            <?php foreach ($detailOrder as $order): ?>
+                                <div class="card card-success rad-0 mb-20">
+                                    <div class="card-heading">
+                                        <p class="card-title mb-0 mt-0"><strong><?= $order->name?></strong></p>
+                                    </div>
+                                    <div class="testimonial">
+                                        <figure class="float-left ml-15">
+                                            <img class="square" src="<?= base_url('asset/upload/'.$order->image)?>" alt="" />
+                                        </figure>
+                                        <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
+                                            <p>Jumlah: <?= $order->quantity?></p>
+                                            <p>Size: <?= $order->size_name.' ('.$order->size.')'?></p>
+                                            <p>Harga Total: Rp. <?= $order->total?></p>
+                                        </div>
+                                    </div>
                                 </div>
-                              </a>
-                            </div>
+                            <?php endforeach;?>
                             <!-- /item -->
                             <hr>
+                              <?php if($detailOrder[0]->status === "Menunggu Konfirmasi") {
+                                  echo "<button type='button' class='btn btn-danger-secondary btn-block' data-toggle='modal' data-target='#cancelOrderModal' data-id='".$detailOrder[0]->id."'>Batalkan Pesanan</button>";
+                              }?>
+                              <div class="modal fade bs-example-modal-lg" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog modal-lg">
+                                      <div class="modal-content">
+
+                                          <!-- header modal -->
+                                          <div class="modal-header">
+                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                              <h4 class="modal-title" id="myLargeModalLabel">Batalkan Pesanan</h4>
+                                          </div>
+
+                                          <!-- body modal -->
+                                          <div class="modal-body">
+                                              <p>Apakah anda yakin ingin membatalkan pesanan?</p>
+                                          </div>
+
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-oldblue-secondary" data-dismiss="modal">Tidak</button>
+                                              <a href="<?=site_url('home/cancelOrder/'.$detailOrder[0]->id)?>" id="cancelButton" class="btn btn-oldblue">Ya</a>
+                                          </div>
+
+                                      </div>
+                                  </div>
+                              </div>
 
                             <!-- <label class="fs-12 mb-0">Keterangan</label>
 
@@ -122,6 +148,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </section>
 <!-- / -->
