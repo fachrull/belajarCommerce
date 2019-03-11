@@ -109,6 +109,41 @@ class Stores extends CI_Controller{
 
   }
 
+  public function updateTransactionStatus($idOrder, $idCustomer) {
+      if ($this->session->userdata('uType') == 3) {
+          $status = array('status_order' => $this->input->post('status'));
+          $condition = array('id'=> $idOrder);
+          $this->mstore->updateData($condition, $status, 'tm_order');
+          if($this->input->post('status') == 3) {
+              $this->orderCancellation($idOrder, $idCustomer);
+          }
+          redirect('stores/detailTransaction/'.$idOrder.'/'.$idCustomer);
+      } else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+      }
+  }
+
+  public function orderCancellation($idOrder, $idCustomer) {
+      if ($this->session->userdata('uType') == 3) {
+          $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
+
+          foreach ($data['detailOrder'] as $item) {
+              $id = $item->id_tr_product;
+              $qty = $item->quantity;
+              $qtyStore = $this->mstore->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $newQuanStore = $qtyStore['quantity'] + $qty;
+              $quantity = array('quantity' => $newQuanStore);
+              $this->mstore->updateData(array('id' => $id), $quantity, 'tr_product');
+          }
+      } else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+      }
+  }
+
   public function inbound() {
         $idStore = $this->mhome->getProducts(array('id_userlogin' => $this->session->userdata('uId')),
           array('idField' => 'id'), 'tm_store_owner', TRUE);

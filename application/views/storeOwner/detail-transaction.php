@@ -37,7 +37,47 @@
                                 </tr>
                                 <tr>
                                     <th>Status Transaksi</th>
-                                    <td><p class="label label-danger"><?= $detailOrder[0]->status?></p> | <a href="#" id="changeStatus">Ubah</a></td>
+                                    <td>
+                                        <p class="label label-danger"><?= $detailOrder[0]->status?></p>
+                                        <?php if ($detailOrder[0]->status_order != 1) {
+                                            echo " | <button type=\"button\" class=\"btn btn-sm btn-primary\" data-toggle=\"modal\" data-target=\"#modal-default\">
+                                            Ubah Status
+                                        </button>";
+                                        } ?>
+                                    </td>
+                                    <div class="modal fade" id="modal-default">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title">Ubah Status Transaksi</h4>
+                                                </div>
+                                                <form action="<?= site_url('stores/updateTransactionStatus/' . $detailOrder[0]->id . '/' .$detailOrder[0]->id_userlogin); ?>"
+                                                      method="post">
+                                                    <div class="modal-body">
+                                                        <select name="status" class="form-control">
+                                                            <option value="3">Pesanan Dibatalkan</option>
+                                                            <option value="4">Pesanan Diproses</option>
+                                                            <option value="5">Pesanan Dikirim</option>
+                                                            <option value="1">Pesanan Selesai</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default pull-left"
+                                                                data-dismiss="modal">Batal
+                                                        </button>
+                                                        <button type="submit" class="btn btn-primary">Simpan perubahan
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            <!-- /.modal-content -->
+                                        </div>
+                                        <!-- /.modal-dialog -->
+                                    </div>
+                                    <!-- /.modal -->
                                 </tr>
 
                             </table>
