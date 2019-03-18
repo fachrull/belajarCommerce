@@ -308,4 +308,7 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
+    public function listSubscriber(){
+        return $this->db->get('tm_newsletter')->result_array();
+    }
 }

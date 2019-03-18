@@ -657,4 +657,13 @@ class Home extends CI_Controller{
     $this->load->view('page-profile-settings');
     $this->load->view('include/footer');
   }
+  public function subscribe(){
+      $email = $this->input->post('email');
+      $data = array(
+          'email'   =>  $email
+
+      );
+      $this->mhome->addNewsLetter($data);
+      redirect('/');
+  }
 }

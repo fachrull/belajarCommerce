@@ -1234,4 +1234,18 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
+    public function listSubscriber(){
+        if ($this->session->userdata('uType') == 1) {
+            $data['subscribers'] = $this->madmin->listSubscriber();
+
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/listallnewsletter', $data);
+            $this->load->view('include/admin/footer');
+        }else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
 }

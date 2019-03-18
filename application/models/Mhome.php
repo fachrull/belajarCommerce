@@ -10,6 +10,7 @@ class Mhome extends CI_Model{
     $this->load->database();
   }
 
+
   public function getDataIndex($id = FALSE){
     if($this->session->userdata('uType') == 1){
       if($id === FALSE){
@@ -59,7 +60,7 @@ class Mhome extends CI_Model{
   }
 
   public function createItems($table){
-    $id_creator = $this->session->userdata('uId');
+      $id_creator = $this->session->userdata('uId');
     $items = array(
       'name'            => $this->input->post('items'),
       'id_super_admin'  => $id_creator
@@ -322,5 +323,9 @@ class Mhome extends CI_Model{
     } else {
       return FALSE;
     }
+  }
+    public function addNewsLetter($data){
+
+    return $this->db->insert('tm_newsletter', $data);
   }
 }
