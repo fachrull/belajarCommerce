@@ -305,7 +305,7 @@ function infoMarker(marker, info_marker) {
     				method: "GET",
     				dataType: "json",
     				success:function(response){
-    				    console.log(response);
+    				    console.log(response[0].quantity);
     					if(response != '') {
                             $("div.toggle.active > label").trigger("click");
                             $("#stockLabel").html('<i id="stockIcon" class="fa fa-check text-oldblue"></i> In Stock');
@@ -318,8 +318,11 @@ function infoMarker(marker, info_marker) {
     						$("#price").val(response[0].price);
     					    $.each(response, function(key, value){
     						$("#size").append(
-    							'<option value='+value.id_product_size+'>'+value.name+' ('+value.size+')</option>'
+    							'<option value="'+value.id_product_size+'" data-max="'+value.quantity+'">'+value.name+' ('+value.size+')</option>'
     						);
+								// $("#size").change(function(){
+								// 	$('input[type=number]').attr('max', $(this).find(":selected").data('max'));
+								// });
                                 $("div.toggle.active > label").trigger("click");
     					});
     					} else {

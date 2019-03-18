@@ -36,163 +36,156 @@
 
 
 		<!-- CHECKOUT -->
-		<form class="row clearfix" method="post" action="<?= site_url('home/checkoutDone');?>">
+		<?php if (validation_errors() != NULL): ?>
+			<div class="row">
+				<div class="col-lg-7 col-sm-7">
+					<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
+						<?= validation_errors();?>
+					</div>
+				</div>
+			</div>
+		<?php endif; ?>
+		<form class="row clearfix" method="post" action="<?= site_url('home/shopCheckout');?>">
 
 			<div class="col-lg-7 col-sm-7">
-				<div class="heading-title">
-					<h4>Billing &amp; Shipping to</h4>
+
+				<?php if ($alamat_default['sub_district'] == $addressCart['id_kec']): ?>
+					<div class="heading-title">
+						<h4>Shipping Address</h4>
+						<!-- <h4>Billing &amp; Shipping to</h4> -->
+					</div>
+
+					<div class="col-lg-12 col-sm-12">
+						<hr />
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_firstname">First Name</label>
+								<input id="billing_firstname" name="first_name" value="<?= $alamat_default['first_name']?>" type="text" class="form-control" disabled />
+								<input type="hidden" name="firstname" value="<?= $alamat_default['first_name']?>">
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_lastname">Last Name</label>
+								<input id="billing_lastname" name="last_name" value="<?= $alamat_default['last_name']?>" type="text" class="form-control required" disabled/>
+								<input type="hidden" name="lastname" value="<?= $alamat_default['last_name']?>">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12">
+								<label for="billing_address1">Address</label>
+								<input id="billing_address1" name="add" value="<?= $alamat_default['address']?>" type="text" class="form-control required" disabled/>
+								<input type="hidden" name="address" value="<?= $alamat_default['address']?>">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label>Province</label>
+								<input type="text" name="prov" value="<?= $addressCart['provinsi']?>" class="form-control" disabled>
+								<input type="hidden" name="provinsi" value="<?= $addressCart['id_prov']?>">
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label>City</label>
+								<input type="text" name="kab" value="<?= $addressCart['kabupaten']?>" class="form-control" disabled>
+								<input type="hidden" name="kabupaten" value="<?= $addressCart['id_kab']?>">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label>District</label>
+								<input type="text" name="kec" value="<?= $addressCart['kecamatan']?>" class="form-control" disabled>
+								<input type="hidden" name="kecamatan" value="<?= $addressCart['id_kec']?>">
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_zipcode">Postcode</label>
+								<input id="billing_zipcode" name="pcode" value="<?= $alamat_default['postcode']?>" type="text" class="form-control required" disabled/>
+								<input type="hidden" name="postcode" value="<?= $alamat_default['postcode']?>">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_phone">Email</label>
+								<input id="billing_phone" name="email" value="<?= $alamat_default['email']?>" type="email" class="form-control required" disabled/>
+								<input type="hidden" name="email" value="<?= $alamat_default['email']?>">
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_fax">Phone</label>
+								<input id="billing_fax" name="hp" value="<?= $alamat_default['phone']?>" type="text" class="form-control" disabled/>
+								<input type="hidden" name="phone" value="<?= $alamat_default['phone']?>">
+							</div>
+						</div>
+					</fieldset>
 				</div>
 
-				<!-- BILLING -->
-				<div id="default_address" class="col-md-12 col-sm-12">
-					<div class="table-responsive">
-						<table class="table">
-							<tr>
-								<td>Name:</td>
-								<td><?= $alamat_default['username'];?></td>
-							</tr>
-							<tr>
-								<td>Company name:</td>
-								<td><?php echo($alamat_default['company_name'] == NULL? "-": $alamat_default['company_name'])?></td>
-							</tr>
-							<tr>
-								<td>Address:</td>
-								<td><?= $alamat_default['address'].", ".$alamat_default['kecamatan']?></td>
-							</tr>
-							<tr>
-								<td>Province: </td>
-								<td><?= $alamat_default['provinsi']?></td>
-							</tr>
-							<tr>
-								<td>City: </td>
-								<td><?= $alamat_default['kabupaten']?></td>
-							</tr>
-							<tr>
-								<td>Postcode: </td>
-								<td><?= $alamat_default['postcode']?></td>
-							</tr>
-							<tr>
-								<td>Phone:</td>
-								<td><?= $alamat_default['phone']?></td>
-							</tr>
-						</table>
+				<?php else: ?>
+					<div class="heading-title">
+						<h4>Shipping Address</h4>
+						<!-- <h4>Billing &amp; Shipping to</h4> -->
 					</div>
-					<hr>
+
+					<div class="col-lg-12 col-sm-12">
+						<hr />
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_firstname">First Name</label>
+								<input id="billing_firstname" name="firstname" type="text" class="form-control required" />
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_lastname">Last Name</label>
+								<input id="billing_lastname" name="lastname" type="text" class="form-control required" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-lg-12">
+								<label for="billing_address1">Address</label>
+								<input id="billing_address1" name="address" type="text" class="form-control required" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label>Province</label>
+								<input type="text" name="prov" value="<?= $addressCart['provinsi']?>" class="form-control" disabled>
+								<input type="hidden" name="provinsi" value="<?= $addressCart['id_prov']?>">
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label>City</label>
+								<input type="text" name="kab" value="<?= $addressCart['kabupaten']?>" class="form-control" disabled>
+								<input type="hidden" name="kabupaten" value="<?= $addressCart['id_kab']?>">
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label>District</label>
+								<input type="text" name="kec" value="<?= $addressCart['kecamatan']?>" class="form-control" disabled>
+								<input type="hidden" name="kecamatan" value="<?= $addressCart['id_kec']?>">
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_zipcode">Postcode *</label>
+								<input id="billing_zipcode" name="postcode" type="text" class="form-control required" />
+							</div>
+						</div>
+
+						<div class="row">
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_phone">Email *</label>
+								<input id="billing_phone" name="email" type="email" class="form-control required" />
+							</div>
+							<div class="col-md-6 col-sm-6">
+								<label for="billing_fax">Phone *</label>
+								<input id="billing_fax" name="phone" type="text" class="form-control" />
+							</div>
+						</div>
+					</fieldset>
 				</div>
 
-				<!-- /BILLING -->
-
-				<div class="row">
-
-					<div class="col-lg-12 m-0 clearfix">
-						<label class="checkbox float-left">
-							<!-- see assets/js/view/demo.shop.js - CHECKOUT section -->
-							<input id="shipswitch" name="shipping[same_as_billing]" type="checkbox" value="1" checked="checked" />
-							<i></i> <span class="fw-300">Ship to the same address</span>
-						</label>
-					</div>
-
-				</div>
-
-				<fieldset id="historyshipping" class="mt-80 hide">
-					<h4>Shipping History</h4>
-					<hr />
-
-					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<label for="history_billing">Shipping History</label>
-							<select class="form-control" name="idShippingHistory">
-								<option value="Select" selected disabled>Select Historical Shipping</option>
-								<?php foreach ($historicals as $historical): ?>
-									<option value="<?= $historical['id']?>">
-										<?= $historical['username'].", ".$historical['address'].", ".$historical['kecamatan']." (".$historical['postcode'].")"?>
-									</option>
-								<?php endforeach; ?>
-							</select>
-						</div>
-					</div>
-				</fieldset>
-
-				<div class="row hide" id="shippinghistory">
-					<div class="col-lg-12 m-0 clearfix">
-						<label class="checkbox float-left">
-							<!-- see assets/js/view/demo.shop.js - CHECKOUT section -->
-							<input id="shipswitch1" name="shipping[same_as_billing]" type="checkbox" value="1" />
-							<i></i> <span class="fw-300">Ship to new address</span>
-						</label>
-					</div>
-				</div>
-
-				<!-- SHIPPING -->
-				<fieldset id="shipping" class="mt-80 hide">
-					<h4>Shipping Address</h4>
-					<hr />
-
-					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<label for="billing_firstname">First Name *</label>
-							<input id="billing_firstname" name="billing[firstname]" type="text" class="form-control required" />
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<label for="billing_lastname">Last Name *</label>
-							<input id="billing_lastname" name="billing[lastname]" type="text" class="form-control required" />
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-lg-12">
-							<label for="billing_address1">Address *</label>
-							<input id="billing_address1" name="billing[address][]" type="text" class="form-control required" />
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<label>Province</label>
-							<select id="province" name="province" class="form-control pointer mb-20">
-								<option value="Select" selected disabled> Select Province </option>
-								<?php foreach ($provinces as $province): ?>
-									<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
-								<?php endforeach; ?>
-								<!-- add all here -->
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<label>City</label>
-							<select id="city" name="city" class="form-control pointer mb-20">
-								<option value="Select" selected disabled> Select City </option>
-								<!-- add all here-->
-							</select>
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<label>District</label>
-							<select id="sub_district" name="cart-tax-state" class="form-control pointer mb-20">
-								<option value="Select" selected disabled> Select District </option>
-								<!-- add all here -->
-							</select>
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<label for="billing_zipcode">Zip Code *</label>
-							<input id="billing_zipcode" name="billing[zipcode]" type="text" class="form-control required" />
-						</div>
-					</div>
-
-					<div class="row">
-						<div class="col-md-6 col-sm-6">
-							<label for="billing_phone">Phone 1 *</label>
-							<input id="billing_phone" name="billing[phone]" type="text" class="form-control required" />
-						</div>
-						<div class="col-md-6 col-sm-6">
-							<label for="billing_fax">Phone 2</label>
-							<input id="billing_fax" name="billing[phone]" type="text" class="form-control" />
-						</div>
-					</div>
-
-				</fieldset>
-				<!-- /SHIPPING -->
+				<?php endif; ?>
 
 			</div>
 
@@ -200,39 +193,39 @@
 
 			<div class="col-lg-5 col-sm-5">
 				<div class="heading-title mb-10">
-					<h4>Payment Method</h4>
+					<h4>Summary</h4>
 				</div>
 
 				<!-- PAYMENT METHOD -->
-				<fieldset class="mt-30">
+				<!-- <fieldset class="mt-30">
 					<div class="toggle-transparent toggle-bordered-full clearfix">
 						<div class="toggle active">
 							<div class="toggle-content">
 
-								<div class="row mb-0">
-									<div class="col-lg-12 m-0 clearfix">
+								<div class="row mb-0"> -->
+									<!-- <div class="col-lg-12 m-0 clearfix">
 										<label class="radio float-left mt-0">
 											<input id="payment_check" name="payment[method]" type="radio" value="1" checked="checked" />
 											<i></i> <span class="fw-300">Check / Money order</span>
 										</label>
-									</div>
-									<div class="col-lg-12 m-0 clearfix">
+									</div> -->
+									<!-- <div class="col-lg-12 m-0 clearfix">
 										<label class="radio float-left">
 											<input id="payment_card" name="payment[method]" type="radio" value="2" />
 											<i></i> <span class="fw-300">Credit Card</span>
 										</label>
-									</div>
-								</div>
+									</div> -->
+								<!-- </div>
 
 							</div>
 						</div>
 					</div>
-				</fieldset>
+				</fieldset> -->
 				<!-- /PAYMENT METHOD -->
 
 
 				<!-- CREDIT CARD PAYMENT -->
-				<fieldset id="ccPayment" class="mt-30 hide">
+				<!-- <fieldset id="ccPayment" class="mt-30 hide">
 
 					<div class="toggle-transparent toggle-bordered-full clearfix">
 						<div class="toggle active">
@@ -323,10 +316,51 @@
 						</div>
 					</div>
 
-				</fieldset>
+				</fieldset> -->
 				<!-- /CREDIT CARD PAYMENT -->
-
-
+				<!-- PRODUCT -->
+				<div class="toggle-transparent toggle-bordered-full clearfix">
+					<div class="toggle active">
+						<div class="toggle-content">
+						<div class="row">
+							<div class="col-6 text-center">
+								<strong>Product</strong>
+							</div>
+							<div class="col-2 text-center">
+								<strong>Qty</strong>
+							</div>
+							<div class="col-4 text-center">
+								<strong>Price</strong>
+							</div>
+						</div>
+						<div class="row">
+							<?php foreach ($carts as $cart): ?>
+								<div class="col-2 p-0">
+									<div class="testimonial">
+										<figure class="text-center">
+											<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
+	                  </figure>
+									</div>
+								</div>
+								<div class="col-4 pl-0">
+									<span class="clearfix">
+										<span class="float-left"><?= $cart['name']?></span>
+										<br>
+										<span class="float-left"><?= $cart['sizeName'].' ('.$cart['detailSize'].')'?></span>
+									</span>
+								</div>
+								<div class="col-2 text-center">
+									<span><?= $cart['qty']?></span>
+								</div>
+								<div class="col-4">
+									<span class="float-left">Rp <?= $cart['subtotal']?></span>
+								</div>
+							<?php endforeach; ?>
+						</div>
+					</div>
+				</div>
+			</div>
+				<!-- /PRODUCT -->
 				<!-- TOTAL / PLACE ORDER -->
 				<div class="toggle-transparent toggle-bordered-full clearfix">
 					<div class="toggle active">
@@ -354,12 +388,12 @@
 
 							<hr />
 
-							<a class="btn btn-oldblue btn-lg btn-block fs-15" href="<?= site_url('home/checkout');?>">
-							<!-- <button class="btn btn-oldblue btn-lg btn-block fs-15"> -->
+							<!-- <a class="btn btn-oldblue btn-lg btn-block fs-15" href="<?= site_url('home/checkout');?>"> -->
+							<button class="btn btn-oldblue btn-lg btn-block fs-15">
 								<i class="fa fa-mail-forward"></i>
 								Place Order Now
-							<!-- </button> -->
-							</a>
+							</button>
+							<!-- </a> -->
 						</div>
 					</div>
 				</div>

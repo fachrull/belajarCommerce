@@ -221,7 +221,7 @@
 								<div class="col-2 col-md-2 mb-10">Qty:</div>
 								<div class="col-4 col-md-10 mb-10">
 									<div>
-										<input name="qty" type="text" value="1" min="0" max="1000" class="form-control stepper" style="width:100% !important;">
+										<input id="qty" name="qty" type="number" value="1" min="1" class="form-control stepper" style="width:100% !important;">
 									</div><!-- /btn-group -->
 								</div>
                                 <div class="col-4 col-md-12 float-right">
