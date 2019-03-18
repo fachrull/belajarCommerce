@@ -76,7 +76,7 @@ class Stores extends CI_Controller{
     }
   }
 
-  public function addQuantity($idStore, $idProd){
+  public function addQuantity($idStore, $idProd, $idProdSize){
     if ($this->session->userdata('uType') == 3) {
       $this->load->helper('form');
       $this->load->library('form_validation');
@@ -84,9 +84,13 @@ class Stores extends CI_Controller{
       $this->form_validation->set_rules('quantity','Quantity','required');
 
       if ($this->form_validation->run() === FALSE) {
-        $id = array('idStore' => $idStore, 'idProd' => $idProd);
+        $id = array('idStore' => $idStore, 'idProd' => $idProd, 'idProdSize' => $idProdSize);
         $data['id'] = $id;
         $data['product'] = $this->mstore->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
+        $data['quantity'] = $this->mstore->getProducts(array('id_store' => $idStore, 'id_product' => $idProd, 'id_product_size' => $idProdSize),
+         array('qtyField' => 'quantity'),'tr_product', TRUE);
+        // print_r($data);
+        // exit();
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -95,8 +99,9 @@ class Stores extends CI_Controller{
       } else {
         $items = array('quantity' => $this->input->post('quantity'));
         $condition = array(
-          'id_store'    => $idStore,
-          'id_product'  => $idProd
+          'id_store'        => $idStore,
+          'id_product'      => $idProd,
+          'id_product_size' => $idProdSize
         );
         $this->mstore->updateData($condition, $items, 'tr_product');
         redirect('stores/storeProduct');
@@ -107,6 +112,41 @@ class Stores extends CI_Controller{
       $this->load->view('include/footer');
     }
 
+  }
+
+  public function updateTransactionStatus($idOrder, $idCustomer) {
+      if ($this->session->userdata('uType') == 3) {
+          $status = array('status_order' => $this->input->post('status'));
+          $condition = array('id'=> $idOrder);
+          $this->mstore->updateData($condition, $status, 'tm_order');
+          if($this->input->post('status') == 3) {
+              $this->orderCancellation($idOrder, $idCustomer);
+          }
+          redirect('stores/detailTransaction/'.$idOrder.'/'.$idCustomer);
+      } else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+      }
+  }
+
+  public function orderCancellation($idOrder, $idCustomer) {
+      if ($this->session->userdata('uType') == 3) {
+          $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
+
+          foreach ($data['detailOrder'] as $item) {
+              $id = $item->id_tr_product;
+              $qty = $item->quantity;
+              $qtyStore = $this->mstore->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $newQuanStore = $qtyStore['quantity'] + $qty;
+              $quantity = array('quantity' => $newQuanStore);
+              $this->mstore->updateData(array('id' => $id), $quantity, 'tr_product');
+          }
+      } else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+      }
   }
 
   public function inbound() {
@@ -127,7 +167,7 @@ class Stores extends CI_Controller{
       $idStore = $this->session->userdata('uId');
       $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore), array('idField' => 'id'), 'tm_store_owner', TRUE);
       $data['transactions'] = $this->mstore->order_list($idStOwner['id']);
-      
+
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');
       $this->load->view('storeOwner/transaction', $data);
@@ -140,10 +180,11 @@ class Stores extends CI_Controller{
 
   }
 
-  public function detailTransaction(){
-    $this->load->view('include/admin/header');
+  public function detailTransaction($idOrder, $idCustomer){
+        $this->load->view('include/admin/header');
+        $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('storeOwner/detail-transaction');
+        $this->load->view('storeOwner/detail-transaction', $data);
         $this->load->view('include/admin/footer');
   }
 

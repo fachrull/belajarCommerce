@@ -51,7 +51,11 @@ class Auth extends CI_Controller{
           'isLogin' => TRUE
         );
         $this->session->set_userdata($data);
-        redirect();
+        if ($this->cart->contents() !== NULL) {
+          redirect('home/shopCart');
+        } else {
+          redirect();
+        }
       }
     }
   }

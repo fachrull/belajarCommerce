@@ -115,8 +115,8 @@
 						<div class="toggle-content">
 							<p class="mb-20">Enter your discount coupon code.</p>
 
-							<form action="#" method="post" class="m-0">
-								<input type="text" id="cart-code" name="cart-code" class="form-control text-center mb-10" placeholder="Voucher Code"
+							<form action="<?= site_url('home/addVoucher')?>" method="post" class="m-0">
+								<input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code"
 								 required="required">
 								<button class="btn btn-oldblue btn-block" type="submit">APPLY</button>
 							</form>

@@ -215,8 +215,8 @@ class Mhome extends CI_Model{
   }
 
   public function detailProfileCustomer($idUserLogin){
-    $this->db->select('c.id, a.email, b.first_name, b.last_name, b.phone, c.username, c.company_name,
-     c.address, c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
+    $this->db->select('c.id, a.email, c.province, c.city, c.sub_district, b.first_name, b.last_name, b.phone, c.address,
+     c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
     $this->db->from('user_login a');
     $this->db->join('tm_customer b', 'b.id_userlogin = a.user_id', 'left');
     $this->db->join('tm_customer_detail c', 'c.id_userlogin = b.id_userlogin', 'left');
@@ -227,7 +227,7 @@ class Mhome extends CI_Model{
       'a.user_id' => $idUserLogin,
       'c.default_address' => 1
     );
-    $this->db->where('a.user_id', $idUserLogin);
+    $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->row_array();
@@ -241,7 +241,8 @@ class Mhome extends CI_Model{
    $this->db->from('tm_customer_detail a');
    $this->db->join('kecamatan b', 'b.id_kec = a.sub_district', 'left');
    $where = array(
-     'a.id_userlogin'    => $idUserLogin
+     'a.id_userlogin'    => $idUserLogin,
+     'a.default_address' => 0,
    );
    $this->db->where($where);
    $query = $this->db->get();
@@ -266,12 +267,13 @@ class Mhome extends CI_Model{
   }
 
   public function listOrderCustomer($idUserLogin){
-    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status');
+    $this->db->select('a.id, a.order_number, a.id_userlogin, a.total, a.order_date, a.address_detail, a.status_order,
+      a.id_voucher, b.id_tr_product, b.quantity, b.subtotal, d.name, d.image');
     $this->db->from('tm_order a');
-    $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-    $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
-    $this->db->join('tm_product c', 'c.id = b.id_product', 'left');
-    $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
+    $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id', 'left');
+    $this->db->join('tr_product c', 'c.id = b.id_tr_product', 'left');
+    $this->db->join('tm_product d', 'd.id = c.id_product', 'left');
+    $this->db->order_by('a.order_date', 'DESC');
     $where = array('id_userlogin' => $idUserLogin);
     $this->db->where($where);
     $query = $this->db->get();
@@ -283,7 +285,7 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, c.name, c.image, d.class, d.status,
+    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, aa.id_tr_product, c.name, c.image, d.class, d.status,
       f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
 
@@ -303,6 +305,20 @@ class Mhome extends CI_Model{
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detail_district_cart($idDistrict){
+    $this->db->select('a.id_kec, a.nama as kecamatan, a.id_kab, b.nama as kabupaten, c.id_prov, c.nama as provinsi');
+    $this->db->from('kecamatan a');
+    $this->db->join('kabupaten b', 'b.id_kab = a.id_kab', 'left');
+    $this->db->join('provinsi c', 'c.id_prov = b.id_prov', 'left');
+    $this->db->where('a.id_kec', $idDistrict);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
     } else {
       return FALSE;
     }
