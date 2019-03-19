@@ -9,9 +9,9 @@
                     Stay in the know
                 </h2>
                 <h6>Be the first to hear about new inventory and offers.</h6>
-                <form method="post" action="<? site_url('home/subscribe') ?>">
+                <form method="post" action="<?=site_url('home/subscribe')?>">
                     <div class="input-email">
-                        <input type="text" class="form-control form-control-footer" placeholder="Your Mail"
+                        <input type="email" name="email" class="form-control form-control-footer" placeholder="Your Mail"
                                aria-label="Your Mail" aria-describedby="basic-addon2" style="background-color: #5F5F5F;">
                         <div>
                             <button class="email-button eyebrow">SUBMIT<i class="pl-5 fa fa-chevron-right"></i></button>
