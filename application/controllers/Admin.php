@@ -1248,4 +1248,14 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
+    public function deleteSubscriber($subscriber){
+        if ($this->session->userdata('uType') == 1) {
+            $this->madmin->deleteData(array('id' => $subscriber), 'tm_newsletter');
+            redirect('admin/listSubscriber', 'refresh');
+        }else{
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
 }

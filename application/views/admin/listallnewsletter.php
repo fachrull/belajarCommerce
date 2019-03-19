@@ -29,7 +29,7 @@
                                     <td><?= $subscriber['email']?></td>
 
                                     <td>
-                                        <a href="<?= site_url('admin/delete_subscriber/'.$subscriber['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                                        <a href="<?= site_url('admin/deletesubscriber/'.$subscriber['id']);?>"><i class="btn btn-danger fa fa-trash"></i></a>
 
                                     </td>
                                 </tr>
