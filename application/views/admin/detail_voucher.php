@@ -62,8 +62,8 @@
             </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-oldblue btn-default" style="float:right;">Edit Voucher</button>
-            <a href="<?= site_url('admin/allVoucher')?>"><button class="btn btn-oldblue btn-default">Back</button></a>
+              <a href="<?= site_url('admin/editVoucher/'.$voucher['id'])?>" class="btn btn-oldblue btn-default">Edit Voucher</a>
+            <a href="<?= site_url('admin/allVoucher')?>" class="btn btn-oldblue btn-default">Back</a>
           </div>
         </div>
       </div>
