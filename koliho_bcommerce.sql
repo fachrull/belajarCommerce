@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 18, 2019 at 01:52 AM
+-- Generation Time: Mar 19, 2019 at 03:21 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.14
 
@@ -8042,7 +8042,6 @@ INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `description`, `im
 (124, 6, NULL, 'City Chair High Back Std Base', '<p>This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.</p>', 0x7374726573736c6573732d2d636974795f63686169725f686967685f6261636b5f7374645f626173652e6a7067, '2019-01-30 17:00:00', '2019-02-06 17:20:31'),
 (125, 6, NULL, 'City Chair Low Back Standard Base', '<p>This elegant mattress is a symbol of perfection. Royal Sovereign® is made with Super Pillow Top® and completed with cashmere, wool and 4cm Talalay® latex layer, to provide you with unparalleled comfort. The 20cm pocket spring system not only brings you the unmatched support your body desires but also respomsive to body movement.</p>', 0x7374726573736c6573732d2d636974795f63686169725f6c6f775f6261636b5f7374616e646172645f626173652e6a7067, '2019-01-30 17:00:00', '2019-02-06 17:20:31'),
 (127, 4, 2, 'Dummy', '<p>Lorem Ipsum</p>\r\n', 0x73657274612d6265645f6c696e656e2d64756d6d792e706e67, '2019-02-11 17:00:00', '2019-02-13 04:37:07'),
-(128, 1, 1, 'Dummy 2', '<p>Description</p>\r\n', 0x616972656c6f6f6d2d6d617474726573732d64756d6d795f322e706e67, '2019-02-11 17:00:00', '2019-02-13 06:33:06'),
 (129, 3, 3, 'Test Product', '<p>Deskripsi Product Test</p>\r\n', 0x666c6f72656e63652d70696c6c6f772d746573745f70726f647563742e6a7067, '2019-02-26 17:00:00', '2019-02-27 07:54:58');
 
 -- --------------------------------------------------------
@@ -8396,6 +8395,54 @@ INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `id_product_size`, `qu
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tr_product_bedding_acc`
+--
+
+DROP TABLE IF EXISTS `tr_product_bedding_acc`;
+CREATE TABLE IF NOT EXISTS `tr_product_bedding_acc` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_id` int(11) NOT NULL,
+  `stars` int(11) NOT NULL COMMENT 'give star 0 -- 5',
+  `position` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prod_id` (`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tr_product_bed_linen`
+--
+
+DROP TABLE IF EXISTS `tr_product_bed_linen`;
+CREATE TABLE IF NOT EXISTS `tr_product_bed_linen` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_id` int(11) NOT NULL,
+  `stars` char(1) NOT NULL COMMENT 'give star 0 -- 5',
+  `position` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prod_id` (`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tr_product_best_seller`
+--
+
+DROP TABLE IF EXISTS `tr_product_best_seller`;
+CREATE TABLE IF NOT EXISTS `tr_product_best_seller` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `prod_id` int(11) NOT NULL,
+  `stars` char(1) NOT NULL COMMENT 'give star 0 -- 5',
+  `position` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `prod_id` (`prod_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tr_product_size`
 --
 
@@ -8621,8 +8668,6 @@ INSERT INTO `tr_product_size` (`id`, `prod_id`, `size_id`, `price`) VALUES
 (240, 125, 2, '2000000'),
 (243, 127, 1, '100'),
 (244, 127, 2, '1000'),
-(245, 128, 1, '10000000'),
-(246, 128, 3, '20000000'),
 (247, 129, 1, '1000000');
 
 -- --------------------------------------------------------
@@ -8888,8 +8933,6 @@ INSERT INTO `tr_product_spec` (`id`, `prod_id`, `spec_id`) VALUES
 (277, 125, 6),
 (278, 125, 8),
 (281, 127, 2),
-(282, 128, 4),
-(283, 128, 5),
 (284, 129, 2),
 (285, 129, 5);
 
@@ -9070,6 +9113,24 @@ ALTER TABLE `tr_product`
   ADD CONSTRAINT `tr_product_ibfk_1` FOREIGN KEY (`id_product`) REFERENCES `tm_product` (`id`),
   ADD CONSTRAINT `tr_product_ibfk_2` FOREIGN KEY (`id_product_size`) REFERENCES `tr_product_size` (`id`),
   ADD CONSTRAINT `tr_product_ibfk_3` FOREIGN KEY (`id_store`) REFERENCES `tm_store_owner` (`id`);
+
+--
+-- Constraints for table `tr_product_bedding_acc`
+--
+ALTER TABLE `tr_product_bedding_acc`
+  ADD CONSTRAINT `tr_product_bedding_acc_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `tm_product` (`id`);
+
+--
+-- Constraints for table `tr_product_bed_linen`
+--
+ALTER TABLE `tr_product_bed_linen`
+  ADD CONSTRAINT `tr_product_bed_linen_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `tm_product` (`id`);
+
+--
+-- Constraints for table `tr_product_best_seller`
+--
+ALTER TABLE `tr_product_best_seller`
+  ADD CONSTRAINT `tr_product_best_seller_ibfk_1` FOREIGN KEY (`prod_id`) REFERENCES `tm_product` (`id`);
 
 --
 -- Constraints for table `tr_product_size`

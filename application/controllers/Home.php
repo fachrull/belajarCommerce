@@ -135,21 +135,53 @@ class Home extends CI_Controller{
     }
   }
 
-  public function shop($brand, $category){
-    if($brand == 6){
+  public function shop($brand = NULL, $category = NULL){
+    if ($brand === NULL && $category === NULL) {
+      $data['products'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name', 'imageField' => 'image'),
+      'tm_product', FALSE);
+      $data['brand'] = array('name' => 'All Products');
+      $data['category'] = $this->mhome->brand_categories($brand);
+    } elseif ($brand !== NULL && $category === NULL) {
+      if($brand === 6){
         $category = NULL;
+      }
+      $data['products'] = $this->mhome->getProducts(array('brand_id' => $brand), array('idField' => 'id', 'nameField' => 'name', 'imageField' => 'image'),
+      'tm_product', FALSE);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->mhome->brand_categories($brand);
+    } else {
+      if($brand === 6){
+        $category = NULL;
+      }
+      $data['products'] = $this->mhome->getProducts(array('brand_id' => $brand, 'cat_id' => $category), array('idField' => 'id',
+      'nameField' => 'name', 'imageField' => 'image'),'tm_product', FALSE);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->mhome->brand_categories($brand);
     }
-    $data['products'] = $this->mhome->getProduct_price($brand, $category);
-    $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('nameField' => 'name', 'idField' => 'id'),
-      'tm_brands', TRUE);
-    $data['category'] = $this->mhome->brand_categories($brand);
-    $data['brands'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
-      'tm_brands', FALSE);
+    // print_r($data['category']);
+    // exit();
 
     $this->load->view('include/header2');
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
   }
+
+  // public function shop($brand = NULL, $category = NULL){
+  //   print_r($data['products']);
+  //   echo "</br></br>";
+  //   print_r($data['brand']);
+  //
+  //   $this->load->view('include/header2');
+  //   $this->load->view('shop', $data);
+  //   $this->load->view('include/footer');
+  //   exit();
+  //
+  //   $data['products'] = $this->mhome->getProduct_price($brand, $category);
+  //   $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('nameField' => 'name', 'idField' => 'id'),
+  //     'tm_brands', TRUE);
+  //   $data['brands'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
+  //     'tm_brands', FALSE);
+  // }
 
   public function listArticle(){
     $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
@@ -309,10 +341,10 @@ class Home extends CI_Controller{
   }
 
   public function shopCart(){
-    $data['cart'] = $this->cart->contents();
-    $this->load->view('include/header2');
-    $this->load->view('shop-cart', $data);
-    $this->load->view('include/footer');
+      $data['cart'] = $this->cart->contents();
+      $this->load->view('include/header2');
+      $this->load->view('shop-cart', $data);
+      $this->load->view('include/footer');
   }
 
   public function checkout(){
@@ -492,7 +524,7 @@ class Home extends CI_Controller{
           $this->mhome->inputData('tm_customer_detail', $data);
           $newAddress = $this->mhome->getProducts($data, array('idField' => 'id'), 'tm_customer_detail', TRUE);
           print_r($data);
-          
+
           $rand = rand(1, 999);
           $data_order = array(
               'order_number'    => 'AGM'.date("dmy").$rand,
@@ -652,9 +684,89 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  public function test(){
+    $data['bed_linenes'] = $this->mhome->bed_linenProducts();
+    $data['beddingACC'] = $this->mhome->beddingAcc();
+    print_r(count($data['bed_linenes']));
+    print_r($data['bed_linenes']);
+    echo "</br></br>";
+    print_r(count($data['beddingACC']));
+    echo "</br></br>";
+    print_r($data['beddingACC']);
+  }
+
   public function profileSetting(){
     $this->load->view('include/header2');
     $this->load->view('page-profile-settings');
+    $this->load->view('include/footer');
+  }
+
+  public function bed_linen($brand = NULL){
+    if ($brand == NULL) {
+      $data['brand'] = array('id' => NULL, 'name' => 'Bed Linens');
+      $data['products'] = $this->mhome->bed_linenProducts();
+    } else {
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+        'tm_brands', TRUE);
+      $data['products'] = $this->mhome->bed_linenProducts($brand);
+    }
+    $data['brands'] = $this->mhome->bed_linenBrands();
+
+    $this->load->view('include/header2');
+    $this->load->view('bed_linen', $data);
+    $this->load->view('include/footer');
+  }
+
+  public function bedding_Acc($brand = NULL, $category = NULL){
+    if ($brand === NULL && $category === NULL) {
+      // select all product which the category aren't mattress neither bed linen
+
+      $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+      $data['products'] = $this->mhome->beddingACC();
+      $data['category'] = $this->mhome->beddingACC_Categories();
+      $data['brands'] = $this->mhome->beddingACC_Brands();
+    } elseif ($brand !== NULL && $category === NULL) {
+      // select all product with specific brand which the category aren't mattress neither bed linen
+
+      if ($brand == 0) {
+        // select all product with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+        $data['products'] = $this->mhome->beddingAcc();
+        $data['category'] = $this->mhome->beddingACC_Categories();
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      } else {
+        // select all product with specific brand and with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+          'tm_brands', TRUE);
+        $data['products'] = $this->mhome->beddingAcc($brand);
+        $data['category'] = $this->mhome->beddingACC_Categories($brand);
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      }
+    } else {
+      // select all product with specific brand and specific category which the category aren't mattress neither bed linen
+
+      if ($brand == 0) {
+        // select all product with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+        $data['products'] = $this->mhome->beddingAcc(NULL, $category);
+        $data['category'] = $this->mhome->beddingACC_Categories();
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      } else {
+        // select all product with specific brand and with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+          'tm_brands', TRUE);
+        $data['products'] = $this->mhome->beddingAcc($brand, $category);
+        $data['category'] = $this->mhome->beddingACC_Categories($brand, $category);
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      }
+    }
+
+    $this->load->view('include/header2');
+    $this->load->view('bedding_acc', $data);
     $this->load->view('include/footer');
   }
 }

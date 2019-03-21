@@ -323,4 +323,102 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+
+  public function bed_linenProducts($brand = NULL){
+    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image');
+    $this->db->from('tm_product a');
+    $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
+    $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
+    // $this->db->join('tr_bedlinen_position d', 'd.prod_id = a.id', 'left');
+    // $this->db->order_by('d.positon', 'asc');
+    if ($brand == NULL) {
+      $this->db->where('a.cat_id', 2);
+    }else{
+      $where = array('a.brand_id' => $brand, 'a.cat_id' => 2);
+      $this->db->where($where);
+    }
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function bed_linenBrands(){
+    $this->db->select('b.id, b.name as brand');
+    $this->db->from('tm_product a');
+    $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
+    $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
+    $this->db->where('a.cat_id', 2);
+    $this->db->group_by('a.brand_id');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function beddingAcc($brand = NULL, $category = NULL){
+    $this->db->select('a.id, a.name, a.image');
+    $this->db->from('tm_product a');
+    $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
+    $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
+    // $this->db->join('tr_bedingacc d', 'd.prod_id = a.id', 'left');
+    // $this->db->order_by('d.position', 'asc');
+    $where = "a.cat_id != 1 AND a.cat_id != 2";
+    $this->db->where($where);
+    if ($brand != NULL) {
+      $this->db->where('a.brand_id', $brand);
+    }
+    if ($category != NULL) {
+      $this->db->where('a.cat_id', $category);
+    }
+    // foreach ($where as $key => $value) {
+    // }
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function beddingACC_Categories($brand = NULL, $category = NULL){
+    $this->db->select('c.id, c.name');
+    $this->db->from('tm_product a');
+    $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
+    $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
+    $this->db->where("a.cat_id != 1 AND a.cat_id != 2");
+    if ($brand != NULL) {
+      $this->db->where('a.brand_id', $brand);
+    }
+    if ($category != NULL) {
+      $this->db->where('a.cat_id', $category);
+    }
+    $this->db->group_by('a.cat_id');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function beddingACC_Brands(){
+    $this->db->select('b.id, b.name');
+    $this->db->from('tm_product a');
+    $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
+    $this->db->join('tm_category c', 'c.id = a.brand_id', 'left');
+    $this->db->where("a.cat_id != 1 AND a.cat_id != 2");
+    $this->db->group_by('a.brand_id');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
 }
