@@ -928,6 +928,183 @@ class Admin extends CI_Controller {
     $this->load->view('include/admin/footer');
   }
 
+  public function promotions() {
+      if ($this->session->userdata('uType') == 1) {
+          $data['promotion'] = $this->madmin->getProducts(NULL, NULL,'tm_promotion', FALSE);
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/promotions', $data);
+          $this->load->view('include/admin/footer');
+      } else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+      }
+  }
+
+    public function addPromotion(){
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('name', 'Name', 'required');
+            $this->form_validation->set_rules('desc', 'Description', 'required');
+            $this->form_validation->set_rules('start', 'Start Period', 'required');
+            $this->form_validation->set_rules('end', 'End Period', 'required');
+
+            if ($this->form_validation->run() === FALSE) {
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/addPromotion');
+                $this->load->view('include/admin/footer');
+            } else {
+                $file_name = strtolower('promotion-image-'.uniqid());
+
+                $config['upload_path'] = './asset/upload/';
+                $config['allowed_types'] = 'jpg|jpeg|png|svg';
+                $config['file_name']  = $file_name;
+                $this->load->library('upload', $config);
+                if (! $this->upload->do_upload('promotionImage')) {
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+
+                    $this->load->view('include/admin/header');
+                    $this->load->view('include/admin/left-sidebar');
+                    $this->load->view('admin/addPromotion');
+                    $this->load->view('include/admin/footer');
+                } else {
+                    $image = $this->upload->data();
+                    $promotion = array(
+                        'name'         => $this->input->post('name'),
+                        'description'  => $this->input->post('desc'),
+                        'start_date'     => $this->input->post('start'),
+                        'end_date'       => $this->input->post('end'),
+                        'image'       => $image['orig_name'],
+                        'status'       => 1
+                    );
+                    $this->madmin->inputData('tm_promotion', $promotion);
+
+                    redirect('admin/promotions', 'refresh');
+                }
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
+    public function detailPromotion($id) {
+        if ($this->session->userdata('uType') == 1) {
+            $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/detailpromotion', $data);
+            $this->load->view('include/admin/footer');
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
+    public function activePromotion($id) {
+        if($this->session->userdata('uType') == 1){
+            $stat = $this->madmin->getProducts(array('id' => $id), array('statField' => 'status'), 'tm_promotion',TRUE);
+            if($stat['status'] == 1){
+                $items = array('status' => 0);
+                $this->madmin->updateData(array('id' => $id), 'tm_promotion', $items);
+                redirect('admin/promotions', 'refresh');
+            }else{
+                $items = array('status' => 1);
+                $this->madmin->updateData(array('id' => $id), 'tm_promotion', $items);
+                redirect('admin/promotions', 'refresh');
+            }
+        }else{
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
+    public function editPromotion($id) {
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('name', 'Name', 'required');
+            $this->form_validation->set_rules('desc', 'Description', 'required');
+            $this->form_validation->set_rules('start', 'Start Period', 'required');
+            $this->form_validation->set_rules('end', 'End Period', 'required');
+
+            if ($this->form_validation->run() === FALSE) {
+                $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/editPromotion', $data);
+                $this->load->view('include/admin/footer');
+            } else {
+                if ($this->input->post('promotionImage') !== NULL) {
+                    $file_name = strtolower('promotion-image-'.uniqid());
+
+                    $config['upload_path'] = './asset/upload/';
+                    $config['allowed_types'] = 'jpg|jpeg|png|svg';
+                    $config['file_name']  = $file_name;
+                    $this->load->library('upload', $config);
+                    if (! $this->upload->do_upload('promotionImage')) {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+
+                        $this->load->view('include/admin/header');
+                        $this->load->view('include/admin/left-sidebar');
+                        $this->load->view('admin/addPromotion');
+                        $this->load->view('include/admin/footer');
+                    } else {
+                        $image = $this->upload->data();
+                        $promotion = array(
+                            'name'         => $this->input->post('name'),
+                            'description'  => $this->input->post('desc'),
+                            'start_date'     => $this->input->post('start'),
+                            'end_date'       => $this->input->post('end'),
+                            'image'       => $image['orig_name'],
+                            'status'       => 1
+                        );
+                        $this->madmin->updateData(array('id' => $id),'tm_promotion', $promotion);
+
+                        redirect('admin/promotions', 'refresh');
+                    }
+                } else {
+                    $promotion = array(
+                        'name'         => $this->input->post('name'),
+                        'description'  => $this->input->post('desc'),
+                        'start_date'     => $this->input->post('start'),
+                        'end_date'       => $this->input->post('end'),
+                        'status'       => 1
+                    );
+                    $this->madmin->updateData(array('id' => $id),'tm_promotion', $promotion);
+
+                    redirect('admin/promotions', 'refresh');
+                }
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
+    public function deletePromotion($id) {
+        if ($this->session->userdata('uType') == 1) {
+            $data = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
+            $this->madmin->deleteData(array('id' => $id), 'tm_promotion');
+            unlink('./asset/upload/'.$data['image']);
+            redirect('admin/promotions', 'refresh');
+        }else{
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
   public function sizeNameStore($idSize){
       $sizeName = $this->madmin->getSizeName($idSize);
       if($sizeName) {
