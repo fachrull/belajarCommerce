@@ -32,15 +32,15 @@
 								<button class="fa fa-bars btn btn-mobile"></button>
 								<h4>CATEGORIES</h4>
 							</div>
-							<?php if ($category != NULL){ ?>
+							<?php if($category != NULL):?>
 								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
-									<?php foreach($category as $category):?>
-									<li class="list-group-noicon active">
-										<a href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
-									</li>
-								<?php endforeach;?>
+							    <?php foreach($category as $category):?>
+								<li class="list-group-noicon active">
+									<a href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
+								</li>
+									<?php endforeach;?>
 								</ul>
-							<?php } ?>
+							<?php endif;?>
 						</div>
 						<!-- /CATEGORIES -->
 
@@ -53,12 +53,12 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-								<li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Serta</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Tempur</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Florence</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/6');?>">Stressless</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>">Aireloom</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>">Kingkoil</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>">Serta</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>">Tempur</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>">Florence</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>">Stressless</a></li>
 							</ul>
 
 						</div>
@@ -145,7 +145,7 @@
 
 												<!-- rating -->
 												<div class="shop-item-rating-line">
-													<div class="rating rating-5 fs-13">
+													<div class="rating rating-0 fs-13">
 														<!-- rating-0 ... rating-5 -->
 													</div>
 												</div>
