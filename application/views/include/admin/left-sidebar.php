@@ -45,7 +45,9 @@
                 <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
                 <li class="active"><a href="<?= site_url('admin/allVoucher')?>">Voucher</a></li>
                 <li class="active"><a href="<?= site_url('admin/special_package');?>">Special Package</a></li>
-                <li class="active"><a href="<?= site_url();?>">Rating</a></li>
+                <li class="active"><a href="<?= site_url('admin/reviews');?>">Review</a></li>
+                <li class="active"><a href="<?= site_url('admin/bed_linen');?>">Bed Linen</a></li>
+                <li class="active"><a href="<?= site_url('admin/beddingAcc');?>">Bedding Accessories</a></li>
                 <li class="active"><a href="<?= site_url('admin/bestSeller');?>">Best Seller</a></li>
               </li>
             </ul>

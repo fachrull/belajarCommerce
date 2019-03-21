@@ -245,7 +245,7 @@
 
 
 				<ul id="myTab" class="nav nav-tabs nav-top-border mt-80" role="tablist">
-					<li class="nav-item"><a class="nav-links active" href="#reviews" data-toggle="tab">Reviews (2)</a></li>
+					<li class="nav-item"><a class="nav-links active" href="#reviews" data-toggle="tab">Reviews</a></li>
 				</ul>
 
 				<div class="tab-content pt-20">
@@ -254,75 +254,49 @@
 					<!-- REVIEWS -->
 					<div role="tabpanel" id="reviews">
 								<!-- REVIEW ITEM -->
-								<div class="block mb-60">
+								<?php foreach ($reviews as $review): ?>
+									<div class="block mb-60">
 
-									<span class="user-avatar">
-										<!-- user-avatar -->
-										<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
-									</span>
+										<span class="user-avatar">
+											<!-- user-avatar -->
+											<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
+										</span>
 
-									<div class="media-body">
-										<h4 class="media-heading fs-14">
-											John Doe &ndash;
-											<span class="text-muted">June 29, 2014 - 11:23</span> &ndash;
-											<span class="fs-14 text-muted">
-												<!-- stars -->
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-											</span>
-										</h4>
+										<div class="media-body">
+											<h4 class="media-heading fs-14">
+												<?= $review['name']?> &ndash;
+												<span class="text-muted"><?= $review['date_attempt']?></span> &ndash;
+												<span class="fs-14 text-muted">
+													<?php for($i = 0; $i < $review['stars']; $i++): ?>
+														<i class="fa fa-star"></i>
+													<?php endfor; ?>
+												</span>
+											</h4>
 
-										<p>
-											Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta
-											dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.
-										</p>
+											<p>
+												<?= $review['comment']?>
+											</p>
+
+										</div>
 
 									</div>
-
-								</div>
+								<?php endforeach; ?>
 								<!-- /REVIEW ITEM -->
 
-								<!-- REVIEW ITEM -->
-								<div class="block mb-60">
-
-									<span class="user-avatar">
-										<!-- user-avatar -->
-										<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
-									</span>
-
-									<div class="media-body">
-										<h4 class="media-heading fs-14">
-											John Doe &ndash;
-											<span class="text-muted">June 29, 2014 - 11:23</span> &ndash;
-											<span class="fs-14 text-muted">
-												<!-- stars -->
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</span>
-										</h4>
-
-										<p>
-											Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta
-											dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.
-										</p>
-
+								<?php if ($this->session->has_userdata('error')): ?>
+									<div class="text-center">
+										<div class="container">
+											<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
+												<?= $this->session->userdata('error');?>
+											</div>
+										</div>
 									</div>
-
-								</div>
-								<!-- /REVIEW ITEM -->
+								<?php endif; ?>
 
 
 								<!-- REVIEW FORM -->
 								<h4 class="page-header mb-40">ADD A REVIEW</h4>
-								<form method="post" action="#" id="form">
+								<form method="post" action="<?= site_url('home/reviewProduct/'.$product['id'])?>" id="form">
 
 									<div class="row mb-10">
 
@@ -341,7 +315,7 @@
 
 									<!-- Comment -->
 									<div class="mb-30">
-										<textarea name="text" id="text" class="form-control" rows="6" placeholder="Comment" maxlength="1000"></textarea>
+										<textarea name="comment" id="text" class="form-control" rows="6" placeholder="Comment" maxlength="1000"></textarea>
 									</div>
 
 									<!-- Stars -->

@@ -156,7 +156,7 @@ class Mhome extends CI_Model{
   }
 
   public function getProduct_MaxMinPrice($idProduct){
-    $this->db->select('MAX(a.price) as max_price, MIN(a.price) as min_price, b.name, b.id, b.brand_id, b.cat_id,
+    $this->db->select('a.id, MAX(a.price) as max_price, MIN(a.price) as min_price, b.name, b.id, b.brand_id, b.cat_id,
       b.description, b.image');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
@@ -324,13 +324,32 @@ class Mhome extends CI_Model{
     }
   }
 
+  public function getShop_product($brand = NULL, $category = NULL){
+    $this->db->select('a.id, a.name, a.image, b.stars, b.position');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product_best_seller b', 'b.prod_id = a.id', 'left');
+    if ($brand != NULL) {
+      $this->db->where('a.brand_id', $brand);
+    }
+    if ($category != NULL) {
+      $this->db->where('a.cat_id', $category);
+    }
+    $this->db->order_by('b.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
   public function bed_linenProducts($brand = NULL){
-    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image');
+    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image, d.stars, d.position');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
-    // $this->db->join('tr_bedlinen_position d', 'd.prod_id = a.id', 'left');
-    // $this->db->order_by('d.positon', 'asc');
+    $this->db->join('tr_product_bed_linen d', 'd.prod_id = a.id', 'left');
+    $this->db->order_by('d.position', 'asc');
     if ($brand == NULL) {
       $this->db->where('a.cat_id', 2);
     }else{
@@ -361,12 +380,12 @@ class Mhome extends CI_Model{
   }
 
   public function beddingAcc($brand = NULL, $category = NULL){
-    $this->db->select('a.id, a.name, a.image');
+    $this->db->select('a.id, a.name, a.image, d.stars, d.position');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
-    // $this->db->join('tr_bedingacc d', 'd.prod_id = a.id', 'left');
-    // $this->db->order_by('d.position', 'asc');
+    $this->db->join('tr_product_bedding_acc d', 'd.prod_id = a.id', 'left');
+    $this->db->order_by('d.position', 'asc');
     $where = "a.cat_id != 1 AND a.cat_id != 2";
     $this->db->where($where);
     if ($brand != NULL) {

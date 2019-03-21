@@ -142,7 +142,7 @@
 
 												<!-- rating -->
 												<div class="shop-item-rating-line">
-													<div class="rating rating-0 fs-13">
+													<div class="rating rating-<?= $product['stars']?> fs-13">
 														<!-- rating-0 ... rating-5 -->
 													</div>
 												</div>

@@ -137,24 +137,21 @@ class Home extends CI_Controller{
 
   public function shop($brand = NULL, $category = NULL){
     if ($brand === NULL && $category === NULL) {
-      $data['products'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name', 'imageField' => 'image'),
-      'tm_product', FALSE);
+      $data['products'] = $this->mhome->getShop_product();
       $data['brand'] = array('name' => 'All Products');
       $data['category'] = $this->mhome->brand_categories($brand);
     } elseif ($brand !== NULL && $category === NULL) {
       if($brand === 6){
         $category = NULL;
       }
-      $data['products'] = $this->mhome->getProducts(array('brand_id' => $brand), array('idField' => 'id', 'nameField' => 'name', 'imageField' => 'image'),
-      'tm_product', FALSE);
+      $data['products'] = $this->mhome->getShop_product($brand);
       $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     } else {
       if($brand === 6){
         $category = NULL;
       }
-      $data['products'] = $this->mhome->getProducts(array('brand_id' => $brand, 'cat_id' => $category), array('idField' => 'id',
-      'nameField' => 'name', 'imageField' => 'image'),'tm_product', FALSE);
+      $data['products'] = $this->mhome->getShop_product($brand, $category);
       $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     }
@@ -234,6 +231,8 @@ class Home extends CI_Controller{
       'provinsi', FALSE);
     $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
     $data['sub_districts'] = $this->mhome->getProducts(NULL, NULL, 'kecamatan', FALSE);
+    $data['reviews'] = $this->mhome->getProducts(array('prod_id' => $idProduct, 'display' => 1), array('nameField' => 'name',
+      'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
     $idSpec = $this->mhome->getProducts(array('prod_id' => $idProduct),
        array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
     $idSize = $this->mhome->getProducts(array('prod_id' => $idProduct),
@@ -279,6 +278,33 @@ class Home extends CI_Controller{
     } else {
         echo "Something went wrong";
     }
+  }
+
+  public function reviewProduct($idProduct){
+    $this->load->helper('form');
+    $this->load->library('form_validation');
+
+    $this->form_validation->set_rules('name', 'Name', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+    $this->form_validation->set_rules('comment', 'Comment', 'required');
+    $this->form_validation->set_rules('product-review-vote', 'Vote', 'required');
+
+    if ($this->form_validation->run() == TRUE) {
+      $data = array(
+        'prod_id' =>  $idProduct,
+        'name'    =>  $this->input->post('name'),
+        'email'   =>  $this->input->post('email'),
+        'comment' =>  $this->input->post('comment'),
+        'stars'    =>  $this->input->post('product-review-vote'),
+        'display' =>  0,
+      );
+      $this->mhome->inputData('tm_review', $data);
+      redirect('home/detailProduct/'.$idProduct);
+    } else {
+      $this->session->set_flashdata('error', validation_errors());
+      redirect('home/detailProduct/'.$idProduct);
+    }
+
   }
 
   public function deleteCart(){

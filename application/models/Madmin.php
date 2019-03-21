@@ -308,4 +308,103 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
+
+  public function product_bed_linen(){
+    $this->db->select('a.id, b.name, a.stars, a.position');
+    $this->db->from('tr_product_bed_linen a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->order_by('a.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detail_prod_bed_linen($idBedLinen){
+    $this->db->select('a.id, b.name, b.image, a.stars, a.position');
+    $this->db->from('tr_product_bed_linen a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $idBedLinen);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function beddingAcc(){
+    $this->db->select('a.id, b.name, a.stars, a.position');
+    $this->db->from('tr_product_bedding_acc a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->order_by('a.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detail_prod_bedding_acc($idBeddingACC){
+    $this->db->select('a.id, b.name, b.image, a.stars, a.position');
+    $this->db->from('tr_product_bedding_acc a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $idBeddingACC);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function best_seler(){
+    $this->db->select('a.id, b.name, a.stars, a.position');
+    $this->db->from('tr_product_best_seller a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->order_by('a.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detail_prod_best_seller($idBestSeller){
+    $this->db->select('a.id, b.name, b.image, a.stars, a.position');
+    $this->db->from('tr_product_best_seller a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $idBestSeller);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function listReview($link = NULL){
+    $this->db->select('a.id, a.name as username, a.email, b.name, b.image, a.comment, a.date_attempt, a.stars, a.display');
+    $this->db->from('tm_review a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $query = $this->db->get();
+    if ($link != NULL) {
+      $this->db->where('a.id', $link);
+      if ($query->num_rows() != 0) {
+        return $query->row_array();
+      } else {
+        return FALSE;
+      }
+    }else{
+      if ($query->num_rows() != 0) {
+        return $query->result_array();
+      } else {
+        return FALSE;
+      }
+    }
+  }
 }

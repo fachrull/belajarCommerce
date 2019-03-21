@@ -408,9 +408,25 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function test($idProduct, $idDistrict){
-    $data = $this->madmin->checkStock_by_Distcit($idProduct, $idDistrict);
-    print_r($data);
+  public function test(){
+    $data = $this->madmin->getProducts(NULL, array('idField' => 'id'), 'tm_product', FALSE);
+    // foreach ($data as $data) {
+    //   print_r($no);
+    //   echo "</br>";
+    // }
+    $no=1;foreach ($data as $key => $value) {
+      $data_bs = array(
+        'stars'     => 5,
+        'position'  => $no
+      );
+      $this->madmin->updateData(array('id' => $value['id']), 'tm_product', $data_bs);
+      $no++;
+    }
+    exit();
+    $dataBL = $this->madmin->getProducts(NULL, NULL, 'tr_product_best_seller', FALSE);
+    foreach ($dataBL as $dataBL) {
+      print_r($dataBL);echo "</br>";
+    }
   }
 
   public function detailProd($idProd){
@@ -982,12 +998,70 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function bestSeller()
-  {
-    $this->load->view('include/admin/header');
-    $this->load->view('include/admin/left-sidebar');
-    $this->load->view('admin/sa_bestseller');
-    $this->load->view('include/admin/footer');
+  public function bestSeller(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['best_seller'] = $this->madmin->best_seler();
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/best_seller', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function edit_best_seller($idBestSeller){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('stars', 'Stars', 'required');
+      $this->form_validation->set_rules('position', 'Position', 'required');
+
+      if ($this->form_validation->run() == TRUE) {
+        // new stars
+        $stars = $this->input->post('stars');
+        // new position
+        $position = $this->input->post('position');
+
+        // search id from new position
+        $positionProduct_destination = $this->madmin->getProducts(array('position' => $position), array('idField' => 'id'),
+          'tr_product_best_seller', TRUE);
+        // search last position from idBeddingACC
+        $positionProduct_lastdestination = $this->madmin->getProducts(array('id' => $idBestSeller), array('positionField' => 'position'),
+          'tr_product_best_seller', TRUE);
+
+        // data new stars and new position for idBedLinen
+        $data_newDestination = array(
+          'stars'     => $stars,
+          'position'  => $position
+        );
+        $this->madmin->updateData(array('id' => $idBestSeller), 'tr_product_best_seller', $data_newDestination);
+
+        $data_ProdLastDestination = array(
+          'position'  => $positionProduct_lastdestination['position']
+        );
+        $this->madmin->updateData(array('id' => $positionProduct_destination['id']), 'tr_product_best_seller', $data_ProdLastDestination);
+
+        redirect('admin/bestSeller');
+      } else {
+        $data['best_seller'] = $this->madmin->detail_prod_best_seller($idBestSeller);
+        $maxPosition = $this->madmin->getProducts(NULL, array('positionField' => 'position'), 'tr_product_best_seller', FALSE);
+        $data['maxPosition'] = array('max' => count($maxPosition));
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/edit_best_seller', $data);
+        $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
   }
 
   public function sa_promotion()
@@ -1228,6 +1302,178 @@ class Admin extends CI_Controller {
       $this->load->view('include/admin/left-sidebar');
       $this->load->view('admin/detail_voucher', $data);
       $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function bed_linen(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['product_bedlinen'] = $this->madmin->product_bed_linen();
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/bed_linen', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function edit_bed_linen($idBedLinen){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('stars', 'Stars', 'required');
+      $this->form_validation->set_rules('position', 'Position', 'required');
+
+      if ($this->form_validation->run() == TRUE) {
+        // new stars
+        $stars = $this->input->post('stars');
+        // new position
+        $position = $this->input->post('position');
+
+        // search id from new position
+        $positionProduct_destination = $this->madmin->getProducts(array('position' => $position), array('idField' => 'id'),
+          'tr_product_bed_linen', TRUE);
+        // search last position from idBedLinen
+        $positionProduct_lastdestination = $this->madmin->getProducts(array('id' => $idBedLinen), array('positionField' => 'position'),
+          'tr_product_bed_linen', TRUE);
+
+        // data new stars and new position for idBedLinen
+        $data_newDestination = array(
+          'stars'     => $stars,
+          'position'  => $position
+        );
+        $this->madmin->updateData(array('id' => $idBedLinen), 'tr_product_bed_linen', $data_newDestination);
+
+        $data_ProdLastDestination = array(
+          'position'  => $positionProduct_lastdestination['position']
+        );
+        $this->madmin->updateData(array('id' => $positionProduct_destination['id']), 'tr_product_bed_linen', $data_ProdLastDestination);
+
+        redirect('admin/bed_linen');
+      } else {
+        $data['product_bedlinen'] = $this->madmin->detail_prod_bed_linen($idBedLinen);
+        $maxPosition = $this->madmin->getProducts(NULL, array('positionField' => 'position'), 'tr_product_bed_linen', FALSE);
+        $data['maxPosition'] = array('max' => count($maxPosition));
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/edit_bed_linen', $data);
+        $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function beddingAcc(){
+    if ($this->session->userdata('uType') == 1) {
+      $data['product_bedAcc'] = $this->madmin->beddingAcc();
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/bedding_accessories', $data);
+      $this->load->view('include/admin/footer');
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function edit_bedding_acc($idBeddingACC){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('stars', 'Stars', 'required');
+      $this->form_validation->set_rules('position', 'Position', 'required');
+
+      if ($this->form_validation->run() == TRUE) {
+        // new stars
+        $stars = $this->input->post('stars');
+        // new position
+        $position = $this->input->post('position');
+
+        // search id from new position
+        $positionProduct_destination = $this->madmin->getProducts(array('position' => $position), array('idField' => 'id'),
+          'tr_product_bedding_acc', TRUE);
+        // search last position from idBeddingACC
+        $positionProduct_lastdestination = $this->madmin->getProducts(array('id' => $idBeddingACC), array('positionField' => 'position'),
+          'tr_product_bedding_acc', TRUE);
+
+        // data new stars and new position for idBedLinen
+        $data_newDestination = array(
+          'stars'     => $stars,
+          'position'  => $position
+        );
+        $this->madmin->updateData(array('id' => $idBeddingACC), 'tr_product_bedding_acc', $data_newDestination);
+
+        $data_ProdLastDestination = array(
+          'position'  => $positionProduct_lastdestination['position']
+        );
+        $this->madmin->updateData(array('id' => $positionProduct_destination['id']), 'tr_product_bedding_acc', $data_ProdLastDestination);
+
+        redirect('admin/beddingAcc');
+      } else {
+        $data['product_bedAcc'] = $this->madmin->detail_prod_bedding_acc($idBeddingACC);
+        $maxPosition = $this->madmin->getProducts(NULL, array('positionField' => 'position'), 'tr_product_bedding_acc', FALSE);
+        $data['maxPosition'] = array('max' => count($maxPosition));
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/edit_bedding_acc', $data);
+        $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function reviews($link = FALSE){
+    if ($this->session->userdata('uType') == 1) {
+      if ($link == TRUE) {
+        $data['review'] = $this->madmin->listReview($link);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/detail-review', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $data['reviews'] = $this->madmin->listReview();
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/reviews', $data);
+        $this->load->view('include/admin/footer');
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function displayReview($idReview){
+    if ($this->session->userdata('uType') == 1) {
+      $display = $this->madmin->getProducts(array('id' => $idReview), array('displayF' => 'display'), 'tm_review', TRUE);
+      if ($display['display'] == 0) {
+        $this->madmin->updateData(array('id' => $idReview), 'tm_review', array('display' => 1));
+      }else{
+        $this->madmin->updateData(array('id' => $idReview), 'tm_review', array('display' => 0));
+      }
+      redirect('admin/reviews');
     } else {
       $this->load->view('include/header2');
       $this->load->view('un-authorise');

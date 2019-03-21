@@ -141,11 +141,11 @@
 											<!-- /product image(s) -->
 
 											<div class="shop-item-summary text-center">
-												<h2><?= $product['name'];?></h2>
+												<h2><?= $product['name'];?> <?= $product['position']?></h2>
 
 												<!-- rating -->
 												<div class="shop-item-rating-line">
-													<div class="rating rating-5 fs-13">
+													<div class="rating rating-<?= $product['stars'] ?> fs-13">
 														<!-- rating-0 ... rating-5 -->
 													</div>
 												</div>
