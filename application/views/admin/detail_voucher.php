@@ -15,18 +15,18 @@
           <div class="product-detail">
             <div class="col-xs-6">
             <div class="row">
-                    <div class="col-xs-12">
-                      <label class="input mb-10"> <p>Voucher Code</p>
+                    <div class="col-xs-12 mb-10">
+                      <label class="input mb-10"> <h4>Voucher Code</h4>
                         <input name="pName" type="text" value="<?= $voucher['kode_voucher'];?>" disabled>
                       </label>
                     </div>
-                    <div class="col-xs-12">
-                      <label class="input mb-10"> <p>Voucher Name</p>
+                    <div class="col-xs-12 mb-10">
+                      <label class="input mb-10"> <h4>Voucher Name</h4>
                         <input name="pName" type="text" value="<?= $voucher['name'];?>" disabled>
                       </label>
                     </div>
-                    <div class="col-xs-12">
-                      <label class="input mb-10"> <p>Quantity</p>
+                    <div class="col-xs-12 mb-10">
+                      <label class="input mb-10"> <h4>Quantity</h4>
                         <input name="pName" type="text" value="<?= $voucher['jumlah']?>" disabled>
                       </label>
                     </div>
@@ -39,13 +39,13 @@
                   </div>
                 <div class="col-xs-12 col-md-6">
                   <div class="row">
-                    <div class="col-xs-12 col-md-6">
-                      <label class="input mb-10"> <p>Discount</p>
+                    <div class="col-xs-12 col-md-6 mb-10">
+                      <label class="input mb-10"> <h4>Discount</h4>
                         <input name="pName" type="text" value="<?= $voucher['discount']* 100?> %" disabled>
                       </label>
                     </div>
                     <div class="col-xs-12">
-                      <label class="input"> <p>Bonus</p>
+                      <label class="input"> <h4>Bonus</h4>
                         <ul class="mb-10">
                             <?php foreach ($detail_voucher as $detail_voucher): ?>
                               <li><?= $detail_voucher['name']?></li>
@@ -56,8 +56,8 @@
                   </div>
                 </div>
             <div class="col-xs-12">
-              <label class="input"> <p>Description</p>
-                <textarea name="" id="" cols="30" rows="10" readonly><?= $voucher['description']?></textarea>
+              <label class="input"> <h4>Description</h4>
+                <textarea name="" id="" cols="122" rows="10" readonly><?= $voucher['description']?></textarea>
               </label>
             </div>
               </div>

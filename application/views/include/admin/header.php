@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/Ionicons/css/ionicons.min.css');?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url('asset/dist/css/AdminLTE.css');?>">
-  <link href="<?= base_url('asset/css/essentials.css');?>" rel="stylesheet" type="text/css" />
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?= base_url('asset/dist/css/skins/_all-skins.css');?>">

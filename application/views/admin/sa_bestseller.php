@@ -10,7 +10,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="<?= site_url('admin/addSize');?>" class="btn btn-oldblue h-30">
+                    <a href="<?= site_url('admin/addSize');?>" class="btn btn-oldblue">
             <i class="fa fa-plus"></i>
              Size
           </a>

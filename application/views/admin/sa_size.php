@@ -10,10 +10,7 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="<?= site_url('admin/addSize');?>" class="btn btn-oldblue h-30">
-            <i class="fa fa-plus"></i>
-             Size
-          </a>
+                    <a href="<?= site_url('admin/addSize');?>" class="btn btn-oldblue"><i class="fa fa-plus"></i> Size</a>
                 </div>
             </div>
             <hr class="col-xs-12">
@@ -31,7 +28,7 @@
                   <td><?= $no?></td>
                   <td><?= $size['name'];?></td>
                   <td><?= $size['size'];?></td>
-                  <td><a href="<?= site_url('admin/deleteSize/'.$size['id']);?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a></td>
+                  <td><a href="<?= site_url('admin/deleteSize/'.$size['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
                 </tr>
                 <?php $no++; ?>
               <?php endforeach; ?>

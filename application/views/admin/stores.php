@@ -32,7 +32,7 @@
                 <td><?= $sub_districts[$i][0]['sub_district']?></td>
                 <td><?= $posts[$i]['phone1']?></td>
                 <td>
-                  <a href="<?=site_url('admin/stores/'.$posts[$i]['id']);?>" type="submit" class="btn btn-oldblue"><i class="fa fa-info"></i></a>
+                  <a href="<?=site_url('admin/stores/'.$posts[$i]['id']);?>" type="submit"><i class="btn btn-oldblue fa fa-info"></i></a>
                 </td>
               </tr>
             <?php endfor; ?>

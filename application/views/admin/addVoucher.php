@@ -18,16 +18,16 @@
             <!-- /ALERT -->
             <?= form_open_multipart('admin/addVoucher', array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
               <label class="input mb-10">
-                  <input name="kVoucher" type="text" placeholder="Kode Voucher e.g= AGM_VCRXXXX">
+                  <input class="form-control" name="kVoucher" type="text" placeholder="Kode Voucher e.g= AGM_VCRXXXX">
               </label>
               <label class="input mb-10">
-                  <input name="name" type="text" placeholder="Voucher Name">
+                  <input class="form-control" name="name" type="text" placeholder="Voucher Name">
               </label>
               <label class="input mb-10">
-                  <input name="discount" type="text" placeholder="Discount e.g= 0.7(70%)">
+                  <input class="form-control" name="discount" type="text" placeholder="Discount e.g= 0.7(70%)">
               </label>
               <label class="input mb-10">
-                  <input name="jumlah" type="text" placeholder="Limit Voucher">
+                  <input class="form-control" name="jumlah" type="text" placeholder="Limit Voucher">
               </label>
               <div class="row mb-3">
                 <div class="col-md-12 cl-xs-12 select2-input-field">

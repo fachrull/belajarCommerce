@@ -12,7 +12,7 @@
           <div class="box-body">
             <div class="row">
               <div class="col-md-4">
-                <a href="<?= site_url('admin/addVoucher');?>" class="mb-10 btn btn-oldblue h-30"><i class="fa fa-plus"></i> Add Voucher</a>
+                <a href="<?= site_url('admin/addVoucher');?>" class="mb-10 btn btn-oldblue"><i class="fa fa-plus"></i> Add Voucher</a>
               </div>
             </div>
             <hr class="col-xs-12 mt-10">

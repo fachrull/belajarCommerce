@@ -336,7 +336,7 @@ class Admin extends CI_Controller {
 
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/addProd', $data);
+          $this->load->view('admin/addProd-2', $data);
           $this->load->view('include/admin/footer');
         }else {
           // $data = array('upload_data' => $this->upload->data());
@@ -398,7 +398,7 @@ class Admin extends CI_Controller {
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/addProd', $data);
+        $this->load->view('admin/addProd-2', $data);
         $this->load->view('include/admin/footer');
       }
     }else{
@@ -1233,5 +1233,29 @@ class Admin extends CI_Controller {
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
+  }
+  public function review(){
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/sa_review');
+    $this->load->view('include/admin/footer');
+  }
+  public function detail_review(){
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/detail_review');
+    $this->load->view('include/admin/footer');
+  }
+  public function detailSpecialPackage(){
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/detailSpecialPackage');
+    $this->load->view('include/admin/footer');
+  }
+  public function historyTransaction(){
+    $this->load->view('include/admin/header');
+    $this->load->view('include/admin/left-sidebar');
+    $this->load->view('admin/sa_historyTransaction');
+    $this->load->view('include/admin/footer');
   }
 }

@@ -10,17 +10,17 @@
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="<?= site_url('admin/addSpec');?>" class="btn btn-oldblue h-30">
-            <i class="fa fa-plus"></i>Spec</a>
+                    <a href="<?= site_url('admin/addSpec');?>" class="btn btn-oldblue">
+            <i class="fa fa-plus"></i> Spec</a>
                 </div>
             </div>
-            <hr class="col-xs-12">
+            <hr>
           <table id="dataTable" class="table table-bordered table-striped">
             <thead>
               <th>No.</th>
               <th>Name</th>
               <!-- <th>Detail</th> -->
-              <th>Delete</th>
+              <th>Action</th>
             </thead>
             <tbody>
               <?php $no=1; ?>
@@ -29,7 +29,7 @@
                   <td><?= $no?></td>
                   <td><?= $spec['name'];?></td>
                   <!-- <td><a href="<?= site_url(''.$spec['id']);?>" class="btn btn-default"><i class="fa fa-edit"></i></a></td> -->
-                  <td><a href="<?= site_url('admin/deleteSpec/'.$spec['id']);?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a></td>
+                  <td><a href="<?= site_url('admin/deleteSpec/'.$spec['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
                 </tr>
                 <?php $no++; ?>
               <?php endforeach; ?>
