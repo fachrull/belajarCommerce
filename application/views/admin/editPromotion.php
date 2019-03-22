@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <div class="content-wrapper">
     <section class="content">
-        <h1 class="text-center">ADD PROMOTION</h1>
+        <h1 class="text-center">EDIT PROMOTION</h1>
         <div class="container-fluid">
             <div class="register-box mt-0" style="width: auto !important">
                 <div class="register-box-body">
@@ -17,11 +17,13 @@
                             <?php endif; ?>
                             <!-- /ALERT -->
                             <?= form_open_multipart('admin/editpromotion/'.$promotion['id'], array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
-                            <label class="input mb-10">
-                                <input name="name" type="text" placeholder="Promotion Name" value="<?=$promotion['name']?>">
+                            <label>
+                                <div class="input-group date">
+                                    <input placeholder="Promotion Name" name="name" type="text" value="<?=$promotion['name']?>" class="form-control pull-right">
+                                </div>
                             </label>
                             <label>
-                            <div class="input-group date">
+                            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
@@ -30,7 +32,7 @@
                             </label>
                             <!-- /.input group -->
                             <label>
-                            <div class="input-group date">
+                            <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
                                 </div>
@@ -46,7 +48,12 @@
                                 <input type="file" class="mt-5" name="promotionImage" />
                             </label>
                             <div class="row">
-                                <div class="col-md-12 text-right">
+                                <div class="col-md-6 text-left">
+                                    <a href="<?=site_url('admin/promotions');?>" id="submit" type="submit" class="btn btn-oldblue btn-default">Cancel
+                                    </a>
+                                    <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
+                                </div>
+                                <div class="col-md-6 text-right">
                                     <button id="submit" type="submit" class="btn btn-oldblue btn-default">Submit
                                     </button>
                                     <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
