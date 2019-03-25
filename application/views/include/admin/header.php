@@ -47,10 +47,11 @@
   <link rel="stylesheet" href="<?= base_url('asset/css/custom.css')?>">
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
+<!--Datatables button-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 
 
-
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
