@@ -54,7 +54,7 @@
             <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Cover</span></a>
           </li>
           <li>
-          <a href="<?= site_url('admin/sa_promotion');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
+          <a href="<?= site_url('admin/promotions');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
           </li>
           <li>
             <a href="<?= site_url('admin/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>

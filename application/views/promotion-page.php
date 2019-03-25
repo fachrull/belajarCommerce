@@ -25,90 +25,20 @@
 					<div class="col-md-12 col-sm-12">
 
 						<div class="row">
+                            <?php foreach ($promotions as $promotion) { ?>
+                                <!-- POST ITEM -->
+                                <div class="blog-post-item col-md-6 col-sm-6">
 
-							<!-- POST ITEM -->
-							<div class="blog-post-item col-md-6 col-sm-6">
+                                    <!-- IMAGE -->
+                                    <figure class="mb-20">
+                                        <img class="img-fluid" src="<?= base_url('asset/upload/'.$promotion['image']);?>" alt="product name">
+                                    </figure>
 
-								<!-- IMAGE -->
-								<figure class="mb-20">
-									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="product name">
-								</figure>
+                                    <h2><a href="<?=site_url('home/promotionDetail/'.$promotion['id'])?>"><?=$promotion['name']?></a></h2>
 
-								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
-
-							</div>
-							<!-- /POST ITEM -->
-
-
-							<!-- POST ITEM -->
-							<div class="blog-post-item col-md-6 col-sm-6">
-
-								<!-- IMAGE -->
-								<figure class="mb-20">
-									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
-								</figure>
-
-								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
-
-							</div>
-							<!-- /POST ITEM -->
-
-
-							<!-- POST ITEM -->
-							<div class="blog-post-item col-md-6 col-sm-6">
-
-								<!-- IMAGE -->
-								<figure class="mb-20">
-									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
-								</figure>
-
-								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
-
-							</div>
-							<!-- /POST ITEM -->
-
-
-							<!-- POST ITEM -->
-							<div class="blog-post-item col-md-6 col-sm-6">
-
-								<!-- IMAGE -->
-								<figure class="mb-20">
-									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
-								</figure>
-
-								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
-
-							</div>
-							<!-- /POST ITEM -->
-
-
-							<!-- POST ITEM -->
-							<div class="blog-post-item col-md-6 col-sm-6">
-
-								<!-- IMAGE -->
-								<figure class="mb-20">
-									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
-								</figure>
-
-								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
-
-							</div>
-							<!-- /POST ITEM -->
-
-
-							<!-- POST ITEM -->
-							<div class="blog-post-item col-md-6 col-sm-6">
-
-								<!-- IMAGE -->
-								<figure class="mb-20">
-									<img class="img-fluid" src="<?= base_url('');?>asset/content-images/slider-1.jpg" alt="">
-								</figure>
-
-								<h2><a href="<?=site_url('home/promotionDetail')?>">THE PRODUCT NAME IS ON SALE</a></h2>
-
-							</div>
-							<!-- /POST ITEM -->
-
+                                </div>
+                                <!-- /POST ITEM -->
+                            <?php } ?>
 						</div>
 
 
