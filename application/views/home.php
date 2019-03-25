@@ -85,8 +85,8 @@
 						<!-- <a style="width:auto !important" class="wow fadeInUp" data-toggle="modal" data-target=".bs-example-modal-sm" data-wow-delay="0.4s">
 							<p style="width:auto !important" class="text-center">View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
 						</a> -->
-						
-						
+
+
 
 					</div>
 				</div>
@@ -123,14 +123,14 @@
 								<img class="promotion-image-3" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm lastest collectin" />
 								<div class="absolute pl-20 pb-20 bottom-center text-left">
 									<h2 class="hidden-md-down text-white">BED<br>LINEN</h2>
-									<a href="<?= base_url('home/bedLinen');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+									<a href="<?= base_url('home/bed_linen');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 								</div>
 							</div>
 							<div class="col-md-6 pt-30">
 								<img class="promotion-image-3" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm lastest collectin" />
 								<div class="absolute pl-20 pb-20 bottom-center text-left">
 									<h2 class="hidden-md-down text-white">BEDDING<br>ACCESSORIES</h2>
-									<a href="<?= base_url('home/beddingAcc');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+									<a href="<?= base_url('home/bedding_acc');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 								</div>
 							</div>
 						</div>
