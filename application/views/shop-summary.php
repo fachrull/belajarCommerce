@@ -112,7 +112,7 @@
         <?php if ($available == TRUE): ?>
           <div class="row">
             <div class="col-sm-6">
-              <a href="#" class="col-sm-12 btn btn-default">Cancle Order</a>
+              <a href="#" class="col-sm-12 btn btn-default">Cancel Order</a>
             </div>
             <div class="col-sm-6 text-right">
               <a href="#" class="col-sm-12 btn btn-oldblue">Purchase</a>
@@ -124,7 +124,7 @@
               <a href="<?= site_url('home/shopCart')?>" class="col-sm-12 btn btn-default">Back to Cart</a>
             </div>
             <div class="col-sm-6 text-right">
-              <a href="#" class="col-sm-12 btn btn-danger">Cancle Order</a>
+              <a href="#" class="col-sm-12 btn btn-danger">Cancel Order</a>
             </div>
           </div>
         <?php endif; ?>
