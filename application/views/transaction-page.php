@@ -53,7 +53,16 @@
                                       <?php foreach ($orderList as $myOrder): ?>
                                         <div class="card card-success hover-shadow rad-0">
                                             <div class="card-heading">
-                                                <a class="btn <?= $myOrder['class']?> btn-sm float-right"><?= $myOrder['status']?></a>
+                                                <!-- <a class="btn <?= $myOrder['class']?> btn-sm float-right"><?= $myOrder['status']?></a> -->
+                                                <?php if ($myOrder['status_order'] == 1): ?>
+                                                  <a class="btn btn-success btn-sm float-right">Sampai Tujuan</a>
+                                                <?php elseif($myOrder['status_order'] == 2): ?>
+                                                  <a class="btn btn-warning btn-sm float-right">Menunggu Konfirmasi</a>
+                                                <?php elseif($myOrder['status_order'] == 3): ?>
+                                                  <a class="btn btn-danger btn-sm float-right">Dibatalkan</a>
+                                                <?php elseif($myOrder['status_order'] == 4): ?>
+                                                  <a class="btn btn-secondary btn-sm float-right">Order Belum Lengkap</a>
+                                                <?php endif; ?>
                                                 <h2 class="card-title"><strong><?= $myOrder['name']?></strong>(<?= $myOrder['quantity']?>)</h2>
                                             </div>
                                             <a href="<?= site_url('home/detail_transaction/'.$myOrder['id']);?>">

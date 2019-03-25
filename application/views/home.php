@@ -73,12 +73,20 @@
 				</div>
 				<div class="row">
 					<div class="col-12 text-center">
-						<button class="brand-button wow fadeInUp" data-wow-delay="0.6s">
+						<button class="brand-button wow fadeInUp" data-wow-delay="0.4s">
 							N E W S L E T T E R
 						</button>
-						<a class="wow fadeInUp" data-wow-delay="0.6s" href="<?= site_url('home/partnership')?>">
-							<p>View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
+						<br>
+						<button>
+						<a style="width:auto !important" class="wow fadeInUp" data-toggle="modal" data-target=".bs-example-modal-sm" data-wow-delay="0.4s">
+							<p style="width:auto !important" class="text-center">View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
 						</a>
+						</button>
+						<!-- <a style="width:auto !important" class="wow fadeInUp" data-toggle="modal" data-target=".bs-example-modal-sm" data-wow-delay="0.4s">
+							<p style="width:auto !important" class="text-center">View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
+						</a> -->
+
+
 
 					</div>
 				</div>
@@ -115,14 +123,14 @@
 								<img class="promotion-image-3" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm lastest collectin" />
 								<div class="absolute pl-20 pb-20 bottom-center text-left">
 									<h2 class="hidden-md-down text-white">BED<br>LINEN</h2>
-									<a href="<?= base_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+									<a href="<?= base_url('home/bed_linen');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 								</div>
 							</div>
 							<div class="col-md-6 pt-30">
 								<img class="promotion-image-3" src="<?= base_url('');?>asset/content-images/slider-1-100x100.png" alt="agm lastest collectin" />
 								<div class="absolute pl-20 pb-20 bottom-center text-left">
 									<h2 class="hidden-md-down text-white">BEDDING<br>ACCESSORIES</h2>
-									<a href="<?= base_url('home/promotionPage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+									<a href="<?= base_url('home/bedding_acc');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 								</div>
 							</div>
 						</div>
@@ -228,3 +236,29 @@
 	</div>
 </section>
 <!-- /LOCATION -->
+
+<!-- Large Modal >-->
+<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-sm">
+		<div class="modal-content">
+
+			<!-- header modal -->
+			<div class="modal-header">
+				<h4 class="modal-title float-left" id="mySmallModalLabel">Stay In The Know</h4>
+				<button type="button" class="close float-right" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			</div>
+
+			<!-- body modal -->
+			<div class="modal-body">
+			<h6>Be the first to hear about new inventory and offers.</h6>
+				<div class="input-email pb-0 mb-0" style="width:265px !important;">
+					<input type="text" class="form-control form-control-footer" placeholder="Your Mail" aria-label="Your Mail"
+					 aria-describedby="basic-addon2" style="width:265px !important;">
+				</div>
+				<button class="btn-sm float-right mt-10">SUBMIT <i class="fa fa-chevron-right"></i></button>
+			</div>
+
+		</div>
+	</div>
+</div>
+<!-- /Large Modal -->

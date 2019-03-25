@@ -11,10 +11,10 @@
         <div class="box">
           <div class="box-body">
             <div class="row">
-              <div class="col-md-4">
-                <a href="<?= site_url('admin/addProd');?>" class="mb-10 btn btn-oldblue h-30"><i class="fa fa-plus"></i> Add Product</a>
+              <div class="col-md-6">
+                <a href="<?= site_url('admin/addProd');?>" class="mb-10 btn btn-oldblue "><i class="fa fa-plus"></i> Add Product</a>
               </div>
-              <div class="col-sm-8">
+              <div class="col-sm-6">
                 <form action="<?= site_url('admin/allProd')?>" method="post" class="m-0">
                   <div class="row">
                     <div class="col-sm-4 mb-10">
@@ -38,7 +38,7 @@
                       </label>
                     </div>
                     <div class="col-sm-3 mb-10">
-                      <button type="submit" name="submit" class="btn btn-oldblue h-30 form-all-product">
+                      <button type="submit" name="submit" class="btn btn-oldblue  form-all-product">
                         <i class="fa fa-search"></i> Search
                       </button>
                     </div>
@@ -60,8 +60,8 @@
                 <?php foreach ($products as $product): ?>
                   <tr>
                     <td><?=$no;?></td>
-                    <td><?= $product['name'];?></td>
-                    <td>-</td>
+                    <td><?= $product['product'];?></td>
+                    <td><?= 'Rp '.$product['price']?></td>
                     <td>-</td>
                     <td>
                       <a href="<?= site_url('admin/detailProd/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>

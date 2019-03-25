@@ -62,11 +62,11 @@
 				</div>
 				<!-- BRANDS -->
 
-				<!-- BANNER ROTATOR -->
-                <div class="owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+				<!-- BANNER ROTATOR MD -->
+                <div class="hidden-sm-down  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
 							<div class="banner-rotator">
 							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute mt-120">
+							<div class="absolute" style="top:45%;>
 								<a href="<?= base_url('home/bestSeller');?>">
 								<p>Best Seller 1</p>
 								</a>
@@ -79,7 +79,7 @@
 							</div>
 							<div class="banner-rotator">
 							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute mt-120">
+							<div class="absolute" style="top:45%;>
 								<a href="<?= base_url('home/bestSeller');?>">
 								<p>Best Seller 2</p>
 								</a>
@@ -90,8 +90,8 @@
 								</a>
 								</div>
 							</div>
-						</div>
-					<!-- /BANNER ROTATOR -->
+				</div>
+				<!-- /BANNER ROTATOR -->
 
 			</div>
 
@@ -104,21 +104,26 @@
 					<!-- IMAGE -->
 					<div class="col-lg-6 col-sm-6">
 
-						<div class="thumbnail relative mb-3">
-							<figure id="zoom-primary" class="zoom" data-mode="mouseover">
-								<a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'><i
-									 class="glyphicon glyphicon-search"></i></a>
-								<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
-							</figure>
-
+					<div class="owl-carousel buttons-autohide controlls-over text-center mb-0" data-plugin-options='{"singleItem": true, "autoPlay": 8000, "navigation": true, "pagination": false}'>
+					<div class="relative mb-3">
+								<a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'>
+									<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
+								</a>
 						</div>
+						<div class="relative mb-3">
+								<a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'>
+									<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
+								</a>
+						</div>
+					</div>
+						
 
 						<div class="tabbed hidden-lg-down text-center">
                                 <?php foreach($specs as $spec):?>
 									<a href="1" id="1">
 										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/5-zone-pocket-spring.png.pagespeed.ce.MDUzM1LUYu.png" alt="">
-										<div class="text-center">
-											<h3><?= $spec['name'];?></h3>
+										<div style="width:100%">
+											<h3 class="text-center"><?= $spec['name'];?></h3>
 										</div>
 									</a>
 								<?php endforeach;?>
@@ -140,15 +145,12 @@
 						</div>
 
 						<div class="mb-15 pl-0">
-							<p class="text-left fs-18 bold">
+							<p class="text-left fs-18 bold" id="price2">
 							Rp. <span class="minprice"><?= $product['min_price'];?></span>
 							-
 							Rp. <span class="maxprice"><?= $product['max_price'];?></span>
 							</p>
-							<p id="price2">
-							
-							</p>
-							
+
 						</div>
 
 						<hr />
@@ -193,7 +195,7 @@
 											</select>
 
 											<label>District</label>
-											<select id="sub_district" name="cart-tax-state" class="form-control pointer mb-20">
+											<select id="sub_district" name="sub_district" class="form-control pointer mb-20">
 												<option value="Select" selected disabled> Select </option>
 												<!-- add all here -->
 											</select>
@@ -205,7 +207,7 @@
 
 						<!-- FORM -->
 						<div id="shoppingForm" class="row text-center">
-							<form class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
+							<form id="cart_form" class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
 								<input type="hidden" id="product_id" name="product_id" value="<?= $product['id'];?>" />
 								<input type="hidden" name="product_name" value="<?= $product['name'];?>" />
 								<input type="hidden" id="price" name="price" />
@@ -224,7 +226,7 @@
 								<div class="col-2 col-md-2 mb-10">Qty:</div>
 								<div class="col-4 col-md-10 mb-10">
 									<div>
-										<input name="qty" type="text" value="1" min="0" max="1000" class="form-control stepper" style="width:100% !important;">
+										<input id="qty" name="qty" type="number" value="1" min="1" class="form-control stepper" style="width:100% !important;">
 									</div><!-- /btn-group -->
 								</div>
                                 <div class="col-4 col-md-12 float-right">
@@ -245,87 +247,88 @@
 
 				</div>
 
-
+				<!-- BANNER ROTATOR SM -->
+				<div class="hidden-md-up  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+							<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+							<div class="absolute" style="top:48%;">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p style="bottom:0px;">Best Seller 1</p>
+								</a>
+								</div>
+							<div class="absolute position-bottom">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>View Detail</p>
+								</a>
+								</div>
+							</div>
+							<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
+							<div class="absolute" style="top:48%;">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>Best Seller 2</p>
+								</a>
+								</div>
+							<div class="absolute position-bottom">
+								<a href="<?= base_url('home/bestSeller');?>">
+								<p>View Detail</p>
+								</a>
+								</div>
+							</div>
+				</div>
+				<!-- /BANNER ROTATOR -->
 
 				<ul id="myTab" class="nav nav-tabs nav-top-border mt-80" role="tablist">
-					<li class="nav-item"><a class="nav-links active" href="#reviews" data-toggle="tab">Reviews (2)</a></li>
+					<li class="nav-item"><a class="nav-links active" href="#reviews" data-toggle="tab">Reviews</a></li>
 				</ul>
 
 				<div class="tab-content pt-20">
-
-
 					<!-- REVIEWS -->
 					<div role="tabpanel" id="reviews">
 								<!-- REVIEW ITEM -->
-								<div class="block mb-60">
+								<?php foreach ($reviews as $review): ?>
+									<div class="block mb-60">
 
-									<span class="user-avatar">
-										<!-- user-avatar -->
-										<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
-									</span>
+										<span class="user-avatar">
+											<!-- user-avatar -->
+											<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
+										</span>
 
-									<div class="media-body">
-										<h4 class="media-heading fs-14">
-											John Doe &ndash;
-											<span class="text-muted">June 29, 2014 - 11:23</span> &ndash;
-											<span class="fs-14 text-muted">
-												<!-- stars -->
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-											</span>
-										</h4>
+										<div class="media-body">
+											<h4 class="media-heading fs-14">
+												<?= $review['name']?> &ndash;
+												<span class="text-muted"><?= $review['date_attempt']?></span> &ndash;
+												<span class="fs-14 text-muted">
+													<?php for($i = 0; $i < $review['stars']; $i++): ?>
+														<i class="fa fa-star"></i>
+													<?php endfor; ?>
+												</span>
+											</h4>
 
-										<p>
-											Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta
-											dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.
-										</p>
+											<p>
+												<?= $review['comment']?>
+											</p>
+
+										</div>
 
 									</div>
-
-								</div>
+								<?php endforeach; ?>
 								<!-- /REVIEW ITEM -->
 
-								<!-- REVIEW ITEM -->
-								<div class="block mb-60">
-
-									<span class="user-avatar">
-										<!-- user-avatar -->
-										<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
-									</span>
-
-									<div class="media-body">
-										<h4 class="media-heading fs-14">
-											John Doe &ndash;
-											<span class="text-muted">June 29, 2014 - 11:23</span> &ndash;
-											<span class="fs-14 text-muted">
-												<!-- stars -->
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star"></i>
-												<i class="fa fa-star-o"></i>
-												<i class="fa fa-star-o"></i>
-											</span>
-										</h4>
-
-										<p>
-											Proin eget tortor risus. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta
-											dapibus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur
-											adipiscing elit. Maecenas metus nulla, commodo a sodales sed, dignissim pretium nunc. Nam et lacus neque.
-										</p>
-
+								<?php if ($this->session->has_userdata('error')): ?>
+									<div class="text-center">
+										<div class="container">
+											<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
+												<?= $this->session->userdata('error');?>
+											</div>
+										</div>
 									</div>
-
-								</div>
-								<!-- /REVIEW ITEM -->
+								<?php endif; ?>
 
 
 								<!-- REVIEW FORM -->
 								<h4 class="page-header mb-40">ADD A REVIEW</h4>
-								<form method="post" action="#" id="form">
+								<form method="post" action="<?= site_url('home/reviewProduct/'.$product['id'])?>" id="form">
 
 									<div class="row mb-10">
 
@@ -344,7 +347,7 @@
 
 									<!-- Comment -->
 									<div class="mb-30">
-										<textarea name="text" id="text" class="form-control" rows="6" placeholder="Comment" maxlength="1000"></textarea>
+										<textarea name="comment" id="text" class="form-control" rows="6" placeholder="Comment" maxlength="1000"></textarea>
 									</div>
 
 									<!-- Stars -->
@@ -384,7 +387,7 @@
 								<!-- /REVIEW FORM -->
 
 							</div>
-				</div>
+					</div>
 
 
 			</div>

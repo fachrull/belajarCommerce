@@ -10,10 +10,10 @@
           <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <a href="<?= site_url('admin/addCat');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i>Category</a>
+                    <a href="<?= site_url('admin/addCat');?>" class="btn btn-oldblue "><i class="fa fa-plus"></i> Category</a>
                 </div>
             </div>
-            <hr class="col-xs-12">
+            <hr>
           <table id="dataTable" class="table table-bordered table-striped">
           <thead>
             <th>No.</th>
@@ -27,11 +27,11 @@
               <tr>
                 <td><?=$no;?></td>
                 <td><?= $cat['name'];?></td>
-                <td><a href="<?= site_url('admin/deleteCat/'.$cat['id']);?>" class="btn btn-danger h-30" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a></td>
+                <td><a href="<?= site_url('admin/deleteCat/'.$cat['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
                 <?php if ($cat['status'] == 1): ?>
-                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>" class="btn btn-success h-30">Active</a></td>
+                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a></td>
                 <?php else: ?>
-                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>" class="btn btn-danger h-30">Inactive</a></td>
+                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a></td>
                 <?php endif; ?>
               </tr>
               <?php $no++; ?>

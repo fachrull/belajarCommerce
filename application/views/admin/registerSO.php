@@ -19,19 +19,19 @@
               <form class="m-0 sky-form" action="<?= site_url('auth/regisSO');?>" method="post">
                   <p class="register-box-msg">Register a new Store Owner</p>
                   <label class="input mb-10">
-                    <input name="uname" type="text" placeholder="Username">
+                    <input class="form-control" name="uname" type="text" placeholder="Username">
                   </label>
                   <label class="input mb-10">
-                    <input name="email" type="email" placeholder="Email address">
+                    <input class="form-control" name="email" type="email" placeholder="Email address">
                   </label>
                   <label class="input mb-10">
-                    <input name="company_name" type="text" placeholder="Company Name">
+                    <input class="form-control" name="company_name" type="text" placeholder="Company Name">
                   </label>
                   <label class="input mb-10">
-                    <input name="add" type="text" placeholder="Address">
+                    <input class="form-control" name="add" type="text" placeholder="Address">
                   </label>
                   <label class="input mb-10">
-                    <input name="add2" type="text" placeholder="Address 2">
+                    <input class="form-control" name="add2" type="text" placeholder="Address 2">
                   </label>
                   <label class="input mb-10">
                     <select class="form-control" name="province" id="province">
@@ -52,29 +52,29 @@
                     </select>
                   </label>
                   <label class="input mb-10">
-                    <input name="pCode" type="text" placeholder="Postcode">
+                    <input class="form-control" name="pCode" type="text" placeholder="Postcode">
                   </label>
                   <div class="row mb-3">
                     <div class="col-md-6">
                       <label class="input mb-10">
-                        <input name="phone1" type="text" placeholder="Phone Number">
+                        <input class="form-control" name="phone1" type="text" placeholder="Phone Number">
                       </label>
                     </div>
-                    <div class="col col-md-6 mb-10">
+                    <div class="col col-md-6">
                       <label class="input">
-                        <input name="fax" type="text" placeholder="Fax">
+                        <input class="form-control" name="fax" type="text" placeholder="Fax">
                       </label>
                     </div>
                   </div>
                   <div class="row mb-3">
                       <div class="col-md-6">
                           <label class="input mb-10">
-                              <input name="lat" type="text" placeholder="Latitude">
+                              <input class="form-control" name="lat" type="text" placeholder="Latitude">
                           </label>
                       </div>
                       <div class="col col-md-6 mb-10">
                           <label class="input mb-10">
-                              <input name="lng" type="text" placeholder="Langtitude">
+                              <input class="form-control" name="lng" type="text" placeholder="Langtitude">
                           </label>
                       </div>
                   </div>

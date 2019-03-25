@@ -72,36 +72,40 @@
                 <?php endif; ?>
                 <?php if($this->session->userdata('uType') == 1): ?>
                   <p class="register-box-msg">Register a new Admin</p>
-                  <label class="input mb-10">
-                    <input name="uname" type="text" placeholder="Username">
-                  </label>
-                  <label class="input mb-10">
-                    <input name="email" type="email" placeholder="Email address">
-                  </label>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <label class="input mb-10">
+                        <input class="form-control" name="uname" type="text" placeholder="Username">
+                      </label>
+                      <label class="input mb-10">
+                        <input class="form-control" name="email" type="email" placeholder="Email address">
+                      </label>
+                    </div>
+                  </div>
                   <div class="row mb-3">
                     <div class="col-md-6">
                       <label class="input">
-                        <input name="fname" type="text" placeholder="First name">
+                        <input class="form-control" name="fname" type="text" placeholder="First name">
                       </label>
                     </div>
                     <div class="col col-md-6">
                       <label class="input">
-                        <input name="lname" type="text" placeholder="Last name">
+                        <input class="form-control" name="lname" type="text" placeholder="Last name">
                       </label>
                     </div>
                   </div>
                   <label class="input mb-10">
-                    <input name="phone" type="text" placeholder="Phone Number">
+                    <input class="form-control" name="phone" type="text" placeholder="Phone Number">
                   </label>
                   <label class="input mb-10">
-                    <select class="form-control" name="adminType">
+                    <select class="form-control" class="form-control" name="adminType">
                       <option value="0" selected disabled>Admin Authority</option>
                       <option value="1">Super Admin</option>
                       <option value="2">Admin</option>
                     </select>
                   </label>
                 <?php endif; ?>
-                <div class="row">
+                <div class="row mt-10">
                   <div class="col-md-12 text-right">
                     <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> REGISTER</button>
                   </div>

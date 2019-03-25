@@ -18,7 +18,7 @@
               <th>City</th>
               <th>Sub District</th>
               <th>Phone</th>
-              <th>Detai</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -31,7 +31,9 @@
                 <td><?= $cities[$i][0]['city']?></td>
                 <td><?= $sub_districts[$i][0]['sub_district']?></td>
                 <td><?= $posts[$i]['phone1']?></td>
-                <td><a href="<?=site_url('admin/stores/'.$posts[$i]['id']);?>" type="submit" class="btn btn-oldblue text-white">Detail</a></td>
+                <td>
+                  <a href="<?=site_url('admin/stores/'.$posts[$i]['id']);?>" type="submit"><i class="btn btn-oldblue fa fa-info"></i></a>
+                </td>
               </tr>
             <?php endfor; ?>
             </tbody>

@@ -57,13 +57,14 @@ class Home extends CI_Controller{
         $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
-      $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
-      $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
-      $data['stores'] = $this->storesToGeoJson();
+        $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
+        $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
+        $data['stores'] = $this->storesToGeoJson();
 
-      $this->load->view('include/header');
-      $this->load->view('home', $data);
-      $this->load->view('include/footer');
+        $this->load->view('include/header');
+        $this->load->view('home', $data);
+        $this->load->view('include/footer');
+
     } elseif ($this->session->userdata('uType') == NULL) {
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
       $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
@@ -134,21 +135,50 @@ class Home extends CI_Controller{
     }
   }
 
-  public function shop($brand, $category){
-    if($brand == 6){
+  public function shop($brand = NULL, $category = NULL){
+    if ($brand === NULL && $category === NULL) {
+      $data['products'] = $this->mhome->getShop_product();
+      $data['brand'] = array('name' => 'All Products');
+      $data['category'] = $this->mhome->brand_categories($brand);
+    } elseif ($brand !== NULL && $category === NULL) {
+      if($brand === 6){
         $category = NULL;
+      }
+      $data['products'] = $this->mhome->getShop_product($brand);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->mhome->brand_categories($brand);
+    } else {
+      if($brand === 6){
+        $category = NULL;
+      }
+      $data['products'] = $this->mhome->getShop_product($brand, $category);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->mhome->brand_categories($brand);
     }
-    $data['products'] = $this->mhome->getProduct_price($brand, $category);
-    $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('nameField' => 'name', 'idField' => 'id'),
-      'tm_brands', TRUE);
-    $data['category'] = $this->mhome->brand_categories($brand);
-    $data['brands'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
-      'tm_brands', FALSE);
+    // print_r($data['category']);
+    // exit();
 
     $this->load->view('include/header2');
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
   }
+
+  // public function shop($brand = NULL, $category = NULL){
+  //   print_r($data['products']);
+  //   echo "</br></br>";
+  //   print_r($data['brand']);
+  //
+  //   $this->load->view('include/header2');
+  //   $this->load->view('shop', $data);
+  //   $this->load->view('include/footer');
+  //   exit();
+  //
+  //   $data['products'] = $this->mhome->getProduct_price($brand, $category);
+  //   $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('nameField' => 'name', 'idField' => 'id'),
+  //     'tm_brands', TRUE);
+  //   $data['brands'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
+  //     'tm_brands', FALSE);
+  // }
 
   public function listArticle(){
     $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
@@ -170,7 +200,7 @@ class Home extends CI_Controller{
   }
 
   public function checkStockbyDistrict($idProduct, $idDistrict){
-    $data = $this->mhome->checkStock_by_Distcit($idProduct, $idDistrict);
+    $data = $this->mhome->checkStock_by_District($idProduct, $idDistrict);
     if($data) {
         print_r(json_encode($data));
     } else {
@@ -201,6 +231,8 @@ class Home extends CI_Controller{
       'provinsi', FALSE);
     $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
     $data['sub_districts'] = $this->mhome->getProducts(NULL, NULL, 'kecamatan', FALSE);
+    $data['reviews'] = $this->mhome->getProducts(array('prod_id' => $idProduct, 'display' => 1), array('nameField' => 'name',
+      'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
     $idSpec = $this->mhome->getProducts(array('prod_id' => $idProduct),
        array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
     $idSize = $this->mhome->getProducts(array('prod_id' => $idProduct),
@@ -248,21 +280,80 @@ class Home extends CI_Controller{
     }
   }
 
-  public function deleteCart(){
-      $this->cart->destroy();
-      redirect('home/shopCart');
+  public function reviewProduct($idProduct){
+    $this->load->helper('form');
+    $this->load->library('form_validation');
+
+    $this->form_validation->set_rules('name', 'Name', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+    $this->form_validation->set_rules('comment', 'Comment', 'required');
+    $this->form_validation->set_rules('product-review-vote', 'Vote', 'required');
+
+    if ($this->form_validation->run() == TRUE) {
+      $data = array(
+        'prod_id' =>  $idProduct,
+        'name'    =>  $this->input->post('name'),
+        'email'   =>  $this->input->post('email'),
+        'comment' =>  $this->input->post('comment'),
+        'stars'    =>  $this->input->post('product-review-vote'),
+        'display' =>  0,
+      );
+      $this->mhome->inputData('tm_review', $data);
+      redirect('home/detailProduct/'.$idProduct);
+    } else {
+      $this->session->set_flashdata('error', validation_errors());
+      redirect('home/detailProduct/'.$idProduct);
+    }
+
   }
 
-  public function updateCart($cart_rowId){
+  public function updateCart(){
+    $carts = $this->cart->contents();
+    if ($carts != NULL) {
+      $qty = $this->input->post('qty');
+
+      $no = 0;foreach ($carts as $cart) {
+        $update_cart = array(
+          'rowid' =>  $cart['rowid'],
+          'qty'   =>  $qty[$no]
+        );
+        print_r($update_cart);echo "</br>";
+        $this->cart->update($update_cart);
+        $no++;
+      }
+
+      print_r($this->cart->contents());
+      redirect('home/shopCart');
+    } else {
+      redirect();
+    }
+  }
+
+  public function deleteCart(){
+      $cart = $this->cart->contents();
+      if ($cart != NULL) {
+        $this->cart->destroy();
+        redirect('home/shopCart');
+      } else {
+        redirect();
+      }
+  }
+
+  public function removeCart_item($cart_rowId){
+    $cart = $this->cart->contents();
+    if ($cart != NULL) {
       $this->cart->remove($cart_rowId);
       redirect('home/shopCart');
+    } else {
+      redirect();
+    }
   }
 
-  public function addToCart() {
+  public function addToCart($idDistrict) {
     $size_name = $this->mhome->sizeStock($this->input->post('size'));
     $idTrProduct['id_trProduct'] = $this->mhome->getProducts(array('id_product' => $this->input->post('product_id'),
       'id_product_size' => $this->input->post('size')), array('idField' => 'id'), 'tr_product', TRUE);
-    $idUserLogin = $this->session->userdata('uId');
+    // $idUserLogin = $this->session->userdata('uId');
     $product = $this->mhome->getProducts(array('id'=>$this->input->post('product_id')), NULL, 'tm_product', TRUE);
     $data = array(
       'id'          => $this->input->post('product_id'),
@@ -271,120 +362,509 @@ class Home extends CI_Controller{
       'price'       => $this->input->post('price'),
       'name'        => $this->input->post('product_name'),
       'id_trProduct'=> $idTrProduct['id_trProduct']['id'],
-      'id_userlogin'=> $idUserLogin,
+      'voucher'     => '',
+      'id_address'  => '',
+      'available'   => FALSE,
       'sizeName'    => $size_name[0]['name_size'],
       'detailSize'  => $size_name[0]['detail_size'],
-      'options' => array('Size' => $this->input->post('size'))
+      'sub_district'=> $idDistrict,
+      'options'     => array('Size' => $this->input->post('size'))
     );
+    // print_r($this->session->userdata());
+    // print_r($data);
+    // exit();
     $this->cart->insert($data);
+    // print_r($this->cart->contents());
+    // exit();
     redirect('home/shopCart');
   }
 
-  public function shopCart(){
-    $data['cart'] = $this->cart->contents();
-    $this->load->view('include/header2');
-    $this->load->view('shop-cart', $data);
-    $this->load->view('include/footer');
-  }
-
-  public function saveCart(){
-    if ($this->session->userdata('uType') == 4) {
-      $data['cart'] = $this->cart->contents();
-      print_r($data['cart']);
-      echo "</br>";
-      $rand = rand(1, 999);
-      foreach ($data['cart'] as $cart) {
-        $save_to_Order = array(
-          'order_number'  => 'AGM'.date("dmy").$rand,
-          'id_userlogin'  => $cart['id_userlogin'],
-          'id_trProduct'  => $cart['id_trProduct'],
-          'quantity'      => $cart['qty'],
-          'subtotal'      => $cart['subtotal'],
-          'total'         => $this->cart->total(),
-          'rowId'         => $cart['rowid'],
-          'status_order'  => 2
+  public function addVoucher(){
+    if ($this->cart->contents() != NULL) {
+      $voucherCode = $this->input->post('voucher');
+      $carts = $this->cart->contents();
+      foreach ($carts as $cart) {
+        $rowId = $cart['rowid'];
+        $addVoucher = array(
+          'rowid'   =>  $rowId,
+          'voucher' =>  $voucherCode
         );
-        $this->mhome->inputData('tm_order', $save_to_Order);
+        $this->cart->update($addVoucher);
+        print_r($cart);
+        echo "</br></br>";
       }
-      // print_r($this->cart->total());
-      redirect('home/shopCheckout');
+      exit();
+      print_r($voucherCode);
     } else {
-      redirect('auth/login');
+      redirect('');
     }
   }
 
-  public function test(){
-    echo date("dmy");
-    $rand = rand(1,999);
-    echo "</br>";
-    print_r($rand);
+  public function shopCart(){
+      $data['cart'] = $this->cart->contents();
+      $this->load->view('include/header2');
+      $this->load->view('shop-cart', $data);
+      $this->load->view('include/footer');
+  }
+
+  public function checkout(){
+      if ($this->session->userdata('uType') == 4) {
+          $data['cart'] = $this->cart->contents();
+          $userId = $this->session->userdata('uId');
+          $defaultAdd = $this->mhome->getProducts(array('id_userlogin' => $userId, 'default_address' => 1),
+              array('idField' => 'id'), 'tm_customer_detail', true);
+          $rand = rand(1, 999);
+          $order = array (
+              'order_number'  => 'AGM'.date("dmy").$rand,
+              'id_userlogin'  => $userId,
+              'total'         => $this->cart->total(),
+              'address_detail' => $defaultAdd['id'],
+              'status_order'  => 2
+          );
+          $this->mhome->inputData('tm_order', $order);
+          $orderId = $this->mhome->getProducts(array('order_number' => $order['order_number']), array('id' => 'id'),
+              'tm_order',true);
+          foreach ($data['cart'] as $cart) {
+              $save_to_Order = array(
+                  'id_tm_order'  => $orderId['id'],
+                  'id_tr_Product'  => $cart['id_trProduct'],
+                  'quantity'      => $cart['qty'],
+                  'subtotal'      => $cart['subtotal']
+              );
+              $this->mhome->inputData('tr_order_detail', $save_to_Order);
+              $qtyStore = $this->mhome->getProducts(array('id' => $cart['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $newQuanStore = $qtyStore['quantity'] - $cart['qty'];
+              $inputQtyStore = array('quantity' => $newQuanStore);
+              $this->mhome->updateData(array('id' => $cart['id_trProduct']), $inputQtyStore, 'tr_product');
+          }
+          $this->cart->destroy();
+          redirect('home/checkoutDone');
+      } else {
+          redirect('auth/login');
+      }
+  }
+
+  public function cancelOrder($id) {
+      if($this->session->userdata('uType') ==  4) {
+          $statusOrder = array('status_order' => 3);
+          $idCustomer = $this->session->userdata('uId');
+          $this->mhome->updateData(array('id' => $id), $statusOrder, 'tm_order');
+          $data['detailOrder'] = $this->mhome->detailOrder($id, $idCustomer);
+
+          foreach ($data['detailOrder'] as $item) {
+              $id = $item->id_tr_product;
+              $qty = $item->quantity;
+              $qtyStore = $this->mhome->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $newQuanStore = $qtyStore['quantity'] + $qty;
+              $quantity = array('quantity' => $newQuanStore);
+              $this->mhome->updateData(array('id' => $id), $quantity, 'tr_product');
+          }
+          redirect('home/transactionPage');
+      }
+  }
+
+  public function shop_summary(){
+    if ($this->session->userdata('uType') == 4) {
+      $carts = $this->cart->contents();
+      if ($carts != NULL) {
+        $id_address = array();
+        $data['available'] = TRUE;
+        foreach ($carts as $cart) {
+          array_push($id_address, array('id_cs_detail' => $cart['id_address']));
+          if ($cart['available'] == FALSE) {
+            $data['available'] = FALSE;
+          }
+        }
+        $data['address_shipping'] = $this->mhome->customer_detail($id_address[0]['id_cs_detail']);
+        $data['carts']  = $this->cart->contents();
+
+        $this->load->view('include/header2');
+        $this->load->view('shop-summary', $data);
+        $this->load->view('include/footer');
+      } else {
+        redirect();
+      }
+    } else {
+      redirect('auth/login');
+    }
   }
 
   public function shopCheckout(){
-    $this->load->view('include/header2');
-    $this->load->view('shop-checkout');
-    $this->load->view('include/footer');
-  }
+    if($this->session->userdata('uType') == 4){
+      // Load helper form and library form validation
+      $this->load->helper('form');
+      $this->load->library('form_validation');
 
-  public function saveAddressOrder(){
-    if ($this->session->userdata('uType') == 4) {
-      $data['cart'] = $this->cart->contents();
-      print_r($data['cart']);
-      $userId = $this->session->userdata('uId');
-      echo "</br>";
-      foreach ($data['cart'] as $cart) {
-        $rowId = $cart['rowid'];
-        $orderNumber = $this->mhome->getProducts(array('rowId' => $rowId), array('orderNumberField' => 'order_number'), 'tm_order', TRUE);
-        $defaultAdd = $this->mhome->getProducts(array('id_userlogin' => $userId, 'default_address' => 1),
-           array('idField' => 'id'), 'tm_customer_detail', TRUE);
-        $qtyStore = $this->mhome->getProducts(array('id' => $cart['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
-        $newQuanStore = $qtyStore['quantity'] - $cart['qty'];
-        $inputQtyStore = array('quantity' => $newQuanStore);
-        $data = array('address_detail' => $defaultAdd['id']);
+      // Setting rules for the form
+      $this->form_validation->set_rules('firstname', 'Firstname','required');
+      $this->form_validation->set_rules('lastname', 'Lastname', 'required');
+      $this->form_validation->set_rules('address', 'Address', 'required');
+      $this->form_validation->set_rules('provinsi', 'Provinsi', 'required');
+      $this->form_validation->set_rules('kabupaten', 'Kabupaten', 'required');
+      $this->form_validation->set_rules('kecamatan', 'kecamatan', 'required');
+      $this->form_validation->set_rules('postcode', 'Postcode', 'required');
+      $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+      $this->form_validation->set_rules('phone', 'Phone Number', 'required');
 
-        print_r($rowId);
-        echo "</br>";
-        print_r($orderNumber['order_number']);
-        echo "</br>";
-        print_r($defaultAdd['id']);
-        echo "</br>";
-        print_r($qtyStore['quantity']);
-        echo "</br>";
-        print_r($newQuanStore);
-        echo "</br>";
-        print_r($inputQtyStore);
-        echo "</br>";
-        print_r($data);
-        echo "</br>";
+      // Condition if the form running FALSE
+      if ($this->form_validation->run() === FALSE) {
+        // Load cart session to carts (variable)
+        $carts = $this->cart->contents();
 
-        $this->mhome->updateData(array('rowId' => $rowId, 'order_number' => $orderNumber['order_number']), $data, 'tm_order');
-        $this->mhome->updateData(array('id' => $cart['id_trProduct']), $inputQtyStore, 'tr_product');
+        // Load customer userdata ID from session
+        $userId = $this->session->userdata('uId');
+
+        // make an empty variable type array to store district ID from cart
+        $district_cart = array();
+
+        // load customer default address district ID
+        $user_district = $this->mhome->getProducts(array('id_userlogin' => $userId, 'default_address' => 1),
+        array('subDistrict' => 'sub_district'), 'tm_customer_detail', TRUE);
+
+        // set an empty variable above from ID district on cart
+        foreach ($carts as $cart) {
+          array_push($district_cart, $cart['sub_district']);
+        }
+
+        // load detail profile with a default address customer to store it to view
+        $data['alamat_default'] = $this->mhome->detailProfileCustomer($this->session->userdata('uId'));
+
+        // load detail cart to store it to view
+        $data['carts'] = $this->cart->contents();
+        // $data['historicals'] = $this->mhome->historicalShipping($this->session->userdata('uId'));
+
+        // load detail district, city, and province, and store it to view
+        $data['addressCart'] = $this->mhome->detail_district_cart($district_cart[0]);
+
+        // load view
+        $this->load->view('include/header2');
+        $this->load->view('shop-checkout', $data);
+        $this->load->view('include/footer');
+
+        // Condition if the form running TRUE
+      } else {
+        // store id user login from session
+        $idUserLogin = $this->session->userdata('uId');
+
+        // store data on cart
+        $carts = $this->cart->contents();
+
+        // make an empty variable type array to store district ID from cart
+        $district_cart = array();
+
+        // set an empty variable above from ID district on cart
+        foreach ($carts as $cart) {
+          array_push($district_cart, $cart['sub_district']);
+        }
+
+        // load detail province, city, and district from the variable that we fill before
+        $addressCart = $this->mhome->detail_district_cart($district_cart[0]);
+
+        // load customer default address
+        $shipping_same_with_default_address = $this->mhome->getProducts(array('sub_district' => $district_cart[0],
+          'id_userlogin' => $idUserLogin, 'default_address' => 1), array('idField' => 'id', 'defaultAddress' => 'default_address'),
+           'tm_customer_detail', TRUE);
+
+        print_r($shipping_same_with_default_address);echo "</br></br>";
+
+        // checking is shipping address has same district with default address or not
+        if ($shipping_same_with_default_address != NULL) {
+
+          // beli   stock
+          // 1      98    TRUE
+          // 5      4     FALSE
+          // 4      4     TRUE
+          // 4      3     TRUE
+
+          // if shipping is same with default address
+          // checking availability
+          foreach ($carts as $cart) {
+            // id tr_product from cart
+            $id_trProduct = $cart['id_trProduct'];
+            // checking the stock
+            $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+
+            // checking is the stock more than 3 and insert id shipping address
+            if ($prod_qty['quantity'] > 3) {
+
+              // checking is the stock on store more than quantity that customer order and insert id shipping address
+              if ($cart['qty'] < $prod_qty['quantity']) {
+                $availablelity_stock = array(
+                  'rowid'       => $cart['rowid'],
+                  'id_address'  => $shipping_same_with_default_address['id'],
+                  'available'   => TRUE
+                );
+                $this->cart->update($availablelity_stock);
+
+              // checking is the stock on store less than quantity that customer order and insert id shipping address
+              } else {
+                $availablelity_stock = array(
+                  'rowid'       => $cart['rowid'],
+                  'id_address'  => $shipping_same_with_default_address['id'],
+                  'available'   => FALSE
+                );
+                $this->cart->update($availablelity_stock);
+              }
+
+            // checking is the stock less than 3 and insert id shipping address
+            } else {
+              $availablelity_stock = array(
+                'rowid'       => $cart['rowid'],
+                'id_address'  => $shipping_same_with_default_address['id'],
+                'available'   => FALSE
+              );
+              $this->cart->update($availablelity_stock);
+            }
+          }
+
+          print_r($this->cart->contents());
+          redirect('home/shop_summary');
+        } else {
+
+          // store shipping address to an array variable
+          $shipping_address = array(
+            'id_userlogin'    =>  $idUserLogin,
+            'first_name'      =>  $this->input->post('firstname'),
+            'last_name'       =>  $this->input->post('lastname'),
+            'address'         =>  $this->input->post('address'),
+            'province'        =>  $this->input->post('provinsi'),
+            'city'            =>  $this->input->post('kabupaten'),
+            'sub_district'    =>  $this->input->post('kecamatan'),
+            'postcode'        =>  $this->input->post('postcode'),
+            'email'           =>  $this->input->post('email'),
+            'phone'           =>  $this->input->post('phone'),
+            'default_address' =>  0
+          );
+
+          // shearching are the shipping address has already being shipped before
+          $has_same_shipped_address = $this->mhome->getProducts($shipping_address, array('idField' => 'id'),
+           'tm_customer_detail', TRUE);
+
+          // if the shipping address has already being shipped address before
+          if ($has_same_shipped_address != NULL) {
+
+            print_r($has_same_shipped_address);echo "</br></br>";
+
+            foreach ($carts as $cart) {
+              // id tr_product from cart
+              $id_trProduct = $cart['id_trProduct'];
+              print_r($id_trProduct);echo "</br></br>";
+
+              // checking the stock
+              $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+
+              // checking is the stock more than 3 and insert id shipping address
+              if ($prod_qty['quantity'] > 3) {
+
+                // if quantity order less than stock
+                if ($cart['qty'] < $prod_qty['quantity']) {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $has_same_shipped_address['id'],
+                    'available'   =>  TRUE
+                  );
+                  $this->cart->update($availablelity_stock);
+
+                // if quntity order more than stock
+                } else {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $has_same_shipped_address['id'],
+                    'available'   =>  FALSE
+                  );
+                  $this->cart->update($availablelity_stock);
+                }
+              } else {
+                $availablelity_stock = array(
+                  'rowid'       =>  $cart['rowid'],
+                  'id_address'  =>  $has_same_shipped_address['id'],
+                  'available'   =>  FALSE
+                );
+                $this->cart->update($availablelity_stock);
+              }
+            }
+            print_r($this->cart->contents());
+            redirect('home/shop_summary');
+
+          // if the shipping address is new
+          } else {
+
+            // insert the new shipping address to tm_customer_detail
+            $this->mhome->inputData('tm_customer_detail', $shipping_address);
+
+            // select id from new shipping address
+            $id_new_shipping_address = $this->mhome->getProducts($shipping_address, array('idField' => 'id'),
+              'tm_customer_detail', TRUE);
+            print_r($id_new_shipping_address);echo "</br></br>";
+
+            foreach ($carts as $cart) {
+              // id tr_product from cart
+              $id_trProduct = $cart['id_trProduct'];
+              print_r($id_trProduct);echo "</br></br>";
+
+              // checking the stock
+              $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+
+              // checking is the stock more than 3 and insert id shipping address
+              if ($prod_qty['quantity'] > 3) {
+
+                // if quantity stock less than order
+                if ($cart['qty'] < $prod_qty['quantity']) {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $id_new_shipping_address['id'],
+                    'available'   =>  TRUE
+                  );
+                  $this->cart->update($availablelity_stock);
+
+                // if quantity order more than
+                } else {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $id_new_shipping_address['id'],
+                    'available'   =>  FALSE
+                  );
+                  $this->cart->update($availablelity_stock);
+                }
+              } else {
+                $availablelity_stock = array(
+                  'rowid'       =>  $cart['rowid'],
+                  'id_address'  =>  $id_new_shipping_address['id'],
+                  'available'   =>  FALSE
+                );
+                $this->cart->update($availablelity_stock);
+              }
+            }
+            print_r($this->cart->contents());
+            redirect('home/shop_summary');
+          }
+
+        }
+        exit();
+
+
+        // checking availablity stock
+        $availableStock = array();
+        foreach ($carts as $cart) {
+          echo "Id tr_product: ";print_r($cart['id_trProduct']);echo "</br>";
+          echo "Quantity :";print_r($cart['qty']);echo "</br>";
+
+          $tr_prod = $this->mhome->getProducts(array('id' => $cart['id_trProduct']), array('idField' => 'id',
+           'qtyF' => 'quantity'), 'tr_product', TRUE);
+          print_r($tr_prod);echo "</br>";
+
+          $qtyAfter = $tr_prod['quantity'] - $cart['qty'];
+          print_r($qtyAfter);
+        }
+        echo "</br></br>";
+
+        $data = array(
+          'id_userlogin'    =>  $idUserLogin,
+          'first_name'      =>  $this->input->post('firstname'),
+          'last_name'       =>  $this->input->post('lastname'),
+          'email'           =>  $this->input->post('email'),
+          'phone'           =>  $this->input->post('phone'),
+          'address'         =>  $this->input->post('address'),
+          'province'        =>  $addressCart['id_prov'],
+          'city'            =>  $addressCart['id_kab'],
+          'sub_district'    =>  $addressCart['id_kec'],
+          'postcode'        =>  $this->input->post('postcode'),
+          // 'default_address' =>  0
+        );
+
+        $alreadyHasAddress = $this->mhome->getProducts($data, array('idField' => 'id', 'default_addressF' => 'default_address'),
+         'tm_customer_detail', TRUE);
+        print_r($alreadyHasAddress);
+        echo "</br></br>";
+        if ($alreadyHasAddress['id'] !== NULL && $alreadyHasAddress['default_address'] == 1) {
+          $rand = rand(1, 999);
+          $data_order = array(
+              'order_number'    => 'AGM'.date("dmy").$rand,
+              'id_userlogin'    => $idUserLogin,
+              'total'           => $this->cart->total(),
+              'address_detail'  => $alreadyHasAddress['id'],
+              'status_order'    => 2,
+          );
+          print_r($data_order);
+          echo "</br></br>";
+          $this->mhome->inputData('tm_order', $data_order);
+          $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);
+
+          $data['cart'] = $this->cart->contents();
+          foreach ($data['cart'] as $cart) {
+            $detail_order = array(
+              'id_tm_order'   =>  $idOrder['id'],
+              'id_tr_product' =>  $cart['id_trProduct'],
+              'quantity'      =>  $cart['qty'],
+              'subtotal'      =>  $cart['subtotal']
+            );
+            $this->mhome->inputData('tr_order_detail', $detail_order);
+          }
+          $this->deleteCart();
+          redirect('home/checkoutDone');
+        } elseif ($alreadyHasAddress['id'] !== NULL) {
+          $rand = rand(1, 999);
+          $data_order = array(
+              'order_number'    => 'AGM'.date("dmy").$rand,
+              'id_userlogin'    => $idUserLogin,
+              'total'           => $this->cart->total(),
+              'address_detail'  => $alreadyHasAddress['id'],
+              'status_order'    => 2,
+          );
+          print_r($data_order);
+          echo "</br></br>";
+          $this->mhome->inputData('tm_order', $data_order);
+          $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);
+
+          $data['cart'] = $this->cart->contents();
+          foreach ($data['cart'] as $cart) {
+            $detail_order = array(
+              'id_tm_order'   =>  $idOrder['id'],
+              'id_tr_product' =>  $cart['id_trProduct'],
+              'quantity'      =>  $cart['qty'],
+              'subtotal'      =>  $cart['subtotal']
+            );
+            $this->mhome->inputData('tr_order_detail', $detail_order);
+          }
+          $this->deleteCart();
+          redirect('home/checkoutDone');
+        } else {
+          $data['default_address'] = 0;
+          print_r($data);
+          $this->mhome->inputData('tm_customer_detail', $data);
+          $newAddress = $this->mhome->getProducts($data, array('idField' => 'id'), 'tm_customer_detail', TRUE);
+          print_r($data);
+
+          $rand = rand(1, 999);
+          $data_order = array(
+              'order_number'    => 'AGM'.date("dmy").$rand,
+              'id_userlogin'    => $idUserLogin,
+              'total'           => $this->cart->total(),
+              'address_detail'  => $newAddress['id'],
+              'status_order'    => 2,
+          );
+          print_r($data_order);
+          echo "</br></br>";
+          $this->mhome->inputData('tm_order', $data_order);
+          $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);
+
+          $data['cart'] = $this->cart->contents();
+          foreach ($data['cart'] as $cart) {
+            $detail_order = array(
+              'id_tm_order'   =>  $idOrder['id'],
+              'id_tr_product' =>  $cart['id_trProduct'],
+              'quantity'      =>  $cart['qty'],
+              'subtotal'      =>  $cart['subtotal']
+            );
+            $this->mhome->inputData('tr_order_detail', $detail_order);
+          }
+          $this->deleteCart();
+          redirect('home/checkoutDone');
+        }
       }
-      $this->cart->destroy();
-      redirect('home/checkoutDone');
-      // foreach ($data['cart'] as $cart) {
-      //   $rowId = $cart['rowid'];
-      //   $orderNumber = $this->mhome->getProducts(array('rowId' => $rowId), array('orderNumberField' => 'order_number'), 'tm_order', TRUE);
-      //   $defaultAdd = $this->mhome->getProducts(array('id_userlogin' => $this->session->userdata('uId'), 'default_address' => 1),
-      //     array('idField' => 'id'), 'tm_customer_detail', TRUE);
-      //   $data = array('address_detail' => $defaultAdd['id']);
-      //   print_r($this->session->userdata('uId'));
-      //   echo "</br>";
-      //   print_r($rowId);
-      //   echo "</br>";
-      //   print_r($orderNumber['order_number']);
-      //   echo "</br>";
-      //   print_r($defaultAdd['id']);
-      //   echo "</br>";
-      //   print_r($data);
-      //   // $this->mhome->updateData(array('rowId' => $rowId, 'order_number' => $orderNumber['order_number']), $data, 'tm_order');
-      //   exit();
-      // }
-      // redirect('home/checkoutDone');
-    } else {
+    }else{
       redirect('auth/login');
     }
-
   }
 
   public function checkoutDone(){
@@ -399,8 +879,9 @@ class Home extends CI_Controller{
   }
 
   public function promotionPage(){
+      $data['promotions'] = $this->mhome->getProducts(NULL, NULL, 'tm_promotion', FALSE);
     $this->load->view('include/header2');
-    $this->load->view('promotion-page');
+    $this->load->view('promotion-page', $data);
     $this->load->view('include/footer');
   }
 
@@ -419,7 +900,7 @@ class Home extends CI_Controller{
   public function pageFaq(){
     $this->load->view('include/header2');
     $this->load->view('page-faq');
-    $this->load->view('include/footer2');
+    $this->load->view('include/footer');
   }
 
   public function termCondition(){
@@ -452,9 +933,10 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function promotionDetail(){
+  public function promotionDetail($id){
+      $data['promotion'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_promotion', TRUE);
     $this->load->view('include/header2');
-    $this->load->view('promotion-detail');
+    $this->load->view('promotion-detail', $data);
     $this->load->view('include/footer');
   }
 
@@ -482,6 +964,8 @@ class Home extends CI_Controller{
 
       $data['orderList'] = $this->mhome->listOrderCustomer($idCustomer);
 
+//      print_r($data);
+
       $this->load->view('include/header2');
       $this->load->view('transaction-page', $data);
       $this->load->view('include/footer');
@@ -495,6 +979,8 @@ class Home extends CI_Controller{
       $idCustomer = $this->session->userdata('uId');
       $data['detailOrder'] = $this->mhome->detailOrder($idOrder, $idCustomer);
 
+//      print_r($data['detailOrder'][0]->order_number);
+//
       $this->load->view('include/header2');
       $this->load->view('detail-transaction-page', $data);
       $this->load->view('include/footer');
@@ -510,9 +996,98 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  public function test(){
+    $data['bed_linenes'] = $this->mhome->bed_linenProducts();
+    $data['beddingACC'] = $this->mhome->beddingAcc();
+    print_r(count($data['bed_linenes']));
+    print_r($data['bed_linenes']);
+    echo "</br></br>";
+    print_r(count($data['beddingACC']));
+    echo "</br></br>";
+    print_r($data['beddingACC']);
+  }
+
   public function profileSetting(){
     $this->load->view('include/header2');
     $this->load->view('page-profile-settings');
     $this->load->view('include/footer');
+  }
+
+  public function bed_linen($brand = NULL){
+    if ($brand == NULL) {
+      $data['brand'] = array('id' => NULL, 'name' => 'Bed Linens');
+      $data['products'] = $this->mhome->bed_linenProducts();
+    } else {
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+        'tm_brands', TRUE);
+      $data['products'] = $this->mhome->bed_linenProducts($brand);
+    }
+    $data['brands'] = $this->mhome->bed_linenBrands();
+
+    $this->load->view('include/header2');
+    $this->load->view('bed_linen', $data);
+    $this->load->view('include/footer');
+  }
+
+  public function bedding_Acc($brand = NULL, $category = NULL){
+    if ($brand === NULL && $category === NULL) {
+      // select all product which the category aren't mattress neither bed linen
+
+      $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+      $data['products'] = $this->mhome->beddingACC();
+      $data['category'] = $this->mhome->beddingACC_Categories();
+      $data['brands'] = $this->mhome->beddingACC_Brands();
+    } elseif ($brand !== NULL && $category === NULL) {
+      // select all product with specific brand which the category aren't mattress neither bed linen
+
+      if ($brand == 0) {
+        // select all product with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+        $data['products'] = $this->mhome->beddingAcc();
+        $data['category'] = $this->mhome->beddingACC_Categories();
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      } else {
+        // select all product with specific brand and with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+          'tm_brands', TRUE);
+        $data['products'] = $this->mhome->beddingAcc($brand);
+        $data['category'] = $this->mhome->beddingACC_Categories($brand);
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      }
+    } else {
+      // select all product with specific brand and specific category which the category aren't mattress neither bed linen
+
+      if ($brand == 0) {
+        // select all product with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+        $data['products'] = $this->mhome->beddingAcc(NULL, $category);
+        $data['category'] = $this->mhome->beddingACC_Categories();
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      } else {
+        // select all product with specific brand and with specific category which the category aren't mattress neither bed linen
+
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+          'tm_brands', TRUE);
+        $data['products'] = $this->mhome->beddingAcc($brand, $category);
+        $data['category'] = $this->mhome->beddingACC_Categories($brand, $category);
+        $data['brands'] = $this->mhome->beddingACC_Brands();
+      }
+    }
+
+    $this->load->view('include/header2');
+    $this->load->view('bedding_acc', $data);
+    $this->load->view('include/footer');
+  }
+  public function subscribe(){
+      $email = $this->input->post('email');
+      $data = array(
+          'email'   =>  $email
+
+      );
+      $this->mhome->addNewsLetter($data);
+      redirect('/');
   }
 }

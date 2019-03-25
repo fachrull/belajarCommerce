@@ -33,6 +33,7 @@
 	<link href="<?= base_url('asset/css/layout-shop.css')?>" rel="stylesheet" type="text/css" />
 	<link href="<?= base_url('asset/css/lightgrey.css');?>" rel="stylesheet" type="text/css" id="color_scheme" />
 	<link href="<?= base_url('asset/css/pack-megashop.css');?>" rel="stylesheet" type="text/css" />
+    <link href="<?= base_url('asset/css/custom.css');?>" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -115,32 +116,32 @@
 									</a>
 									<ul class="dropdown-menu">
 										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/1/1');?>">
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/1');?>">
 												Aireloom
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/2/1');?>">
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/2');?>">
 												Kingkoil
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4/1');?>">
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
 												Serta
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5/1');?>">
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
 												Tempur
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3/1');?>">
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
 												Florence
 											</a>
 										</li>
 										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/6/1');?>">
+											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/6');?>">
 												Stressless
 											</a>
 										</li>

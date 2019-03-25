@@ -10,7 +10,7 @@
           <div class="box-body">
               <div class="row">
                   <div class="col-md-12">
-                      <a href="<?= site_url('admin/addBrand');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i>Brand</a>
+                      <a href="<?= site_url('admin/addBrand');?>" class="btn btn-oldblue"><i class="fa fa-plus"></i> Brand</a>
                   </div>
               </div>
               <hr class=col-xs-12>
@@ -27,11 +27,11 @@
                   <tr>
                     <td><?= $no;?></td>
                     <td><?= $brand['name'];?></td>
-                    <td><a href="<?= site_url('admin/deleteBrand/'.$brand['id'])?>" class="btn btn-danger h-30" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a></td>
+                    <td><a href="<?= site_url('admin/deleteBrand/'.$brand['id'])?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
                     <?php if ($brand['status'] == 1): ?>
-                      <td><a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>" class="btn btn-success h-30">Active</a></td>
+                      <td><a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a></td>
                     <?php else: ?>
-                      <td><a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>" class="btn btn-danger h-30">Active</a></td>
+                      <td><a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a></td>
                     <?php endif; ?>
                   </tr>
                   <?php $no++; ?>

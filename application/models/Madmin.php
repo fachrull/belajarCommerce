@@ -32,7 +32,21 @@ class Madmin extends CI_Model {
       return $query->result_array();
     }
   }
-  
+
+  public function listProduct(){
+    $this->db->select('a.id, a.name as product, b.price');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $this->db->group_by('a.id');
+    $this->db->order_by('a.id', 'desc');
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
   public function allProducts($condition = NULL, $selection = NULL, $table, $singleRowResult =  FALSE){
     if ($condition != NULL) {
       foreach ($condition as $key => $value) {
@@ -45,7 +59,7 @@ class Madmin extends CI_Model {
         $this->db->select($value);
       }
     }
-    
+
     $this->db->order_by("id", "desc");
     $query =  $this->db->get($table);
 
@@ -103,7 +117,7 @@ class Madmin extends CI_Model {
     $query = $this->db->get_where('user_login', array('user_id' =>$id));
     return $query->row_array();
   }
-  
+
   public function emailStore($idStore){
       $this->db->select('a.email');
       $this->db->from('user_login a');
@@ -131,7 +145,7 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
-  
+
   public function joinSizeProduct($prod_id){
       $this->db->select('b.id, a.name, a.size, b.price');
       $this->db->from('tm_size a');
@@ -144,7 +158,7 @@ class Madmin extends CI_Model {
           return FALSE;
       }
   }
-  
+
   public function joinStoreProv($store_id){
     $this->db->select('a.nama as province');
     $this->db->from('provinsi a');
@@ -183,7 +197,7 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
-  
+
   public function joinDetailStore(){
       $this->db->select('b.company_name, a.username, a.email');
       $this->db->from('user_login a');
@@ -196,7 +210,7 @@ class Madmin extends CI_Model {
         return FALSE;
     }
   }
-  
+
   public function getSizeName($idSize){
       $this->db->select('a.name');
       $this->db->from('tm_size a');
@@ -209,11 +223,197 @@ class Madmin extends CI_Model {
         return FALSE;
     }
   }
-  
+
   public function getSizeNameProduct($idSize){
       $this->db->select('name, size');
       $this->db->where('id', $idSize);
       $query = $this->db->get('tm_size');
       return $query->row_array();
   }
+
+  public function getProduct_orderBy($condition = NULL, $selection = NULL, $table, $orderby, $singleRowResult=FALSE){
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+
+    if ($selection != NULL) {
+      foreach ($selection as $key => $value) {
+        $this->db->select($value);
+      }
+    }
+
+    $this->db->group_by($orderby);
+    $query =  $this->db->get($table);
+
+    if ($singleRowResult === TRUE) {
+      return $query->row_array();
+    }else {
+      return $query->result_array();
+    }
+  }
+
+  public function detail_voucher($idVoucher){
+    $this->db->select('b.name, b.image');
+    $this->db->from('tr_bonus_voucher a');
+    $this->db->join('tm_product b', 'b.id = a.bonus', 'left');
+    $this->db->where('a.id_voucher', $idVoucher);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function detail_admin($idAdmin){
+    $this->db->select('b.user_id, a.first_name, a.last_name, a.phone, b.username, b.email, b.user_type');
+    $this->db->from('tm_super_admin a');
+    $this->db->join('user_login b', 'b.user_id = a.id_userlogin', 'left');
+    $this->db->where('a.id_userlogin', $idAdmin);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->row_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function detailAddress_store($idStore){
+    $this->db->select('a.city, a.province, b.nama as city_name, c.nama as prov_name');
+    $this->db->from('tm_store_owner a');
+    $this->db->join('kabupaten b', 'b.id_kab = a.city', 'left');
+    $this->db->join('provinsi c', 'b.id_prov = a.province', 'left');
+    $this->db->where('a.id', $idStore);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->row_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function detailCluster($idStore){
+    $this->db->select('a.id_store, a.sub_district, b.nama as prov_name, c.nama as city_name, d.nama as sub_name');
+    $this->db->from('tr_store_owner_cluster a');
+    $this->db->join('provinsi b', 'b.id_prov = a.province', 'left');
+    $this->db->join('kabupaten c', 'c.id_kab = a.city', 'left');
+    $this->db->join('kecamatan d', 'd.id_kec = a.sub_district', 'left');
+    $this->db->where('a.id_store', $idStore);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function product_bed_linen(){
+    $this->db->select('a.id, b.name, a.stars, a.position');
+    $this->db->from('tr_product_bed_linen a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->order_by('a.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detail_prod_bed_linen($idBedLinen){
+    $this->db->select('a.id, b.name, b.image, a.stars, a.position');
+    $this->db->from('tr_product_bed_linen a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $idBedLinen);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function beddingAcc(){
+    $this->db->select('a.id, b.name, a.stars, a.position');
+    $this->db->from('tr_product_bedding_acc a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->order_by('a.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detail_prod_bedding_acc($idBeddingACC){
+    $this->db->select('a.id, b.name, b.image, a.stars, a.position');
+    $this->db->from('tr_product_bedding_acc a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $idBeddingACC);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function best_seler(){
+    $this->db->select('a.id, b.name, a.stars, a.position');
+    $this->db->from('tr_product_best_seller a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->order_by('a.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function detail_prod_best_seller($idBestSeller){
+    $this->db->select('a.id, b.name, b.image, a.stars, a.position');
+    $this->db->from('tr_product_best_seller a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $idBestSeller);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function listReview(){
+    $this->db->select('a.id, a.name as username, a.email, b.name, b.image, a.comment, a.date_attempt, a.stars, a.display');
+    $this->db->from('tm_review a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function specific_review($link){
+    $this->db->select('a.id, a.name as username, a.email, b.name, b.image, a.comment, a.date_attempt, a.stars, a.display');
+    $this->db->from('tm_review a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $link);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function listSubscriber(){
+      return $this->db->get('tm_newsletter')->result_array();
+  }
+
 }

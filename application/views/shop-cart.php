@@ -51,7 +51,7 @@
 			<div class="col-lg-9 col-sm-8">
 
 				<!-- CART -->
-				<form class="cartContent clearfix" method="post" action="#">
+				<form class="cartContent clearfix" method="post" action="<?= site_url('home/updateCart')?>">
 
 					<!-- cart content -->
 					<div id="cartContent">
@@ -76,9 +76,9 @@
 								<span><?=$item['name']?></span>
 								<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
 							</a>
-							<a href="<?= site_url('home/updateCart/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
+							<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
 							<div class="total_price">Rp. <span><?=$item['subtotal']?></span></div>
-							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty" maxlength="3" max="999" min="1" /> &times; Rp.
+							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
 								<?=$item['price']?></div>
 							<div class="clearfix"></div>
 						</div>
@@ -115,8 +115,8 @@
 						<div class="toggle-content">
 							<p class="mb-20">Enter your discount coupon code.</p>
 
-							<form action="#" method="post" class="m-0">
-								<input type="text" id="cart-code" name="cart-code" class="form-control text-center mb-10" placeholder="Voucher Code"
+							<form action="<?= site_url('home/addVoucher')?>" method="post" class="m-0">
+								<input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code"
 								 required="required">
 								<button class="btn btn-oldblue btn-block" type="submit">APPLY</button>
 							</form>
@@ -183,7 +183,7 @@
 
 							<hr />
 
-							<a href="<?= site_url('home/saveCart');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
+							<a href="<?= site_url('home/shopCheckout');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
 								Check Out</a>
 						</div>
 					</div>

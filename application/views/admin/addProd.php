@@ -20,7 +20,7 @@
             <p class="register-box-msg">Add a new product</p>
               <div class="row mb-3">
                   <div class="col-md-6 col-xs-12">
-                      <label class="input">
+                      <label class="input" style="width:100% !important">
                           <select class="form-control" name="brand">
                             <option selected disabled>Select Brand</option>
                             <?php foreach ($brands as $brand): ?>
@@ -41,7 +41,7 @@
                   </div>
               </div>
               <label class="input mb-10">
-                  <input name="pName" type="text" placeholder="Product Name">
+                <input class="form-control" type="text" name="pName" placeholder="Product Name">
               </label>
               <div class="row mb-3">
                   <div class="col col-md-6 col-xs-12">
@@ -55,9 +55,8 @@
                       </label>
                   </div>
                   <div class="col col-md-5 col-xs-12">
-                      <label class="input">
-                          <input id="price" name="price" type="text"
-                            placeholder="Price (e.g 100000)">
+                      <label class="input mb-10">
+                          <input class="form-control" type="text" name="price" placeholder="Price (e.g 100000)">
                       </label>
                   </div>
                   <div class="col col-md-1 col-xs-12">

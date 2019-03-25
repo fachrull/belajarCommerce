@@ -32,16 +32,15 @@
 								<button class="fa fa-bars btn btn-mobile"></button>
 								<h4>CATEGORIES</h4>
 							</div>
-
-                            <?php if($category != NULL):?>
-							<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
+							<?php if($category != NULL):?>
+								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
-								<li class="list-group-item">
-									<a class="text-capitalize pt-4 pb-4 pl-0 pr-0" href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
+								<li class="list-group-noicon active">
+									<a href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
 								</li>
-								<?php endforeach;?>
-							</ul>
-                            <?php endif;?>
+									<?php endforeach;?>
+								</ul>
+							<?php endif;?>
 						</div>
 						<!-- /CATEGORIES -->
 
@@ -100,7 +99,7 @@
 					</div>
 
 					<!-- RIGHT -->
-					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="8"
+					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="12"
 					 data-pajinate-container=".pajinate-container">
 					    <?php if($products == NULL):?>
                             <p align:"center">Product tidak tersedia</p>
@@ -130,7 +129,7 @@
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
 							<?php foreach ($products as $product): ?>
 								<!-- ITEM -->
-								<li class="col-lg-6 col-sm-6">
+								<li class="col-lg-4 col-sm-4">
 
 									<div class="shop-item">
 
@@ -146,7 +145,7 @@
 
 												<!-- rating -->
 												<div class="shop-item-rating-line">
-													<div class="rating rating-0 fs-13">
+													<div class="rating rating-<?= $product['stars'] ?> fs-13">
 														<!-- rating-0 ... rating-5 -->
 													</div>
 												</div>

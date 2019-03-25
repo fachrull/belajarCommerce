@@ -10,7 +10,7 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-body">
-          <h2>
+          <h2 class="mb-30">
             <?= $product['name']?>
             </h2>
           <div class="row">
@@ -52,8 +52,7 @@
                 </div>
             <div class="col-xs-12">
               <label class="input mb-10"> <p>Description</p>
-                <textarea name="" id="" cols="30" rows="10" readonly><?= $product['description'];?></textarea>
-
+                <textarea name="" id="" cols="122" rows="10" readonly><?= $product['description'];?></textarea>
               </label>
             </div>
               </div>

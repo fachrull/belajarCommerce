@@ -17,7 +17,7 @@
               <form class="m-0 sky-form" action="<?= site_url('admin/addSpec');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                 <p class="register-box-msg">Add a new spec</p>
                 <label class="input mb-10">
-                  <input type="text" name="name" placeholder="Spec name">
+                  <input class="form-control" type="text" name="name" placeholder="Spec name">
                 </label>
                 <!-- <label class="input mb-10">
                   <input type="file" name="specPict" />
