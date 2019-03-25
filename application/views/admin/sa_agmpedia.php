@@ -16,7 +16,7 @@
                 <?php endif; ?>
                 <div class="row">
                     <div class="col-xs-12">
-                        <a href="<?= site_url('admin/addPedia');?>" class="btn btn-default btn-oldblue h-30 test"><i class="fa fa-plus"></i>AgmPedia</a>
+                        <a href="<?= site_url('admin/addPedia');?>" class="btn btn-default btn-oldblue"><i class="fa fa-plus"></i> AgmPedia</a>
                     </div>
                     <hr class="col-xs-12">
                     <div class="col-md-12">
@@ -36,9 +36,9 @@
                         <td><?php echo $pedia['title']; ?></td>
                         <td><?php echo $pedia['date']; ?></td>
                         <td>
-                          <a href="#" class="btn btn-success">Active</a>
-                          <a href="" class="btn btn-warning">Detail</a>
-                          <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')">Delete</a>
+                          <a href="#"><i class="btn btn-success fa fa-power-off"></i></a>
+                          <a href="#"><i class="btn btn-oldblue fa fa-info"></i></a>
+                          <a href="#" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                         </td>
                       </tr>
                     <?php endforeach; ?>

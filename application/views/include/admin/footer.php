@@ -50,6 +50,7 @@ $.widget.bridge('uibutton', $.ui.button);
 <script src="<?= base_url('asset/bower_components/ckeditor/ckeditor.js"');?>"></script>
 <!-- DataTables -->
 <script src="<?= base_url('asset/bower_components/datatables.net/js/jquery.dataTables.js');?>"></script>
+<script src="<?= base_url('asset/bower_components/datatables.net-bs/js/dataTables.bundle.js');?>"></script>
 <script src="<?= base_url('asset/bower_components/datatables.net-bs/js/dataTables.bootstrap.js');?>"></script>
 <!-- Select2 -->
 <script type="text/javascript" src="<?= base_url('asset/bower_components/select2/dist/js/select2.full.min.js');?>"></script>
@@ -136,8 +137,24 @@ $(function(){
 });
 </script>
 <script>
+
     $(function () {
     $('#dataTable').DataTable({
+
+      'paging'      : true, // harus ada
+      'lengthChange': true, // harus ada
+      'ordering'    : true, // harus ada
+      'info'        : true,
+      'autoWidth'   : false,
+      'searching'   : true,
+      'processing'  : true,
+
+
+        });
+  });
+  $(function () {
+<<<<<<< HEAD
+    $('#dataTable1').DataTable({
       'paging'      : true, // harus ada
       'lengthChange': true, // harus ada
       'ordering'    : true, // harus ada
@@ -149,8 +166,9 @@ $(function(){
       // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
     });
   });
-  $(function () {
+=======
    $('#dataTable1').DataTable({
+
      'paging'      : true, // harus ada
      'lengthChange': true, // harus ada
      'ordering'    : true, // harus ada
@@ -158,10 +176,16 @@ $(function(){
      'autoWidth'   : false,
      'searching'   : true,
      'processing'  : true,
-     // 'pageLength'  : 15,
+
+       dom: 'Bfrtip',
+       buttons: [
+           'copy', 'csv', 'excel', 'pdf', 'print'
+       ]
+       // 'pageLength'  : 15,
      // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
    });
  })
+>>>>>>> fcr
 </script>
 <script>
   const autoNumericOptionsIdr = {

@@ -17,10 +17,10 @@
               <form class="m-0 sky-form" action="<?= site_url('admin/addSize');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                 <p class="register-box-msg">Add a new size</p>
                 <label class="input mb-10">
-                  <input type="text" name="name" placeholder="Size name">
+                  <input class="form-control" type="text" name="name" placeholder="Size name">
                 </label>
                 <label class="input mb-10">
-                  <input type="text" name="size" placeholder="Size (length x width)">
+                  <input class="form-control" type="text" name="size" placeholder="Size (length x width)">
                 </label>
                 <div class="row">
                   <div class="col-md-12 text-right">

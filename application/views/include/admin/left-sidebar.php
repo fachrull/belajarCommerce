@@ -49,20 +49,24 @@
                 <li class="active"><a href="<?= site_url('admin/bed_linen');?>">Bed Linen</a></li>
                 <li class="active"><a href="<?= site_url('admin/beddingAcc');?>">Bedding Accessories</a></li>
                 <li class="active"><a href="<?= site_url('admin/bestSeller');?>">Best Seller</a></li>
+                <li class="active"><a href="<?= site_url('admin/listsubscriber');?>">Newsletter</a></li>
               </li>
             </ul>
           </li>
           <li>
-            <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Slider</span></a>
+            <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Cover</span></a>
           </li>
           <li>
-          <a href="<?= site_url('admin/sa_promotion');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
+          <a href="<?= site_url('admin/promotions');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
           </li>
           <li>
             <a href="<?= site_url('admin/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
           </li>
           <li>
             <a href="<?= site_url('admin/stores');?>"><i class="fa fa-map"></i><span>Manage store</span></a>
+          </li>
+          <li>
+            <a href="<?= site_url('admin/historyTransaction');?>"><i class="fa fa-map"></i><span>History Transaction</span></a>
           </li>
           </li>
         <?php endif; ?>

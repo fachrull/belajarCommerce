@@ -879,8 +879,9 @@ class Home extends CI_Controller{
   }
 
   public function promotionPage(){
+      $data['promotions'] = $this->mhome->getProducts(NULL, NULL, 'tm_promotion', FALSE);
     $this->load->view('include/header2');
-    $this->load->view('promotion-page');
+    $this->load->view('promotion-page', $data);
     $this->load->view('include/footer');
   }
 
@@ -932,9 +933,10 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function promotionDetail(){
+  public function promotionDetail($id){
+      $data['promotion'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_promotion', TRUE);
     $this->load->view('include/header2');
-    $this->load->view('promotion-detail');
+    $this->load->view('promotion-detail', $data);
     $this->load->view('include/footer');
   }
 
@@ -1078,5 +1080,14 @@ class Home extends CI_Controller{
     $this->load->view('include/header2');
     $this->load->view('bedding_acc', $data);
     $this->load->view('include/footer');
+  }
+  public function subscribe(){
+      $email = $this->input->post('email');
+      $data = array(
+          'email'   =>  $email
+
+      );
+      $this->mhome->addNewsLetter($data);
+      redirect('/');
   }
 }

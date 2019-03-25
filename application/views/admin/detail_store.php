@@ -52,9 +52,9 @@
             </div>
           </div>
           <div class="box-body">
-            <hr class="col-xs-12">
-          <a href="<?= site_url('admin/addCluster/'.$post['id'])?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i>Add Cluster</button></a>
-          <hr class="mt-50" style="width:100%; height:0px">
+            <hr>
+          <a href="<?= site_url('admin/addCluster/'.$post['id'])?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add Cluster</button></a>
+          <hr class="mt-80" style="width:100%; height:0px">
           <table id="dataTable1" class="table table-bordered table-striped">
               <thead>
                 <th>No.</th>
@@ -79,9 +79,9 @@
                     <?php $no++;endforeach; ?>
               </tbody>
             </table>
-            <hr class="col-xs-12">
-            <a href="<?= site_url('admin/storeProd/'.$post['id']);?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i>Add Product</button></a>
-            <hr class="mt-50" style="width:100%; height:0px">
+            <hr>
+            <a href="<?= site_url('admin/storeProd/'.$post['id']);?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add Product</button></a>
+            <hr class="mt-80" style="width:100%; height:0px">
                 <table id="dataTable" class="table table-bordered table-striped">
                   <thead>
                     <th>No.</th>
