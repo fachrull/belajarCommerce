@@ -43,14 +43,15 @@
                 <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_spec');?>">Spec</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
-                <li class="active"><a href="<?= site_url();?>">Rating</a></li>
+                <li class="active"><a href="<?= site_url('admin/allVoucher')?>">Voucher</a></li>
+                <li class="active"><a href="<?= site_url('admin/special_package');?>">Special Package</a></li>
+                <li class="active"><a href="<?= site_url('admin/review');?>">Review</a></li>
                 <li class="active"><a href="<?= site_url('admin/bestSeller');?>">Best Seller</a></li>
-                <li class="active"><a href="<?= site_url('admin/voucher');?>">Voucher</a></li>
               </li>
             </ul>
           </li>
           <li>
-            <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Slider</span></a>
+            <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Cover</span></a>
           </li>
           <li>
           <a href="<?= site_url('admin/sa_promotion');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
@@ -60,6 +61,9 @@
           </li>
           <li>
             <a href="<?= site_url('admin/stores');?>"><i class="fa fa-map"></i><span>Manage store</span></a>
+          </li>
+          <li>
+            <a href="<?= site_url('admin/historyTransaction');?>"><i class="fa fa-map"></i><span>History Transaction</span></a>
           </li>
           </li>
         <?php endif; ?>
@@ -90,7 +94,10 @@
             <a href="<?= site_url('stores/storeProduct')?>">Product</a>
           </li>
           <li>
-            <a href="<?= site_url('stores/transaction')?>">History Transaction</a>
+            <a href="<?= site_url('stores/history')?>">History</a>
+          </li>
+          <li>
+            <a href="<?= site_url('stores/transaction')?>">Transaction</a>
           </li>
         <?php endif; ?>
       </ul>

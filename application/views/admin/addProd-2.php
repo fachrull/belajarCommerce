@@ -18,9 +18,9 @@
 							<?php endif;?>
 							<!-- /ALERT -->
 							<?= form_open_multipart('admin/addProd', array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
-							<p class="register-box-msg">Add a new product</p>
+							<!-- <p class="register-box-msg">Add a new product</p> -->
 							<div class="row mb-3">
-								<div class="col-md-12 col-xs-12 mb-10">
+								<div class="col-md-12 col-xs-12">
 									<div class="form-group">
 										<label><strong>Select Brand</strong></label>
 										<select class="form-control">
@@ -31,7 +31,7 @@
 										</select>
 									</div>
 								</div>
-								<div class="col col-md-12 col-xs-12 mb-10">
+								<div class="col col-md-12 col-xs-12">
 									<div class="form-group">
 										<label><strong>Select Category</strong></label>
 										<select class="form-control">
@@ -50,7 +50,7 @@
                   				<input type="text" class="form-control" placeholder="Product Name">
                 			</div>
 							<div class="row mb-3">
-								<div class="col col-md-12 col-xs-12 mb-10">
+								<div class="col col-md-12 col-xs-12">
 								<div class="form-group">
 										<label><strong>Select Size</strong></label>
 										<select class="form-control">
@@ -63,10 +63,10 @@
 										</select>
 								</div>
 								</div>
-								<div class="col col-md-12 col-xs-12 mb-10">
+								<div class="col col-md-12 col-xs-12">
 									<div class="form-group">
 										<label for=""><strong>Price</strong></label>
-										<input id="price" name="price" class="form-control" type="number" placeholder="Price (e.g 100000)">
+										<input id="price" name="price" class="form-control" type="text" placeholder="Price (e.g 100000)">
 									</div>
 								</div>
 								<div class="col col-md-12 col-xs-12 mb-20">
@@ -74,7 +74,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-12 col-xs-12 mb-10">
+								<div class="col-md-12 col-xs-12">
 									<table id="table_sizePrice" class="mb-10 table table-bordered table-striped">
 										<thead>
 											<th>Size</th>
@@ -85,8 +85,8 @@
 									</table>
 								</div>
 							</div>
-							<div class="row mb-3">
-								<div class="col-md-12 col-xs-12 select2-input-field mb-10">
+							<div class="row mb-3 mt-10">
+								<div class="col-md-12 col-xs-12 select2-input-field">
 								<div class="form-group">
 										<label><strong>Select a Spec</strong></label>
 										<select class="form-control select2" id="spec" name="spec[]" multiple="multiple" data-placeholder="Select a spec"
@@ -100,16 +100,16 @@
 								</div>
 								</div>
 							</div>
-							<div class="box-body pad pt-0 pl-0 pr-0 mb-10">
+							<div class="box-body pad pt-0 pl-0 pr-0">
 								<label><strong>Add Description</strong></label>
 								<textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description"></textarea>
 							</div>
-							<label class="input mb-10"><b>Upload product image</b>
+							<label class="input"><b>Upload product image</b>
 							<p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
 								<input type="file" class="mt-5" name="productPict" />
 							</label>
 							<div class="row">
-								<div class="col-md-12 text-right mb-10">
+								<div class="col-md-12 text-right">
 									<button id="submit" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Product</button>
 									<!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
 								</div>

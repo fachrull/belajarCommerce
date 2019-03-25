@@ -23,7 +23,6 @@
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/Ionicons/css/ionicons.min.css');?>">
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= base_url('asset/dist/css/AdminLTE.css');?>">
-  <link href="<?= base_url('asset/css/essentials.css');?>" rel="stylesheet" type="text/css" />
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="<?= base_url('asset/dist/css/skins/_all-skins.css');?>">
@@ -32,7 +31,7 @@
   <!-- jvectormap -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/jvectormap/jquery-jvectormap.css');?>">
   <!-- Date Picker -->
-  <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css');?>">
+  <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.css');?>">
   <!-- Daterange picker -->
   <link rel="stylesheet" href="<?= base_url('asset/bower_components/bootstrap-daterangepicker/daterangepicker.css');?>">
   <!-- bootstrap wysihtml5 - text editor -->
@@ -47,10 +46,7 @@
   <link rel="stylesheet" href="<?= base_url('asset/plugins/iCheck/all.css');?>">
   <link rel="stylesheet" href="<?= base_url('asset/css/custom.css')?>">
   <!-- DataTables -->
-  <link rel="stylesheet" href="<?= base_url('asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
-  <!-- Bootstrap Toggle -->
-  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="<?= base_url('/asset/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css');?>">
 
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->

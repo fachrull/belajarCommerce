@@ -15,20 +15,22 @@
             <div class="box-body">
             <table id="dataTable" class="table">
             <thead>
+              <th>No.</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Phone</th>
               <th>Detail</th>
             </thead>
             <tbody>
-              <?php foreach($posts as $post): ?>
+              <?php $no = 1;foreach($posts as $post): ?>
                 <tr>
+                  <td><?= $no.'.'?></td>
                   <td><?= $post['first_name'];?></td>
                   <td><?= $post['last_name'];?></td>
                   <td><?= $post['phone'];?></td>
-                  <td><a href="#" class="btn btn-oldblue">Detail</a></td>
+                  <td><a href="<?= site_url('admin/listAdmin/'.$post['id_userlogin']);?>" class="btn btn-oldblue">Detail</a></td>
                 </tr>
-              <?php endforeach; ?>
+              <?php $no++; endforeach; ?>
             </tbody>
           </table>
             </div>

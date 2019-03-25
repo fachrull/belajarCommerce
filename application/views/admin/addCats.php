@@ -19,7 +19,7 @@
                 <form class="m-0 sky-form" action="<?= site_url('admin/addCat');?>" method="post">
                   <p class="register-box-msg">Add a new category</p>
                   <label class="input mb-10">
-                    <input name="items" type="text" placeholder="Category">
+                    <input class="form-control" name="items" type="text" placeholder="Category">
                   </label>
                   <label class="input mb-10">
                     <textarea id="editor1" name="desc" rows="8" cols="43" placeholder="Description"></textarea>
