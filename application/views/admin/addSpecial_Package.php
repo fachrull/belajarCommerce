@@ -18,7 +18,7 @@
             <!-- /ALERT -->
             <?= form_open_multipart('admin/addSpecial_package', array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
               <label class="input mb-10">
-                  <input name="name" type="text" placeholder="Special Package Name">
+                  <input class="form-control" name="name" type="text" placeholder="Special Package Name">
               </label>
               <div class="row mb-3">
                 <div class="col-md-12 cl-xs-12 select2-input-field">
@@ -33,14 +33,14 @@
                 </div>
               </div>
               <label class="input mb-10">
-                <input name="price" type="text" placeholder="Special Package Price">
+                <input class="form-control" name="price" type="text" placeholder="Special Package Price">
               </label>
               <div class="box-body pad pt-0 pl-0 pr-0 mb-10">
                 <textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description Special Package"></textarea>
               </div>
               <label class="input mb-10"><b>Upload product image</b>
               <p class="help-block text-danger fs-12">Max. Size 2 MB and Resolution 700 x 670 pixels</p>
-                <input type="file" class="mt-5" name="imageSP" />
+                <input class="form-control" type="file" class="mt-5" name="imageSP" />
               </label>
             <div class="row">
               <div class="col-md-6">

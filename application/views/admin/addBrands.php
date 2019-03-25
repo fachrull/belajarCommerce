@@ -18,7 +18,7 @@
               <form class="m-0 sky-form" action="<?= site_url('admin/addBrand');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                 <p class="register-box-msg">Add a new brand</p>
                 <label class="input mb-10">
-                  <input name="items" type="text" placeholder="Brand">
+                  <input class="form-control" name="items" type="text" placeholder="Brand">
                 </label>
                 <label class="input mb-10">
                   <textarea id="editor1" name="desc" rows="8" cols="43" placeholder="Description"></textarea>
