@@ -307,14 +307,46 @@ class Home extends CI_Controller{
 
   }
 
-  public function deleteCart(){
-      $this->cart->destroy();
+  public function updateCart(){
+    $carts = $this->cart->contents();
+    if ($carts != NULL) {
+      $qty = $this->input->post('qty');
+
+      $no = 0;foreach ($carts as $cart) {
+        $update_cart = array(
+          'rowid' =>  $cart['rowid'],
+          'qty'   =>  $qty[$no]
+        );
+        print_r($update_cart);echo "</br>";
+        $this->cart->update($update_cart);
+        $no++;
+      }
+
+      print_r($this->cart->contents());
       redirect('home/shopCart');
+    } else {
+      redirect();
+    }
   }
 
-  public function updateCart($cart_rowId){
+  public function deleteCart(){
+      $cart = $this->cart->contents();
+      if ($cart != NULL) {
+        $this->cart->destroy();
+        redirect('home/shopCart');
+      } else {
+        redirect();
+      }
+  }
+
+  public function removeCart_item($cart_rowId){
+    $cart = $this->cart->contents();
+    if ($cart != NULL) {
       $this->cart->remove($cart_rowId);
       redirect('home/shopCart');
+    } else {
+      redirect();
+    }
   }
 
   public function addToCart($idDistrict) {
@@ -331,10 +363,12 @@ class Home extends CI_Controller{
       'name'        => $this->input->post('product_name'),
       'id_trProduct'=> $idTrProduct['id_trProduct']['id'],
       'voucher'     => '',
+      'id_address'  => '',
+      'available'   => FALSE,
       'sizeName'    => $size_name[0]['name_size'],
       'detailSize'  => $size_name[0]['detail_size'],
       'sub_district'=> $idDistrict,
-      'options' => array('Size' => $this->input->post('size'))
+      'options'     => array('Size' => $this->input->post('size'))
     );
     // print_r($this->session->userdata());
     // print_r($data);
@@ -429,11 +463,39 @@ class Home extends CI_Controller{
       }
   }
 
+  public function shop_summary(){
+    if ($this->session->userdata('uType') == 4) {
+      $carts = $this->cart->contents();
+      if ($carts != NULL) {
+        $id_address = array();
+        $data['available'] = TRUE;
+        foreach ($carts as $cart) {
+          array_push($id_address, array('id_cs_detail' => $cart['id_address']));
+          if ($cart['available'] == FALSE) {
+            $data['available'] = FALSE;
+          }
+        }
+        $data['address_shipping'] = $this->mhome->customer_detail($id_address[0]['id_cs_detail']);
+        $data['carts']  = $this->cart->contents();
+
+        $this->load->view('include/header2');
+        $this->load->view('shop-summary', $data);
+        $this->load->view('include/footer');
+      } else {
+        redirect();
+      }
+    } else {
+      redirect('auth/login');
+    }
+  }
+
   public function shopCheckout(){
     if($this->session->userdata('uType') == 4){
+      // Load helper form and library form validation
       $this->load->helper('form');
       $this->load->library('form_validation');
 
+      // Setting rules for the form
       $this->form_validation->set_rules('firstname', 'Firstname','required');
       $this->form_validation->set_rules('lastname', 'Lastname', 'required');
       $this->form_validation->set_rules('address', 'Address', 'required');
@@ -444,34 +506,256 @@ class Home extends CI_Controller{
       $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
       $this->form_validation->set_rules('phone', 'Phone Number', 'required');
 
+      // Condition if the form running FALSE
       if ($this->form_validation->run() === FALSE) {
+        // Load cart session to carts (variable)
         $carts = $this->cart->contents();
+
+        // Load customer userdata ID from session
         $userId = $this->session->userdata('uId');
+
+        // make an empty variable type array to store district ID from cart
         $district_cart = array();
+
+        // load customer default address district ID
         $user_district = $this->mhome->getProducts(array('id_userlogin' => $userId, 'default_address' => 1),
         array('subDistrict' => 'sub_district'), 'tm_customer_detail', TRUE);
+
+        // set an empty variable above from ID district on cart
         foreach ($carts as $cart) {
           array_push($district_cart, $cart['sub_district']);
         }
+
+        // load detail profile with a default address customer to store it to view
         $data['alamat_default'] = $this->mhome->detailProfileCustomer($this->session->userdata('uId'));
+
+        // load detail cart to store it to view
         $data['carts'] = $this->cart->contents();
         // $data['historicals'] = $this->mhome->historicalShipping($this->session->userdata('uId'));
+
+        // load detail district, city, and province, and store it to view
         $data['addressCart'] = $this->mhome->detail_district_cart($district_cart[0]);
 
+        // load view
         $this->load->view('include/header2');
         $this->load->view('shop-checkout', $data);
         $this->load->view('include/footer');
+
+        // Condition if the form running TRUE
       } else {
-        $shipping_same_address = $this->input->post('username');
-        $checksameAddress = $this->input->post('checksameAddress');
+        // store id user login from session
         $idUserLogin = $this->session->userdata('uId');
+
+        // store data on cart
         $carts = $this->cart->contents();
+
+        // make an empty variable type array to store district ID from cart
         $district_cart = array();
+
+        // set an empty variable above from ID district on cart
         foreach ($carts as $cart) {
           array_push($district_cart, $cart['sub_district']);
         }
+
+        // load detail province, city, and district from the variable that we fill before
         $addressCart = $this->mhome->detail_district_cart($district_cart[0]);
-        print_r($addressCart);
+
+        // load customer default address
+        $shipping_same_with_default_address = $this->mhome->getProducts(array('sub_district' => $district_cart[0],
+          'id_userlogin' => $idUserLogin, 'default_address' => 1), array('idField' => 'id', 'defaultAddress' => 'default_address'),
+           'tm_customer_detail', TRUE);
+
+        print_r($shipping_same_with_default_address);echo "</br></br>";
+
+        // checking is shipping address has same district with default address or not
+        if ($shipping_same_with_default_address != NULL) {
+
+          // beli   stock
+          // 1      98    TRUE
+          // 5      4     FALSE
+          // 4      4     TRUE
+          // 4      3     TRUE
+
+          // if shipping is same with default address
+          // checking availability
+          foreach ($carts as $cart) {
+            // id tr_product from cart
+            $id_trProduct = $cart['id_trProduct'];
+            // checking the stock
+            $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+
+            // checking is the stock more than 3 and insert id shipping address
+            if ($prod_qty['quantity'] > 3) {
+
+              // checking is the stock on store more than quantity that customer order and insert id shipping address
+              if ($cart['qty'] < $prod_qty['quantity']) {
+                $availablelity_stock = array(
+                  'rowid'       => $cart['rowid'],
+                  'id_address'  => $shipping_same_with_default_address['id'],
+                  'available'   => TRUE
+                );
+                $this->cart->update($availablelity_stock);
+
+              // checking is the stock on store less than quantity that customer order and insert id shipping address
+              } else {
+                $availablelity_stock = array(
+                  'rowid'       => $cart['rowid'],
+                  'id_address'  => $shipping_same_with_default_address['id'],
+                  'available'   => FALSE
+                );
+                $this->cart->update($availablelity_stock);
+              }
+
+            // checking is the stock less than 3 and insert id shipping address
+            } else {
+              $availablelity_stock = array(
+                'rowid'       => $cart['rowid'],
+                'id_address'  => $shipping_same_with_default_address['id'],
+                'available'   => FALSE
+              );
+              $this->cart->update($availablelity_stock);
+            }
+          }
+
+          print_r($this->cart->contents());
+          redirect('home/shop_summary');
+        } else {
+
+          // store shipping address to an array variable
+          $shipping_address = array(
+            'id_userlogin'    =>  $idUserLogin,
+            'first_name'      =>  $this->input->post('firstname'),
+            'last_name'       =>  $this->input->post('lastname'),
+            'address'         =>  $this->input->post('address'),
+            'province'        =>  $this->input->post('provinsi'),
+            'city'            =>  $this->input->post('kabupaten'),
+            'sub_district'    =>  $this->input->post('kecamatan'),
+            'postcode'        =>  $this->input->post('postcode'),
+            'email'           =>  $this->input->post('email'),
+            'phone'           =>  $this->input->post('phone'),
+            'default_address' =>  0
+          );
+
+          // shearching are the shipping address has already being shipped before
+          $has_same_shipped_address = $this->mhome->getProducts($shipping_address, array('idField' => 'id'),
+           'tm_customer_detail', TRUE);
+
+          // if the shipping address has already being shipped address before
+          if ($has_same_shipped_address != NULL) {
+
+            print_r($has_same_shipped_address);echo "</br></br>";
+
+            foreach ($carts as $cart) {
+              // id tr_product from cart
+              $id_trProduct = $cart['id_trProduct'];
+              print_r($id_trProduct);echo "</br></br>";
+
+              // checking the stock
+              $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+
+              // checking is the stock more than 3 and insert id shipping address
+              if ($prod_qty['quantity'] > 3) {
+
+                // if quantity order less than stock
+                if ($cart['qty'] < $prod_qty['quantity']) {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $has_same_shipped_address['id'],
+                    'available'   =>  TRUE
+                  );
+                  $this->cart->update($availablelity_stock);
+
+                // if quntity order more than stock
+                } else {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $has_same_shipped_address['id'],
+                    'available'   =>  FALSE
+                  );
+                  $this->cart->update($availablelity_stock);
+                }
+              } else {
+                $availablelity_stock = array(
+                  'rowid'       =>  $cart['rowid'],
+                  'id_address'  =>  $has_same_shipped_address['id'],
+                  'available'   =>  FALSE
+                );
+                $this->cart->update($availablelity_stock);
+              }
+            }
+            print_r($this->cart->contents());
+            redirect('home/shop_summary');
+
+          // if the shipping address is new
+          } else {
+
+            // insert the new shipping address to tm_customer_detail
+            $this->mhome->inputData('tm_customer_detail', $shipping_address);
+
+            // select id from new shipping address
+            $id_new_shipping_address = $this->mhome->getProducts($shipping_address, array('idField' => 'id'),
+              'tm_customer_detail', TRUE);
+            print_r($id_new_shipping_address);echo "</br></br>";
+
+            foreach ($carts as $cart) {
+              // id tr_product from cart
+              $id_trProduct = $cart['id_trProduct'];
+              print_r($id_trProduct);echo "</br></br>";
+
+              // checking the stock
+              $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+
+              // checking is the stock more than 3 and insert id shipping address
+              if ($prod_qty['quantity'] > 3) {
+
+                // if quantity stock less than order
+                if ($cart['qty'] < $prod_qty['quantity']) {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $id_new_shipping_address['id'],
+                    'available'   =>  TRUE
+                  );
+                  $this->cart->update($availablelity_stock);
+
+                // if quantity order more than
+                } else {
+                  $availablelity_stock = array(
+                    'rowid'       =>  $cart['rowid'],
+                    'id_address'  =>  $id_new_shipping_address['id'],
+                    'available'   =>  FALSE
+                  );
+                  $this->cart->update($availablelity_stock);
+                }
+              } else {
+                $availablelity_stock = array(
+                  'rowid'       =>  $cart['rowid'],
+                  'id_address'  =>  $id_new_shipping_address['id'],
+                  'available'   =>  FALSE
+                );
+                $this->cart->update($availablelity_stock);
+              }
+            }
+            print_r($this->cart->contents());
+            redirect('home/shop_summary');
+          }
+
+        }
+        exit();
+
+
+        // checking availablity stock
+        $availableStock = array();
+        foreach ($carts as $cart) {
+          echo "Id tr_product: ";print_r($cart['id_trProduct']);echo "</br>";
+          echo "Quantity :";print_r($cart['qty']);echo "</br>";
+
+          $tr_prod = $this->mhome->getProducts(array('id' => $cart['id_trProduct']), array('idField' => 'id',
+           'qtyF' => 'quantity'), 'tr_product', TRUE);
+          print_r($tr_prod);echo "</br>";
+
+          $qtyAfter = $tr_prod['quantity'] - $cart['qty'];
+          print_r($qtyAfter);
+        }
         echo "</br></br>";
 
         $data = array(

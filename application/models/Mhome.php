@@ -236,6 +236,22 @@ class Mhome extends CI_Model{
     }
   }
 
+  public function customer_detail($id_cs_detail){
+    $this->db->select('a.first_name, a.last_name, a.email, a.phone, a.postcode, a.address, b.nama as provinsi,
+      c.nama as kabupaten, d.nama as kecamatan');
+    $this->db->from('tm_customer_detail a');
+    $this->db->join('provinsi b', 'b.id_prov = a.province', 'left');
+    $this->db->join('kabupaten c', 'c.id_kab = a.city', 'left');
+    $this->db->join('kecamatan d', 'd.id_kec = a.sub_district', 'left');
+    $this->db->where('id', $id_cs_detail);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
   public function historicalShipping($idUserLogin){
    $this->db->select("a.id, a.username, a.address, a.postcode, b.nama as kecamatan");
    $this->db->from('tm_customer_detail a');

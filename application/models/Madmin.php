@@ -387,24 +387,28 @@ class Madmin extends CI_Model {
     }
   }
 
-  public function listReview($link = NULL){
+  public function listReview(){
     $this->db->select('a.id, a.name as username, a.email, b.name, b.image, a.comment, a.date_attempt, a.stars, a.display');
     $this->db->from('tm_review a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $query = $this->db->get();
-    if ($link != NULL) {
-      $this->db->where('a.id', $link);
-      if ($query->num_rows() != 0) {
-        return $query->row_array();
-      } else {
-        return FALSE;
-      }
-    }else{
-      if ($query->num_rows() != 0) {
-        return $query->result_array();
-      } else {
-        return FALSE;
-      }
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function specific_review($link){
+    $this->db->select('a.id, a.name as username, a.email, b.name, b.image, a.comment, a.date_attempt, a.stars, a.display');
+    $this->db->from('tm_review a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->where('a.id', $link);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
     }
   }
 }

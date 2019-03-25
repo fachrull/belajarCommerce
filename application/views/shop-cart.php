@@ -51,7 +51,7 @@
 			<div class="col-lg-9 col-sm-8">
 
 				<!-- CART -->
-				<form class="cartContent clearfix" method="post" action="#">
+				<form class="cartContent clearfix" method="post" action="<?= site_url('home/updateCart')?>">
 
 					<!-- cart content -->
 					<div id="cartContent">
@@ -76,9 +76,9 @@
 								<span><?=$item['name']?></span>
 								<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
 							</a>
-							<a href="<?= site_url('home/updateCart/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
+							<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
 							<div class="total_price">Rp. <span><?=$item['subtotal']?></span></div>
-							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty" maxlength="3" max="999" min="1" /> &times; Rp.
+							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
 								<?=$item['price']?></div>
 							<div class="clearfix"></div>
 						</div>

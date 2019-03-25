@@ -1443,19 +1443,19 @@ class Admin extends CI_Controller {
 
   public function reviews($link = FALSE){
     if ($this->session->userdata('uType') == 1) {
-      if ($link == TRUE) {
-        $data['review'] = $this->madmin->listReview($link);
-
-        $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/detail-review', $data);
-        $this->load->view('include/admin/footer');
-      } else {
+      if ($link === FALSE) {
         $data['reviews'] = $this->madmin->listReview();
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/reviews', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $data['review'] = $this->madmin->specific_review($link);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/detail-review', $data);
         $this->load->view('include/admin/footer');
       }
     } else {

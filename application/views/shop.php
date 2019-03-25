@@ -141,7 +141,7 @@
 											<!-- /product image(s) -->
 
 											<div class="shop-item-summary text-center">
-												<h2><?= $product['name'];?> <?= $product['position']?></h2>
+												<h2><?= $product['name'];?></h2>
 
 												<!-- rating -->
 												<div class="shop-item-rating-line">
