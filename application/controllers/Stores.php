@@ -34,9 +34,10 @@ class Stores extends CI_Controller{
   public function storeProduct( $idProd = FALSE,$idStore = FALSE){
     if ($this->session->userdata('uType') == 3) {
       if ($idStore === FALSE && $idProd === FALSE) {
+
         $idStore = $this->mstore->getProducts(array('id_userlogin' => $this->session->userdata('uId')), array('idField' => 'id'), 'tm_store_owner', TRUE);
         $data['products'] = $this->mstore->productAcceptStore($idStore['id']);
-
+        
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('storeOwner/productStore', $data);
