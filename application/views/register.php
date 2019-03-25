@@ -37,7 +37,7 @@
                             <input name="email" type="text" placeholder="Email address">
                             <b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
                         </label>
-                        <?php if ($this->session->userdata('isLogin') === NULL): ?>
+                        <?php if ($this->session->userdata('isLogin') == NULL): ?>
                           <label class="input mb-10">
                               <i class="ico-append fa fa-lock"></i>
                               <input name="password" type="password" placeholder="Password">

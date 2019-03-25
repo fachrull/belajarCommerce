@@ -115,20 +115,30 @@ class Mauth extends CI_Model{
         'user_type' => $uType,
         'newer'     => $newCS
       );
+
       $queryULoging = $this->db->insert('user_login', $dataUserLogin);
 
-      $userId = $this->getData(array('username' => $this->input->post('uname')),
+      $userId = $this->getData(array('username' => $this->input->post('uname'), 'email' => $this->input->post('email')),
         array('userIdField' => 'user_id'), TRUE);
       $id = $userId->user_id;
+      $default_address = 1; // 1 = TRUE ; 0 = FALSE
 
       $dataCustomer = array(
-        'id_userLogin'  => $id,
-        'first_name'    => $this->input->post('fname'),
-        'last_name'     => $this->input->post('lname'),
-        'gender'        => $this->input->post('gender')
+        'id_userLogin'    => $id,
+        'first_name'      => $this->input->post('fname'),
+        'last_name'       => $this->input->post('lname'),
+        'gender'          => $this->input->post('gender'),
+        'email'           => $this->input->post('email'),
+        'phone'           => $this->input->post('phone'),
+        'address'         => $this->input->post('add'),
+        'province'        => $this->input->post('province'),
+        'city'            => $this->input->post('city'),
+        'sub_district'    => $this->input->post('sub_district'),
+        'postcode'        => $this->input->post('postcode'),
+        'default_address' => $default_address
       );
 
-      $queryCustomer = $this->db->insert('tm_customer', $dataCustomer);
+      $queryCustomer = $this->db->insert('tm_customer_detail', $dataCustomer);
 
       return array(
         'queryULoging'  => $queryULoging,
@@ -258,5 +268,27 @@ class Mauth extends CI_Model{
       }
     }
     return $this->db->update($table, $items);
+  }
+
+  public function getProducts($condition = NULL, $selection = NULL, $table, $singleRowResult =  FALSE){
+    if ($condition != NULL) {
+      foreach ($condition as $key => $value) {
+        $this->db->where($key, $value);
+      }
+    }
+
+    if ($selection != NULL) {
+      foreach ($selection as $key => $value) {
+        $this->db->select($value);
+      }
+    }
+
+    $query =  $this->db->get($table);
+
+    if ($singleRowResult === TRUE) {
+      return $query->row_array();
+    }else {
+      return $query->result_array();
+    }
   }
 }

@@ -216,18 +216,13 @@ class Mhome extends CI_Model{
   }
 
   public function detailProfileCustomer($idUserLogin){
-    $this->db->select('c.id, a.email, c.province, c.city, c.sub_district, b.first_name, b.last_name, b.phone, c.address,
-     c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
-    $this->db->from('user_login a');
-    $this->db->join('tm_customer b', 'b.id_userlogin = a.user_id', 'left');
-    $this->db->join('tm_customer_detail c', 'c.id_userlogin = b.id_userlogin', 'left');
-    $this->db->join('provinsi d', 'd.id_prov = c.province', 'left');
-    $this->db->join('kabupaten e', 'e.id_kab = c.city', 'left');
-    $this->db->join('kecamatan f', 'f.id_kec = c.sub_district', 'left');
-    $where = array(
-      'a.user_id' => $idUserLogin,
-      'c.default_address' => 1
-    );
+    $this->db->select('a.first_name, a.last_name, a.email, a.phone, a.address, b.nama as provinsi, c.nama as kabupaten,
+      d.nama as kecamatan, a.postcode');
+    $this->db->from('tm_customer_detail a');
+    $this->db->join('provinsi b', 'b.id_prov = a.province', 'left');
+    $this->db->join('kabupaten c', 'c.id_kab = a.city', 'left');
+    $this->db->join('kecamatan d', 'd.id_kec = a.sub_district', 'left');
+    $where = array('a.id_userlogin' => $idUserLogin, 'a.default_address' => 1);
     $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
