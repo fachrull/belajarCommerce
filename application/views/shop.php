@@ -99,7 +99,7 @@
 					</div>
 
 					<!-- RIGHT -->
-					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="8"
+					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="12"
 					 data-pajinate-container=".pajinate-container">
 					    <?php if($products == NULL):?>
                             <p align:"center">Product tidak tersedia</p>
@@ -129,7 +129,7 @@
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
 							<?php foreach ($products as $product): ?>
 								<!-- ITEM -->
-								<li class="col-lg-6 col-sm-6">
+								<li class="col-lg-4 col-sm-4">
 
 									<div class="shop-item">
 
