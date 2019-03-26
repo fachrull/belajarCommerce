@@ -991,9 +991,16 @@ class Home extends CI_Controller{
   }
 
   public function profilePage(){
-    $this->load->view('include/header2');
-    $this->load->view('page-profile');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $id_userlogin = $this->session->userdata('uId');
+      $data['profile'] = $this->mhome->detailProfileCustomer($id_userlogin);
+
+      $this->load->view('include/header2');
+      $this->load->view('page-profile', $data);
+      $this->load->view('include/footer');
+    } else {
+      redirect();
+    }
   }
 
   public function test(){
@@ -1008,9 +1015,13 @@ class Home extends CI_Controller{
   }
 
   public function profileSetting(){
-    $this->load->view('include/header2');
-    $this->load->view('page-profile-settings');
-    $this->load->view('include/footer');
+    if ($this->session->userdata('uType') == 4) {
+      $this->load->view('include/header2');
+      $this->load->view('page-profile-settings');
+      $this->load->view('include/footer');
+    } else {
+      redirect();
+    }
   }
 
   public function bed_linen($brand = NULL){

@@ -22,7 +22,7 @@
                 <input type="text" name="title" class="form-control" placeholder="Title">
               </label>
               <label class="input mb-10">
-                <input type="text" maxlength="125" name="sContent" placeholder="Short news (max 100 characters)">
+                <input class="form-control" type="text" maxlength="125" name="sContent" placeholder="Short news (max 100 characters)">
               </label>
               <label class="input mb-10">
                 <textarea id="editor1" name="content" rows="8" cols="124" placeholder="News"></textarea>

@@ -66,7 +66,7 @@
                 <div class="hidden-sm-down  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
 							<div class="banner-rotator">
 							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:45%;>
+							<div class="absolute" style="top:45%;">
 								<a href="<?= base_url('home/bestSeller');?>">
 								<p>Best Seller 1</p>
 								</a>
@@ -79,7 +79,7 @@
 							</div>
 							<div class="banner-rotator">
 							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:45%;>
+							<div class="absolute" style="top:45%;">
 								<a href="<?= base_url('home/bestSeller');?>">
 								<p>Best Seller 2</p>
 								</a>
@@ -116,7 +116,7 @@
 								</a>
 						</div>
 					</div>
-						
+
 
 						<div class="tabbed hidden-lg-down text-center">
                                 <?php foreach($specs as $spec):?>

@@ -127,12 +127,20 @@ class Auth extends CI_Controller{
       $this->form_validation->set_rules('fname', 'First name', 'required');
       $this->form_validation->set_rules('lname', 'Last name', 'required');
       $this->form_validation->set_rules('gender', 'Gender', 'required');
+      $this->form_validation->set_rules('phone', 'phone', 'required');
+      $this->form_validation->set_rules('add', 'Address', 'required');
+      $this->form_validation->set_rules('province', 'Province', 'required');
+      $this->form_validation->set_rules('city', 'City', 'required');
+      $this->form_validation->set_rules('sub_district', 'Sub District', 'required');
+      $this->form_validation->set_rules('postcode', 'Postcode', 'required');
       $this->form_validation->set_rules('checkbox', 'Checkbox', 'required');
 
       if ($this->form_validation->run() === FALSE) {
-          $this->load->view('include/header2');
-          $this->load->view('register');
-          $this->load->view('include/footer');
+        $data['provinces'] = $this->mauth->getProducts(NULL, NULL, 'provinsi', FALSE);
+
+        $this->load->view('include/header2');
+        $this->load->view('register', $data);
+        $this->load->view('include/footer');
       } else {
         $this->mauth->regis();
         redirect('auth/login');
