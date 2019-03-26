@@ -16,7 +16,7 @@
 		</section>
 		<!-- /PAGE HEADER -->
 
-		<section>
+		<section class="pt-0">
 			<div class="container">
 
 				<div class="row">

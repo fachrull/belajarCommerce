@@ -16,7 +16,7 @@
 </section>
 <!-- /PAGE HEADER -->
 
-<section>
+<section class="pt-0">
 	<div class="container">
 
 		<div class="row">
@@ -171,7 +171,7 @@
 												<span class="float-right text-danger"><i class="fa fa-remove"></i> Out of Stock</span>
 												-->
 
-											<strong id="stockTitle">Choose your location first</strong>
+											<strong id="stockTitle">Pilih Lokasi Pengiriman</strong>
 										</div>
 
 										<div id="pageloader">

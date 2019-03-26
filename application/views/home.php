@@ -40,36 +40,41 @@
 <section id="product" class="section-lg">
 			<div class="container">
 				<div class="row text-center">
-					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
+				<div class="col-lg-8 offset-lg-2">
+				<div class="row text-center">
+				<div class="col-6 col-md-4 col-lg-4 pb-70">
 						<a href="<?= site_url('home/shop/1/1');?>">
 							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-2 pb-70">
+					<div class="col-6 col-md-4 col-lg-4 pb-70">
 						<a href="<?= site_url('home/shop/2/1');?>">
 							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-2 pb-70">
+					<div class="col-6 col-md-4 col-lg-4 pb-70">
 						<a href="<?= site_url('home/shop/4/1');?>">
 							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-2 offset-lg-3 pb-70">
+					<div class="col-6 col-md-4 col-lg-4 pb-70">
 						<a href="<?= site_url('home/shop/5/1');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-2 pb-70">
+					<div class="col-6 col-md-4 col-lg-4 pb-70">
 						<a href="<?= site_url('home/shop/3/1');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-2 pb-70">
+					<div class="col-6 col-md-4 col-lg-4 pb-70">
 						<a href="<?= site_url('home/shop/6/1');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
 						</a>
 					</div>
+				</div>
+				</div>
+					
 				</div>
 				<div class="row">
 					<div class="col-12 text-center">
@@ -157,12 +162,12 @@
         <div>
           <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" style="width:100%;" alt="agmpedia title">
           <div class="absolute pt-20">
-            <h4 class="text-white text-center">LOREM</h4>
+            <h4 class="text-white text-center mt-40 mb-40">LOREM</h4>
             <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 1</h6>
             <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
 
             </p>
-            <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
+            <p class="text-center to-center fs-12 pt-40"><a class="text-white" href="<?= site_url('home/fullArticle');?>">read more<i class="fa fa-chevron-right pl-5"
                  aria-hidden="true"></i></a></p>
           </div>
         </div>
@@ -174,11 +179,11 @@
         <div>
             <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" style="width:100%;" alt="agmpedia title">
             <div class="absolute pt-20">
-              <h4 class="text-white text-center"><?= $pedia['title'];?></h4>
+              <h4 class="text-white text-center mt-40 mb-40"><?= $pedia['title'];?></h4>
               <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
                 <?= $pedia['sub_content'];?>
               </p>
-              <p class="text-center to-center fs-12 pt-20"><a class="text-white" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">read more<i class="fa fa-chevron-right pl-5"
+              <p class="text-center to-center fs-12 pt-40"><a class="text-white" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">read more<i class="fa fa-chevron-right pl-5"
                    aria-hidden="true"></i></a></p>
             </div>
         </div>
