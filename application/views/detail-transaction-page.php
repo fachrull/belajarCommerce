@@ -62,16 +62,16 @@
                                   <?php
                                   switch($detailOrder[0]->status_order) {
                                       case 1:
-                                          echo "<span class=\"badge badge-success float-right\">Sampai Tujuan</span>";
+                                          echo "<span class=\"badge badge-success float-right\">Pesanan Selesai</span>";
                                           break;
                                       case 2:
-                                          echo "<span class=\"badge badge-warning btn-sm float-right\">Menunggu Konfirmasi</span>";
+                                          echo "<span class=\"badge badge-warning btn-sm float-right\">Menunggu Pembayaran</span>";
                                           break;
                                       case 3:
-                                          echo "<span class=\"badge badge-danger btn-sm float-right\">Dibatalkan</span>";
+                                          echo "<span class=\"badge badge-danger btn-sm float-right\">Pesanan Dibatalkan</span>";
                                           break;
                                       case 4:
-                                          echo "<span class=\"badge badge-secondary btn-sm float-right\">Order Belum Lengkap</span>";
+                                          echo "<span class=\"badge badge-secondary btn-sm float-right\">Pesanan diproses</span>";
                                           break;
                                       case 5:
                                           echo "<span class=\"badge badge-secondary btn-sm float-right\">Pesanan Dikirim</span>";
@@ -83,11 +83,17 @@
                               </div>
                             </div>
 
-                            <hr>
-
-                            <label class="fs-12 mb-0">Tanggal Order</label>
-                            <label class="pt-0 fs-16"><?= $detailOrder[0]->order_date?></label>
-
+                              <hr>
+                              <div class="row ml-0 mr-0">
+                                  <div class="col-6 col-md-6">
+                                      <label class="fs-12 mb-0">Tanggal Order</label>
+                                      <label class="pt-0 fs-16"><?= $detailOrder[0]->order_date?></label>
+                                  </div>
+                                  <div class="col-6 col-md-6">
+                                      <label class="fs-12 mb-0">Total Pembayaran</label>
+                                      <label class="pt-0 fs-16">Rp. <?=$detailOrder[0]->total?></label>
+                                  </div>
+                              </div>
                             <hr>
 
                             <label class="fs-12 mb-0">Alamat Pengiriman</label>
@@ -118,6 +124,7 @@
                                 </div>
                             <?php endforeach;?>
                             <!-- /item -->
+
                             <hr>
                               <?php if($detailOrder[0]->status === "Menunggu Pembayaran") {
                                   echo "<button type='button' class='btn btn-danger-secondary btn-block' data-toggle='modal' data-target='#cancelOrderModal' data-id='".$detailOrder[0]->id."'>Batalkan Pesanan</button>";
@@ -146,21 +153,6 @@
                                   </div>
                               </div>
 
-                            <!-- <label class="fs-12 mb-0">Keterangan</label>
-
-                            <hr>
-
-                            <label class="fs-12 mb-0">Status Tagihan</label>
-
-                            <hr>
-
-                            <label class="fs-12 mb-0">Metode Pembayaran</label>
-
-                            <hr>
-
-                            <label class="fs-12 mb-0">Total Pembayaran</label>
-
-                            <hr> -->
 
                           </div>
 

@@ -325,6 +325,14 @@ class Mhome extends CI_Model{
     }
   }
 
+  public function getOrderList($id) {
+      return $this->getProducts(array('id_userlogin' => $id), NULL, 'tm_order', FALSE);
+  }
+
+    public function getOrderHistory($id) {
+        return $this->getProducts(array('id_userlogin' => $id, 'status_order' => 1), NULL, 'tm_order', FALSE);
+    }
+
   public function detail_district_cart($idDistrict){
     $this->db->select('a.id_kec, a.nama as kecamatan, a.id_kab, b.nama as kabupaten, c.id_prov, c.nama as provinsi');
     $this->db->from('kecamatan a');

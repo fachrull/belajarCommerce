@@ -54,38 +54,58 @@
                                         <div class="card card-success hover-shadow rad-0">
                                             <div class="card-heading">
                                                 <!-- <a class="btn <?= $myOrder['class']?> btn-sm float-right"><?= $myOrder['status']?></a> -->
-                                                <?php switch($myOrder['status_order']) {
-                                                    case 1:
-                                                        echo "<span class=\"badge badge-success float-right\">Sampai Tujuan</span>";
-                                                        break;
-                                                    case 2:
-                                                        echo "<span class=\"badge badge-warning btn-sm float-right\">Menunggu Konfirmasi</span>";
-                                                        break;
-                                                    case 3:
-                                                        echo "<span class=\"badge badge-danger btn-sm float-right\">Dibatalkan</span>";
-                                                        break;
-                                                    case 4:
-                                                        echo "<span class=\"badge badge-secondary btn-sm float-right\">Order Belum Lengkap</span>";
-                                                        break;
-                                                    default:
-                                                        break;
-                                                } ?>
-                                                <h2 class="card-title"><strong><?= $myOrder['name']?></strong>(<?= $myOrder['quantity']?>)</h2>
-                                            </div>
-                                            <a href="<?= site_url('home/detail_transaction/'.$myOrder['id']);?>">
-                                                <div class="testimonial">
-                                                    <figure class="float-left ml-15">
-                                                        <img class="square" src="<?= site_url('asset/upload/'.$myOrder['image']);?>" alt="">
-                                                    </figure>
-                                                    <div class="testimonial-content fs-14 line-height-20 ml-20">
-                                                        <p><?= $myOrder['order_number']?></p>
-                                                        <p>Rp. <?= $myOrder['total']?></p>
-                                                        <!-- <p><?= date_format($myOrder['order_date'], "d/F/Y")?></p> -->
-                                                        <p><?= $myOrder['order_date']?></p>
+                                                <h2 class="card-title">
+                                                    <div class="row ml-0 mr-0">
+                                                        <div class="col-6 col-md-6">
+                                                            <label class="fs-11 mb-0">Nomor Transaksi</label>
+                                                            <strong><?= $myOrder['order_number']?></strong>
+                                                        </div>
+                                                        <div class="col-3 col-md-3">
+                                                            <label class="fs-11 mb-0">Tanggal Transaski</label>
+                                                            <strong><?= date_format(date_create($myOrder['order_date']), "d M Y")?></strong>
+                                                        </div>
+                                                        <div class="col-3 col-md-3">
+                                                            <?php switch($myOrder['status_order']) {
+                                                                case 1:
+                                                                    echo "<span class=\"badge badge-success float-right\">Pesanan Selesai</span>";
+                                                                    break;
+                                                                case 2:
+                                                                    echo "<span class=\"badge badge-warning btn-sm float-right\">Menunggu Pembayaran</span>";
+                                                                    break;
+                                                                case 3:
+                                                                    echo "<span class=\"badge badge-danger btn-sm float-right\">Pesanan Dibatalkan</span>";
+                                                                    break;
+                                                                case 4:
+                                                                    echo "<span class=\"badge badge-secondary btn-sm float-right\">Pesanan diproses</span>";
+                                                                    break;
+                                                                case 5:
+                                                                    echo "<span class=\"badge badge-secondary btn-sm float-right\">Pesanan Dikirim</span>";
+                                                                    break;
+                                                                default:
+                                                                    break;
+                                                            } ?>
+                                                        </div>
+
                                                     </div>
-                                                </div>
-                                            </a>
+                                                    <br />
+                                                    <div class="row ml-0 mr-0">
+                                                        <div class="col-6 col-md-6">
+                                                            <label class="fs-11 mb-0">Total Item</label>
+                                                            <strong>10</strong>
+                                                        </div>
+                                                        <div class="col-4 col-md-4">
+                                                            <label class="fs-11 mb-0">Total Pembayaran</label>
+                                                            <strong>Rp. <?= $myOrder['total']?></strong>
+                                                        </div>
+                                                        <div class="col-2 col-md-2">
+                                                            <a href="<?= site_url('home/detail_transaction/'.$myOrder['id']);?>" class="btn btn-outline-secondary btn-oldblue btn-sm float-right">Detail</a>
+                                                        </div>
+                                                    </div>
+
+                                                </h2>
+                                            </div>
                                         </div>
+
                                       <?php endforeach; ?>
                                       <!-- /item -->
                                     <?php else: ?>
@@ -93,69 +113,6 @@
                                           Maaf, anda belum memiliki order
                                       </div>
                                     <?php endif; ?>
-
-                                    <!-- item -->
-                                    <!-- <div class="card card-success hover-shadow rad-0">
-                                        <div class="card-heading">
-                                            <a class="btn btn-success btn-sm float-right">Sampai Tujuan</a>
-                                            <h2 class="card-title"><strong>KING KOIL</strong></h2>
-                                        </div>
-                                        <a href="#">
-                                            <div class="testimonial">
-                                                <figure class="float-left ml-15">
-                                                    <img class="square" src="<?= site_url('asset/content-images/01.jpg');?>" alt="">
-                                                </figure>
-                                                <div class="testimonial-content fs-14 line-height-20 ml-20">
-                                                    <p>4155</p>
-                                                    <p>Rp. 30,000,000</p>
-                                                    <p>10 January 2017</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div> -->
-                                    <!-- /item -->
-
-                                    <!-- item -->
-                                    <!-- <div class="card card-success hover-shadow rad-0">
-                                        <div class="card-heading">
-                                            <a class="btn btn-danger btn-sm float-right">Dibatalkan</a>
-                                            <h2 class="card-title"><strong>KING KOIL</strong></h2>
-                                        </div>
-                                        <a href="#">
-                                            <div class="testimonial">
-                                                <figure class="float-left ml-15">
-                                                    <img class="square" src="<?= site_url('asset/content-images/01.jpg');?>" alt="">
-                                                </figure>
-                                                <div class="testimonial-content fs-14 line-height-20 ml-20">
-                                                    <p>4155</p>
-                                                    <p>Rp. 30,000,000</p>
-                                                    <p>10 January 2017</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div> -->
-                                    <!-- /item -->
-
-                                    <!-- Item -->
-                                    <!-- <div class="card card-success hover-shadow rad-0">
-                                        <div class="card-heading">
-                                            <a class="btn btn-warning btn-sm float-right">Menunggu Konfirmasi</a>
-                                            <h2 class="card-title"><strong>KING KOIL</strong></h2>
-                                        </div>
-                                        <a href="#">
-                                            <div class="testimonial">
-                                                <figure class="float-left ml-15">
-                                                    <img class="square" src="<?= site_url('asset/content-images/01.jpg');?>" alt="">
-                                                </figure>
-                                                <div class="testimonial-content fs-14 line-height-20 ml-20">
-                                                    <p>4155</p>
-                                                    <p>Rp. 30,000,000</p>
-                                                    <p>10 January 2017</p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div> -->
-                                    <!-- /item -->
                                 </div>
                             </div>
                         </div>
