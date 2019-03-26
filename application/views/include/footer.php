@@ -304,6 +304,10 @@
 <script>
     // process quantity or size item
     $(document).ready(function () {
+        const formatter = new Intl.NumberFormat('id-ID', {
+            minimumFractionDigits: 0
+        });
+
         $('#stockDetail').hide();
         $('#shoppingForm').hide();
         $('#sub_district').on('change', function () {
@@ -326,8 +330,10 @@
                             $('#shoppingForm').show();
                             $("#size").attr('disabled', false);
                             $("#size").empty();
-                            $("#price2").html("Rp.");
-                            $('#price2').append('<span class="totalprice" value=' + response[0].price + '>' + response[0].price + '</span>');
+                            var price = `Rp. <span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span>`
+                            $("#price2").html(price);
+                            //$('#price2').append("<span class='totalprice' value=" + response[0].price + "><?//=number_format(floatval(), 0, ',', '.')?>//" + "</span>");
+
                             $("#price").val(response[0].price);
                             $.each(response, function (key, value) {
                                 $("#size").append(
@@ -353,8 +359,6 @@
         $('#size').on('change', function () {
             var size = $("#size").val();
             var productId = $('#product_id').val();
-            var id_district = $('#')
-            console.log(productId)
             if (size) {
                 $.ajax({
                     url: "<?=site_url('home/checkPricebyProdSize/')?>" + productId + "/" + size,
@@ -362,7 +366,7 @@
                     dataType: "json",
                     success: function (response) {
                         console.log(response);
-                        $("#price2").html("Rp. " + response.price);
+                        $("#price2").html("Rp. " + formatter.format(response.price));
                         $("#price").val(response.price);
                     }
                 });

@@ -61,7 +61,7 @@
                   <tr>
                     <td><?=$no;?></td>
                     <td><?= $product['product'];?></td>
-                    <td><?= 'Rp '.$product['price']?></td>
+                    <td><?= 'Rp '. number_format(floatval($product['price']), 0, ",", ".")?></td>
                     <td>-</td>
                     <td>
                       <a href="<?= site_url('admin/detailProd/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>

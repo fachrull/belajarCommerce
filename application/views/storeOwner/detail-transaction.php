@@ -105,7 +105,7 @@
                                         <td><?= $order->name?></td>
                                         <td><?= $order->size_name.' ('.$order->size.')'?></td>
                                         <td><?= $order->quantity?></td>
-                                        <td><?= 'Rp '.$order->subtotal?></td>
+                                        <td><?= 'Rp '.number_format(floatval($order->subtotal), 0, ',', '.')?></td>
                                     </tr>
                                 <?php $no++; endforeach; ?>
                             </tbody>

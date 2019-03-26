@@ -278,7 +278,7 @@ class Mhome extends CI_Model{
       }
   }
 
-  public function listOrderCustomer($idUserLogin){
+  public function listOrderCustomer($idUserLogin, $criteria = NULL){
     $this->db->select('a.id, a.order_number, a.id_userlogin, a.total, a.order_date, a.address_detail, a.status_order,
       a.id_voucher, b.id_tr_product, b.quantity, b.subtotal, d.name, d.image');
     $this->db->from('tm_order a');
@@ -288,6 +288,9 @@ class Mhome extends CI_Model{
     $this->db->order_by('a.order_date', 'DESC');
     $where = array('id_userlogin' => $idUserLogin);
     $this->db->where($where);
+    if ($criteria !== NULL) {
+        $this->db->where($criteria);
+    }
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
@@ -297,7 +300,7 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, aa.id_tr_product, c.name, c.image, d.class, d.status,
+    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, a.total, a.order_date, aa.id_tr_product, c.name, c.image, d.class, d.status,
       f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
 
@@ -321,6 +324,14 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+
+  public function getOrderList($id) {
+      return $this->getProducts(array('id_userlogin' => $id), NULL, 'tm_order', FALSE);
+  }
+
+    public function getOrderHistory($id) {
+        return $this->getProducts(array('id_userlogin' => $id, 'status_order' => 1), NULL, 'tm_order', FALSE);
+    }
 
   public function detail_district_cart($idDistrict){
     $this->db->select('a.id_kec, a.nama as kecamatan, a.id_kab, b.nama as kabupaten, c.id_prov, c.nama as provinsi');

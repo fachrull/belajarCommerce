@@ -57,16 +57,43 @@
                                 <label class="fs-12 mb-0">Nomor Transaksi</label>
                                 <label class="pt-0 fs-16"><?= $detailOrder[0]->order_number?></label>
                               </div>
+
                               <div class="col-6 col-md-6 pt-10">
-                                <p class="btn <?= $detailOrder[0]->class?> btn-sm float-right"><?= $detailOrder[0]->status?></p>
+                                  <?php
+                                  switch($detailOrder[0]->status_order) {
+                                      case 1:
+                                          echo "<span class=\"badge badge-success float-right\">Pesanan Selesai</span>";
+                                          break;
+                                      case 2:
+                                          echo "<span class=\"badge badge-warning btn-sm float-right\">Menunggu Pembayaran</span>";
+                                          break;
+                                      case 3:
+                                          echo "<span class=\"badge badge-danger btn-sm float-right\">Pesanan Dibatalkan</span>";
+                                          break;
+                                      case 4:
+                                          echo "<span class=\"badge badge-secondary btn-sm float-right\">Pesanan diproses</span>";
+                                          break;
+                                      case 5:
+                                          echo "<span class=\"badge badge-secondary btn-sm float-right\">Pesanan Dikirim</span>";
+                                          break;
+                                      default:
+                                          break;
+                                  } ?>
+
                               </div>
                             </div>
 
-                            <hr>
-
-                            <label class="fs-12 mb-0">Tanggal Order</label>
-                            <label class="pt-0 fs-16"><?= $detailOrder[0]->order_date?></label>
-
+                              <hr>
+                              <div class="row ml-0 mr-0">
+                                  <div class="col-6 col-md-6">
+                                      <label class="fs-12 mb-0">Tanggal Order</label>
+                                      <label class="pt-0 fs-16"><?= $detailOrder[0]->order_date?></label>
+                                  </div>
+                                  <div class="col-6 col-md-6">
+                                      <label class="fs-12 mb-0">Total Pembayaran</label>
+                                      <label class="pt-0 fs-16">Rp. <?= number_format(floatval($detailOrder[0]->total), 0, ',', '.')?></label>
+                                  </div>
+                              </div>
                             <hr>
 
                             <label class="fs-12 mb-0">Alamat Pengiriman</label>
@@ -91,12 +118,13 @@
                                         <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
                                             <p>Jumlah: <?= $order->quantity?></p>
                                             <p>Size: <?= $order->size_name.' ('.$order->size.')'?></p>
-                                            <p>Harga Total: Rp. <?= $order->total?></p>
+                                            <p>Harga Total: Rp. <?= number_format(floatval($order->total), 0, ',', '.')?></p>
                                         </div>
                                     </div>
                                 </div>
                             <?php endforeach;?>
                             <!-- /item -->
+
                             <hr>
                               <?php if($detailOrder[0]->status === "Menunggu Pembayaran") {
                                   echo "<button type='button' class='btn btn-danger-secondary btn-block' data-toggle='modal' data-target='#cancelOrderModal' data-id='".$detailOrder[0]->id."'>Batalkan Pesanan</button>";
@@ -125,21 +153,6 @@
                                   </div>
                               </div>
 
-                            <!-- <label class="fs-12 mb-0">Keterangan</label>
-
-                            <hr>
-
-                            <label class="fs-12 mb-0">Status Tagihan</label>
-
-                            <hr>
-
-                            <label class="fs-12 mb-0">Metode Pembayaran</label>
-
-                            <hr>
-
-                            <label class="fs-12 mb-0">Total Pembayaran</label>
-
-                            <hr> -->
 
                           </div>
 
