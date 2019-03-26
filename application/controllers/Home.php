@@ -947,9 +947,20 @@ class Home extends CI_Controller{
   }
 
   public function historyPage(){
-    $this->load->view('include/header2');
-    $this->load->view('history-page');
-    $this->load->view('include/footer');
+      if ($this->session->userdata('uType') == 4) {
+          $idCustomer = $this->session->userdata('uId');
+          $criteria = array('status_order' => 1);
+
+          $data['orderList'] = $this->mhome->listOrderCustomer($idCustomer, $criteria);
+
+//      print_r($data);
+
+          $this->load->view('include/header2');
+          $this->load->view('history-page', $data);
+          $this->load->view('include/footer');
+      } else {
+          redirect('auth/login');
+      }
   }
 
   public function wishlistPage(){

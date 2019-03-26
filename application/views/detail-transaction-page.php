@@ -57,8 +57,29 @@
                                 <label class="fs-12 mb-0">Nomor Transaksi</label>
                                 <label class="pt-0 fs-16"><?= $detailOrder[0]->order_number?></label>
                               </div>
+
                               <div class="col-6 col-md-6 pt-10">
-                                <p class="btn <?= $detailOrder[0]->class?> btn-sm float-right"><?= $detailOrder[0]->status?></p>
+                                  <?php
+                                  switch($detailOrder[0]->status_order) {
+                                      case 1:
+                                          echo "<span class=\"badge badge-success float-right\">Sampai Tujuan</span>";
+                                          break;
+                                      case 2:
+                                          echo "<span class=\"badge badge-warning btn-sm float-right\">Menunggu Konfirmasi</span>";
+                                          break;
+                                      case 3:
+                                          echo "<span class=\"badge badge-danger btn-sm float-right\">Dibatalkan</span>";
+                                          break;
+                                      case 4:
+                                          echo "<span class=\"badge badge-secondary btn-sm float-right\">Order Belum Lengkap</span>";
+                                          break;
+                                      case 5:
+                                          echo "<span class=\"badge badge-secondary btn-sm float-right\">Pesanan Dikirim</span>";
+                                          break;
+                                      default:
+                                          break;
+                                  } ?>
+
                               </div>
                             </div>
 
