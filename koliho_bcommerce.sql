@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2019 at 05:35 PM
+-- Generation Time: Mar 26, 2019 at 02:05 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.14
 
@@ -30,7 +30,6 @@ USE `koliho_bcommerce`;
 -- Table structure for table `kabupaten`
 --
 
-DROP TABLE IF EXISTS `kabupaten`;
 CREATE TABLE IF NOT EXISTS `kabupaten` (
   `id_kab` char(4) NOT NULL,
   `id_prov` char(2) NOT NULL,
@@ -566,7 +565,6 @@ INSERT INTO `kabupaten` (`id_kab`, `id_prov`, `nama`, `id_jenis`) VALUES
 -- Table structure for table `kecamatan`
 --
 
-DROP TABLE IF EXISTS `kecamatan`;
 CREATE TABLE IF NOT EXISTS `kecamatan` (
   `id_kec` char(6) NOT NULL,
   `id_kab` char(4) NOT NULL,
@@ -7685,7 +7683,6 @@ INSERT INTO `kecamatan` (`id_kec`, `id_kab`, `nama`) VALUES
 -- Table structure for table `provinsi`
 --
 
-DROP TABLE IF EXISTS `provinsi`;
 CREATE TABLE IF NOT EXISTS `provinsi` (
   `id_prov` char(2) NOT NULL,
   `nama` tinytext NOT NULL,
@@ -7738,7 +7735,6 @@ INSERT INTO `provinsi` (`id_prov`, `nama`) VALUES
 -- Table structure for table `tm_agmpedia`
 --
 
-DROP TABLE IF EXISTS `tm_agmpedia`;
 CREATE TABLE IF NOT EXISTS `tm_agmpedia` (
   `id` int(15) NOT NULL AUTO_INCREMENT,
   `title` varchar(100) NOT NULL,
@@ -7766,7 +7762,6 @@ INSERT INTO `tm_agmpedia` (`id`, `title`, `sub_content`, `content`, `date`, `thu
 -- Table structure for table `tm_brands`
 --
 
-DROP TABLE IF EXISTS `tm_brands`;
 CREATE TABLE IF NOT EXISTS `tm_brands` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -7794,7 +7789,6 @@ INSERT INTO `tm_brands` (`id`, `name`, `logo`, `description`, `status`) VALUES
 -- Table structure for table `tm_category`
 --
 
-DROP TABLE IF EXISTS `tm_category`;
 CREATE TABLE IF NOT EXISTS `tm_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
@@ -7821,7 +7815,6 @@ INSERT INTO `tm_category` (`id`, `name`, `description`, `status`) VALUES
 -- Table structure for table `tm_customer`
 --
 
-DROP TABLE IF EXISTS `tm_customer`;
 CREATE TABLE IF NOT EXISTS `tm_customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_userlogin` int(11) NOT NULL,
@@ -7846,7 +7839,6 @@ INSERT INTO `tm_customer` (`id`, `id_userlogin`, `first_name`, `last_name`, `gen
 -- Table structure for table `tm_customer_detail`
 --
 
-DROP TABLE IF EXISTS `tm_customer_detail`;
 CREATE TABLE IF NOT EXISTS `tm_customer_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_userlogin` int(11) NOT NULL,
@@ -7873,7 +7865,7 @@ CREATE TABLE IF NOT EXISTS `tm_customer_detail` (
 --
 
 INSERT INTO `tm_customer_detail` (`id`, `id_userlogin`, `first_name`, `last_name`, `gender`, `email`, `phone`, `address`, `province`, `city`, `sub_district`, `postcode`, `default_address`) VALUES
-(1, 15, 'dummy customer2', '', 'm', '', '085712345678', 'Jl. Sesama No.123', '31', '3174', '317403', '12780', 1),
+(1, 15, 'dummy', 'customer2', 'm', '', '085712345678', 'Jl. Sesama No.123', '31', '3174', '317403', '12780', 1),
 (2, 40, 'fachrul', 'fandi', 'm', 'fachrul@email.com', '085712345678', 'Jl. Sesama No.123', '31', '3175', '317509', '13730', 0),
 (3, 40, 'fachrul', 'fandi', 'm', 'fachrul@email.com', '085712345678', 'Jl. Tidak Sesama No.321', '31', '3174', '317403', '12780', 1),
 (5, 40, 'fachrul', 'fandi', 'm', 'dummystr@koliho.com', '2188877665', 'Jl. Sesama No. 123', '31', '3174', '317403', '12345678', 0),
@@ -7887,7 +7879,6 @@ INSERT INTO `tm_customer_detail` (`id`, `id_userlogin`, `first_name`, `last_name
 -- Table structure for table `tm_order`
 --
 
-DROP TABLE IF EXISTS `tm_order`;
 CREATE TABLE IF NOT EXISTS `tm_order` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_number` varchar(100) NOT NULL,
@@ -7919,7 +7910,6 @@ INSERT INTO `tm_order` (`id`, `order_number`, `id_userlogin`, `total`, `order_da
 -- Table structure for table `tm_product`
 --
 
-DROP TABLE IF EXISTS `tm_product`;
 CREATE TABLE IF NOT EXISTS `tm_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `brand_id` int(11) NOT NULL,
@@ -8050,10 +8040,26 @@ INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `description`, `im
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tm_promotion`
+--
+
+CREATE TABLE IF NOT EXISTS `tm_promotion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `description` text NOT NULL,
+  `image` blob NOT NULL,
+  `start_date` date NOT NULL,
+  `end_date` date NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tm_review`
 --
 
-DROP TABLE IF EXISTS `tm_review`;
 CREATE TABLE IF NOT EXISTS `tm_review` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
@@ -8082,7 +8088,6 @@ INSERT INTO `tm_review` (`id`, `prod_id`, `name`, `email`, `comment`, `stars`, `
 -- Table structure for table `tm_size`
 --
 
-DROP TABLE IF EXISTS `tm_size`;
 CREATE TABLE IF NOT EXISTS `tm_size` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -8110,7 +8115,6 @@ INSERT INTO `tm_size` (`id`, `name`, `size`, `created_at`, `updated_at`, `status
 -- Table structure for table `tm_slide`
 --
 
-DROP TABLE IF EXISTS `tm_slide`;
 CREATE TABLE IF NOT EXISTS `tm_slide` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `slide` blob NOT NULL,
@@ -8132,7 +8136,6 @@ INSERT INTO `tm_slide` (`id`, `slide`, `created_at`, `updated_at`) VALUES
 -- Table structure for table `tm_spec`
 --
 
-DROP TABLE IF EXISTS `tm_spec`;
 CREATE TABLE IF NOT EXISTS `tm_spec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -8202,7 +8205,6 @@ INSERT INTO `tm_spec` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUE
 -- Table structure for table `tm_special_package`
 --
 
-DROP TABLE IF EXISTS `tm_special_package`;
 CREATE TABLE IF NOT EXISTS `tm_special_package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(100) NOT NULL,
@@ -8227,7 +8229,6 @@ INSERT INTO `tm_special_package` (`id`, `name`, `image`, `description`, `active`
 -- Table structure for table `tm_status_order`
 --
 
-DROP TABLE IF EXISTS `tm_status_order`;
 CREATE TABLE IF NOT EXISTS `tm_status_order` (
   `id` int(11) NOT NULL,
   `class` varchar(100) NOT NULL,
@@ -8251,7 +8252,6 @@ INSERT INTO `tm_status_order` (`id`, `class`, `status`) VALUES
 -- Table structure for table `tm_store_owner`
 --
 
-DROP TABLE IF EXISTS `tm_store_owner`;
 CREATE TABLE IF NOT EXISTS `tm_store_owner` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_userlogin` int(11) NOT NULL,
@@ -8285,7 +8285,6 @@ INSERT INTO `tm_store_owner` (`id`, `id_userlogin`, `company_name`, `address`, `
 -- Table structure for table `tm_super_admin`
 --
 
-DROP TABLE IF EXISTS `tm_super_admin`;
 CREATE TABLE IF NOT EXISTS `tm_super_admin` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_userlogin` int(11) NOT NULL,
@@ -8319,7 +8318,6 @@ INSERT INTO `tm_super_admin` (`id`, `id_userlogin`, `first_name`, `last_name`, `
 -- Table structure for table `tm_voucher`
 --
 
-DROP TABLE IF EXISTS `tm_voucher`;
 CREATE TABLE IF NOT EXISTS `tm_voucher` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode_voucher` char(12) NOT NULL,
@@ -8347,7 +8345,6 @@ INSERT INTO `tm_voucher` (`id`, `kode_voucher`, `name`, `description`, `bonus`, 
 -- Table structure for table `tr_bonus_voucher`
 --
 
-DROP TABLE IF EXISTS `tr_bonus_voucher`;
 CREATE TABLE IF NOT EXISTS `tr_bonus_voucher` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_voucher` int(11) NOT NULL,
@@ -8371,7 +8368,6 @@ INSERT INTO `tr_bonus_voucher` (`id`, `id_voucher`, `bonus`) VALUES
 -- Table structure for table `tr_order_detail`
 --
 
-DROP TABLE IF EXISTS `tr_order_detail`;
 CREATE TABLE IF NOT EXISTS `tr_order_detail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_tm_order` int(11) DEFAULT NULL,
@@ -8399,7 +8395,6 @@ INSERT INTO `tr_order_detail` (`id`, `id_tm_order`, `id_tr_product`, `quantity`,
 -- Table structure for table `tr_product`
 --
 
-DROP TABLE IF EXISTS `tr_product`;
 CREATE TABLE IF NOT EXISTS `tr_product` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_store` int(11) NOT NULL,
@@ -8430,7 +8425,6 @@ INSERT INTO `tr_product` (`id`, `id_store`, `id_product`, `id_product_size`, `qu
 -- Table structure for table `tr_product_bedding_acc`
 --
 
-DROP TABLE IF EXISTS `tr_product_bedding_acc`;
 CREATE TABLE IF NOT EXISTS `tr_product_bedding_acc` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
@@ -8488,7 +8482,6 @@ INSERT INTO `tr_product_bedding_acc` (`id`, `prod_id`, `stars`, `position`) VALU
 -- Table structure for table `tr_product_bed_linen`
 --
 
-DROP TABLE IF EXISTS `tr_product_bed_linen`;
 CREATE TABLE IF NOT EXISTS `tr_product_bed_linen` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
@@ -8533,7 +8526,6 @@ INSERT INTO `tr_product_bed_linen` (`id`, `prod_id`, `stars`, `position`) VALUES
 -- Table structure for table `tr_product_best_seller`
 --
 
-DROP TABLE IF EXISTS `tr_product_best_seller`;
 CREATE TABLE IF NOT EXISTS `tr_product_best_seller` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
@@ -8661,7 +8653,6 @@ INSERT INTO `tr_product_best_seller` (`id`, `prod_id`, `stars`, `position`) VALU
 -- Table structure for table `tr_product_size`
 --
 
-DROP TABLE IF EXISTS `tr_product_size`;
 CREATE TABLE IF NOT EXISTS `tr_product_size` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
@@ -8891,7 +8882,6 @@ INSERT INTO `tr_product_size` (`id`, `prod_id`, `size_id`, `price`) VALUES
 -- Table structure for table `tr_product_spec`
 --
 
-DROP TABLE IF EXISTS `tr_product_spec`;
 CREATE TABLE IF NOT EXISTS `tr_product_spec` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `prod_id` int(11) NOT NULL,
@@ -9157,7 +9147,6 @@ INSERT INTO `tr_product_spec` (`id`, `prod_id`, `spec_id`) VALUES
 -- Table structure for table `tr_special_package`
 --
 
-DROP TABLE IF EXISTS `tr_special_package`;
 CREATE TABLE IF NOT EXISTS `tr_special_package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_special_package` int(11) NOT NULL,
@@ -9182,7 +9171,6 @@ INSERT INTO `tr_special_package` (`id`, `id_special_package`, `id_product`) VALU
 -- Table structure for table `tr_storeowner_special_package`
 --
 
-DROP TABLE IF EXISTS `tr_storeowner_special_package`;
 CREATE TABLE IF NOT EXISTS `tr_storeowner_special_package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_special_package` int(11) NOT NULL,
@@ -9199,7 +9187,6 @@ CREATE TABLE IF NOT EXISTS `tr_storeowner_special_package` (
 -- Table structure for table `tr_store_owner_cluster`
 --
 
-DROP TABLE IF EXISTS `tr_store_owner_cluster`;
 CREATE TABLE IF NOT EXISTS `tr_store_owner_cluster` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_store` int(11) NOT NULL,
@@ -9228,7 +9215,6 @@ INSERT INTO `tr_store_owner_cluster` (`id`, `id_store`, `province`, `city`, `sub
 -- Table structure for table `user_login`
 --
 
-DROP TABLE IF EXISTS `user_login`;
 CREATE TABLE IF NOT EXISTS `user_login` (
   `user_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
