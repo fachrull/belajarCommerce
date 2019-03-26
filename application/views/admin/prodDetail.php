@@ -44,7 +44,7 @@
                       <ul>
                         <?php for($i = 0; $i < count($sizes); $i++): ?>
                           <li><?= $sizes[$i][0]['name'];?> (<?= $sizes[$i][0]['size'];?>) -
-                            <b>Rp <?= number_format($prices[$i], 2, ",", ".");?></b></li>
+                            <b>Rp <?= number_format($prices[$i], 0, ",", ".");?></b></li>
                         <?php endfor; ?>
                       </ul>
                     </div>

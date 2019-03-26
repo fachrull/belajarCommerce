@@ -91,7 +91,7 @@
                                   </div>
                                   <div class="col-6 col-md-6">
                                       <label class="fs-12 mb-0">Total Pembayaran</label>
-                                      <label class="pt-0 fs-16">Rp. <?=$detailOrder[0]->total?></label>
+                                      <label class="pt-0 fs-16">Rp. <?= number_format(floatval($detailOrder[0]->total), 0, ',', '.')?></label>
                                   </div>
                               </div>
                             <hr>
@@ -118,7 +118,7 @@
                                         <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
                                             <p>Jumlah: <?= $order->quantity?></p>
                                             <p>Size: <?= $order->size_name.' ('.$order->size.')'?></p>
-                                            <p>Harga Total: Rp. <?= $order->total?></p>
+                                            <p>Harga Total: Rp. <?= number_format(floatval($order->total), 0, ',', '.')?></p>
                                         </div>
                                     </div>
                                 </div>

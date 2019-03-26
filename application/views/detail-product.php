@@ -146,9 +146,9 @@
 
 						<div class="mb-15 pl-0">
 							<p class="text-left fs-18 bold" id="price2">
-							Rp. <span class="minprice"><?= $product['min_price'];?></span>
+							Rp. <span ><?=number_format(floatval($product['min_price']), 0, ',', '.')?></span>
 							-
-							Rp. <span class="maxprice"><?= $product['max_price'];?></span>
+							Rp. <span><?=number_format(floatval($product['max_price']), 0, ',', '.')?></span>
 							</p>
 
 						</div>
