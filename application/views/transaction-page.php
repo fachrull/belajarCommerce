@@ -46,7 +46,6 @@
                                 <div class="col-12 col-md-12">
                                     <h2 class="fs-16 font-regular mb-20 mt-6">
                                         <i class="fa fa-bar-chart-o mr-10"></i> Status Transaksi
-                                        <span class="text-muted">(4)</span>
                                     </h2>
                                     <?php if ($orderList != NULL): ?>
                                       <!-- item -->
