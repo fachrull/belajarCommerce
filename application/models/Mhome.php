@@ -300,15 +300,14 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, a.total, a.order_date, aa.id_tr_product, c.name, c.image, d.class, d.status,
-      f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
+    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.name, c.image,
+      f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
 
     $this->db->from('tm_order a');
     $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
     $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
     $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
-    $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
     $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
     $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
     $this->db->join('kabupaten h', 'h.id_kab = f.city', 'left');

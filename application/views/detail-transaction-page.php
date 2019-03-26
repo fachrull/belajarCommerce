@@ -118,7 +118,7 @@
                                         <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
                                             <p>Jumlah: <?= $order->quantity?></p>
                                             <p>Size: <?= $order->size_name.' ('.$order->size.')'?></p>
-                                            <p>Harga Total: Rp. <?= number_format(floatval($order->total), 0, ',', '.')?></p>
+                                            <p>Harga Total: Rp. <?= number_format(floatval($order->subtotal), 0, ',', '.')?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                             <!-- /item -->
 
                             <hr>
-                              <?php if($detailOrder[0]->status === "Menunggu Pembayaran") {
+                              <?php if($detailOrder[0]->status_order == 2) {
                                   echo "<button type='button' class='btn btn-danger-secondary btn-block' data-toggle='modal' data-target='#cancelOrderModal' data-id='".$detailOrder[0]->id."'>Batalkan Pesanan</button>";
                               }?>
                               <div class="modal fade bs-example-modal-lg" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

@@ -292,13 +292,6 @@
                 })
             }
         });
-
-        $('#sub_district').change(function () {
-            var selectedDistrict = $(this).children("option:selected").val();
-            var url = "<?= site_url('home/addToCart/');?>" + selectedDistrict
-            $('#cart_form').attr('action', url);
-            console.log(url);
-        })
     });
 </script>
 <script>
@@ -322,9 +315,9 @@
                     method: "GET",
                     dataType: "json",
                     success: function (response) {
-                        console.log(response[0].quantity);
                         if (response != '') {
                             $("div.toggle.active > label").trigger("click");
+                            $("#stockTitle").html("Available in your location");
                             $("#stockLabel").html('<i id="stockIcon" class="fa fa-check text-oldblue"></i> In Stock');
                             $('#stockDetail').show();
                             $('#shoppingForm').show();
