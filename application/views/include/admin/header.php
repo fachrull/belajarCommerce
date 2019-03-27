@@ -103,7 +103,7 @@
               <!-- Menu Body -->
               <li class="user-body">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat h-30">Profile</a>
+                  <a href="<?=site_url('admin/Profile/')?>" class="btn btn-default btn-flat h-30">Profile</a>
                 </div>
                 <div class="pull-right">
                   <a href="<?= site_url('auth/logout')?>" class="btn btn-default btn-flat h-30">Sign out</a>

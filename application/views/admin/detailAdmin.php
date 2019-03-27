@@ -55,7 +55,7 @@
                 <a href="<?= site_url('admin/listAdmin');?>"><button class="btn btn-oldblue btn-default" style="float:left;">Back</button></a>
                 </div>
                 <div class="col-xs-6">
-                <a href="<?= site_url('admin/resetPassword/'.$detail_admin['user_id']);?>"><button class="btn btn-oldblue btn-default" style="float:right;">Reset Password</button></a>
+                <a href="<?= site_url('admin/changePassword/'.$detail_admin['user_id']);?>"><button class="btn btn-oldblue btn-default" style="float:right;">Change Password</button></a>
                 </div>
               </div>
             </div>
