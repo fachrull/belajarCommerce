@@ -1736,4 +1736,69 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
+
+    public function changePassword()
+    {
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('current', 'Current password', 'required');
+            $this->form_validation->set_rules('new', 'New password', 'required');
+            $this->form_validation->set_rules('confirm', 'Confirm password', 'required');
+
+            if ($this->form_validation->run() == TRUE) {
+                $this->load->model('Mauth', 'mauth');
+                $id = $this->session->userdata('uId');
+                $currentPassword = $this->input->post('current');
+                $userData = $this->mauth->getData(array('user_id' => $id), array('password' => 'password'), TRUE);
+
+                if (!password_verify($currentPassword, $userData->password)) {
+                    $this->session->set_flashdata('error', 'Current password salah');
+                    redirect('admin/changePassword');
+                } else {
+                    $newPassword = $this->input->post('new');
+                    $confirmPassword = $this->input->post('confirm');
+                    if ($confirmPassword === $newPassword) {
+                        $data = array(
+                            'password' => password_hash($newPassword, PASSWORD_DEFAULT)
+                        );
+                        $this->madmin->updateData(array('user_id' => $id), 'user_login', $data);
+                        redirect('admin/profile');
+
+                    } else {
+                        $this->session->set_flashdata('error', 'Password yang diinput tidak sama');
+                        redirect('admin/changePassword');
+                    }
+                }
+
+            } else {
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/changePassword');
+                $this->load->view('include/admin/footer');
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
+    public function profile()
+    {
+        if ($this->session->userdata('uType') == 1) {
+            $id = $this->session->userdata('uId');
+            $data['detail_admin'] = $this->madmin->detail_admin($id);
+
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/detailAdmin', $data);
+            $this->load->view('include/admin/footer');
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
 }

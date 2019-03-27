@@ -2142,6 +2142,29 @@ body {
 	background-color: #f9fafc;
 }
 
+/* .form-control:not(textarea) {
+	height: 40px;
+}
+
+select.form-control:not([size]):not([multiple]) {
+	-webkit-appearance: none;
+	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAGCAMAAADNLv/0AAAANlBMVEUAAAD///+ZmZmfoqiaoKydo6ueo6ucpKqdo6qdoqqeoqqdo6qdoqqdo6qco6mdo6qcoqmdo6rJSltEAAAAEHRSTlMAAQVSU5Wmrbe+1NXf5f7+fUgvXAAAAC5JREFUeNodxkkCABAMBMEhiDX4/2fJ9KULLYHlhW5C3YIwvikgThOK3kcddPU9JQ4BFWtk/ScAAAAASUVORK5CYII=) no-repeat;
+	background-color: #fff;
+	color: #a3a9b0;
+	background-position: center right 15px;
+}
+
+.form-control:not(textarea) {
+	height: 46px !important;
+}
+
+input.form-control,
+select.form-control,
+textarea.form-control {
+	border-color: #dee5ed;
+} */
+
+
 /*
  * Content Wrapper - contains the main content
  */
@@ -7239,7 +7262,6 @@ table.text-center th {
 }
 
 .select2-container--default .select2-selection--multiple {
-	border: 2px solid #E5E5E5 !important;
 	border-radius: 0;
 	width: 100% !important;
 }
@@ -8095,21 +8117,21 @@ table.text-center th {
 	margin-top: 0px;
 }
 
-.register-box-body label textarea {
+/* .register-box-body label textarea {
 	border: solid #e5e5e5 2px !important;
 	width: 100% !important;
 	height: 80px;
 	padding: 8px 10px;
 	font: 15px/19px 'Open Sans', Helvetica, Arial, sans-serif;
-}
+} */
 
-.box .box-body label textarea {
+/* .box .box-body label textarea {
 	border: solid #e5e5e5 1px !important;
 	width: 100% !important;
 	height: 170px;
 	padding: 8px 10px;
 	font: 15px/19px 'Open Sans', Helvetica, Arial, sans-serif;
-}
+} */
 
 .box .box-body img {
 	width: 100% !important;
@@ -8123,7 +8145,7 @@ table.text-center th {
 	font-weight: 700 !important;
 }
 
-.register-box-body select.form-control {
+/* .register-box-body select.form-control {
 	border: solid #e5e5e5 2px !important;
 	width: 100% !important;
 	height: 40px !important;
@@ -8131,7 +8153,7 @@ table.text-center th {
 	font: 15px/19px 'Open Sans', Helvetica, Arial, sans-serif;
 	color: #000 !important;
 	line-height: normal !important;
-}
+} */
 
 .box .box-body .product-detail label {
 	width: 100% !important;
@@ -8171,4 +8193,10 @@ table.text-center th {
 
 div.toggle-voucher {
 	margin-top: 0px;
+}
+
+label.input,
+input.form-control {
+	width: 100% !important;
+	border-radius: 5px;
 }
