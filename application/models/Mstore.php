@@ -155,4 +155,17 @@ class Mstore extends CI_Model{
             return FALSE;
         }
     }
+    public function detail_admin($idAdmin){
+        $this->db->select('b.user_id, a.company_name, a.phone1, b.username, b.email, b.user_type');
+        $this->db->from('tm_store_owner a');
+        $this->db->join('user_login b', 'b.user_id = a.id_userlogin', 'left');
+        $this->db->where('a.id_userlogin', $idAdmin);
+        $query = $this->db->get();
+        if($query->num_rows() != 0){
+            return $query->row_array();
+        }else{
+            return FALSE;
+        }
+    }
+
 }
