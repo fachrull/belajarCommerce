@@ -50,14 +50,14 @@
 						<h4>BRANDS</h4>
 					</div>
 
-					<ul id="brands" class="list-group list-unstyled">
-						<li class="list-group-item"><a href="#"> Aireloom</a></li>
-						<li class="list-group-item"><a href="#"> KingKoil</a></li>
-						<li class="list-group-item"><a href="#"> Serta</a></li>
-						<li class="list-group-item"><a href="#"> Tempur</a></li>
-						<li class="list-group-item"><a href="#"> Stressless</a></li>
-						<li class="list-group-item"><a href="#"> Florence</a></li>
-					</ul>
+                    <ul id="brands" class="list-group list-unstyled">
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>">Aireloom</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>">Kingkoil</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>">Serta</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>">Tempur</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>">Florence</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>">Stressless</a></li>
+                    </ul>
 
 				</div>
 				<!-- BRANDS -->
@@ -146,9 +146,9 @@
 
 						<div class="mb-15 pl-0">
 							<p class="text-left fs-18 bold" id="price2">
-							Rp. <span class="minprice"><?= $product['min_price'];?></span>
+							Rp. <span ><?=number_format(floatval($product['min_price']), 0, ',', '.')?></span>
 							-
-							Rp. <span class="maxprice"><?= $product['max_price'];?></span>
+							Rp. <span><?=number_format(floatval($product['max_price']), 0, ',', '.')?></span>
 							</p>
 
 						</div>

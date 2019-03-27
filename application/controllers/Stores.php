@@ -189,4 +189,69 @@ class Stores extends CI_Controller{
         $this->load->view('include/admin/footer');
   }
 
+    public function profile()
+    {
+        if ($this->session->userdata('uType') == 3) {
+            $id = $this->session->userdata('uId');
+            $data['detail_admin'] = $this->mstore->detail_admin($id);
+
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('storeOwner/profile', $data);
+            $this->load->view('include/admin/footer');
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+    public function changePassword()
+    {
+        if ($this->session->userdata('uType') == 3) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('current', 'Current password', 'required');
+            $this->form_validation->set_rules('new', 'New password', 'required');
+            $this->form_validation->set_rules('confirm', 'Confirm password', 'required');
+
+            if ($this->form_validation->run() == TRUE) {
+                $this->load->model('Mauth', 'mauth');
+                $id = $this->session->userdata('uId');
+                $currentPassword = $this->input->post('current');
+                $userData = $this->mauth->getData(array('user_id' => $id), array('password' => 'password'), TRUE);
+
+                if (!password_verify($currentPassword, $userData->password)) {
+                    $this->session->set_flashdata('error', 'Current password salah');
+                    redirect('stores/changePassword');
+                } else {
+                    $newPassword = $this->input->post('new');
+                    $confirmPassword = $this->input->post('confirm');
+                    if ($confirmPassword === $newPassword) {
+                        $data = array(
+                            'password' => password_hash($newPassword, PASSWORD_DEFAULT)
+                        );
+                        $this->mstore->updateData(array('user_id' => $id)    , $data, 'user_login');
+//                        echo $this->db->last_query();
+                        redirect('stores/profile');
+
+                    } else {
+                        $this->session->set_flashdata('error', 'Password yang diinput tidak sama');
+                        redirect('stores/changePassword');
+                    }
+                }
+
+            } else {
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('storeOwner/changePassword');
+                $this->load->view('include/admin/footer');
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
 }
