@@ -36,7 +36,7 @@
 								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
 								<li class="list-group-noicon active">
-									<a href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
+									<a class="pt-4 pb-4" href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
 								</li>
 									<?php endforeach;?>
 								</ul>

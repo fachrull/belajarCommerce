@@ -12,38 +12,67 @@
 							<li><a href="#password" data-toggle="tab">Password</a></li>
 						</ul>
 
-						<div class="tab-content mt-20">
-
+						<div class="tab-content">
+							<?php if ($this->session->has_userdata('error')): ?>
+								<div class="text-center">
+									<div class="container">
+										<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
+											<?= $this->session->userdata('error');?>
+										</div>
+									</div>
+								</div>
+							<?php endif; ?>
 							<!-- PERSONAL INFO TAB -->
 							<div class="tab-pane active" id="info">
-								<form action="#" method="post">
+								<form action="<?= site_url('home/profileSetting')?>" method="post">
 									<div class="form-group">
 										<label class="form-control-label">First Name</label>
-										<input type="text" placeholder="Sherlock" class="form-control">
+										<input type="text" name="firstname" value="<?= $profile['first_name'];?>" class="form-control">
 									</div>
 									<div class="form-group">
 										<label class="form-control-label">Last Name</label>
-										<input type="text" placeholder="Holmes" class="form-control">
+										<input type="text" name="lastname" value="<?= $profile['last_name']?>" class="form-control">
 									</div>
 									<div class="form-group">
 										<label class="form-control-label">Email</label>
-										<input type="text" placeholder="email@email.com" class="form-control">
+										<input type="email" name="email" value="<?= $profile['email']?>" class="form-control">
 									</div>
 									<div class="form-group">
 										<label class="form-control-label">Phone Number</label>
-										<input type="text" placeholder="+4482637176" class="form-control">
+										<input type="text" name="phone" value="<?= $profile['phone']?>" class="form-control">
 									</div>
 									<div class="form-group">
-										<label class="form-control-label">Birthday</label>
-										<input type="text" class="form-control masked" data-format="99/99/9999" data-placeholder="_" placeholder="dd/mm/yyy">
+										<label class="form-control-label">Province</label>
+										<select id="province" name="province" class="form-control" name="">
+											<option value="Select" selected disabled> Province </option>
+											<?php foreach ($provinces as $province): ?>
+												<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
+											<?php endforeach; ?>
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="form-control-label">City</label>
+										<select class="form-control" name="city" id="city">
+											<option value="Select" selected disabled> City </option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label class="form-control-label">Sub District</label>
+										<select class="form-control" name="sub_district" id="sub_district">
+											<option value="Select" selected disabled> City </option>
+										</select>
 									</div>
 									<div class="form-group">
 										<label class="form-control-label">Address</label>
-										<textarea class="form-control" rows="3" placeholder=""></textarea>
+										<textarea class="form-control" name="address" rows="3" placeholder=""><?= $profile['address']?></textarea>
+									</div>
+									<div class="form-group">
+										<label class="form-control-label">Postcode</label>
+										<input type="text" name="postcode" value="<?= $profile['postcode']?>" class="form-control">
 									</div>
 									<div class="margiv-top10">
-										<a href="#" class="btn btn-oldblue"><i class="fa fa-check"></i> Save Changes </a>
-										<a href="#" class="btn btn-default">Cancel </a>
+										<button type="submit" class="btn btn-oldblue"><i class="fa fa-check"></i> Save Changes </button>
+										<a href="<?= site_url('home/profilePage');?>" class="btn btn-default">Cancel </a>
 									</div>
 								</form>
 							</div>

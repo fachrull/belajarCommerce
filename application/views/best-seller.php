@@ -77,7 +77,7 @@
 						<ul class="shop-item-list row list-inline m-0">
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -88,7 +88,7 @@
 										</a>
 										<!-- /product image(s) -->
 
-										
+
 
 										<!-- product more info -->
 										<div class="shop-item-info">
@@ -128,7 +128,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -177,7 +177,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -234,7 +234,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -289,7 +289,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -346,7 +346,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -403,7 +403,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -452,7 +452,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -509,7 +509,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 
@@ -558,7 +558,7 @@
 							<!-- /ITEM -->
 
 							<!-- ITEM -->
-							<li class="col-lg-6 col-sm-6">
+							<li class="col-lg-4 col-sm-4">
 
 								<div class="shop-item">
 

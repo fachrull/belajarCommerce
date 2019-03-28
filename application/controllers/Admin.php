@@ -409,6 +409,8 @@ class Admin extends CI_Controller {
   }
 
   public function test(){
+    redirect('admin/bestSeller');
+    exit();
     $data = $this->madmin->getProducts(NULL, array('idField' => 'id'), 'tm_product', FALSE);
     // foreach ($data as $data) {
     //   print_r($no);
@@ -668,7 +670,7 @@ class Admin extends CI_Controller {
 
   public function sa_slider(){
     if ($this->session->userdata('uType') == 1) {
-      $data['slides'] = $this->madmin->getProducts(NULL, NULL, 'tm_slide', FALSE);
+      $data['slides'] = $this->madmin->getProducts(array('cover' => 1), NULL, 'tm_cover', FALSE);
 
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');
@@ -696,11 +698,13 @@ class Admin extends CI_Controller {
         $this->load->view('include/admin/footer');
       }else{
         $pName = $this->upload->data();
+        $coverIdentifier = 1;
         $items = array(
           'slide'       => $pName['orig_name'],
           'created_at'  => date('Ymd'),
+          'cover'       =>  $coverIdentifier
         );
-        $this->madmin->inputData('tm_slide', $items);
+        $this->madmin->inputData('tm_cover', $items);
         redirect('admin/sa_slider');
       }
     } else {
@@ -712,7 +716,11 @@ class Admin extends CI_Controller {
 
   public function deleteSlider($idSlider){
     if ($this->session->userdata('uType') == 1) {
-      $this->madmin->deleteData(array('id' => $idSlider), 'tm_slide');
+      $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tm_cover', TRUE);
+      $file_path = 'asset/upload/best-seller-cover/'.$file['slide'];
+      unlink($file_path);
+      print_r($file_path);
+      $this->madmin->deleteData(array('id' => $idSlider), 'tm_cover');
       redirect('admin/sa_slider');
     }else{
       $this->load->view('include/header2');
@@ -1000,13 +1008,51 @@ class Admin extends CI_Controller {
 
   public function bestSeller(){
     if ($this->session->userdata('uType') == 1) {
-      $data['best_seller'] = $this->madmin->best_seler();
+      $file_name = strtolower('best-seller-cover-'.uniqid());
 
-      $this->load->view('include/admin/header');
-      $this->load->view('include/admin/left-sidebar');
-      $this->load->view('admin/best_seller', $data);
-      $this->load->view('include/admin/footer');
+      $config['upload_path'] = './asset/upload/best-seller-cover/';
+      $config['allowed_types'] = 'jpg|jpeg|png|svg';
+      $config['file_name'] = $file_name;
+
+      $this->load->library('upload', $config);
+      if (! $this->upload->do_upload('cover_bestSeller')) {
+          $this->session->set_flashdata('error', $this->upload->display_errors());
+          $data['best_seller'] = $this->madmin->best_seler();
+          $data['slides'] = $this->madmin->getProducts(array('cover' => 2), array('idField' => 'id', 'slideField' => 'slide'),
+            'tm_cover', TRUE);
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/best_seller', $data);
+          $this->load->view('include/admin/footer');
+      } else {
+          $coverName = $this->upload->data();
+          $coverIdentifier = 2; // 1 = header, 2 = best seller, 3 = special package, 4 = bed linen, 5 = bedding accessories
+          $items = array(
+            'slide'       =>  $coverName['orig_name'],
+            'created_at'  =>  date('Ymd'),
+            'cover'       =>  $coverIdentifier
+          );
+
+          $this->madmin->inputData('tm_cover', $items);
+          redirect('admin/bestSeller');
+      }
     } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function delete_cover_bestSeller($idSlider){
+    if ($this->session->userdata('uType') == 1) {
+      $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tn_cover', TRUE);
+      $file_path = 'asset/upload/best-seller-cover/'.$file['slide'];
+      unlink($file_path);
+      print_r($file_path);
+      $this->madmin->deleteData(array('id' => $idSlider), 'tm_cover');
+      redirect('admin/bestSeller');
+    }else{
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
@@ -1269,14 +1315,52 @@ class Admin extends CI_Controller {
 
   public function special_package(){
     if ($this->session->userdata('uType') == 1) {
-      $data['specialPackages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name',
-       'priceField' => 'price', 'activeField' => 'active'), 'tm_special_package', FALSE);
+      $file_name = strtolower('special-package-cover-'.uniqid());
 
-      $this->load->view('include/admin/header');
-      $this->load->view('include/admin/left-sidebar');
-      $this->load->view('admin/specialPackage', $data);
-      $this->load->view('include/admin/footer');
+      $config['upload_path'] = './asset/upload/special-package/cover/';
+      $config['allowed_types'] = 'jpg|jpeg|png|svg';
+      $config['file_name'] = $file_name;
+
+      $this->load->library('upload', $config);
+      if (! $this->upload->do_upload('cover_spPackage')) {
+        $this->session->set_flashdata('error', $this->upload->display_errors());
+        $data['specialPackages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name','priceField' => 'price', 'activeField' => 'active'),
+         'tm_special_package', FALSE);
+        $data['slides'] = $this->madmin->getProducts(array('cover' => 3), array('idField' => 'id', 'slideField' => 'slide'),
+        'tm_cover', TRUE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/specialPackage', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $coverName = $this->upload->data();
+        $coverIdentifier = 3; // 1 = header, 2 = best seller, 3 = special package, 4 = bed linen, 5 = bedding accessories
+        $items = array(
+          'slide'       =>  $coverName['orig_name'],
+          'created_at'  =>  date('Ymd'),
+          'cover'       =>  $coverIdentifier
+        );
+
+        $this->madmin->inputData('tm_cover', $items);
+        redirect('admin/special_package');
+      }
     } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function delete_cover_spPackage($idSlider){
+    if ($this->session->userdata('uType') == 1) {
+      $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tm_cover', TRUE);
+      $file_path = 'asset/upload/special-package/cover/'.$file['slide'];
+      unlink($file_path);
+      print_r($file_path);
+      $this->madmin->deleteData(array('id' => $idSlider), 'tm_cover');
+      redirect('admin/special_package');
+    }else{
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
@@ -1488,13 +1572,51 @@ class Admin extends CI_Controller {
 
   public function bed_linen(){
     if ($this->session->userdata('uType') == 1) {
-      $data['product_bedlinen'] = $this->madmin->product_bed_linen();
+      $file_name = strtolower('bed-linen-cover-'.uniqid());
 
-      $this->load->view('include/admin/header');
-      $this->load->view('include/admin/left-sidebar');
-      $this->load->view('admin/bed_linen', $data);
-      $this->load->view('include/admin/footer');
+      $config['upload_path'] = './asset/upload/bed-linen-cover/';
+      $config['allowed_types'] = 'jpg|jpeg|png|svg';
+      $config['file_name'] = $file_name;
+
+      $this->load->library('upload', $config);
+      if (! $this->upload->do_upload('cover_bedLinen')) {
+        $this->session->set_flashdata('error', $this->upload->display_errors());
+        $data['product_bedlinen'] = $this->madmin->product_bed_linen();
+        $data['slides'] = $this->madmin->getProducts(array('cover' => 4), array('idField' => 'id', 'slideField' => 'slide'),
+        'tm_cover', TRUE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/bed_linen', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $coverName = $this->upload->data();
+        $coverIdentifier = 4; // 1 = header, 2 = best seller, 3 = special package, 4 = bed linen, 5 = bedding accessories
+        $items = array(
+          'slide'       => $coverName['orig_name'],
+          'created_at'  => date('Ymd'),
+          'cover'       => $coverIdentifier
+        );
+
+        $this->madmin->inputData('tm_cover', $items);
+        redirect('admin/bed_linen');
+      }
     } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function delete_cover_bedLinen($idSlider){
+    if ($this->session->userdata('uType') == 1) {
+      $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tm_cover', TRUE);
+      $file_path = 'asset/upload/special-package/cover/'.$file['slide'];
+      unlink($file_path);
+      print_r($file_path);
+      $this->madmin->deleteData(array('id' => $idSlider), 'tm_cover');
+      redirect('admin/bed_linen');
+    }else{
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
@@ -1554,13 +1676,51 @@ class Admin extends CI_Controller {
 
   public function beddingAcc(){
     if ($this->session->userdata('uType') == 1) {
-      $data['product_bedAcc'] = $this->madmin->beddingAcc();
+      $file_name = strtolower('bedding-accessories-cover-'.uniqid());
 
-      $this->load->view('include/admin/header');
-      $this->load->view('include/admin/left-sidebar');
-      $this->load->view('admin/bedding_accessories', $data);
-      $this->load->view('include/admin/footer');
+      $config['upload_path'] = './asset/upload/bedding-acc-cover/';
+      $config['allowed_types'] = 'jpg|jpeg|png|svg';
+      $config['file_name'] = $file_name;
+
+      $this->load->library('upload', $config);
+      if (! $this->upload->do_upload('cover_beddingAcc')) {
+        $this->session->set_flashdata('error', $this->upload->display_errors());
+        $data['product_bedAcc'] = $this->madmin->beddingAcc();
+        $data['slides'] = $this->madmin->getProducts(array('cover' => 5), array('idField' => 'id', 'slideField' => 'slide'),
+        'tm_cover', TRUE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/bedding_accessories', $data);
+        $this->load->view('include/admin/footer');
+      } else {
+        $coverName = $this->upload->data();
+        $coverIdentifier = 5; // 1 = header, 2 = best seller, 3 = special package, 4 = bed linen, 5 = bedding accessories
+        $items = array(
+          'slide'       => $coverName['orig_name'],
+          'created_at'  => date('Ymd'),
+          'cover'       => $coverIdentifier
+        );
+
+        $this->madmin->inputData('tm_cover', $items);
+        redirect('admin/beddingAcc');
+      }
     } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function delete_cover_beddingAcc($idSlider){
+    if ($this->session->userdata('uType') == 1) {
+      $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tm_cover', TRUE);
+      $file_path = 'asset/upload/special-package/cover/'.$file['slide'];
+      unlink($file_path);
+      print_r($file_path);
+      $this->madmin->deleteData(array('id' => $idSlider), 'tm_cover');
+      redirect('admin/bed_linen');
+    }else{
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');

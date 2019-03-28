@@ -32,13 +32,11 @@
 						<button class="fa fa-bars btn btn-mobile"></button>
 						<h4>CATEGORIES</h4>
 					</div>
-
-					<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
-								<li class="list-group-noicon active">
-									<a href="#">MATTRESS</a>
-								</li>
-							</ul>
-
+						<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
+						<li class="list-group-noicon active">
+							<a class="pt-4 pb-4" href="#">MATTRESS`</a>
+						</li>
+						</ul>
 				</div>
 				<!-- /CATEGORIES -->
 
