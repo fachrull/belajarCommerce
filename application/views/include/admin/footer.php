@@ -81,6 +81,7 @@ $(function(){
   $('#sizePrice').click(function(){
     var size  = $("#size").val();
     var price = $("#price").val();
+    var sku = $("#sku").val();
     if(size){
        $.ajax({
            url: "<?= site_url('admin/sizeNameProduct/');?>"+size,
@@ -94,6 +95,10 @@ $(function(){
                               .append(size)
                       )
                       .append($('<td>')
+                          .attr('class', 'sku-value')
+                          .append(sku)
+                      )
+                      .append($('<td>')
                           .attr('class', 'size-name')
                               .append(response.name)
                       )
@@ -104,6 +109,8 @@ $(function(){
                   );
                   $("#size").val("");
                   inputPrice.clear(true);
+               $("#sku").val("");
+
            }
        })
     }
@@ -127,6 +134,14 @@ $(function(){
                     .attr('name', 'price[]')
                     .val(price))
     });
+
+      $("#table_sizePrice .sku-value").each(function(){
+          sku = $(this).html().split('.').join("")
+          $("#addProd").append($('<input>')
+              .attr('type', 'hidden')
+              .attr('name', 'sku[]')
+              .val(sku))
+      });
 
     // add variable sizes to input tag name's sizes[]
     // $("#sizes").val(JSON.stringify(sizes));
