@@ -57,7 +57,11 @@ class Home extends CI_Controller{
         $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
-        $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
+        $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
+        $data['best_seller'] = $this->mhome->getProducts(array('cover' => 2), array('slideField' => 'slide'), 'tm_cover', TRUE);
+        $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
+        $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
+        $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
         $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
         $data['stores'] = $this->storesToGeoJson();
 
@@ -66,8 +70,12 @@ class Home extends CI_Controller{
         $this->load->view('include/footer');
 
     } elseif ($this->session->userdata('uType') == NULL) {
+      $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
+      $data['best_seller'] = $this->mhome->getProducts(array('cover' => 2), array('slideField' => 'slide'), 'tm_cover', TRUE);
+      $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
+      $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
+      $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $data['pedias'] = $this->mhome->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
-      $data['slides'] = $this->mhome->getProducts(NULL, array('slideField' => 'slide'), 'tm_slide', FALSE);
       $data['stores'] = $this->storesToGeoJson();
 
       $this->load->view('include/header');
@@ -741,41 +749,59 @@ class Home extends CI_Controller{
 
         }
         exit();
+      }
+    }else{
+      redirect('auth/login');
+    }
+  }
 
-
-        // checking availablity stock
-        $availableStock = array();
-        foreach ($carts as $cart) {
-          echo "Id tr_product: ";print_r($cart['id_trProduct']);echo "</br>";
-          echo "Quantity :";print_r($cart['qty']);echo "</br>";
-
-          $tr_prod = $this->mhome->getProducts(array('id' => $cart['id_trProduct']), array('idField' => 'id',
-           'qtyF' => 'quantity'), 'tr_product', TRUE);
-          print_r($tr_prod);echo "</br>";
-
-          $qtyAfter = $tr_prod['quantity'] - $cart['qty'];
-          print_r($qtyAfter);
+  public function purchase(){
+    if ($this->session->userdata('uType') == 4) {
+      $cart = $this->cart->contents();
+      if ($cart != NULL) {
+        print_r($cart);echo "</br></br>";
+        $cartAdress = $this->cart->contents();
+        $address_detail = array();
+        foreach ($cartAdress as $cart) {
+          $address_detail['id_address'] = $cart['id_address'];
         }
-        echo "</br></br>";
+        $idUserLogin = $this->session->userdata('uId');
 
-        $data = array(
-          'id_userlogin'    =>  $idUserLogin,
-          'first_name'      =>  $this->input->post('firstname'),
-          'last_name'       =>  $this->input->post('lastname'),
-          'email'           =>  $this->input->post('email'),
-          'phone'           =>  $this->input->post('phone'),
-          'address'         =>  $this->input->post('address'),
-          'province'        =>  $addressCart['id_prov'],
-          'city'            =>  $addressCart['id_kab'],
-          'sub_district'    =>  $addressCart['id_kec'],
-          'postcode'        =>  $this->input->post('postcode'),
-          // 'default_address' =>  0
+        $rand = rand(1, 999);
+        $data_order = array(
+          'order_number'    => 'AGM'.date("dmy").$rand,
+          'id_userlogin'    => $idUserLogin,
+          'total'           => $this->cart->total(),
+          'address_detail'  => $address_detail['id_address'],
+          'status_order'    => 2,
         );
+        print_r($data_order);echo "</br></br>";
+        $this->mhome->inputData('tm_order', $data_order);
+        $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);
 
-        $alreadyHasAddress = $this->mhome->getProducts($data, array('idField' => 'id', 'default_addressF' => 'default_address'),
-         'tm_customer_detail', TRUE);
-        print_r($alreadyHasAddress);
-        echo "</br></br>";
+        $carts = $this->cart->contents();
+        foreach ($carts as $cart) {
+          $detail_order = array(
+            'id_tm_order'   =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
+            'id_tr_product' =>  $cart['id_trProduct'],
+            'quantity'      =>  $cart['qty'],
+            'subtotal'      =>  $cart['subtotal']
+          );
+          $this->mhome->inputData('tr_order_detail', $detail_order);
+          print_r($detail_order);echo "</br></br>";
+        }
+
+        $cuttingStocks = $this->cart->contents();
+        foreach ($cuttingStocks as $cut) {
+          $stock = $this->mhome->getProducts(array('id' => $cut['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
+          $newStock['quantity'] = $stock['quantity'] - $cut['qty'];
+          $this->mhome->updateData(array('id' => $cut['id_trProduct']), $newStock, 'tr_product');
+          print_r($newStock);
+        }
+
+        $this->cart->destroy();
+        redirect('home/checkoutDone');
+        exit();
         if ($alreadyHasAddress['id'] !== NULL && $alreadyHasAddress['default_address'] == 1) {
           $rand = rand(1, 999);
           $data_order = array(
@@ -792,15 +818,10 @@ class Home extends CI_Controller{
 
           $data['cart'] = $this->cart->contents();
           foreach ($data['cart'] as $cart) {
-            $detail_order = array(
-              'id_tm_order'   =>  $idOrder['id'],
-              'id_tr_product' =>  $cart['id_trProduct'],
-              'quantity'      =>  $cart['qty'],
-              'subtotal'      =>  $cart['subtotal']
-            );
+
             $this->mhome->inputData('tr_order_detail', $detail_order);
           }
-          $this->deleteCart();
+
           redirect('home/checkoutDone');
         } elseif ($alreadyHasAddress['id'] !== NULL) {
           $rand = rand(1, 999);
@@ -858,12 +879,11 @@ class Home extends CI_Controller{
             );
             $this->mhome->inputData('tr_order_detail', $detail_order);
           }
-          $this->deleteCart();
           redirect('home/checkoutDone');
         }
       }
     }else{
-      redirect('auth/login');
+      redirect();
     }
   }
 
@@ -1026,9 +1046,47 @@ class Home extends CI_Controller{
 
   public function profileSetting(){
     if ($this->session->userdata('uType') == 4) {
-      $this->load->view('include/header2');
-      $this->load->view('page-profile-settings');
-      $this->load->view('include/footer');
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('firstname', 'First name', 'required');
+      $this->form_validation->set_rules('lastname', 'Last name', 'required');
+      $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+      $this->form_validation->set_rules('phone', 'Phone number', 'required');
+      $this->form_validation->set_rules('province', 'Province', 'required');
+      $this->form_validation->set_rules('city', 'City', 'required');
+      $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
+      $this->form_validation->set_rules('address', 'Address', 'required');
+      $this->form_validation->set_rules('postcode', 'Postcode', 'required');
+
+      if ($this->form_validation->run() === FALSE) {
+        $id_userlogin = $this->session->userdata('uId');
+        $data['profile'] = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail', TRUE);
+        $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
+        $this->session->set_flashdata('error', validation_errors());
+
+        $this->load->view('include/header2');
+        $this->load->view('page-profile-settings', $data);
+        $this->load->view('include/footer');
+      } else {
+        $id_userlogin = $this->session->userdata('uId');
+        $profile = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), array('genderF' => 'gender'), 'tm_customer_detail'
+          , TRUE);
+        $updateProfile = array(
+          'id_userlogin'    =>  $id_userlogin,
+          'first_name'      =>  $this->input->post('firstname'),
+          'last_name'       =>  $this->input->post('lastname'),
+          'gender'          =>  $profile['gender'],
+          'province'        =>  $this->input->post('province'),
+          'city'            =>  $this->input->post('city'),
+          'sub_district'    =>  $this->input->post('sub_district'),
+          'postcode'        =>  $this->input->post('postcode'),
+          'default_address' =>  1,
+        );
+        print_r($updateProfile);
+        // di tunda hingga selesai meeting
+        // terakhir hanya mengecek apakah data yang di input berhasil masuk atau tidak
+      }
     } else {
       redirect();
     }

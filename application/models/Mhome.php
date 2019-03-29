@@ -217,7 +217,7 @@ class Mhome extends CI_Model{
 
   public function detailProfileCustomer($idUserLogin){
     $this->db->select('a.first_name, a.last_name, a.email, a.phone, a.address, b.nama as provinsi, c.nama as kabupaten,
-      d.nama as kecamatan, a.postcode');
+      d.nama as kecamatan, a.postcode, a.sub_district');
     $this->db->from('tm_customer_detail a');
     $this->db->join('provinsi b', 'b.id_prov = a.province', 'left');
     $this->db->join('kabupaten c', 'c.id_kab = a.city', 'left');

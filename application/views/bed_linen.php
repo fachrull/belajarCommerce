@@ -107,7 +107,7 @@
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
 							<?php foreach ($products as $product): ?>
 								<!-- ITEM -->
-								<li class="col-lg-6 col-sm-6">
+								<li class="col-lg-4 col-sm-4">
 
 									<div class="shop-item">
 
