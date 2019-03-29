@@ -292,6 +292,13 @@
                 })
             }
         });
+
+        $('#sub_district').change(function(){
+            var selectedDistrict = $(this).children("option:selected").val();
+            var url = "<?= site_url('home/addToCart/');?>"+selectedDistrict
+            $('#cart_form').attr('action', url);
+            console.log(url);
+        });
     });
 </script>
 <script>
