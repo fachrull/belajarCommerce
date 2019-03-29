@@ -112,15 +112,18 @@ class Mstore extends CI_Model{
     }
   }
 
-  public function order_list($idStore){
-    $this->db->select('a.id, a.order_number, a.order_date, a.total, a.id_userlogin, b.username');
+  public function order_list($idStore, $history = FALSE){
+    $this->db->select('a.id, a.order_number, a.order_date, a.total, a.status_order, a.id_userlogin, b.first_name, b.last_name');
     $this->db->from('tm_order as a');
       $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-    $this->db->join('user_login as b', 'b.user_id = a.id_userlogin', 'left');
+    $this->db->join('tm_customer_detail as b', 'b.id = a.address_detail', 'left');
     $this->db->join('tr_product as c', 'c.id = aa.id_tr_Product', 'left');
     $this->db->group_by('a.order_number');
     $where = array('c.id_store' => $idStore);
     $this->db->where($where);
+    if ($history) {
+        $this->db->where("a.status_order = 1 or a.status_order = 3");
+    }
     $query = $this->db->get();
 
     if($query->num_rows() != 0){
@@ -131,7 +134,7 @@ class Mstore extends CI_Model{
   }
     public function getDetailOrder($idOrder, $idCustomer){
         $this->db->select('a.id, a.order_number, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, aa.id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
-      f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
+      f.first_name, f.last_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size, l.first_name, l.last_name');
 
         $this->db->from('tm_order a');

@@ -181,6 +181,24 @@ class Stores extends CI_Controller{
 
   }
 
+    public function history(){
+        if ($this->session->userdata('uType') == 3) {
+            $idStore = $this->session->userdata('uId');
+            $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore), array('idField' => 'id'), 'tm_store_owner', TRUE);
+            $data['transactions'] = $this->mstore->order_list($idStOwner['id'], TRUE);
+
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('storeOwner/history-transaction', $data);
+            $this->load->view('include/admin/footer');
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+
+    }
+
   public function detailTransaction($idOrder, $idCustomer){
         $this->load->view('include/admin/header');
         $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
