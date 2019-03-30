@@ -62,12 +62,12 @@
                     <div class="col-md-4 col-4 pt-5">
                         <h4 class="letter-spacing-1 footer-zero">SHOP</h4>
                         <ul class="list-unstyled footer-list half-paddings b-0">
-                            <li><a class="block" href="<?= site_url('home/shop/1/1'); ?>">Aireloom</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/2/1'); ?>">Kingkoil</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/4/1'); ?>">Serta</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/5/1'); ?>">Tempur</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/3/1'); ?>">Florence</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/6/1'); ?>">Stressless</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/1'); ?>">Aireloom</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/2'); ?>">Kingkoil</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/4'); ?>">Serta</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/5'); ?>">Tempur</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/3'); ?>">Florence</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/6'); ?>">Stressless</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-4 pt-5">

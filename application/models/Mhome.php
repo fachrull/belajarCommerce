@@ -158,10 +158,23 @@ class Mhome extends CI_Model{
 
   public function getProduct_MaxMinPrice($idProduct){
     $this->db->select('a.id, MAX(a.price) as max_price, MIN(a.price) as min_price, b.name, b.id, b.brand_id, b.cat_id,
-      b.description, b.image');
+      b.description, b.image, c.stars');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->join('tr_product_best_seller c', 'c.prod_id = a.prod_id', 'left');
     $this->db->where('b.id', $idProduct);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function getProduct_categories($idBrand){
+    $this->db->select('a.cat_id');
+    $this->db->from('tm_product a');
+    $this->db->where('a.brand_id', $idBrand);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->row_array();

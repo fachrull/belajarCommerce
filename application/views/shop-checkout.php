@@ -38,7 +38,7 @@
 		<!-- CHECKOUT -->
 		<?php if (validation_errors() != NULL): ?>
 			<div class="row">
-				<div class="col-lg-7 col-sm-7">
+				<div class="col-lg-6 col-sm-6">
 					<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
 						<?= validation_errors();?>
 					</div>
@@ -47,7 +47,7 @@
 		<?php endif; ?>
 		<form class="row clearfix" method="post" action="<?= site_url('home/shopCheckout');?>">
 
-			<div class="col-lg-7 col-sm-7">
+			<div class="col-lg-6 col-sm-6">
 
 				<?php if ($alamat_default['sub_district'] == $addressCart['id_kec']): ?>
 					<div class="heading-title">
@@ -191,7 +191,7 @@
 
 
 
-			<div class="col-lg-5 col-sm-5">
+			<div class="col-lg-6 col-sm-6">
 				<div class="heading-title mb-10">
 					<h4>Summary</h4>
 				</div>
@@ -335,26 +335,55 @@
 						</div>
 						<div class="row">
 							<?php foreach ($carts as $cart): ?>
-								<div class="col-2 p-0">
-									<div class="testimonial">
-										<figure class="text-center">
-											<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
-	                  </figure>
-									</div>
-								</div>
-								<div class="col-4 pl-0">
-									<span class="clearfix">
-										<span class="float-left"><?= $cart['name']?></span>
-										<br>
-										<span class="float-left"><?= $cart['sizeName'].' ('.$cart['detailSize'].')'?></span>
-									</span>
-								</div>
-								<div class="col-2 text-center">
-									<span><?= $cart['qty']?></span>
-								</div>
-								<div class="col-4">
-									<span class="float-left">Rp <?= $cart['subtotal']?></span>
-								</div>
+								<?php if ($cart['available'] == TRUE): ?>
+										<div class="col-2 p-0">
+											<div class="testimonial">
+												<figure class="text-center">
+													<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
+			                  </figure>
+											</div>
+										</div>
+										<div class="col-4 pl-0">
+											<span class="clearfix">
+												<span class="float-left"><?= $cart['name']?></span>
+												<br>
+												<span class="float-left"><?= $cart['sizeName'].' ('.$cart['detailSize'].')'?></span>
+											</span>
+										</div>
+										<div class="col-2 text-center">
+											<span><?= $cart['qty']?></span>
+										</div>
+										<div class="col-4">
+											<span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span>
+										</div>
+										<div class="col-12" style="margin-left:1px;">
+										<font color="green">Status: <span><?= $cart['comment']?></span></font>
+										</div>
+								<?php else: ?>
+										<div class="col-2 p-0" style="background: #ffcccc;">
+											<div class="testimonial">
+												<figure class="text-center">
+													<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
+			                  </figure>
+											</div>
+										</div>
+										<div class="col-4 pl-0" style="background: #ffcccc;">
+											<span class="clearfix">
+												<span class="float-left"><?= $cart['name']?></span>
+												<br>
+												<span class="float-left"><?= $cart['sizeName'].' ('.$cart['detailSize'].')'?></span>
+											</span>
+										</div>
+										<div class="col-2 text-center" style="background: #ffcccc;">
+											<span><?= $cart['qty']?></span>
+										</div>
+										<div class="col-4" style="background: #ffcccc;">
+											<span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span>
+										</div>
+										<div class="col-12" style="margin-left:1px; background: #ffcccc;">
+											<font color="red">Status: <span><?= $cart['comment']?></span></font>
+										</div>
+								<?php endif; ?>
 							<?php endforeach; ?>
 						</div>
 					</div>
@@ -367,7 +396,7 @@
 						<div class="toggle-content">
 
 							<span class="clearfix">
-								<span class="float-right">Rp. <?= $this->cart->total();?></span>
+								<span class="float-right">Rp. <?= number_format($this->cart->total(),0,',','.');?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
 							<span class="clearfix">
@@ -382,17 +411,29 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. <?= $this->cart->total();?></span>
+								<span class="float-right fs-20">Rp. <?= number_format($this->cart->total(),0,',','.');?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 
 							<hr />
 
 							<!-- <a class="btn btn-oldblue btn-lg btn-block fs-15" href="<?= site_url('home/checkout');?>"> -->
-							<button class="btn btn-oldblue btn-lg btn-block fs-15">
-								<i class="fa fa-mail-forward"></i>
-								Place Order Now
-							</button>
+							<?php if ($available == TRUE): ?>
+								<a href="<?= site_url('home/shopCart')?>" class="btn btn-default btn-lg btn-block fs-15">
+									Back to Cart
+								</a>
+								<button class="btn btn-oldblue btn-lg btn-block fs-15">
+									<i class="fa fa-mail-forward"></i>
+									Place Order Now
+								</button>
+							<?php else: ?>
+								<a href="<?= site_url('home/shopCart')?>" class="btn btn-default btn-lg btn-block fs-15">
+									Back to Cart
+								</a>
+								<a href="<?= site_url('home/shopCart')?>" class="btn btn-danger btn-lg btn-block fs-15">
+									Cancel Order
+								</a>
+							<?php endif; ?>
 							<!-- </a> -->
 						</div>
 					</div>
