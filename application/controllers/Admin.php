@@ -309,8 +309,10 @@ class Admin extends CI_Controller {
       $this->form_validation->set_rules('spec[]', 'Specification', 'required');
       $this->form_validation->set_rules('size[]', 'Size', 'required');
       $this->form_validation->set_rules('price[]', 'Price', 'required');
+      $this->form_validation->set_rules('sku[]', 'SKU', 'required');
 
-      if ($this->form_validation->run() === TRUE) {
+
+        if ($this->form_validation->run() === TRUE) {
         $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
           array('nameField' => 'name'), 'tm_brands', TRUE);
         $cName = $this->madmin->getProducts(array('id' => $this->input->post('cat')),
@@ -372,11 +374,13 @@ class Admin extends CI_Controller {
           // input for each size and price
           $count_SizePrice = count($this->input->post('size[]'));
           $data_SizePrice = array(
+              'sku'=> $this->input->post('sku[]'),
             'size' => $this->input->post('size[]'),
             'price' => $this->input->post('price[]')
           );
           for ($i=0; $i < $count_SizePrice; $i++) {
             $prodSizePrice = array(
+                'sku'=> $data_SizePrice['sku'][$i],
               'prod_id' => $prod['id'],
               'size_id' => $data_SizePrice['size'][$i],
               'price'   => $data_SizePrice['price'][$i]
