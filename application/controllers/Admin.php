@@ -273,14 +273,14 @@ class Admin extends CI_Controller {
         $idBrand = $this->input->post('brand');
         $idCat = $this->input->post('cat');
         if ($idBrand != 0 && $idCat != 0) {
-          $data['products'] = $this->madmin->allProducts(array('brand_id' => $idBrand,
-          'cat_id' => $idCat), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct(array('a.brand_id' => $idBrand,
+          'a.cat_id' => $idCat));
         }elseif($idBrand != 0 && $idCat == 0){
-          $data['products'] = $this->madmin->allProducts(array('brand_id' => $idBrand), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct(array('a.brand_id' => $idBrand));
         }elseif ($idBrand == 0 && $idCat != 0) {
-          $data['products'] = $this->madmin->allProducts(array('cat_id' => $idCat), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct(array('a.cat_id' => $idCat));
         }elseif ($idBrand == 0 && $idCat == 0) {
-          $data['products'] = $this->madmin->allProducts(NULL, NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct();
         }
         $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
         $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);

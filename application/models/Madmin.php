@@ -33,16 +33,25 @@ class Madmin extends CI_Model {
     }
   }
 
-  public function listProduct(){
-    $this->db->select('a.id, a.name as product, b.price');
+  public function listProduct($filters = NULL){
+    $this->db->select('a.id, c.name as brand_name, d.name as cat_name, a.name as product, b.price');
     $this->db->from('tm_product a');
     $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $this->db->join('tm_brands c', 'c.id = a.brand_id', 'inner');
+    $this->db->join('tm_category d', 'd.id = a.cat_id', 'inner');
     $this->db->group_by('a.id');
     $this->db->order_by('a.id', 'desc');
+      if ($filters != NULL) {
+          foreach ($filters as $key => $value) {
+              $this->db->where($key, $value);
+          }
+      }
     $query = $this->db->get();
     if($query->num_rows() != 0){
+//        $this->db->flush_cache();
       return $query->result_array();
     }else{
+//        $this->db->flush_cache();
       return FALSE;
     }
   }
