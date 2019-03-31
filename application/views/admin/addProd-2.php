@@ -84,6 +84,7 @@
                                             <th>SKU</th>
 											<th>Size</th>
 											<th>Price</th>
+                                            <th>Action</th>
 										</thead>
 										<tbody>
 										</tbody>

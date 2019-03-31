@@ -88,8 +88,10 @@ $(function(){
            method: "GET",
            dataType: "json",
            success: function(response){
+               var rowId = Math.random().toString(36).substr(2, 5);
                $("#table_sizePrice").find('tbody')
                   .append($('<tr>')
+                      .attr('id', rowId)
                       .append($('<td>')
                           .attr('class', 'size-value hide')
                               .append(size)
@@ -105,6 +107,9 @@ $(function(){
                       .append($('<td>')
                           .attr('class', 'price-value')
                               .append(price)
+                      )
+                      .append($('<td>')
+                          .append($(`<button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${rowId})"><i class="fa fa-trash"></i></button>`))
                       )
                   );
                   $("#size").val("");
@@ -151,6 +156,10 @@ $(function(){
 
   });
 });
+
+function removeSize(id) {
+    $(id).remove();
+}
 </script>
 <script>
 
