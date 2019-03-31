@@ -56,6 +56,26 @@ class Madmin extends CI_Model {
     }
   }
 
+    public function getDetailProduct($productId){
+        $this->db->select('a.id, c.id as brand_id, c.name as brand_name, d.id as cat_id, d.name as cat_name, 
+                            a.name as prod_name, a.description, b.price, e.name as size_name, e.size');
+        $this->db->from('tm_product a');
+        $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+        $this->db->join('tm_brands c', 'c.id = a.brand_id', 'inner');
+        $this->db->join('tm_category d', 'd.id = a.cat_id', 'inner');
+        $this->db->join('tm_size e', 'e.id = b.size_id', 'inner');
+        $this->db->order_by('a.id', 'desc');
+        $this->db->where('a.id', $productId);
+        $query = $this->db->get();
+        if($query->num_rows() != 0){
+//        $this->db->flush_cache();
+            return $query->result();
+        }else{
+//        $this->db->flush_cache();
+            return FALSE;
+        }
+    }
+
   public function allProducts($condition = NULL, $selection = NULL, $table, $singleRowResult =  FALSE){
     if ($condition != NULL) {
       foreach ($condition as $key => $value) {
