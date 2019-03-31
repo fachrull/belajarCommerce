@@ -102,20 +102,23 @@ $(function(){
                       )
                       .append($('<td>')
                           .attr('class', 'size-name')
-                              .append(response.name)
+                              .append(response.name + " (" +response.size+ ")")
                       )
                       .append($('<td>')
                           .attr('class', 'price-value')
                               .append(price)
                       )
                       .append($('<td>')
-                          .append($(`<button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${rowId})"><i class="fa fa-trash"></i></button>`))
+                          .append($(`<button class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${rowId})"><i class="fa fa-trash"></i></button>`))
                       )
                   );
                   $("#size").val("");
                   inputPrice.clear(true);
                $("#sku").val("");
-
+               if ($("#btnClose").length !== 0) {
+                   $("#btnClose").trigger("click");
+               }
            }
        })
     }

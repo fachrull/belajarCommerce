@@ -68,14 +68,14 @@
                                 <hr>
                                 <div class="col col-md-12 col-xs-12 mb-20">
                                     <label class="pull-left"><strong>Table Size</strong></label>
-                                    <button type="button" id="sizePrice" class="btn btn-oldblue pull-right"><i class="fa fa-plus"></i>Add</button>
+                                    <button type="button" data-toggle="modal" data-target="#modal-add-size" class="btn btn-oldblue pull-right"><i class="fa fa-plus"></i>Add</button>
                                 </div>
                                 <div class="col-md-12 col-xs-12">
                                     <table id="table_sizePrice" class="mb-10 table table-bordered table-striped">
                                         <thead>
                                         <th>SKU</th>
                                         <th>Size</th>
-                                        <th>Price</th>
+                                        <th>Price (Rp)</th>
                                         <th>Action</th>
                                         </thead>
                                         <tbody>
@@ -83,11 +83,10 @@
                                             <tr>
                                                 <td>&nbsp</td>
                                                 <td>
-                                                    <?=$product->size_name;?> (
-                                                    <?=$product->size;?>)
+                                                    <?=$product->size_name;?> (<?=$product->size;?>)
                                                 </td>
                                                 <td>
-                                                    Rp. <?= number_format(floatval($product->price), 0, ',', '.')?>
+                                                    <?= number_format(floatval($product->price), 0, ',', '.')?>
                                                 </td>
                                                 <td>
                                                     <button class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
@@ -126,4 +125,48 @@
 			</div>
 		</div>
 	</section>
+
+    <div class="modal fade" id="modal-add-size" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Add Size</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><strong>SKU</strong></label>
+                        <input type="text" class="form-control" id="sku" name="pSku" placeholder="SKU">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col col-md-12 col-xs-12">
+                            <div class="form-group">
+                                <label><strong>Select Size</strong></label>
+                                <select class="form-control" id="size" name="size">
+                                    <option value=""selected disabled>Size</option>
+                                    <?php foreach($sizes as $size): ?>
+                                        <option value="<?= $size['id'];?>">
+                                            <?=$size['name'];?> (<?=$size['size'];?>)</option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col col-md-12 col-xs-12">
+                            <div class="form-group">
+                                <label for=""><strong>Price</strong></label>
+                                <input id="price" name="price" class="form-control" type="text" placeholder="Price (e.g 100000)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnClose" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" id="sizePrice" class="btn btn-oldblue pull-right"><i class="fa fa-plus"></i>Add</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
 </div>
