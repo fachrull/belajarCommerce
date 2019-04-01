@@ -17,7 +17,7 @@
 							<?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
 							<?php endif;?>
 							<!-- /ALERT -->
-							<?= form_open_multipart('admin/addProd', array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
+							<?= form_open_multipart('admin/editProd/' . $products[0]->id, array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
 							<!-- <p class="register-box-msg">Add a new product</p> -->
 							<div class="row mb-3">
 								<div class="col-md-12 col-xs-12">
@@ -80,17 +80,16 @@
                                         </thead>
                                         <tbody>
                                         <?php foreach ($products as $product): ?>
-                                            <tr>
-                                                <td>&nbsp</td>
+                                            <tr id="<?=$product->size_id;?>">
+                                                <td class="size-value hide"><?=$product->size_id;?></td>
+                                                <td class="sku-value">0</td>
                                                 <td>
                                                     <?=$product->size_name;?> (<?=$product->size;?>)
                                                 </td>
-                                                <td>
-                                                    <?= number_format(floatval($product->price), 0, ',', '.')?>
-                                                </td>
+                                                <td class="price-value"><?= number_format(floatval($product->price), 0, ',', '.')?></td>
                                                 <td>
                                                     <button class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
-                                                    <button class="btn btn-danger btn-sm" type="button" onclick="removeSize()"><i class="fa fa-trash"></i></button>
+                                                    <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(<?=$product->size_id;?>)"><i class="fa fa-trash"></i></button>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

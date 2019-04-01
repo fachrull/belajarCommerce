@@ -58,7 +58,7 @@ class Madmin extends CI_Model {
 
     public function getDetailProduct($productId){
         $this->db->select('a.id, c.id as brand_id, c.name as brand_name, d.id as cat_id, d.name as cat_name, 
-                            a.name as prod_name, a.description, b.price, e.name as size_name, e.size');
+                            a.name as prod_name, a.description, b.price, b.size_id, e.name as size_name, e.size');
         $this->db->from('tm_product a');
         $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
         $this->db->join('tm_brands c', 'c.id = a.brand_id', 'inner');

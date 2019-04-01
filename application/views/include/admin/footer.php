@@ -91,7 +91,7 @@ $(function(){
                var rowId = Math.random().toString(36).substr(2, 5);
                $("#table_sizePrice").find('tbody')
                   .append($('<tr>')
-                      .attr('id', rowId)
+                      .attr('id', size)
                       .append($('<td>')
                           .attr('class', 'size-value hide')
                               .append(size)
@@ -110,7 +110,7 @@ $(function(){
                       )
                       .append($('<td>')
                           .append($(`<button class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
-                                    <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${rowId})"><i class="fa fa-trash"></i></button>`))
+                                    <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${size})"><i class="fa fa-trash"></i></button>`))
                       )
                   );
                   $("#size").val("");
@@ -136,7 +136,8 @@ $(function(){
 
     // push each value of price to variable prices
     $("#table_sizePrice .price-value").each(function(){
-        price = $(this).html().split('.').join("")
+        price = $(this).html().split('.').join("");
+        console.log(price);
       $("#addProd").append($('<input>')
                     .attr('type', 'hidden')
                     .attr('name', 'price[]')
@@ -161,7 +162,7 @@ $(function(){
 });
 
 function removeSize(id) {
-    $(id).remove();
+    $('#'+id).remove();
 }
 </script>
 <script>
