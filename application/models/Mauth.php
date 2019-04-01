@@ -66,7 +66,7 @@ class Mauth extends CI_Model{
       'city'            => $this->input->post('city'),
       'province'        => $this->input->post('province'),
       'latitude'        => $this->input->post('lat'),
-      'langtitude'      => $this->input->post('lng'),
+      'longitude'      => $this->input->post('lng'),
       'postcode'        => $this->input->post('pCode'),
       'phone1'          => $this->input->post('phone1'),
       'fax'             => $this->input->post('fax'),

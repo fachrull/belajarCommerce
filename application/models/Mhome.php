@@ -461,4 +461,28 @@ class Mhome extends CI_Model{
 
     return $this->db->insert('tm_newsletter', $data);
   }
+
+  public function findNearestStoreByLatLng($latitude, $longitude, $distance, $limit = NULL)
+  {
+    $query = $this->db->query("
+      SELECT *
+        , (
+          6371 * acos(
+          cos(radians($latitude))
+            * cos(radians(latitude))
+            * cos(
+              radians(longitude) - radians($longitude)
+            )
+            + sin(radians($latitude))
+            * sin(radians(latitude))
+          )
+        ) AS distance 
+      FROM tm_store_owner 
+      HAVING distance < $distance
+      ORDER BY distance"
+      . (!is_null($limit) ? " LIMIT $limit" : '')
+      . ";
+    ");
+    return $query->result_array();
+  }
 }

@@ -84,7 +84,7 @@ class Home extends CI_Controller{
 
     $stores = $this->mhome->getProducts(NULL, array('idField' => 'id',
       'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
-      'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE);
+      'lngField' => 'longitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE);
 
       foreach ($stores as $store) {
         $feature =  array(
@@ -92,7 +92,7 @@ class Home extends CI_Controller{
           'type' => 'Feature',
           'geometry' => array(
             'type' => 'Point',
-            'coordinates' => array($store['langtitude'], $store['latitude'])
+            'coordinates' => array($store['longitude'], $store['latitude'])
           ),
           'properties' => array(
             'company_name' => $store['company_name'],
@@ -1090,4 +1090,34 @@ class Home extends CI_Controller{
       $this->mhome->addNewsLetter($data);
       redirect('/');
   }
+
+  public function store_lookup()
+	{
+		if (!$this->input->is_ajax_request()) die('Direct access not allowed');
+
+    $latitude = $this->input->get('lat', TRUE);
+    $longitude = $this->input->get('lng', TRUE);
+    $distance = $this->input->get('distance', TRUE);
+
+		if (is_null($latitude)) {
+			
+			// give them the widget
+			$this->load->view('store-lookup');
+
+		} else if (is_null($longitude)) {
+			
+			// must have latitude and longitude
+			$this->output->set_status_header(403);
+			
+		} else {
+
+      if (is_null($distance)) {
+        $distance = 10;
+      }
+
+			// get boundary and search store inside it
+			echo json_encode($this->mhome->findNearestStoreByLatLng($latitude, $longitude, $distance));
+
+		}
+	}
 }

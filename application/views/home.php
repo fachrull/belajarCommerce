@@ -199,40 +199,8 @@
 <!-- LOCATION -->
 <section id="location" class="mb-30">
 	<div class="container-fluid">
-	<h3 class="text-center mb-30">OUR LOCATION</h3>
-		<div class="location-form">
-			<div class="row location-form-small float-right">
-				<div class="col-12 location-form-small">
-					<div class="modal-dialog w-350 mr-60 absolute" style="z-index:1;">
-						<div class="modal-content">
-							<div class="modal-header">
-								<p>
-								Cari Lokasi Agen
-								</p>
-								<div class="input-group mt-0">
-									<div class="input-group-addon">
-									<i class="fa fa-search"></i>
-									</div>
-									<input id="filter-store" type="text" class="form-control" placeholder="Search">
-								</div>
-							<div class="modal-body px-0">
-								<div id="store" class="list-group margin-bottom-0 list-height">
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-  		<div class="row">
-			<div class="col-12 pb-30">
-				<div class="form-group h-500">
-					<div class="absolute" id="maps" >
-						<input type="hidden" id="lat" />
-						<input type="hidden" id="lng" />
-					</div>
-			</div>
-		</div>
+		<h3 class="text-center mb-30">OUR LOCATION</h3>
+		<div id="store-location"></div>
 	</div>
 </section>
 <!-- /LOCATION -->
