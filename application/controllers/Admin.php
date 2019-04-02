@@ -685,6 +685,141 @@ class Admin extends CI_Controller {
     }
   }
 
+  public function detailPedia($articleId) {
+      if ($this->session->userdata('uType') == 1) {
+          $data['article'] = $this->madmin->getProducts(array('id' => $articleId), NULL, 'tm_agmpedia', TRUE);
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/article', $data);
+          $this->load->view('include/admin/footer');
+      }else{
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+      }
+  }
+    public function editPedia($id) {
+        $data['article'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_agmpedia', TRUE);
+        global $photos;
+        global $thumbnails;
+        global $thumbnailUploadStatus;
+        global $photoUploadStatus;
+
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('title', 'Title', 'required');
+            $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]');
+            $this->form_validation->set_rules('content', 'News', 'required');
+
+            if ($this->form_validation->run() === FALSE) {
+
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/editPedia', $data);
+                $this->load->view('include/admin/footer');
+            } else {
+                if ($_FILES['thumbnail']['error'] == 0) {
+                    $file_name = strtolower('thumbnail-image-'.uniqid());
+
+                    $config['upload_path'] = './asset/upload/pedia/';
+                    $config['allowed_types'] = 'jpg|jpeg|png';
+                    $config['max_size'] = 2048;
+                    $config['file_name']  = $file_name;
+                    $this->load->library('upload', $config);
+                    if (! $this->upload->do_upload('thumbnail')) {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+
+                        $this->load->view('include/admin/header');
+                        $this->load->view('include/admin/left-sidebar');
+                        $this->load->view('admin/editPedia');
+                        $this->load->view('include/admin/footer');
+                    } else {
+                        $thumbnailUploadStatus = 1;
+                        $thumbnails = $this->upload->data();
+                    }
+
+
+                }
+
+                if ($_FILES['photo']['error'] == 0) {
+                    $file_name = strtolower('photo-image-'.uniqid());
+
+                    $config['upload_path'] = './asset/upload/pedia/';
+                    $config['allowed_types'] = 'jpg|jpeg|png';
+                    $config['max_size'] = 2048;
+                    $config['file_name']  = $file_name;
+                    $this->load->library('upload', $config);
+                    if (! $this->upload->do_upload('photo')) {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+
+                        $this->load->view('include/admin/header');
+                        $this->load->view('include/admin/left-sidebar');
+                        $this->load->view('admin/editPedia');
+                        $this->load->view('include/admin/footer');
+                    } else {
+                        $photoUploadStatus = 1;
+                        $photos = $this->upload->data();
+                    }
+                }
+
+                if ($photoUploadStatus === 1 && $thumbnailUploadStatus === 1) {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'thumbnail' => $thumbnails['file_name'],
+                        'photo' => $photos['file_name'],
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+
+                } else if ($photoUploadStatus === 1) {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'photo' => $photos['orig_name'],
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+                } else if ($thumbnailUploadStatus === 1) {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'thumbnail' => $thumbnails['orig_name'],
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+                } else {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+                }
+
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
   public function storeProd($idSO){
     if ($this->session->userdata('uType') == 2 || $this->session->userdata('uType') == 1) {
       $this->load->helper('form');
@@ -1362,7 +1497,7 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/editPromotion', $data);
                 $this->load->view('include/admin/footer');
             } else {
-                if ($this->input->post('promotionImage') !== NULL) {
+                if (isset($_FILES)) {
                     $file_name = strtolower('promotion-image-'.uniqid());
 
                     $config['upload_path'] = './asset/upload/';
