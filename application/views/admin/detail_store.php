@@ -64,19 +64,21 @@
                 <th>Action</th>
               </thead>
               <tbody>
-                    <?php $no = 1;foreach ($clusters as $cluster): ?>
-                      <tr>
-                        <td><?= $no.'.'?></td>
-                        <td><?= $cluster['prov_name']?></td>
-                        <td><?= $cluster['city_name']?></td>
-                        <td><?= $cluster['sub_name']?></td>
-                        <td>
-                          <a href="<?= site_url('admin/deleteCluster_Store/'.$post['id'].'/'.$cluster['sub_district'])?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">
-                            <i class="fa fa-trash"></i>
-                          </a>
-                        </td>
-                      </tr>
-                    <?php $no++;endforeach; ?>
+                    <?php if ($clusters != NULL): ?>
+                      <?php $no = 1;foreach ($clusters as $cluster): ?>
+                        <tr>
+                          <td><?= $no.'.'?></td>
+                          <td><?= $cluster['prov_name']?></td>
+                          <td><?= $cluster['city_name']?></td>
+                          <td><?= $cluster['sub_name']?></td>
+                          <td>
+                            <a href="<?= site_url('admin/deleteCluster_Store/'.$post['id'].'/'.$cluster['sub_district'])?>" class="btn btn-danger" onclick="return confirm('Are you sure?')">
+                              <i class="fa fa-trash"></i>
+                            </a>
+                          </td>
+                        </tr>
+                      <?php $no++;endforeach; ?>
+                    <?php endif; ?>
               </tbody>
             </table>
             <hr>

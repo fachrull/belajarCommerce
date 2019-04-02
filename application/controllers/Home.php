@@ -92,7 +92,7 @@ class Home extends CI_Controller{
 
     $stores = $this->mhome->getProducts(NULL, array('idField' => 'id',
       'company_nameField' => 'company_name', 'addField' => 'address', 'latField' => 'latitude',
-      'lngField' => 'langtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE);
+      'lngField' => 'longtitude', 'phoneField' => 'phone1'), 'tm_store_owner', FALSE);
 
       foreach ($stores as $store) {
         $feature =  array(
@@ -100,7 +100,7 @@ class Home extends CI_Controller{
           'type' => 'Feature',
           'geometry' => array(
             'type' => 'Point',
-            'coordinates' => array($store['langtitude'], $store['latitude'])
+            'coordinates' => array($store['longtitude'], $store['latitude'])
           ),
           'properties' => array(
             'company_name' => $store['company_name'],
