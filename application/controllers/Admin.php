@@ -820,6 +820,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function getItem($id) {
+      $result = $this->madmin->getProductItem($id);
+      echo json_encode($result);
+    }
+
   public function storeProd($idSO){
     if ($this->session->userdata('uType') == 2 || $this->session->userdata('uType') == 1) {
       $this->load->helper('form');

@@ -76,6 +76,7 @@
                                         <th>SKU</th>
                                         <th>Size</th>
                                         <th>Price (Rp)</th>
+                                        <th>Sub price (Rp)</th>
                                         <th>Action</th>
                                         </thead>
                                         <tbody>
@@ -83,12 +84,22 @@
                                             <tr id="<?=$product->size_id;?>">
                                                 <td class="size-value hide"><?=$product->size_id;?></td>
                                                 <td class="sku-value">0</td>
-                                                <td>
+                                                <td class="size-name-value">
                                                     <?=$product->size_name;?> (<?=$product->size;?>)
                                                 </td>
                                                 <td class="price-value"><?= number_format(floatval($product->price), 0, ',', '.')?></td>
+                                                <td class="subprice-value">
+                                                    <?php
+                                                    if ($product->sub_price !== NULL) {
+                                                        echo number_format(floatval($product->sub_price), 0, ',', '.');
+                                                    } else {
+                                                        echo "-";
+                                                    }
+
+                                                    ?>
+                                                </td>
                                                 <td>
-                                                    <button class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
+                                                    <button data-toggle="modal" data-target="#modal-edit-size" data-id="<?=$product->item_id?>" class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
                                                     <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(<?=$product->size_id;?>)"><i class="fa fa-trash"></i></button>
                                                 </td>
                                             </tr>
@@ -162,6 +173,54 @@
                 <div class="modal-footer">
                     <button type="button" id="btnClose" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
                     <button type="button" id="sizePrice" class="btn btn-oldblue pull-right"><i class="fa fa-plus"></i>Add</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <div class="modal fade" id="modal-edit-size" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Edit Size</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label><strong>SKU</strong></label>
+                        <input type="hidden" class="form-control" id="rowId" name="rowId">
+                        <input type="text" class="form-control" id="sku" name="pSku" placeholder="SKU">
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col col-md-12 col-xs-12">
+                            <div class="form-group">
+                                <label><strong>Select Size</strong></label>
+                                <select class="form-control" id="sizeEdit" name="size">
+                                    <option value=""selected disabled>Size</option>
+                                    <?php foreach($sizes as $size): ?>
+                                        <option id="size-<?= $size['id'];?>" value="<?= $size['id'];?>">
+                                            <?=$size['name'];?> (<?=$size['size'];?>)</option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col col-md-12 col-xs-12">
+                            <div class="form-group">
+                                <label for=""><strong>Price</strong></label>
+                                <input id="editPrice" name="price" class="form-control" type="text" placeholder="Price (e.g 100000)">
+                            </div>
+                            <div class="form-group">
+                                <label for=""><strong>Sub price</strong></label>
+                                <input id="subPrice" name="sub-price" class="form-control" type="text" placeholder="Price (e.g 100000)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCloseEdit" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                    <button type="button" id="sizePriceEdit" class="btn btn-oldblue pull-right">Edit</button>
                 </div>
             </div>
             <!-- /.modal-content -->

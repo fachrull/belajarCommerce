@@ -152,11 +152,7 @@ $(function(){
               .val(sku))
       });
 
-    // add variable sizes to input tag name's sizes[]
-    // $("#sizes").val(JSON.stringify(sizes));
 
-    // add variable prices to input tag name's prices[]
-    // $("#prices").val(JSON.stringify(prices));
 
   });
 });
@@ -164,6 +160,55 @@ $(function(){
 function removeSize(id) {
     $('#'+id).remove();
 }
+
+$('#modal-edit-size').on('show.bs.modal', function (event) {
+    const autoNumericOptionsIdr = {
+        digitGroupSeparator        : '.',
+        decimalCharacter           : ',',
+        decimalCharacterAlternative: '.',
+        decimalPlaces   : 0,
+        roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
+    };
+    var button = $(event.relatedTarget);
+    var id = button.data('id');
+    var modal = $(this);
+    console.log(id);
+    $.ajax({
+        url: "<?=site_url('/admin/getItem/');?>"+id,
+        type: "GET",
+        dataType: "json",
+        success:function(data) {
+            modal.find('#editPrice').val(data.price);
+            modal.find('#sizeEdit').val(data.size_id);
+            if (data.sub_price != null) {
+                modal.find('#subPrice').val(data.sub_price);
+            }
+            modal.find('#rowId').val(data.size_id);
+            new AutoNumeric('#editPrice', autoNumericOptionsIdr);
+            new AutoNumeric('#subPrice', autoNumericOptionsIdr);
+        }
+    });
+});
+
+$('#sizePriceEdit').click(function() {
+    var selector = '#'+$('#rowId').val();
+    var price = $('#editPrice').val();
+    var sizeName = $('#sizeEdit option:selected').text().trim();
+    var sizeId = $('#sizeEdit').val();
+    var subprice;
+    if ($('#subPrice').val() != "") {
+        subprice = $('#subPrice').val();
+    } else {
+        subprice = '-';
+    }
+
+    $(selector).find('.price-value').html(price);
+    $(selector).find('.subprice-value').html(subprice);
+    $(selector).find('.size-name-value').html(sizeName);
+    $(selector).find('.size-value').html(sizeId);
+
+    $("#btnCloseEdit").trigger("click");
+});
 </script>
 <script>
 
@@ -222,6 +267,7 @@ function removeSize(id) {
     roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
 };
     var inputPrice = new AutoNumeric('#price', autoNumericOptionsIdr);
+    // var editPrice = new AutoNumeric('#editPrice', autoNumericOptionsIdr);
 </script>
 <script>
     $(document).ready(function(){
