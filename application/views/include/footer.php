@@ -130,7 +130,7 @@
     });
 
     function loadLocationLookup() {
-        $('#store-location').load('<?php echo base_url('home/store_lookup'); ?>');
+        $('#store-location').load('<?php echo base_url('home/store-lookup'); ?>');
     }
     
 
