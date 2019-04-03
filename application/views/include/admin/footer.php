@@ -101,7 +101,7 @@ $(function(){
                           .append(sku)
                       )
                       .append($('<td>')
-                          .attr('class', 'size-name')
+                          .attr('class', 'size-name-value')
                               .append(response.name + " (" +response.size+ ")")
                       )
                       .append($('<td>')
@@ -109,7 +109,11 @@ $(function(){
                               .append(price)
                       )
                       .append($('<td>')
-                          .append($(`<button class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
+                          .attr('class', 'subprice-value')
+                          .append('-')
+                      )
+                      .append($('<td>')
+                          .append($(`<button class="btn btn-oldblue btn-sm" data-toggle="modal" data-target="#modal-edit-size" data-id="${size}" type="button"><i class="fa fa-edit"></i></button>
                                     <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${size})"><i class="fa fa-trash"></i></button>`))
                       )
                   );
@@ -161,54 +165,113 @@ function removeSize(id) {
     $('#'+id).remove();
 }
 
-$('#modal-edit-size').on('show.bs.modal', function (event) {
-    const autoNumericOptionsIdr = {
-        digitGroupSeparator        : '.',
-        decimalCharacter           : ',',
-        decimalCharacterAlternative: '.',
-        decimalPlaces   : 0,
-        roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
-    };
-    var button = $(event.relatedTarget);
-    var id = button.data('id');
-    var modal = $(this);
-    console.log(id);
-    $.ajax({
-        url: "<?=site_url('/admin/getItem/');?>"+id,
-        type: "GET",
-        dataType: "json",
-        success:function(data) {
-            modal.find('#editPrice').val(data.price);
-            modal.find('#sizeEdit').val(data.size_id);
-            if (data.sub_price != null) {
-                modal.find('#subPrice').val(data.sub_price);
-            }
-            modal.find('#rowId').val(data.size_id);
-            new AutoNumeric('#editPrice', autoNumericOptionsIdr);
-            new AutoNumeric('#subPrice', autoNumericOptionsIdr);
+$(function () {
+    $('#modal-edit-size').on('show.bs.modal', function (event) {
+        const autoNumericOptionsIdr = {
+            digitGroupSeparator        : '.',
+            decimalCharacter           : ',',
+            decimalCharacterAlternative: '.',
+            decimalPlaces   : 0,
+            roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
+        };
+
+        var button = $(event.relatedTarget);
+        var id = button.data('id');
+        var selector = '#'+id;
+        console.log(selector);
+        var price = $(selector + ' .price-value').html().trim();
+        var sizeName = $(selector + ' .size-name-value').html().trim();
+        var subprice = $(selector + ' .subprice-value').html().trim();
+        var modal = $(this);
+
+
+        modal.find('#editPrice').val(price);
+        modal.find('#sizeEdit').val(id);
+        if (subprice != '-') {
+            modal.find('#subPrice').val(subprice);
+        } else {
+            modal.find('#subPrice').val(0);
         }
+
+        modal.find('#rowId').val(id);
+        new AutoNumeric('#editPrice', autoNumericOptionsIdr);
+        new AutoNumeric('#subPrice', autoNumericOptionsIdr);
+
+        //$.ajax({
+        //    url: "<?//=site_url('/admin/getItem/');?>//"+id,
+        //    type: "GET",
+        //    dataType: "json",
+        //    success:function(data) {
+        //        modal.find('#editPrice').val(data.price);
+        //        modal.find('#sizeEdit').val(data.size_id);
+        //        if (data.sub_price != null) {
+        //            modal.find('#subPrice').val(data.sub_price);
+        //        }
+        //        modal.find('#rowId').val(data.size_id);
+        //        new AutoNumeric('#editPrice', autoNumericOptionsIdr);
+        //        new AutoNumeric('#subPrice', autoNumericOptionsIdr);
+        //    }
+        //});
+    });
+
+    $('#sizePriceEdit').click(function() {
+        var selector = '#'+$('#rowId').val();
+        var price = $('#editPrice').val();
+        var sizeName = $('#sizeEdit option:selected').text().trim();
+        var sizeId = $('#sizeEdit').val();
+        var subprice;
+        if ($('#subPrice').val() != "") {
+            subprice = $('#subPrice').val();
+        } else {
+            subprice = '-';
+        }
+
+        $(selector).find('.price-value').html(price);
+        $(selector).find('.subprice-value').html(subprice);
+        $(selector).find('.size-name-value').html(sizeName);
+        $(selector).find('.size-value').html(sizeId);
+
+        $("#btnCloseEdit").trigger("click");
+    });
+
+    $('#btnEdit').click(function() {
+        $("#table_sizePrice .size-value").each(function(){
+            // sizes.push($(this).html())
+            $("#addProd").append($('<input>')
+                .attr('type', 'hidden')
+                .attr('name', 'size[]')
+                .val($(this).html()))
+        });
+
+        // push each value of price to variable prices
+        $("#table_sizePrice .price-value").each(function(){
+            price = $(this).html().split('.').join("");
+            console.log(price);
+            $("#addProd").append($('<input>')
+                .attr('type', 'hidden')
+                .attr('name', 'price[]')
+                .val(price))
+        });
+
+        $("#table_sizePrice .sku-value").each(function(){
+            sku = $(this).html().split('.').join("")
+            $("#addProd").append($('<input>')
+                .attr('type', 'hidden')
+                .attr('name', 'sku[]')
+                .val(sku))
+        });
+
+        $("#table_sizePrice .subprice-value").each(function(){
+            subprice = $(this).html().trim().split('.').join("");
+            $("#addProd").append($('<input>')
+                .attr('type', 'hidden')
+                .attr('name', 'subprice[]')
+                .val(subprice))
+        });
     });
 });
 
-$('#sizePriceEdit').click(function() {
-    var selector = '#'+$('#rowId').val();
-    var price = $('#editPrice').val();
-    var sizeName = $('#sizeEdit option:selected').text().trim();
-    var sizeId = $('#sizeEdit').val();
-    var subprice;
-    if ($('#subPrice').val() != "") {
-        subprice = $('#subPrice').val();
-    } else {
-        subprice = '-';
-    }
 
-    $(selector).find('.price-value').html(price);
-    $(selector).find('.subprice-value').html(subprice);
-    $(selector).find('.size-name-value').html(sizeName);
-    $(selector).find('.size-value').html(sizeId);
-
-    $("#btnCloseEdit").trigger("click");
-});
 </script>
 <script>
 

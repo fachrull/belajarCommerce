@@ -418,12 +418,12 @@ class Admin extends CI_Controller {
             $this->load->library('form_validation');
 
             $this->form_validation->set_rules('brand', 'Brand', 'required');
-            // $this->form_validation->set_rules('cat', 'Category', 'required');
+             $this->form_validation->set_rules('cat', 'Category', 'required');
             $this->form_validation->set_rules('pName', 'Product Name', 'required');
             $this->form_validation->set_rules('desc', 'Description', 'required');
-//            $this->form_validation->set_rules('spec[]', 'Specification', 'required');
-//            $this->form_validation->set_rules('size[]', 'Size', 'required');
-//            $this->form_validation->set_rules('price[]', 'Price', 'required');
+            $this->form_validation->set_rules('spec[]', 'Specification', 'required');
+            $this->form_validation->set_rules('size[]', 'Size', 'required');
+            $this->form_validation->set_rules('price[]', 'Price', 'required');
 //            $this->form_validation->set_rules('sku[]', 'SKU', 'required');
 
 
@@ -492,18 +492,23 @@ class Admin extends CI_Controller {
                     $data_SizePrice = array(
 //                        'sku'=> $this->input->post('sku[]'),
                         'size' => $this->input->post('size[]'),
-                        'price' => $this->input->post('price[]')
+                        'price' => $this->input->post('price[]'),
+                        'subprice' => $this->input->post('subprice[]')
                     );
                     for ($i=0; $i < $count_SizePrice; $i++) {
+                        $subPrice = $data_SizePrice['subprice'][$i] == '-' ? NULL : $data_SizePrice['subprice'][$i];
                         $prodSizePrice = array(
 //                            'sku'=> $data_SizePrice['sku'][$i],
                             'prod_id' => $productId,
                             'size_id' => $data_SizePrice['size'][$i],
-                            'price'   => $data_SizePrice['price'][$i]
+                            'price'   => $data_SizePrice['price'][$i],
+                            'sub_price' => $subPrice
                         );
                         // input size and price
                         $this->madmin->inputData('tr_product_size', $prodSizePrice);
+//                        print_r($prodSizePrice);
                     }
+
 //                    exit();
                     redirect('admin/allProd');
 //                }

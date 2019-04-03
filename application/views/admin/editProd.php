@@ -99,7 +99,7 @@
                                                     ?>
                                                 </td>
                                                 <td>
-                                                    <button data-toggle="modal" data-target="#modal-edit-size" data-id="<?=$product->item_id?>" class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
+                                                    <button data-toggle="modal" data-target="#modal-edit-size" data-id="<?=$product->size_id?>" class="btn btn-oldblue btn-sm" type="button"><i class="fa fa-edit"></i></button>
                                                     <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(<?=$product->size_id;?>)"><i class="fa fa-trash"></i></button>
                                                 </td>
                                             </tr>
@@ -124,7 +124,7 @@
 									<!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
 								</div>
                                 <div class="col-md-6 text-right">
-                                    <button id="submit" type="submit" class="btn btn-oldblue btn-default">Submit</button>
+                                    <button id="btnEdit" type="submit" class="btn btn-oldblue btn-default">Submit</button>
                                     <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
                                 </div>
 							</div>
