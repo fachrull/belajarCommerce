@@ -1101,4 +1101,18 @@ class Home extends CI_Controller{
       $this->mhome->addNewsLetter($data);
       redirect('/');
   }
+
+  public function specialPackage() {
+    $this->load->view('include/header2');
+    $this->load->view('special_package');
+    $this->load->view('include/footer');
+  }
+
+  public function detailSpecial() {
+    $this->load->view('include/header2');
+    $this->load->view('detail_special');
+    $this->load->view('include/footer');
+  }
 }
+
+
