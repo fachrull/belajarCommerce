@@ -1291,4 +1291,18 @@ class Home extends CI_Controller{
 
 		}
 	}
+
+  public function specialPackage() {
+    $this->load->view('include/header2');
+    $this->load->view('special_package');
+    $this->load->view('include/footer');
+  }
+
+  public function detailSpecial() {
+    $this->load->view('include/header2');
+    $this->load->view('detail_special');
+    $this->load->view('include/footer');
+  }
 }
+
+
