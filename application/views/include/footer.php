@@ -122,125 +122,134 @@
 <!-- PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('asset/javascript/demo.shop.js'); ?>"></script>
 <script>
-
-    var stores = <?= $stores?>;
-    var lat = document.getElementById('lat');
-    var lng = document.getElementById('lng');
-    var km = 30;
-    var map;
-    var markers = [];
-    var infoWindow; // markers information
-    var locationSelect;
-    var mapOption = {
-        center: {lat: -2.0372851958986224, lng: 117.06773251302911},
-        zoom: 5,
-        mapTypeId: 'roadmap'
-    }
-
-    for (var i = 0; i < stores.length; i++) {
-        console.log(stores[i]);
-    }
-
-    function initMap() {
-        var indonesia = {lat: -2.0372851958986224, lng: 117.06773251302911};
-        map = new google.maps.Map(document.getElementById('maps'), mapOption);
-        infoWindow = new google.maps.InfoWindow({map: map});
-
-        map.data.addGeoJson(stores);
-        map.data.setStyle(function (feature) {
-            return {
-                icon: '<?= base_url('asset/logo-agm/favicon.png');?>',
-                title: feature.getProperty('company_name')
-            }
-        })
-
-        map.data.addListener('click', function (e) {
-            console.log($(this))
-            var company_nameField = e.feature.getProperty('company_name');
-            var addressField = e.feature.getProperty('address');
-            var logo = "<?= base_url('asset/logo-agm/favicon.png');?>";
-            infoWindow.setContent("<div style='width: 150px;'><img src='"
-                + logo +
-                "'/><h4>"
-                + company_nameField +
-                "</h4><p>"
-                + addressField +
-                "</p></div>");
-            infoWindow.setPosition(e.feature.getGeometry().get());
-            infoWindow.setOptions({pixelOffest: new google.maps.Size(0, -30)});
-            infoWindow.open(map);
-            console.log(e.feature.getGeometry().get());
-        })
-
-        $.each(stores.features, function (index, store) {
-            item = '<a href="#" class="list-group-item" data-toggle="outlet-item" data-target=' + store.id + '>' +
-                '<h4 class="list-group-item-heading">' + store.properties.company_name + '</h4>' +
-                '<p class="list-group-item-heading">' +
-                '<strong>Address : </strong>' + store.properties.address +
-                '</p>' +
-                '<p class="list-group-item-heading">' +
-                '<strong>Phone : </strong>' + store.properties.phone +
-                '</p>'
-            '</a>';
-            $('#store').append(item);
-        });
-
-        $('a[data-toggle="outlet-item"]').click(function (e) {
-            e.preventDefault()
-            var target = $(this).data('target');
-            var result = $.grep(stores.features, function (e) {
-                return e.id == target;
-            });
-            $('div[title="' + result[0].properties.company_name + '"]').click()
-        })
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                lat.value = position.coords.latitude;
-                lng.value = position.coords.longitude;
-                // info.nodeValue = position.coords.longitude;
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(pos),
-                    map: map,
-                    animation: google.maps.Animation.BOUNCE,
-                })
-                map.setCenter(pos);
-                map.setZoom(12);
-
-                // showLocation(mapOption, map, pos, km);
-            }, function () {
-                handleLocationError(true, map.getCenter());
-            });
-        } else {
-            handleLocationError(false, map.getCenter());
+    $(window).on('load', e => {
+        if ($('#store-location').length) {
+            // load map location lookup
+            loadLocationLookup();
         }
-    }
+    });
 
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: Browser hasn\'t have location.' :
-            'Error: Browser doesn\'t support.');
+    function loadLocationLookup() {
+        $('#store-location').load('<?php echo base_url('home/store-lookup'); ?>');
     }
+    
 
-    function infoMarker(marker, info_marker) {
-        var infoWindow = new google.maps.InfoWindow({
-            content: info_marker
-        });
+    // var stores = <?= $stores?>;
+    // var lat = document.getElementById('lat');
+    // var lng = document.getElementById('lng');
+    // var km = 30;
+    // var map;
+    // var markers = [];
+    // var infoWindow; // markers information
+    // var locationSelect;
+    // var mapOption = {
+    //     center: {lat: -2.0372851958986224, lng: 117.06773251302911},
+    //     zoom: 5,
+    //     mapTypeId: 'roadmap'
+    // }
 
-        marker.addListener('click', function () {
-            infoWindow.open(marker.get('map'), marker);
-        });
-    }
+    // for (var i = 0; i < stores.length; i++) {
+    //     console.log(stores[i]);
+    // }
+
+    // function initMap() {
+    //     var indonesia = {lat: -2.0372851958986224, lng: 117.06773251302911};
+    //     map = new google.maps.Map(document.getElementById('maps'), mapOption);
+    //     infoWindow = new google.maps.InfoWindow({map: map});
+
+    //     map.data.addGeoJson(stores);
+    //     map.data.setStyle(function (feature) {
+    //         return {
+    //             icon: '<?= base_url('asset/logo-agm/favicon.png');?>',
+    //             title: feature.getProperty('company_name')
+    //         }
+    //     })
+
+    //     map.data.addListener('click', function (e) {
+    //         console.log($(this))
+    //         var company_nameField = e.feature.getProperty('company_name');
+    //         var addressField = e.feature.getProperty('address');
+    //         var logo = "<?= base_url('asset/logo-agm/favicon.png');?>";
+    //         infoWindow.setContent("<div style='width: 150px;'><img src='"
+    //             + logo +
+    //             "'/><h4>"
+    //             + company_nameField +
+    //             "</h4><p>"
+    //             + addressField +
+    //             "</p></div>");
+    //         infoWindow.setPosition(e.feature.getGeometry().get());
+    //         infoWindow.setOptions({pixelOffest: new google.maps.Size(0, -30)});
+    //         infoWindow.open(map);
+    //         console.log(e.feature.getGeometry().get());
+    //     })
+
+    //     $.each(stores.features, function (index, store) {
+    //         item = '<a href="#" class="list-group-item" data-toggle="outlet-item" data-target=' + store.id + '>' +
+    //             '<h4 class="list-group-item-heading">' + store.properties.company_name + '</h4>' +
+    //             '<p class="list-group-item-heading">' +
+    //             '<strong>Address : </strong>' + store.properties.address +
+    //             '</p>' +
+    //             '<p class="list-group-item-heading">' +
+    //             '<strong>Phone : </strong>' + store.properties.phone +
+    //             '</p>'
+    //         '</a>';
+    //         $('#store').append(item);
+    //     });
+
+    //     $('a[data-toggle="outlet-item"]').click(function (e) {
+    //         e.preventDefault()
+    //         var target = $(this).data('target');
+    //         var result = $.grep(stores.features, function (e) {
+    //             return e.id == target;
+    //         });
+    //         $('div[title="' + result[0].properties.company_name + '"]').click()
+    //     })
+
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(function (position) {
+    //             var pos = {
+    //                 lat: position.coords.latitude,
+    //                 lng: position.coords.longitude,
+    //             };
+    //             lat.value = position.coords.latitude;
+    //             lng.value = position.coords.longitude;
+    //             // info.nodeValue = position.coords.longitude;
+
+    //             var marker = new google.maps.Marker({
+    //                 position: new google.maps.LatLng(pos),
+    //                 map: map,
+    //                 animation: google.maps.Animation.BOUNCE,
+    //             })
+    //             map.setCenter(pos);
+    //             map.setZoom(12);
+
+    //             // showLocation(mapOption, map, pos, km);
+    //         }, function () {
+    //             handleLocationError(true, map.getCenter());
+    //         });
+    //     } else {
+    //         handleLocationError(false, map.getCenter());
+    //     }
+    // }
+
+    // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    //     infoWindow.setPosition(pos);
+    //     infoWindow.setContent(browserHasGeolocation ?
+    //         'Error: Browser hasn\'t have location.' :
+    //         'Error: Browser doesn\'t support.');
+    // }
+
+    // function infoMarker(marker, info_marker) {
+    //     var infoWindow = new google.maps.InfoWindow({
+    //         content: info_marker
+    //     });
+
+    //     marker.addListener('click', function () {
+    //         infoWindow.open(marker.get('map'), marker);
+    //     });
+    // }
 
 </script>
-<script async defer type="text/javascript"
-        src="//maps.google.com/maps/api/js?key=AIzaSyD7Bogq9RONZQpDo-E2gU37FsnQUSSRIFs&callback=initMap"></script>
 <script>
     $(document).ready(function () {
         $('#province').change(function () {
