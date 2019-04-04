@@ -273,14 +273,14 @@ class Admin extends CI_Controller {
         $idBrand = $this->input->post('brand');
         $idCat = $this->input->post('cat');
         if ($idBrand != 0 && $idCat != 0) {
-          $data['products'] = $this->madmin->allProducts(array('brand_id' => $idBrand,
-          'cat_id' => $idCat), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct(array('a.brand_id' => $idBrand,
+          'a.cat_id' => $idCat));
         }elseif($idBrand != 0 && $idCat == 0){
-          $data['products'] = $this->madmin->allProducts(array('brand_id' => $idBrand), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct(array('a.brand_id' => $idBrand));
         }elseif ($idBrand == 0 && $idCat != 0) {
-          $data['products'] = $this->madmin->allProducts(array('cat_id' => $idCat), NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct(array('a.cat_id' => $idCat));
         }elseif ($idBrand == 0 && $idCat == 0) {
-          $data['products'] = $this->madmin->allProducts(NULL, NULL, 'tm_product', FALSE);
+          $data['products'] = $this->madmin->listProduct();
         }
         $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
         $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
@@ -411,6 +411,135 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
+
+  public function editProd($productId){
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('brand', 'Brand', 'required');
+             $this->form_validation->set_rules('cat', 'Category', 'required');
+            $this->form_validation->set_rules('pName', 'Product Name', 'required');
+            $this->form_validation->set_rules('desc', 'Description', 'required');
+            $this->form_validation->set_rules('spec[]', 'Specification', 'required');
+            $this->form_validation->set_rules('size[]', 'Size', 'required');
+            $this->form_validation->set_rules('price[]', 'Price', 'required');
+//            $this->form_validation->set_rules('sku[]', 'SKU', 'required');
+
+
+            if ($this->form_validation->run() === TRUE) {
+//                $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
+//                    array('nameField' => 'name'), 'tm_brands', TRUE);
+//                $cName = $this->madmin->getProducts(array('id' => $this->input->post('cat')),
+//                    array('nameField' => 'name'), 'tm_category', TRUE);
+//                $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName'));
+//
+//                $config['upload_path'] = './asset/upload/';
+//                $config['allowed_types'] = 'jpg|jpeg|png';
+//                $config['file_name']  = $file_name;
+//
+//                $this->load->library('upload',$config);
+//                if(! $this->upload->do_upload('productPict')){
+//                    $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+//                        'nameField' => 'name'), 'tm_brands', FALSE);
+//                    $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+//                        'nameField' => 'name'), 'tm_category', FALSE);
+//                    $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+//                        'nameField' => 'name'), 'tm_spec', FALSE);
+//                    $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+//                        'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
+//
+//                    $this->session->set_flashdata('error', $this->upload->display_errors());
+//
+//                    $this->load->view('include/admin/header');
+//                    $this->load->view('include/admin/left-sidebar');
+//                    $this->load->view('admin/addProd-2', $data);
+//                    $this->load->view('include/admin/footer');
+//                }else {
+                    // $data = array('upload_data' => $this->upload->data());
+//                    $pName = $this->upload->data();
+
+                    // data for input tm_product
+                    $items = array(
+                        'brand_id'    => $this->input->post('brand'),
+                        'cat_id'      => $this->input->post('cat'),
+                        'name'        => $this->input->post('pName'),
+                        'description' => $this->input->post('desc')
+//                        'image'       => $pName['orig_name'],
+//                        'created_at'  => date('Ymd')
+                    );
+
+                    // update data above to database
+                    $this->madmin->updateData(array('id' => $productId), 'tm_product', $items);
+
+                    // delete product spec & size
+                    $this->madmin->deleteData(array('prod_id' => $productId), 'tr_product_spec');
+                    $this->madmin->deleteData(array('prod_id' => $productId), 'tr_product_size');
+//                    exit();
+
+                    // input for each spec id
+                    $data = array('spec' => $this->input->post('spec[]'));
+                    foreach($data['spec'] as $spec){
+                        $prodSpec = array(
+                            'prod_id' => $productId,
+                            'spec_id' => $spec
+                        );
+                        $this->madmin->inputData('tr_product_spec', $prodSpec);
+                    }
+
+                    // input for each size and price
+                    $count_SizePrice = count($this->input->post('size[]'));
+                    $data_SizePrice = array(
+//                        'sku'=> $this->input->post('sku[]'),
+                        'size' => $this->input->post('size[]'),
+                        'price' => $this->input->post('price[]'),
+                        'subprice' => $this->input->post('subprice[]')
+                    );
+                    for ($i=0; $i < $count_SizePrice; $i++) {
+                        $subPrice = $data_SizePrice['subprice'][$i] == '-' ? NULL : $data_SizePrice['subprice'][$i];
+                        $prodSizePrice = array(
+//                            'sku'=> $data_SizePrice['sku'][$i],
+                            'prod_id' => $productId,
+                            'size_id' => $data_SizePrice['size'][$i],
+                            'price'   => $data_SizePrice['price'][$i],
+                            'sub_price' => $subPrice
+                        );
+                        // input size and price
+                        $this->madmin->inputData('tr_product_size', $prodSizePrice);
+//                        print_r($prodSizePrice);
+                    }
+
+//                    exit();
+                    redirect('admin/allProd');
+//                }
+            }else{
+                $data['products'] = $this->madmin->getDetailProduct($productId);
+                $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                    'nameField' => 'name'), 'tm_brands', FALSE);
+                $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                    'nameField' => 'name'), 'tm_category', FALSE);
+                $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                    'nameField' => 'name'), 'tm_spec', FALSE);
+                $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                    'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
+
+                $idSpec = $this->madmin->getProducts(array('prod_id' => $productId),
+                    array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
+
+                $data['productSpecs'] = $idSpec;
+//                print_r($data['productSpecs']);
+//                exit();
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/editProd', $data);
+                $this->load->view('include/admin/footer');
+            }
+        }else{
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
 
   public function test(){
     redirect('admin/bestSeller');
@@ -560,6 +689,146 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
+
+  public function detailPedia($articleId) {
+      if ($this->session->userdata('uType') == 1) {
+          $data['article'] = $this->madmin->getProducts(array('id' => $articleId), NULL, 'tm_agmpedia', TRUE);
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/article', $data);
+          $this->load->view('include/admin/footer');
+      }else{
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+      }
+  }
+    public function editPedia($id) {
+        $data['article'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_agmpedia', TRUE);
+        global $photos;
+        global $thumbnails;
+        global $thumbnailUploadStatus;
+        global $photoUploadStatus;
+
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('title', 'Title', 'required');
+            $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]');
+            $this->form_validation->set_rules('content', 'News', 'required');
+
+            if ($this->form_validation->run() === FALSE) {
+
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/editPedia', $data);
+                $this->load->view('include/admin/footer');
+            } else {
+                if ($_FILES['thumbnail']['error'] == 0) {
+                    $file_name = strtolower('thumbnail-image-'.uniqid());
+
+                    $config['upload_path'] = './asset/upload/pedia/';
+                    $config['allowed_types'] = 'jpg|jpeg|png';
+                    $config['max_size'] = 2048;
+                    $config['file_name']  = $file_name;
+                    $this->load->library('upload', $config);
+                    if (! $this->upload->do_upload('thumbnail')) {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+
+                        $this->load->view('include/admin/header');
+                        $this->load->view('include/admin/left-sidebar');
+                        $this->load->view('admin/editPedia');
+                        $this->load->view('include/admin/footer');
+                    } else {
+                        $thumbnailUploadStatus = 1;
+                        $thumbnails = $this->upload->data();
+                    }
+
+
+                }
+
+                if ($_FILES['photo']['error'] == 0) {
+                    $file_name = strtolower('photo-image-'.uniqid());
+
+                    $config['upload_path'] = './asset/upload/pedia/';
+                    $config['allowed_types'] = 'jpg|jpeg|png';
+                    $config['max_size'] = 2048;
+                    $config['file_name']  = $file_name;
+                    $this->load->library('upload', $config);
+                    if (! $this->upload->do_upload('photo')) {
+                        $this->session->set_flashdata('error', $this->upload->display_errors());
+
+                        $this->load->view('include/admin/header');
+                        $this->load->view('include/admin/left-sidebar');
+                        $this->load->view('admin/editPedia');
+                        $this->load->view('include/admin/footer');
+                    } else {
+                        $photoUploadStatus = 1;
+                        $photos = $this->upload->data();
+                    }
+                }
+
+                if ($photoUploadStatus === 1 && $thumbnailUploadStatus === 1) {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'thumbnail' => $thumbnails['file_name'],
+                        'photo' => $photos['file_name'],
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+
+                } else if ($photoUploadStatus === 1) {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'photo' => $photos['orig_name'],
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+                } else if ($thumbnailUploadStatus === 1) {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'thumbnail' => $thumbnails['orig_name'],
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+                } else {
+                    $items = array(
+                        'title' => $this->input->post('title'),
+                        'sub_content' => $this->input->post('sContent'),
+                        'content' => $this->input->post('content'),
+                        'status' => 1,
+                        'user_id' => $this->session->userdata('uId')
+                    );
+                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    redirect('admin/sa_agmpedia', 'refresh');
+                }
+
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
+    public function getItem($id) {
+      $result = $this->madmin->getProductItem($id);
+      echo json_encode($result);
+    }
 
   public function storeProd($idSO){
     if ($this->session->userdata('uType') == 2 || $this->session->userdata('uType') == 1) {
@@ -1239,7 +1508,7 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/editPromotion', $data);
                 $this->load->view('include/admin/footer');
             } else {
-                if ($this->input->post('promotionImage') !== NULL) {
+                if (isset($_FILES)) {
                     $file_name = strtolower('promotion-image-'.uniqid());
 
                     $config['upload_path'] = './asset/upload/';

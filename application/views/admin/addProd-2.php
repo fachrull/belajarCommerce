@@ -84,6 +84,7 @@
                                             <th>SKU</th>
 											<th>Size</th>
 											<th>Price</th>
+                                            <th>Action</th>
 										</thead>
 										<tbody>
 										</tbody>
@@ -111,13 +112,19 @@
 							</div>
 							<label class="input"><b>Upload product image</b>
 							<p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
-								<input type="file" class="mt-5" name="productPict" />
+								<input type="file" class="mt-5" name="productPict[]" />
+                                <input type="file" class="mt-5" name="productPict[]" />
+                                <input type="file" class="mt-5" name="productPict[]" />
 							</label>
-							<div class="row">
-								<div class="col-md-12 text-right">
-									<button id="submit" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Product</button>
+							<div class="row mt-10">
+								<div class="col-md-6 text-left">
+									<a href="<?=site_url('admin/allProd')?>" class="btn btn-oldblue btn-default">Cancel</a>
 									<!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
 								</div>
+                                <div class="col-md-6 text-right">
+                                    <button id="submit" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Product</button>
+                                    <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
+                                </div>
 							</div>
 							</form>
 						</div>

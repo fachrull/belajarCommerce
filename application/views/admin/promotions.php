@@ -10,7 +10,7 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <a href="<?= site_url('admin/addPromotion');?>" class="btn btn-oldblue h-30"><i class="fa fa-plus"></i>Promotion</a>
+                                <a href="<?= site_url('admin/addPromotion');?>" class="mb-10 btn btn-oldblue"><i class="fa fa-plus"></i>Promotion</a>
                             </div>
                         </div>
                         <hr class=col-xs-12>
@@ -29,9 +29,9 @@
                                     <td><?= $promotion['name'];?></td>
                                     <td><?= $promotion['start_date']." - ". $promotion['end_date']?></td>
                                     <td>
-                                        <a href="<?= site_url('admin/detailpromotion/'.$promotion['id'])?>" class="btn btn-oldblue btn-default h-30"><i class="fa fa-info"></i></a>
-                                        <a href="<?= site_url('admin/deletePromotion/'.$promotion['id'])?>" class="btn btn-danger h-30" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
-                                        <a href="<?=site_url('admin/activePromotion/'.$promotion['id']);?>" class="btn <?php echo $promotion['status'] == 1? 'btn-success': 'btn-danger'; ?> h-30"><i class="fa fa-power-off"></i></a>
+                                        <a href="<?= site_url('admin/detailpromotion/'.$promotion['id'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                                        <a href="<?= site_url('admin/deletePromotion/'.$promotion['id'])?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
+                                        <a href="<?=site_url('admin/activePromotion/'.$promotion['id']);?>"><i  class="btn <?php echo $promotion['status'] == 1? 'btn-success': 'btn-danger'; ?> fa fa-power-off "></i></a>
                                     </td>
                                 </tr>
                                 <?php $no++; ?>
