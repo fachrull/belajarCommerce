@@ -86,8 +86,8 @@
                     </span>
                   </td>
                   <td><span><?= $cart['qty']?></span></td>
-                  <td><span class="float-left">Rp <?= $cart['subtotal']?></span></td>
-                  <td><font color="green">Available</font></td>
+                  <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
+                  <td><font color="green"><?= $cart['comment']?></font></td>
                 </tr>
               <?php else: ?>
                 <tr class="testimonial" style="background: #ffcccc;">
@@ -102,8 +102,8 @@
                     </span>
                   </td>
                   <td><span><?= $cart['qty']?></span></td>
-                  <td><span class="float-left">Rp <?= $cart['subtotal']?></span></td>
-                  <td><font color="red"><b>Out of stock</b></font></td>
+                  <td><span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span></td>
+                  <td><font color="red"><b><?= $cart['comment']?></b></font></td>
                 </tr>
               <?php endif; ?>
             <?php endforeach; ?>
@@ -112,7 +112,7 @@
         <?php if ($available == TRUE): ?>
           <div class="row">
             <div class="col-sm-6">
-              <a href="<?= site_url('home/deleteCart')?>" class="col-sm-12 btn btn-default">Cancel Order</a>
+              <a href="<?= site_url('home/shopCart')?>" class="col-sm-12 btn btn-default">Back to Cart</a>
             </div>
             <div class="col-sm-6 text-right">
               <a href="<?= site_url('home/purchase')?>" class="col-sm-12 btn btn-oldblue">Purchase</a>

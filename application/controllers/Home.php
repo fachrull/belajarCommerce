@@ -230,10 +230,11 @@ class Home extends CI_Controller{
 
   public function detailProduct($idProduct){
     $specs = [];
-    $prices = [];
-    $sizes = [];
     $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
-    // print_r($data['product']);
+    $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
+    $data['brand'] = $id_brand['brand_id'];
+    $data['categories'] = $this->mhome->brand_categories($id_brand['brand_id']);
+    // print_r($data['categories']);
     // exit();
     $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
       'provinsi', FALSE);
@@ -243,25 +244,15 @@ class Home extends CI_Controller{
       'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
     $idSpec = $this->mhome->getProducts(array('prod_id' => $idProduct),
        array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
-    $idSize = $this->mhome->getProducts(array('prod_id' => $idProduct),
-       array('idField' => 'size_id', 'priceField' => 'price'), 'tr_product_size', FALSE);
 
     for ($i=0; $i < count($idSpec) ; $i++) {
         array_push($specs, $this->mhome->getProducts(array('id' => $idSpec[$i]['spec_id']),
          array('nameField' => 'name'), 'tm_spec', TRUE));
       }
     $data['specs'] = $specs;
-
-    for ($i=0; $i < count($idSize); $i++) {
-        array_push($prices, $idSize[$i]['price']);
-      }
-      $data['prices'] = $prices;
-
-      for ($i=0; $i < count($idSize); $i++) {
-        array_push($sizes, $this->mhome->getProducts(array('id' => $idSize[$i]['size_id']),
-         array('nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE));
-      }
-      $data['sizes'] = $sizes;
+    // print_r($data['specs']);echo "</br></br>";
+    // print_r($data['prices']);echo "</br></br>";
+    // print_r($data['sizes']);echo "</br></br>";exit();
 
     $this->load->view('include/header2');
     $this->load->view('detail-product', $data);
@@ -373,6 +364,7 @@ class Home extends CI_Controller{
       'voucher'     => '',
       'id_address'  => '',
       'available'   => FALSE,
+      'comment'     => '',
       'sizeName'    => $size_name[0]['name_size'],
       'detailSize'  => $size_name[0]['detail_size'],
       'sub_district'=> $idDistrict,
@@ -532,6 +524,44 @@ class Home extends CI_Controller{
         // set an empty variable above from ID district on cart
         foreach ($carts as $cart) {
           array_push($district_cart, $cart['sub_district']);
+        }
+
+        $cart_availablelity = $this->cart->contents();
+        foreach ($cart_availablelity as $cart) {
+          $quantity_Prod = $this->mhome->getProducts(array('id' => $cart['id_trProduct']),
+            array('quantityF' => 'quantity'), 'tr_product', TRUE);
+          if ($quantity_Prod['quantity'] > 3) {
+            if ($cart['qty'] < $quantity_Prod['quantity']) {
+              $updateAvbllty = array(
+                'rowid'     => $cart['rowid'],
+                'available' => TRUE,
+                'comment'   => 'Available',
+              );
+              $this->cart->update($updateAvbllty);
+            } else {
+              $updateAvbllty = array(
+                'rowid'     => $cart['rowid'],
+                'available' => FALSE,
+                'comment'   => 'Our quantity less than your order',
+              );
+              $this->cart->update($updateAvbllty);
+            }
+          } else {
+            $updateAvbllty = array(
+              'rowid'     => $cart['rowid'],
+              'available' => FALSE,
+              'comment'   => 'Stock not available',
+            );
+            $this->cart->update($updateAvbllty);
+          }
+        }
+
+        $mayPurchase = $this->cart->contents();
+        $data['available'] = TRUE;
+        foreach ($mayPurchase as $cart) {
+          if ($cart['available'] == FALSE) {
+            $data['available'] = FALSE;
+          }
         }
 
         // load detail profile with a default address customer to store it to view
@@ -993,8 +1023,7 @@ class Home extends CI_Controller{
       $idCustomer = $this->session->userdata('uId');
 
       $data['orderList'] = $this->mhome->getOrderList($idCustomer);
-
-//      print_r($data);
+      // print_r($data['orderList']);exit();
 
       $this->load->view('include/header2');
       $this->load->view('transaction-page', $data);
@@ -1044,51 +1073,114 @@ class Home extends CI_Controller{
     print_r($data['beddingACC']);
   }
 
-  public function profileSetting(){
+  public function profileSetting($pass = NULL){
     if ($this->session->userdata('uType') == 4) {
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('firstname', 'First name', 'required');
-      $this->form_validation->set_rules('lastname', 'Last name', 'required');
-      $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
-      $this->form_validation->set_rules('phone', 'Phone number', 'required');
-      $this->form_validation->set_rules('province', 'Province', 'required');
-      $this->form_validation->set_rules('city', 'City', 'required');
-      $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
-      $this->form_validation->set_rules('address', 'Address', 'required');
-      $this->form_validation->set_rules('postcode', 'Postcode', 'required');
+      if ($pass == NULL) {
+        $this->form_validation->set_rules('firstname', 'First name', 'required');
+        $this->form_validation->set_rules('lastname', 'Last name', 'required');
+        $this->form_validation->set_rules('phone', 'Phone number', 'required');
+        $this->form_validation->set_rules('province', 'Province', 'required');
+        $this->form_validation->set_rules('city', 'City', 'required');
+        $this->form_validation->set_rules('sub_district', 'Sub district', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        $this->form_validation->set_rules('postcode', 'Postcode', 'required');
 
-      if ($this->form_validation->run() === FALSE) {
-        $id_userlogin = $this->session->userdata('uId');
-        $data['profile'] = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail', TRUE);
-        $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
-        $this->session->set_flashdata('error', validation_errors());
-
-        $this->load->view('include/header2');
-        $this->load->view('page-profile-settings', $data);
-        $this->load->view('include/footer');
-      } else {
-        $id_userlogin = $this->session->userdata('uId');
-        $profile = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), array('genderF' => 'gender'), 'tm_customer_detail'
+        if ($this->form_validation->run() === TRUE) {
+          $id_userlogin = $this->session->userdata('uId');
+          $profile = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail'
           , TRUE);
-        $updateProfile = array(
-          'id_userlogin'    =>  $id_userlogin,
-          'first_name'      =>  $this->input->post('firstname'),
-          'last_name'       =>  $this->input->post('lastname'),
-          'gender'          =>  $profile['gender'],
-          'province'        =>  $this->input->post('province'),
-          'city'            =>  $this->input->post('city'),
-          'sub_district'    =>  $this->input->post('sub_district'),
-          'postcode'        =>  $this->input->post('postcode'),
-          'default_address' =>  1,
-        );
-        print_r($updateProfile);
-        // di tunda hingga selesai meeting
-        // terakhir hanya mengecek apakah data yang di input berhasil masuk atau tidak
+          $id_customerDetail = $profile['id'];
+          print_r($profile);echo "</br></br>";
+          $updateProfile = array(
+            'id_userlogin'    =>  $id_userlogin,
+            'first_name'      =>  $this->input->post('firstname'),
+            'last_name'       =>  $this->input->post('lastname'),
+            'gender'          =>  $profile['gender'],
+            'phone'           =>  $this->input->post('phone'),
+            'address'         =>  $this->input->post('address'),
+            'province'        =>  $this->input->post('province'),
+            'city'            =>  $this->input->post('city'),
+            'sub_district'    =>  $this->input->post('sub_district'),
+            'postcode'        =>  $this->input->post('postcode'),
+            'default_address' =>  1,
+          );
+          print_r($updateProfile);
+          $this->mhome->updateData(array('id' => $id_customerDetail), $updateProfile, 'tm_customer_detail');
+          redirect('home/profilePage');
+        }else{
+          $id_userlogin = $this->session->userdata('uId');
+          $data['profile'] = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail', TRUE);
+          $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
+          // $this->session->set_flashdata('error', validation_errors());
+
+          $this->load->view('include/header2');
+          $this->load->view('page-profile-settings', $data);
+          $this->load->view('include/footer');
+        }
+      } else {
+        $this->form_validation->set_rules('current_password', 'Current Password',
+          'required|callback_checkingCurrentPass');
+        $this->form_validation->set_rules('password', 'New Password', 'required');
+        $this->form_validation->set_rules('confirm_password', 'Re-type New Password',
+          'required|matches[password]');
+
+        if ($this->form_validation->run() === TRUE) {
+          $new_password = $this->input->post('password');
+          $id_userlogin = $this->session->userdata('uId');
+          $new_pass = array(
+            'password' => password_hash($new_password, PASSWORD_DEFAULT)
+          );
+          print_r($new_pass);echo "</br></br>";
+          print_r($id_userlogin);
+
+          $this->mhome->updateData(array('user_id' => $id_userlogin), $new_pass, 'user_login');
+          redirect('home/profilePage');
+        }else{
+          $id_userlogin = $this->session->userdata('uId');
+          $data['profile'] = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail', TRUE);
+          $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
+          // $this->session->set_flashdata('error', validation_errors());
+
+          $this->load->view('include/header2');
+          $this->load->view('page-profile-settings', $data);
+          $this->load->view('include/footer');
+        }
       }
     } else {
       redirect();
+    }
+  }
+
+  public function reset_password_profile(){
+    if ($this->session->userdata('uType') == 4) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+
+
+      if ($this->form_validation->run() === TRUE) {
+
+      } else {
+        redirect('home/profileSetting');
+      }
+    } else {
+      redirect();
+    }
+  }
+
+  public function checkingCurrentPass($current_password){
+    $id_userlogin = $this->session->userdata('uId');
+    $currentPass = $this->mhome->getProducts(array('user_id' => $id_userlogin),
+    array('passwordField' => 'password'), 'user_login', TRUE);
+
+    if (password_verify($current_password, $currentPass['password'])) {
+      return TRUE;
+    }else{
+      $this->session->set_flashdata('error', 'Wrong Password');
+      return FALSE;
     }
   }
 

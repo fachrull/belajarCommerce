@@ -33,9 +33,11 @@
 						<h4>CATEGORIES</h4>
 					</div>
 						<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
-						<li class="list-group-noicon active">
-							<a class="pt-4 pb-4" href="#">MATTRESS`</a>
-						</li>
+						<?php foreach ($categories as $category): ?>
+							<li class="list-group-noicon active">
+								<a class="pt-4 pb-4" href="<?= site_url('home/shop/'.$brand.'/'.$category['id'])?>"><?= $category['name']?></a>
+							</li>
+						<?php endforeach; ?>
 						</ul>
 				</div>
 				<!-- /CATEGORIES -->
@@ -49,12 +51,12 @@
 					</div>
 
                     <ul id="brands" class="list-group list-unstyled">
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>">Aireloom</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>">Kingkoil</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>">Serta</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>">Tempur</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>">Florence</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>">Stressless</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Serta</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Tempur</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Florence</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/6');?>">Stressless</a></li>
                     </ul>
 
 				</div>
@@ -136,7 +138,7 @@
 						<div class="shop-item-price mt-0">
 							<span class="pl-0 bold fs-24 mt-0"><strong><?= $product['name'];?></strong></span>
 							<!-- rating -->
-						<div class="rating rating-4 fs-17 mt-10 fw-100 float-right">
+						<div class="rating rating-<?= $product['stars'];?> fs-17 mt-10 fw-100 float-right">
 							<!-- rating-0 ... rating-5 -->
 						</div>
 						<!-- /rating -->

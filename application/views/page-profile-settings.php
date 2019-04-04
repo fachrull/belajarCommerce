@@ -13,17 +13,21 @@
 						</ul>
 
 						<div class="tab-content">
-							<?php if ($this->session->has_userdata('error')): ?>
-								<div class="text-center">
-									<div class="container">
-										<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
-											<?= $this->session->userdata('error');?>
-										</div>
-									</div>
-								</div>
-							<?php endif; ?>
 							<!-- PERSONAL INFO TAB -->
 							<div class="tab-pane active" id="info">
+								<?php if (validation_errors() != NULL): ?>
+									<div class="text-center">
+										<div class="container">
+											<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
+												<?php if ($this->session->userdata('error') != NULL): ?>
+													<?= $this->session->userdata('error')?>
+												<?php else: ?>
+												<?= validation_errors();?>
+											<?php endif; ?>
+											</div>
+										</div>
+									</div>
+								<?php endif; ?>
 								<form action="<?= site_url('home/profileSetting')?>" method="post">
 									<div class="form-group">
 										<label class="form-control-label">First Name</label>
@@ -32,10 +36,6 @@
 									<div class="form-group">
 										<label class="form-control-label">Last Name</label>
 										<input type="text" name="lastname" value="<?= $profile['last_name']?>" class="form-control">
-									</div>
-									<div class="form-group">
-										<label class="form-control-label">Email</label>
-										<input type="email" name="email" value="<?= $profile['email']?>" class="form-control">
 									</div>
 									<div class="form-group">
 										<label class="form-control-label">Phone Number</label>
@@ -81,23 +81,37 @@
 							<!-- PASSWORD TAB -->
 							<div class="tab-pane fade" id="password">
 
-								<form action="#" method="post">
+								<?php if (validation_errors() == TRUE): ?>
+									<div class="text-center">
+										<div class="container">
+											<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
+												<?php if ($this->session->userdata('error') != NULL): ?>
+													<?= $this->session->userdata('error');?>
+												<?php else: ?>
+													<?= validation_errors();?>
+												<?php endif; ?>
+											</div>
+										</div>
+									</div>
+								<?php endif; ?>
+
+								<form action="<?= site_url('home/profileSetting/password')?>" method="post">
 
 									<div class="form-group">
 										<label class="form-control-label">Current Password</label>
-										<input type="password" class="form-control">
+										<input name="current_password" type="password" class="form-control">
 									</div>
 									<div class="form-group">
 										<label class="form-control-label">New Password</label>
-										<input type="password" class="form-control">
+										<input name="password" type="password" class="form-control">
 									</div>
 									<div class="form-group">
 										<label class="form-control-label">Re-type New Password</label>
-										<input type="password" class="form-control">
+										<input name="confirm_password" type="password" class="form-control">
 									</div>
 
 									<div class="margiv-top10">
-										<a href="#" class="btn btn-oldblue"><i class="fa fa-check"></i> Change Password</a>
+										<button type="submit" class="btn btn-oldblue"><i class="fa fa-check"></i> Change Password</button>
 										<a href="#" class="btn btn-default">Cancel </a>
 									</div>
 

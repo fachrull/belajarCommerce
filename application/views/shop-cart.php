@@ -77,9 +77,9 @@
 								<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
 							</a>
 							<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
-							<div class="total_price">Rp. <span><?=$item['subtotal']?></span></div>
+							<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
 							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
-								<?=$item['price']?></div>
+								<?=number_format($item['price'],0,',','.')?></div>
 							<div class="clearfix"></div>
 						</div>
 						<!-- /cart item -->
@@ -162,7 +162,7 @@
 						<div class="toggle-content">
 
 							<span class="clearfix">
-								<span class="float-right">Rp. <?=$this->cart->total()?></span>
+								<span class="float-right">Rp. <?=number_format($this->cart->total(),0,',','.')?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
 							<span class="clearfix">
@@ -177,7 +177,7 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. <?=$this->cart->total()?></span>
+								<span class="float-right fs-20">Rp. <?=number_format($this->cart->total(),0,',','.')?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 

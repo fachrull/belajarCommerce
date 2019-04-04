@@ -953,6 +953,7 @@ class Admin extends CI_Controller {
         $data['address'] = $this->madmin->detailAddress_store($idStore);
         $data['sub_districts'] = $this->madmin->getProducts(array('id_kab' => $data['address']['city']),
           array('id_kecField' => 'id_kec', 'namaField' => 'nama'), 'kecamatan', FALSE);
+        $data['provinces'] = $this->madmin->getProducts(NULL, NULL, 'provinsi', FALSE);
 
 
         $this->load->view('include/admin/header');
