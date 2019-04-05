@@ -11297,3 +11297,15 @@ div.tabbed>a:hover>div {
 		border: unset;
 	}
 }
+
+.special-package-cover{
+	height: 300px;
+	width: 100%;
+	margin-bottom:50px;
+}
+
+@media only screen and (max-width: 767px) {
+	.special-package-cover{
+		height: 150px;
+	}
+}
