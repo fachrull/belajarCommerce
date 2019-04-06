@@ -7,7 +7,9 @@ class Stores extends CI_Controller{
 
   function __construct(){
     parent::__construct();
-
+      $params = array('server_key' => 'SB-Mid-server--tJLtZ_iEZ3G_oN_ixz3rtF3', 'production' => false);
+      $this->load->library('midtrans');
+      $this->midtrans->config($params);
     $this->load->helper('url');
     $this->load->model('Mstore', 'mstore');
     $this->load->model('Mhome', 'mhome');
@@ -133,9 +135,10 @@ class Stores extends CI_Controller{
 
   public function orderCancellation($idOrder, $idCustomer) {
       if ($this->session->userdata('uType') == 3) {
-          $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
+          $detailOrder = $this->mstore->getDetailOrder($idOrder, $idCustomer);
+          $orderId = $detailOrder[0]->order_number;
 
-          foreach ($data['detailOrder'] as $item) {
+          foreach ($detailOrder as $item) {
               $id = $item->id_tr_product;
               $qty = $item->quantity;
               $qtyStore = $this->mstore->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
@@ -143,6 +146,8 @@ class Stores extends CI_Controller{
               $quantity = array('quantity' => $newQuanStore);
               $this->mstore->updateData(array('id' => $id), $quantity, 'tr_product');
           }
+          $this->midtrans->cancel($orderId);
+
       } else {
           $this->load->view('include/header2');
           $this->load->view('un-authorise');

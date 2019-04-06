@@ -144,6 +144,11 @@ class Snap extends CI_Controller {
         }
     }
 
+    public function cancel($orderId) {
+	    $this->midtrans->cancel($orderId);
+        redirect('home/transactionPage');
+    }
+
     public function notification()
     {
         echo 'test notification handler\n';
@@ -186,6 +191,14 @@ class Snap extends CI_Controller {
             // TODO set payment status in merchant's database to 'Denied'
             $this->changeTransactionStatus($order_id, 3);
             echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+        } else if ($transaction == 'expire') {
+            // TODO set payment status in merchant's database to 'Denied'
+            $this->changeTransactionStatus($order_id, 3);
+            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is expire.";
+        } else if ($transaction == 'cancel') {
+            // TODO set payment status in merchant's database to 'Denied'
+            $this->changeTransactionStatus($order_id, 3);
+            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is cancel.";
         }
     }
 }
