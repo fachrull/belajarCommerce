@@ -18,7 +18,7 @@ class Snap extends CI_Controller {
         $address = $this->mhome->customer_detail($carts[key($carts)]['id_address']);
 		// Required
 		$transaction_details = array(
-		  'order_id' => rand(),
+		  'order_id' => 'AGM'.date("dmy").rand(1, 999),
 		  'gross_amount' => $this->cart->total() // no decimal allowed for creditcard
 		);
 
@@ -81,8 +81,8 @@ class Snap extends CI_Controller {
         $time = time();
         $custom_expiry = array(
             'start_time' => date("Y-m-d H:i:s O",$time),
-            'unit' => 'minute', 
-            'duration'  => 2
+            'unit' => 'day',
+            'duration'  => 1
         );
         
         $transaction_data = array(
@@ -101,10 +101,91 @@ class Snap extends CI_Controller {
 
     public function finish()
     {
+        /*
+         * TODO:
+         * 1. Check status code, fraud status, transaction status
+         * Status code must be 2xx, fraud status must be ACCEPT
+         * If status code and fraud staus none of the above, throw an error
+         *
+         * 2. Handle status code:
+         * Please refer to https://api-docs.midtrans.com/#status-code for further description
+         *
+         * 3. Handle transaction status:
+         * Please refer to https://api-docs.midtrans.com/#transaction-status for further description
+         * These statues will trigger purchasing: pending, settlement and capture
+         * These statues will trigger cancellation: cancel, expire and failure
+         */
+        $successStatusCode = array('200', '201', '202');
     	$result = json_decode($this->input->post('result_data'));
+    	if (in_array($result->status_code, $successStatusCode)) {
+    	    redirect('home/purchase/'.$result->order_id);
+        }
     	echo 'RESULT <br><pre>';
-    	var_dump($result);
+    	print_r($result);
     	echo '</pre>' ;
 
+    }
+
+    public function changeTransactionStatus($orderId, $transactionStatus) {
+        $status = array('status_order' => $transactionStatus);
+        $condition = array('order_number'=> $orderId);
+        $this->mhome->updateData($condition, $status, 'tm_order');
+        if($transactionStatus == 3) {
+            $data['detailOrder'] = $this->mhome->getDetailOrder($orderId);
+
+            foreach ($data['detailOrder'] as $item) {
+                $id = $item->id_tr_product;
+                $qty = $item->quantity;
+                $qtyStore = $this->mhome->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
+                $newQuanStore = $qtyStore['quantity'] + $qty;
+                $quantity = array('quantity' => $newQuanStore);
+                $this->mhome->updateData(array('id' => $id), $quantity, 'tr_product');
+            }
+        }
+    }
+
+    public function notification()
+    {
+        echo 'test notification handler\n';
+        $json_result = file_get_contents('php://input');
+        $result = json_decode($json_result);
+        if($result){
+            $notif = $this->midtrans->status($result->order_id);
+        }
+        error_log(print_r($result,TRUE));
+        //notification handler sample
+        $transaction = $notif->transaction_status;
+        $type = $notif->payment_type;
+        $order_id = $notif->order_id;
+        $fraud = $notif->fraud_status;
+        if ($transaction == 'capture') {
+            // For credit card transaction, we need to check whether transaction is challenge by FDS or not
+            if ($type == 'credit_card'){
+                if($fraud == 'challenge'){
+                    // TODO set payment status in merchant's database to 'Challenge by FDS'
+                    // TODO merchant should decide whether this transaction is authorized or not in MAP
+                    echo "Transaction order_id: " . $order_id ." is challenged by FDS";
+                }
+                else {
+                    // TODO set payment status in merchant's database to 'Success'
+                    $this->changeTransactionStatus($order_id, 4);
+                    echo "Transaction order_id: " . $order_id ." successfully captured using " . $type;
+                }
+            }
+        }
+        else if ($transaction == 'settlement'){
+            // TODO set payment status in merchant's database to 'Settlement'
+            $this->changeTransactionStatus($order_id, 4);
+            echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+        }
+        else if($transaction == 'pending'){
+            // TODO set payment status in merchant's database to 'Pending'
+            echo "Waiting customer to finish transaction order_id: " . $order_id . " using " . $type;
+        }
+        else if ($transaction == 'deny') {
+            // TODO set payment status in merchant's database to 'Denied'
+            $this->changeTransactionStatus($order_id, 3);
+            echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is denied.";
+        }
     }
 }

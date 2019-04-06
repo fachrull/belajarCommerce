@@ -123,6 +123,12 @@
                 <button id="pay-button" class="col-sm-12 btn btn-oldblue">Purchase</button>
             </div>
           </div>
+            <div class="row">
+                <form id="payment-form" method="post" action="<?=site_url('snap/finish')?>">
+                    <input type="hidden" name="result_type" id="result-type" value=""></div>
+          <input type="hidden" name="result_data" id="result-data" value=""></div>
+        </form>
+            </div>
         <?php else: ?>
           <div class="row">
             <div class="col-sm-6">
