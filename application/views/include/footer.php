@@ -420,6 +420,9 @@
                         changeResult('error', result);
                         console.log(result.status_message);
                         $("#payment-form").submit();
+                    },
+                    onClose: function(result){
+                        window.location = "<?=site_url('home/shop_summary')?>";
                     }
                 });
             }
