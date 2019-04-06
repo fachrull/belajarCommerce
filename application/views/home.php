@@ -162,7 +162,7 @@
         <div>
           <img class="pedia-img-2" src="<?= base_url('asset/content-images/slider-1.jpg');?>" style="width:100%;" alt="agmpedia title">
           <div class="absolute pt-20">
-            <h4 class="text-white text-center mt-40 mb-40">LOREM</h4>
+            <h4 class="text-white text-center mb-40">LOREM</h4>
             <h6 class="text-white text-center">CONSECTUR ADIPISCING ELIT 1</h6>
             <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
 
@@ -179,7 +179,7 @@
         <div>
             <img class="pedia-img-2" src="<?= base_url('asset/upload/pedia/'.$pedia['photo']);?>" style="width:100%;" alt="agmpedia title">
             <div class="absolute pt-20">
-              <h4 class="text-white text-center mt-40 mb-40"><?= $pedia['title'];?></h4>
+              <h4 class="text-white text-center mb-40"><?= $pedia['title'];?></h4>
               <p class="fs-10 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
                 <?= $pedia['sub_content'];?>
               </p>
