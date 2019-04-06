@@ -598,6 +598,49 @@ class Admin extends CI_Controller {
     }
   }
 
+  public function addStore_SpecialPackage($idStoreOwner){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('specialPackage', 'Special Package', 'required|callback_checkingSpecialPackage');
+
+      if ($this->form_validation->run() === FALSE) {
+        $data['id_store'] = $idStoreOwner;
+        $data['special_packages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_special_package', FALSE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addStore_SpecialPackage', $data);
+        $this->load->view('include/admin/footer');
+      }else{
+        $dataStore_SpclPckg = array(
+          'id_special_package'  =>  $this->input->post('specialPackage'),
+          'id_store_owner'      =>  $idStoreOwner,
+          'quantity'            =>  0
+        );
+
+        $this->madmin->inputData('tr_storeowner_special_package', $dataStore_SpclPckg);
+        redirect('admin/stores/'.$idStoreOwner);
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingSpecialPackage($idSpecialPckg){
+    $alreadyAssgn = $this->madmin->getProducts(array('id_store_owner' => $this->input->post('idStore'), 'id_special_package' => $idSpecialPckg),
+      NULL, 'tr_storeowner_special_package', TRUE);
+    if (isset($alreadyAssgn)) {
+      $this->session->set_flashdata('error', 'Special package has already been added to store');
+      return FALSE;
+    }else {
+      return TRUE;
+    }
+  }
+
   public function getIdProduct($idProd){
       $sizes = $this->madmin->joinSizeProduct($idProd);
        if($sizes) {
@@ -916,6 +959,7 @@ class Admin extends CI_Controller {
         $data['storeId'] = $idStore;
         $data['products'] = $this->madmin->joinStoreProd($link);
         $data['clusters'] = $this->madmin->detailCluster($link);
+        $data['special_packages'] = $this->madmin->store_specialPackage($link);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -1291,8 +1335,8 @@ class Admin extends CI_Controller {
       $this->form_validation->set_rules('name', 'Special Package Name', 'required|callback_checkingSPackage');
       $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
       // $this->form_validation->set_rules('promo_date');
-      $this->form_validation->set_rules('price', 'Special Package Price', 'required');
-      $this->form_validation->set_rules('product[]', 'Special Package Products', 'required');
+      // $this->form_validation->set_rules('price', 'Special Package Price', 'required');
+      // $this->form_validation->set_rules('product[]', 'Special Package Products', 'required');
 
       if ($this->form_validation->run() === TRUE) {
         $file_name = strtolower('special_package-'.$this->input->post('name'));
@@ -1313,13 +1357,15 @@ class Admin extends CI_Controller {
           $this->load->view('include/admin/footer');
         } else {
           $sp_name = $this->upload->data();
+          $priceSpcl = $this->input->post('priceSpcl[]');
+          $total_priceSpcl = array_sum($priceSpcl);
 
           $data = array(
             'name'        => $this->input->post('name'),
             'image'       => $sp_name['orig_name'],
             'description' => $this->input->post('desc'),
             'active'      => 1,
-            'price'       => $this->input->post('price')
+            'price'       => $total_priceSpcl
           );
 
           $this->madmin->inputData('tm_special_package', $data);
@@ -1328,13 +1374,17 @@ class Admin extends CI_Controller {
           // print_r($idSP);
           // exit();
 
-          $prods = $this->input->post('product[]');
-          foreach ($prods as $prod) {
+          $prods = count($this->input->post('sizeSpcl[]'));
+          $sizeSpcl = $this->input->post('sizeSpcl[]');
+          $qtySpcl = $this->input->post('qtySpcl[]');
+          $priceSpcl = $this->input->post('priceSpcl[]');
+          for ($i=0; $i < $prods; $i++) {
             $dataRelation_SpecialPackage = array(
               'id_special_package' => $idSP['id'],
-              'id_product'         => $prod
+              'id_tr_prod_size'    => $sizeSpcl[$i],
+              'priceSpcl'          => $priceSpcl[$i],
+              'quantity'           => $qtySpcl[$i]
             );
-
             $this->madmin->inputData('tr_special_package', $dataRelation_SpecialPackage);
           }
           redirect('admin/special_package');
@@ -1351,6 +1401,24 @@ class Admin extends CI_Controller {
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
+    }
+  }
+
+  public function checkProdSize($idProduct){
+    $sizeProduct = $this->madmin->product_size($idProduct);
+    if ($sizeProduct) {
+      print_r(json_encode($sizeProduct));
+    }else{
+      echo "Something went wrong";
+    }
+  }
+
+  public function check_tr_prod_size($idprod_size){
+    $productSize = $this->madmin->checkprod_size($idprod_size);
+    if ($productSize) {
+      print_r(json_encode($productSize));
+    }else {
+      echo "Something went wrong";
     }
   }
 
@@ -1658,11 +1726,21 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function detailSpecialPackage(){
-    $this->load->view('include/admin/header');
-    $this->load->view('include/admin/left-sidebar');
-    $this->load->view('admin/detailSpecialPackage');
-    $this->load->view('include/admin/footer');
+  public function detailSpecialPackage($idSpecialPckg){
+    if ($this->session->userdata('uType') == 1) {
+      $data['detail_SpclPckg'] = $this->madmin->getProducts(array('id' => $idSpecialPckg), array('nameField' => 'name',
+        'img' => 'image', 'desc' => 'description', 'priceField' => 'price'), 'tm_special_package', TRUE);
+      $data['prod_SpclPckg'] = $this->madmin->detail_specialPackage($idSpecialPckg);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('admin/detailSpecialPackage', $data);
+      $this->load->view('include/admin/footer');
+    }else{
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
   }
   public function historyTransaction(){
     $this->load->view('include/admin/header');

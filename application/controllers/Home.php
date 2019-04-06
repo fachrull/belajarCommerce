@@ -1101,4 +1101,54 @@ class Home extends CI_Controller{
       $this->mhome->addNewsLetter($data);
       redirect('/');
   }
+
+  public function store_lookup()
+	{
+		if (!$this->input->is_ajax_request()) die('Direct access not allowed');
+
+    $latitude = $this->input->get('lat', TRUE);
+    $longitude = $this->input->get('lng', TRUE);
+    $distance = $this->input->get('distance', TRUE);
+
+		if (is_null($latitude)) {
+
+			// give them the widget
+			$this->load->view('store-lookup');
+
+		} else if (is_null($longitude)) {
+
+			// must have latitude and longitude
+			$this->output->set_status_header(403);
+
+		} else {
+
+      if (is_null($distance)) {
+        $distance = 10;
+      }
+
+			// get boundary and search store inside it
+			echo json_encode($this->mhome->findNearestStoreByLatLng($latitude, $longitude, $distance));
+
+		}
+	}
+
+  public function specialPackage() {
+    $data['special_packages'] = $this->mhome->getProducts(array('active' => 1), array('idField' => 'id', 'nameField' => 'name',
+      'imageField' => 'image'), 'tm_special_package', FALSE);
+    // print_r($data['special_packages']);exit();
+
+    $this->load->view('include/header2');
+    $this->load->view('special_package', $data);
+    $this->load->view('include/footer');
+  }
+
+  public function detailSpecial($idSpecialPckg) {
+    $data['specialPckg'] = $this->mhome->getProducts(array('id' => $idSpecialPckg), array('nameField' => 'name', 'img' => 'image',
+      'desc' => 'description', 'prc' => 'price'), 'tm_special_package', TRUE);
+    $data['details'] = $this->mhome->detail_specialPackage($idSpecialPckg);
+
+    $this->load->view('include/header2');
+    $this->load->view('detail_special', $data);
+    $this->load->view('include/footer');
+  }
 }
