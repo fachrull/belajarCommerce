@@ -509,13 +509,28 @@ class Mhome extends CI_Model{
             + sin(radians($latitude))
             * sin(radians(latitude))
           )
-        ) AS distance 
-      FROM tm_store_owner 
+        ) AS distance
+      FROM tm_store_owner
       HAVING distance < $distance
       ORDER BY distance"
       . (!is_null($limit) ? " LIMIT $limit" : '')
       . ";
     ");
     return $query->result_array();
+  }
+
+  public function detail_specialPackage($idSpecialPckg){
+    $this->db->select('c.name as prod, d.name as sizeName, d.size as sizeDetail, a.quantity, a.priceSpcl');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_tr_prod_size', 'left');
+    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
+    $this->db->join('tm_size d', 'd.id = b.size_id', 'left');
+    $this->db->where('a.id_special_package', $idSpecialPckg);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
   }
 }

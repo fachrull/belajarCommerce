@@ -873,6 +873,49 @@ class Admin extends CI_Controller {
     }
   }
 
+  public function addStore_SpecialPackage($idStoreOwner){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('specialPackage', 'Special Package', 'required|callback_checkingSpecialPackage');
+
+      if ($this->form_validation->run() === FALSE) {
+        $data['id_store'] = $idStoreOwner;
+        $data['special_packages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_special_package', FALSE);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addStore_SpecialPackage', $data);
+        $this->load->view('include/admin/footer');
+      }else{
+        $dataStore_SpclPckg = array(
+          'id_special_package'  =>  $this->input->post('specialPackage'),
+          'id_store_owner'      =>  $idStoreOwner,
+          'quantity'            =>  0
+        );
+
+        $this->madmin->inputData('tr_storeowner_special_package', $dataStore_SpclPckg);
+        redirect('admin/stores/'.$idStoreOwner);
+      }
+    } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingSpecialPackage($idSpecialPckg){
+    $alreadyAssgn = $this->madmin->getProducts(array('id_store_owner' => $this->input->post('idStore'), 'id_special_package' => $idSpecialPckg),
+      NULL, 'tr_storeowner_special_package', TRUE);
+    if (isset($alreadyAssgn)) {
+      $this->session->set_flashdata('error', 'Special package has already been added to store');
+      return FALSE;
+    }else {
+      return TRUE;
+    }
+  }
+
   public function getIdProduct($idProd){
       $sizes = $this->madmin->joinSizeProduct($idProd);
        if($sizes) {
@@ -1197,6 +1240,7 @@ class Admin extends CI_Controller {
         $data['storeId'] = $idStore;
         $data['products'] = $this->madmin->joinStoreProd($link);
         $data['clusters'] = $this->madmin->detailCluster($link);
+        $data['special_packages'] = $this->madmin->store_specialPackage($link);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');

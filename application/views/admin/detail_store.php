@@ -110,6 +110,33 @@
                     <?php endif; ?>
                   </tbody>
                 </table>
+                <hr>
+                <a href="<?= site_url('admin/addStore_SpecialPackage/'.$post['id'])?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add Special Package</button></a>
+                <hr class="mt-80" style="width:100%; height:0px;">
+                <table id="tableStoreSpecialPackage" class="table table-bordered table-striped">
+                  <thead>
+                    <th>No.</th>
+                    <th>Special Package</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                  </thead>
+                  <tbody>
+                    <?php if (is_array($special_packages)): ?>
+                      <?php $no=1; foreach ($special_packages as $specialPackage): ?>
+                        <tr>
+                          <td><?= $no?></td>
+                          <td><?= $specialPackage['name']?></td>
+                          <td><?= $specialPackage['quantity']?></td>
+                          <td><?= 'Rp. '.number_format($specialPackage['price'],0,',','.')?></td>
+                          <td>
+                            <a href="#" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
+                          </td>
+                        </tr>
+                      <?php $no++; endforeach; ?>
+                    <?php endif; ?>
+                  </tbody>
+                </table>
           </div>
         </div>
       </div>
