@@ -2,7 +2,7 @@
 
 <section class="page-header page-header-md">
 	<div class="container">
-		<h1 class="text-uppercase">Dummy</h1>
+		<h1 class="text-uppercase"><?= $specialPckg['name']?></h1>
 
 		<!-- breadcrumbs -->
 		<!--<ol class="breadcrumb">-->
@@ -26,18 +26,7 @@
 			<!-- CATEGORIES -->
             <div class="col-lg-3 col-md-3 col-sm-3 order-md-1 order-lg-1">
 
-            <div class="side-nav mb-60">
 
-                <div class="side-nav-head" data-toggle="collapse" data-target="#categories">
-                    <button class="fa fa-bars btn btn-mobile"></button>
-                    <h4>CATEGORIES</h4>
-                </div>
-                    <ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
-                        <li class="list-group-noicon active">
-                            <a class="pt-4 pb-4" href="#">Dummy</a>
-                        </li>
-                    </ul>
-            </div>
 				<!-- /CATEGORIES -->
 
 				<!-- BRANDS -->
@@ -100,7 +89,7 @@
 				<div class="row">
 
                 <!-- SPECIAL PACKAGE IMAGE -->
-                <img src="<?= base_url('asset/upload/4.jpg');?>" alt="" class="special-package-cover">
+                <img src="<?= base_url('asset/upload/special-package/'.$specialPckg['image']);?>" alt="<?= $specialPckg['name']?>" class="special-package-cover">
 
 					<!-- IMAGE -->
 					<div class="col-lg-6 col-sm-6">
@@ -108,29 +97,19 @@
 					<table class="table table-bordered text-center">
                                     <tbody class="text-center">
                                     <tr>
-                                        <th style="width: 10px">No.</th>
-                                        <th>Product</th>
-                                        <th>Size</th>
-                                        <th>Price</th>
+                                      <th>Product</th>
+                                      <th>Size</th>
+                                      <th style="width: 10px">Qty</th>
+                                      <th>Price</th>
                                     </tr>
-                                    <tr>
-                                        <td>1.</td>
-                                        <td>Spine-X</td>
-                                        <td>King (193 cm x 203 cm)</td>
-                                        <td>10.000.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.</td>
-                                        <td>Imperial Heritage</td>
-                                        <td>King (193 cm x 203 cm)</td>
-                                        <td>30.000.000</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3.</td>
-                                        <td>Imperial Heritage</td>
-                                        <td>King (193 cm x 203 cm)</td>
-                                        <td>40.000.000</td>
-                                    </tr>
+                                    <?php foreach ($details as $detail): ?>
+                                      <tr>
+                                        <td><?= $detail['prod']?></td>
+                                        <td><?= $detail['sizeName'].' ('.$detail['sizeDetail'].')'?></td>
+                                        <td><?= $detail['quantity']?></td>
+                                        <td>Rp. <?= number_format(floatval($detail['priceSpcl']),0,',','.')?></td>
+                                      </tr>
+                                    <?php endforeach; ?>
                                     </tbody>
                                 </table>
 
@@ -141,7 +120,7 @@
 					<div class="col-lg-6 col-sm-6">
 
 						<div class="shop-item-price mt-0">
-							<span class="pl-0 bold fs-24 mt-0"><strong>Dummy</strong></span>
+							<span class="pl-0 bold fs-24 mt-0"><strong><?= $specialPckg['name']?></strong></span>
 							<!-- rating -->
 						<div class="rating fs-17 mt-10 fw-100 float-right">
 							<!-- rating-0 ... rating-5 -->
@@ -151,9 +130,7 @@
 
 						<div class="mb-15 pl-0">
 							<p class="text-left fs-18 bold" id="price2">
-							Rp. <span ><?=number_format(floatval(100000), 0, ',', '.')?></span>
-							-
-							Rp. <span><?=number_format(floatval(200000), 0, ',', '.')?></span>
+							Rp. <span ><?=number_format(floatval($specialPckg['price']), 0, ',', '.')?></span>
 							</p>
 
 						</div>
@@ -161,7 +138,7 @@
 						<hr />
 
 						<!-- short description -->
-						<p class="mt-10">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate odit quidem suscipit, voluptatum tempore libero impedit animi in explicabo expedita placeat mollitia pariatur doloremque veritatis veniam dolor! Possimus nemo culpa dignissimos doloremque, corporis aperiam molestias maxime nulla ad excepturi maiores impedit iure a architecto quod, fugit quisquam. Ullam, provident quisquam!</p>
+						<p class="mt-10"><?= $specialPckg['description']?></p>
 						<!-- /short description -->
 
 						<hr />
@@ -297,7 +274,7 @@
 											</h4>
 
 											<p>
-												hallo
+												Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate odit quidem suscipit, voluptatum tempore libero impedit animi in explicabo expedita placeat mollitia pariatur doloremque veritatis veniam dolor! Possimus nemo culpa dignissimos doloremque, corporis aperiam molestias maxime nulla ad excepturi maiores impedit iure a architecto quod, fugit quisquam. Ullam, provident quisquam!
 											</p>
 
 										</div>

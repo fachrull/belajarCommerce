@@ -461,4 +461,46 @@ class Madmin extends CI_Model {
       return $this->db->get('tm_newsletter')->result_array();
   }
 
+
+  public function product_size($idProduct){
+    $this->db->select('a.id, b.name as sizeName, b.size as sizeDetail');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_size b', 'b.id = a.size_id', 'left');
+    $this->db->where('a.prod_id', $idProduct);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function checkprod_size($idProdSize){
+    $this->db->select('b.name as prodName, c.name as sizeName, c.size as sizeDetail');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->join('tm_size c', 'c.id = a.size_id', 'left');
+    $this->db->where('a.id', $idProdSize);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function detail_specialPackage($idSpecialPckg){
+    $this->db->select('c.name as prod, c.image, d.name as sizeName, d.size as sizeDetail, a.quantity, a.priceSpcl');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_tr_prod_size', 'left');
+    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
+    $this->db->join('tm_size d', 'd.id = b.size_id', 'left');
+    $this->db->where('a.id_special_package', $idSpecialPckg);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
 }

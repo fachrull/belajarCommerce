@@ -448,5 +448,109 @@ $(function () {
 	});
 });
 </script>
+<script>
+  $(document).ready(function(){
+    $('#productSP').change(function(){
+      var product_id = $(this).val();
+      if (product_id) {
+        $.ajax({
+          url: "<?= site_url('admin/checkProdSize/')?>"+product_id,
+          method: "GET",
+          dataType: "json",
+          success:function(response){
+            $("#sizeSP").attr('disabled', false);
+            $("#sizeSP").empty();
+            $.each(response, function(key, value){
+              $("#sizeSP").append(
+                '<option value='+value.id+'>'+value.sizeName+' ('+value.sizeDetail+')</option>'
+              );
+            });
+          }
+        });
+      }
+    });
+
+    var prodSP = [];
+    var sizeSP = [];
+    var priceSP = [];
+    var qtySP = [];
+    $(function(){
+      $('#submitSP').click(function(){
+        var prodSP = $('#productSP').val();
+        var sizeSP = $('#sizeSP').val();
+        var priceSP = $('#price').val();
+        var qtySP = $('#qtySP').val();
+
+        if (sizeSP) {
+          $.ajax({
+            url: "<?= site_url('admin/check_tr_prod_size/')?>"+sizeSP,
+            method: "GET",
+            dataType: "json",
+            success: function(response){
+              var rowID = Math.random().toString(36).substr(2,5);
+              $("#table_prodSizeSP").find('tbody')
+                .append($('<tr>')
+                  .attr('id', sizeSP)
+                  .append($('<td>')
+                    .append(response.prodName)
+                  )
+                  .append($('<td>')
+                    .append(response.sizeName + " ("+response.sizeDetail+")")
+                  )
+                  .append($('<td>')
+                    .attr('class', 'qtySP-value')
+                    .append(qtySP)
+                  )
+                  .append($('<td>')
+                    .attr('class', 'priceSP-value')
+                    .append(priceSP)
+                  )
+                  .append($('<td>')
+                    .append($(`<button class="btn btn-oldblue btn-sm" data-toggle="modal" data-target="#modal-edit-size" data-id="${sizeSP}" type="button"><i class="fa fa-edit"></i></button>
+                              <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${sizeSP})"><i class="fa fa-trash"></i></button>`))
+                  )
+                  .append($('<td>')
+                    .attr('class', 'sizeSP-value hide')
+                    .append(sizeSP)
+                  )
+                );
+                $('#productSP').val("");
+                $('#sizeSP').val("");
+                $('#qtySP').val("");
+                $('#price').val("");
+                $('#modal-default').modal('toggle');
+            }
+          })
+        }
+      });
+
+      $('#submitSpcl').click(function(){
+        $("#table_prodSizeSP .priceSP-value").each(function(){
+          priceSpcl = $(this).html().split('.').join("");
+          console.log(priceSpcl);
+          $('#addSpecialPackage').append($('<input>')
+                                  .attr('type', 'hidden')
+                                  .attr('name', 'priceSpcl[]')
+                                  .val(priceSpcl))
+        });
+
+        $("#table_prodSizeSP .sizeSP-value").each(function(){
+          $("#addSpecialPackage").append($('<input>')
+                                  .attr('type', 'hidden')
+                                  .attr('name', 'sizeSpcl[]')
+                                  .val($(this).html()))
+        });
+
+        $("#table_prodSizeSP .qtySP-value").each(function(){
+          $("#addSpecialPackage").append($('<input>')
+                                  .attr('type', 'hidden')
+                                  .attr('name', 'qtySpcl[]')
+                                  .val($(this).html()))
+        });
+
+      });
+    })
+  });
+</script>
 </body>
 </html>

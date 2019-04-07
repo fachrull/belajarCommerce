@@ -38,7 +38,7 @@
                             <td><?= $specialPackage['name']?></td>
                             <td><?= 'Rp '.$specialPackage['price'];?></td>
                             <td>
-                              <a href="<?= site_url('admin/detailSpecialPackage');?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                              <a href="<?= site_url('admin/detailSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                               <?php if ($specialPackage['active'] == 1): ?>
                                 <a href="<?= site_url('admin/activeSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
                               <?php else: ?>

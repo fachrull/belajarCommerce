@@ -28,17 +28,19 @@
 
 					<div class="row">
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
-							<!-- POST ITEM -->
-							<div class="blog-post-item col-md-6 col-sm-6">
-								<!-- IMAGE -->
-								<figure class="mb-20">
-									<img class="img-fluid"
-										src="<?= base_url('');?>asset/content-images/slider-1.jpg"
-										alt="product name">
-									<h4 class="text-center"><a href="<?= base_url('home/detailSpecial');?>">Judul</a></h4>
-								</figure>
-							</div>
-							<!-- /POST ITEM -->
+							<?php foreach ($special_packages as $specialPackage): ?>
+								<!-- POST ITEM -->
+								<div class="blog-post-item col-md-6 col-sm-6">
+									<!-- IMAGE -->
+									<figure class="mb-20">
+										<img class="img-fluid" style="height:300px !important;"
+											src="<?= base_url('asset/upload/special-package/'.$specialPackage['image']);?>"
+											alt="<?= $specialPackage['name']?>">
+										<h4 class="text-center"><a href="<?= base_url('home/detailSpecial/'.$specialPackage['id']);?>"><?= $specialPackage['name']?></a></h4>
+									</figure>
+								</div>
+								<!-- /POST ITEM -->
+							<?php endforeach; ?>
 						</ul>
 					</div>
 
@@ -60,4 +62,3 @@
 	</div>
 </section>
 <!-- / -->
-
