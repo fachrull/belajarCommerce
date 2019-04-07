@@ -87,7 +87,7 @@
 		</div>
 	</div>
 </div>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCoCxjDaQ3PgMqff9Y-47c99qPfOgoqnTQ&libraries=places&callback=initMap"" type="text/javascript"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF2j6e5Glf3NYC_7dF0YRKB2fvI0KPxiw&libraries=places&callback=initMap"" type="text/javascript"></script>
 <script type="text/javascript">
 	let infoWindow, infowindowContent, myMarker;
 
