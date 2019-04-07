@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lcxm5wUAAAAAEhnAdo5xeknvh7RXGpTqWq5XDTO"></script>
 
 <section class="page-header page-header-md">
 	<div class="container">
@@ -321,6 +322,9 @@
 											<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
 												<?= $this->session->userdata('error');?>
 											</div>
+                                            <div class="container text-center" style="background: greenyellow; border: 1px solid lawngreen;">
+                                                <?= $this->session->userdata('success');?>
+                                            </div>
 										</div>
 									</div>
 								<?php endif; ?>
@@ -328,7 +332,7 @@
 
 								<!-- REVIEW FORM -->
 								<h4 class="page-header mb-40">ADD A REVIEW</h4>
-								<form method="post" action="<?= site_url('home/reviewProduct/'.$product['id'])?>" id="form">
+								<form method="post" action="<?= site_url('home/reviewProduct/'.$product['id'])?>" id="form-review">
 
 									<div class="row mb-10">
 
@@ -347,7 +351,7 @@
 
 									<!-- Comment -->
 									<div class="mb-30">
-										<textarea name="comment" id="text" class="form-control" rows="6" placeholder="Comment" maxlength="1000"></textarea>
+										<textarea name="comment" id="comment" class="form-control" rows="6" placeholder="Comment" maxlength="1000"></textarea>
 									</div>
 
 									<!-- Stars -->
@@ -379,6 +383,8 @@
 										</label>
 
 									</div>
+
+                                    <input type="hidden" name="token" id="token">
 
 									<!-- Send Button -->
 									<button type="submit" class="btn btn-oldblue"><i class="fa fa-check"></i> Send Review</button>
