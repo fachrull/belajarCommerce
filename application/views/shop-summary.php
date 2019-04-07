@@ -1,4 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<script type="text/javascript"
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-37nPUlOf7Jos2Y8R"></script>
+
 <section class="page-header page-header-md">
   <div class="container">
     <h1>Cart Summary</h1>
@@ -115,9 +119,16 @@
               <a href="<?= site_url('home/shopCart')?>" class="col-sm-12 btn btn-default">Back to Cart</a>
             </div>
             <div class="col-sm-6 text-right">
-              <a href="<?= site_url('home/purchase')?>" class="col-sm-12 btn btn-oldblue">Purchase</a>
+<!--              <a href="--><?//= site_url('home/purchase')?><!--" class="col-sm-12 btn btn-oldblue">Purchase</a>-->
+                <button id="pay-button" class="col-sm-12 btn btn-oldblue">Purchase</button>
             </div>
           </div>
+            <div class="row">
+                <form id="payment-form" method="post" action="<?=site_url('snap/finish')?>">
+                    <input type="hidden" name="result_type" id="result-type" value=""></div>
+          <input type="hidden" name="result_data" id="result-data" value=""></div>
+        </form>
+            </div>
         <?php else: ?>
           <div class="row">
             <div class="col-sm-6">

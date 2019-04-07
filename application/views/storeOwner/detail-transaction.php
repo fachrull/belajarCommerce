@@ -51,12 +51,13 @@
                                                 break;
                                             case 3:
                                                 echo "<p class=\"label label-danger btn-sm\">Pesanan Dibatalkan</p>";
+
                                                 break;
                                             case 4:
-                                                echo "<p class=\"label label-secondary btn-sm\">Pesanan diproses</p>";
+                                                echo "<p class=\"label label-primary btn-sm\">Pesanan diproses</p>";
                                                 break;
                                             case 5:
-                                                echo "<p class=\"label label-secondary btn-sm\">Pesanan Dikirim</p>";
+                                                echo "<p class=\"label label-primary btn-sm\">Pesanan Dikirim</p>";
                                                 break;
                                             default:
                                                 break;

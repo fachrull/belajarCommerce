@@ -48,8 +48,6 @@
 					</ul>
 				</div>
 
-                <?php } ?>
-
 				<!-- Pagination Default -->
 				<div class="pajinate-nav text-center">
 					<ul class="pagination">

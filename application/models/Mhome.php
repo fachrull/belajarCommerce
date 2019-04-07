@@ -337,6 +337,21 @@ class Mhome extends CI_Model{
     }
   }
 
+    public function getDetailOrder($orderId){
+        $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product');
+
+        $this->db->from('tm_order a');
+        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+        $where = array('a.order_number' => $orderId);
+        $this->db->where($where);
+        $query = $this->db->get();
+        if ($query->num_rows() != 0) {
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+    }
+
   public function getOrderList($id) {
       return $this->getProducts(array('id_userlogin' => $id), NULL, 'tm_order', FALSE);
   }

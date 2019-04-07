@@ -449,9 +449,10 @@ class Home extends CI_Controller{
           $statusOrder = array('status_order' => 3);
           $idCustomer = $this->session->userdata('uId');
           $this->mhome->updateData(array('id' => $id), $statusOrder, 'tm_order');
-          $data['detailOrder'] = $this->mhome->detailOrder($id, $idCustomer);
+          $detailOrder= $this->mhome->detailOrder($id, $idCustomer);
+          $orderId = $detailOrder[0]->order_number;
 
-          foreach ($data['detailOrder'] as $item) {
+          foreach ($detailOrder as $item) {
               $id = $item->id_tr_product;
               $qty = $item->quantity;
               $qtyStore = $this->mhome->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
@@ -459,7 +460,7 @@ class Home extends CI_Controller{
               $quantity = array('quantity' => $newQuanStore);
               $this->mhome->updateData(array('id' => $id), $quantity, 'tr_product');
           }
-          redirect('home/transactionPage');
+          redirect('snap/cancel/'.$orderId);
       }
   }
 
@@ -785,7 +786,7 @@ class Home extends CI_Controller{
     }
   }
 
-  public function purchase(){
+  public function purchase($orderId){
     if ($this->session->userdata('uType') == 4) {
       $cart = $this->cart->contents();
       if ($cart != NULL) {
@@ -799,7 +800,7 @@ class Home extends CI_Controller{
 
         $rand = rand(1, 999);
         $data_order = array(
-          'order_number'    => 'AGM'.date("dmy").$rand,
+          'order_number'    => $orderId,
           'id_userlogin'    => $idUserLogin,
           'total'           => $this->cart->total(),
           'address_detail'  => $address_detail['id_address'],
