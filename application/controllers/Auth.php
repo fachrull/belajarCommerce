@@ -303,6 +303,8 @@ class Auth extends CI_Controller{
     if ($this->form_validation->run() == FALSE) {
       $data['user'] = $this->mauth->getUData(array('id_userlogin' => $this->session->userdata('uId')),
         NULL, 'tm_store_owner', TRUE);
+        $data['provinces'] = $this->mauth->getProducts(NULL, NULL, 'provinsi', FALSE);
+        
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');

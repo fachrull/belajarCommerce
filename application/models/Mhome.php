@@ -158,10 +158,23 @@ class Mhome extends CI_Model{
 
   public function getProduct_MaxMinPrice($idProduct){
     $this->db->select('a.id, MAX(a.price) as max_price, MIN(a.price) as min_price, b.name, b.id, b.brand_id, b.cat_id,
-      b.description, b.image');
+      b.description, b.image, c.stars');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->join('tr_product_best_seller c', 'c.prod_id = a.prod_id', 'left');
     $this->db->where('b.id', $idProduct);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    } else {
+      return FALSE;
+    }
+  }
+
+  public function getProduct_categories($idBrand){
+    $this->db->select('a.cat_id');
+    $this->db->from('tm_product a');
+    $this->db->where('a.brand_id', $idBrand);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->row_array();
@@ -217,7 +230,7 @@ class Mhome extends CI_Model{
 
   public function detailProfileCustomer($idUserLogin){
     $this->db->select('a.first_name, a.last_name, a.email, a.phone, a.address, b.nama as provinsi, c.nama as kabupaten,
-      d.nama as kecamatan, a.postcode');
+      d.nama as kecamatan, a.postcode, a.sub_district');
     $this->db->from('tm_customer_detail a');
     $this->db->join('provinsi b', 'b.id_prov = a.province', 'left');
     $this->db->join('kabupaten c', 'c.id_kab = a.city', 'left');
@@ -278,7 +291,7 @@ class Mhome extends CI_Model{
       }
   }
 
-  public function listOrderCustomer($idUserLogin){
+  public function listOrderCustomer($idUserLogin, $criteria = NULL){
     $this->db->select('a.id, a.order_number, a.id_userlogin, a.total, a.order_date, a.address_detail, a.status_order,
       a.id_voucher, b.id_tr_product, b.quantity, b.subtotal, d.name, d.image');
     $this->db->from('tm_order a');
@@ -288,6 +301,9 @@ class Mhome extends CI_Model{
     $this->db->order_by('a.order_date', 'DESC');
     $where = array('id_userlogin' => $idUserLogin);
     $this->db->where($where);
+    if ($criteria !== NULL) {
+        $this->db->where($criteria);
+    }
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
@@ -297,15 +313,14 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, aa.quantity, a.total, a.order_date, aa.id_tr_product, c.name, c.image, d.class, d.status,
-      f.username, f.company_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
+    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.name, c.image,
+      f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size');
 
     $this->db->from('tm_order a');
     $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
     $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
     $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
-    $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
     $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
     $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
     $this->db->join('kabupaten h', 'h.id_kab = f.city', 'left');
@@ -321,6 +336,29 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+
+    public function getDetailOrder($orderId){
+        $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product');
+
+        $this->db->from('tm_order a');
+        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+        $where = array('a.order_number' => $orderId);
+        $this->db->where($where);
+        $query = $this->db->get();
+        if ($query->num_rows() != 0) {
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+    }
+
+  public function getOrderList($id) {
+      return $this->getProducts(array('id_userlogin' => $id), NULL, 'tm_order', FALSE);
+  }
+
+    public function getOrderHistory($id) {
+        return $this->getProducts(array('id_userlogin' => $id, 'status_order' => 1), NULL, 'tm_order', FALSE);
+    }
 
   public function detail_district_cart($idDistrict){
     $this->db->select('a.id_kec, a.nama as kecamatan, a.id_kab, b.nama as kabupaten, c.id_prov, c.nama as provinsi');
@@ -455,5 +493,44 @@ class Mhome extends CI_Model{
     public function addNewsLetter($data){
 
     return $this->db->insert('tm_newsletter', $data);
+  }
+
+  public function findNearestStoreByLatLng($latitude, $longitude, $distance, $limit = NULL)
+  {
+    $query = $this->db->query("
+      SELECT *
+        , (
+          6371 * acos(
+          cos(radians($latitude))
+            * cos(radians(latitude))
+            * cos(
+              radians(longitude) - radians($longitude)
+            )
+            + sin(radians($latitude))
+            * sin(radians(latitude))
+          )
+        ) AS distance
+      FROM tm_store_owner
+      HAVING distance < $distance
+      ORDER BY distance"
+      . (!is_null($limit) ? " LIMIT $limit" : '')
+      . ";
+    ");
+    return $query->result_array();
+  }
+
+  public function detail_specialPackage($idSpecialPckg){
+    $this->db->select('c.name as prod, d.name as sizeName, d.size as sizeDetail, a.quantity, a.priceSpcl');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_tr_prod_size', 'left');
+    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
+    $this->db->join('tm_size d', 'd.id = b.size_id', 'left');
+    $this->db->where('a.id_special_package', $idSpecialPckg);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
   }
 }

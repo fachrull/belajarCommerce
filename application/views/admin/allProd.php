@@ -50,6 +50,8 @@
             <table id="dataTable" class="table table-bordered table-striped">
               <thead>
                 <th>No</th>
+                <th>Brand</th>
+                <th>Category</th>
                 <th>Product</th>
                 <th>Price</th>
                 <th>Sub Price</th>
@@ -57,11 +59,13 @@
               </thead>
               <tbody>
                 <?php $no=1; ?>
-                <?php foreach ($products as $product): ?>
+                <?php if($products != NULL) {foreach ($products as $product): ?>
                   <tr>
                     <td><?=$no;?></td>
+                      <td><?=$product['brand_name'];?></td>
+                      <td><?=$product['cat_name'];?></td>
                     <td><?= $product['product'];?></td>
-                    <td><?= 'Rp '.$product['price']?></td>
+                    <td><?= 'Rp '. number_format(floatval($product['price']), 0, ",", ".")?></td>
                     <td>-</td>
                     <td>
                       <a href="<?= site_url('admin/detailProd/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
@@ -69,7 +73,7 @@
                     </td>
                   </tr>
                   <?php $no++; ?>
-                <?php endforeach; ?>
+                <?php endforeach;} ?>
               </tbody>
             </table>
             <div class="row pb-10">

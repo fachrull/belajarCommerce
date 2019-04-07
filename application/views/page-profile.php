@@ -60,8 +60,8 @@
 										<td><?= $profile['phone']?></td>
 									</tr>
 									<tr>
-										<th>Province</th>
-										<td><?= $profile['provinsi']?></td>
+										<th><i class="fa fa-home pr-5 line-height-40"></i> Address</th>
+										<td><?= $profile['address']?></td>
 									</tr>
 									<tr>
 										<th>Province</th>
@@ -74,10 +74,6 @@
 									<tr>
 										<th>Sub district</th>
 										<td><?= $profile['kecamatan']?></td>
-									</tr>
-									<tr>
-										<th><i class="fa fa-home pr-5 line-height-40"></i> Address</th>
-										<td><?= $profile['address']?></td>
 									</tr>
 									<tr>
 										<th>Postcode</th>

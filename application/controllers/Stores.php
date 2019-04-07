@@ -7,7 +7,9 @@ class Stores extends CI_Controller{
 
   function __construct(){
     parent::__construct();
-
+      $params = array('server_key' => 'SB-Mid-server--tJLtZ_iEZ3G_oN_ixz3rtF3', 'production' => false);
+      $this->load->library('midtrans');
+      $this->midtrans->config($params);
     $this->load->helper('url');
     $this->load->model('Mstore', 'mstore');
     $this->load->model('Mhome', 'mhome');
@@ -133,9 +135,10 @@ class Stores extends CI_Controller{
 
   public function orderCancellation($idOrder, $idCustomer) {
       if ($this->session->userdata('uType') == 3) {
-          $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
+          $detailOrder = $this->mstore->getDetailOrder($idOrder, $idCustomer);
+          $orderId = $detailOrder[0]->order_number;
 
-          foreach ($data['detailOrder'] as $item) {
+          foreach ($detailOrder as $item) {
               $id = $item->id_tr_product;
               $qty = $item->quantity;
               $qtyStore = $this->mstore->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
@@ -143,6 +146,8 @@ class Stores extends CI_Controller{
               $quantity = array('quantity' => $newQuanStore);
               $this->mstore->updateData(array('id' => $id), $quantity, 'tr_product');
           }
+          $this->midtrans->cancel($orderId);
+
       } else {
           $this->load->view('include/header2');
           $this->load->view('un-authorise');
@@ -181,6 +186,24 @@ class Stores extends CI_Controller{
 
   }
 
+    public function history(){
+        if ($this->session->userdata('uType') == 3) {
+            $idStore = $this->session->userdata('uId');
+            $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore), array('idField' => 'id'), 'tm_store_owner', TRUE);
+            $data['transactions'] = $this->mstore->order_list($idStOwner['id'], TRUE);
+
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('storeOwner/history-transaction', $data);
+            $this->load->view('include/admin/footer');
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+
+    }
+
   public function detailTransaction($idOrder, $idCustomer){
         $this->load->view('include/admin/header');
         $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
@@ -188,5 +211,70 @@ class Stores extends CI_Controller{
         $this->load->view('storeOwner/detail-transaction', $data);
         $this->load->view('include/admin/footer');
   }
+
+    public function profile()
+    {
+        if ($this->session->userdata('uType') == 3) {
+            $id = $this->session->userdata('uId');
+            $data['detail_admin'] = $this->mstore->detail_admin($id);
+
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('storeOwner/profile', $data);
+            $this->load->view('include/admin/footer');
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+    public function changePassword()
+    {
+        if ($this->session->userdata('uType') == 3) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('current', 'Current password', 'required');
+            $this->form_validation->set_rules('new', 'New password', 'required');
+            $this->form_validation->set_rules('confirm', 'Confirm password', 'required');
+
+            if ($this->form_validation->run() == TRUE) {
+                $this->load->model('Mauth', 'mauth');
+                $id = $this->session->userdata('uId');
+                $currentPassword = $this->input->post('current');
+                $userData = $this->mauth->getData(array('user_id' => $id), array('password' => 'password'), TRUE);
+
+                if (!password_verify($currentPassword, $userData->password)) {
+                    $this->session->set_flashdata('error', 'Current password salah');
+                    redirect('stores/changePassword');
+                } else {
+                    $newPassword = $this->input->post('new');
+                    $confirmPassword = $this->input->post('confirm');
+                    if ($confirmPassword === $newPassword) {
+                        $data = array(
+                            'password' => password_hash($newPassword, PASSWORD_DEFAULT)
+                        );
+                        $this->mstore->updateData(array('user_id' => $id)    , $data, 'user_login');
+//                        echo $this->db->last_query();
+                        redirect('stores/profile');
+
+                    } else {
+                        $this->session->set_flashdata('error', 'Password yang diinput tidak sama');
+                        redirect('stores/changePassword');
+                    }
+                }
+
+            } else {
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('storeOwner/changePassword');
+                $this->load->view('include/admin/footer');
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
 
 }

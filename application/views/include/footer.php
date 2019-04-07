@@ -62,12 +62,12 @@
                     <div class="col-md-4 col-4 pt-5">
                         <h4 class="letter-spacing-1 footer-zero">SHOP</h4>
                         <ul class="list-unstyled footer-list half-paddings b-0">
-                            <li><a class="block" href="<?= site_url('home/shop/1/1'); ?>">Aireloom</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/2/1'); ?>">Kingkoil</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/4/1'); ?>">Serta</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/5/1'); ?>">Tempur</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/3/1'); ?>">Florence</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/6/1'); ?>">Stressless</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/1'); ?>">Aireloom</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/2'); ?>">Kingkoil</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/4'); ?>">Serta</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/5'); ?>">Tempur</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/3'); ?>">Florence</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/6'); ?>">Stressless</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-4 pt-5">
@@ -122,125 +122,134 @@
 <!-- PAGE LEVEL SCRIPTS -->
 <script src="<?= base_url('asset/javascript/demo.shop.js'); ?>"></script>
 <script>
-
-    var stores = <?= $stores?>;
-    var lat = document.getElementById('lat');
-    var lng = document.getElementById('lng');
-    var km = 30;
-    var map;
-    var markers = [];
-    var infoWindow; // markers information
-    var locationSelect;
-    var mapOption = {
-        center: {lat: -2.0372851958986224, lng: 117.06773251302911},
-        zoom: 5,
-        mapTypeId: 'roadmap'
-    }
-
-    for (var i = 0; i < stores.length; i++) {
-        console.log(stores[i]);
-    }
-
-    function initMap() {
-        var indonesia = {lat: -2.0372851958986224, lng: 117.06773251302911};
-        map = new google.maps.Map(document.getElementById('maps'), mapOption);
-        infoWindow = new google.maps.InfoWindow({map: map});
-
-        map.data.addGeoJson(stores);
-        map.data.setStyle(function (feature) {
-            return {
-                icon: '<?= base_url('asset/logo-agm/favicon.png');?>',
-                title: feature.getProperty('company_name')
-            }
-        })
-
-        map.data.addListener('click', function (e) {
-            console.log($(this))
-            var company_nameField = e.feature.getProperty('company_name');
-            var addressField = e.feature.getProperty('address');
-            var logo = "<?= base_url('asset/logo-agm/favicon.png');?>";
-            infoWindow.setContent("<div style='width: 150px;'><img src='"
-                + logo +
-                "'/><h4>"
-                + company_nameField +
-                "</h4><p>"
-                + addressField +
-                "</p></div>");
-            infoWindow.setPosition(e.feature.getGeometry().get());
-            infoWindow.setOptions({pixelOffest: new google.maps.Size(0, -30)});
-            infoWindow.open(map);
-            console.log(e.feature.getGeometry().get());
-        })
-
-        $.each(stores.features, function (index, store) {
-            item = '<a href="#" class="list-group-item" data-toggle="outlet-item" data-target=' + store.id + '>' +
-                '<h4 class="list-group-item-heading">' + store.properties.company_name + '</h4>' +
-                '<p class="list-group-item-heading">' +
-                '<strong>Address : </strong>' + store.properties.address +
-                '</p>' +
-                '<p class="list-group-item-heading">' +
-                '<strong>Phone : </strong>' + store.properties.phone +
-                '</p>'
-            '</a>';
-            $('#store').append(item);
-        });
-
-        $('a[data-toggle="outlet-item"]').click(function (e) {
-            e.preventDefault()
-            var target = $(this).data('target');
-            var result = $.grep(stores.features, function (e) {
-                return e.id == target;
-            });
-            $('div[title="' + result[0].properties.company_name + '"]').click()
-        })
-
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(function (position) {
-                var pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                };
-                lat.value = position.coords.latitude;
-                lng.value = position.coords.longitude;
-                // info.nodeValue = position.coords.longitude;
-
-                var marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(pos),
-                    map: map,
-                    animation: google.maps.Animation.BOUNCE,
-                })
-                map.setCenter(pos);
-                map.setZoom(12);
-
-                // showLocation(mapOption, map, pos, km);
-            }, function () {
-                handleLocationError(true, map.getCenter());
-            });
-        } else {
-            handleLocationError(false, map.getCenter());
+    $(window).on('load', e => {
+        if ($('#store-location').length) {
+            // load map location lookup
+            loadLocationLookup();
         }
-    }
+    });
 
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: Browser hasn\'t have location.' :
-            'Error: Browser doesn\'t support.');
+    function loadLocationLookup() {
+        $('#store-location').load('<?php echo base_url('home/store-lookup'); ?>');
     }
+    
 
-    function infoMarker(marker, info_marker) {
-        var infoWindow = new google.maps.InfoWindow({
-            content: info_marker
-        });
+    // var stores = <?= $stores?>;
+    // var lat = document.getElementById('lat');
+    // var lng = document.getElementById('lng');
+    // var km = 30;
+    // var map;
+    // var markers = [];
+    // var infoWindow; // markers information
+    // var locationSelect;
+    // var mapOption = {
+    //     center: {lat: -2.0372851958986224, lng: 117.06773251302911},
+    //     zoom: 5,
+    //     mapTypeId: 'roadmap'
+    // }
 
-        marker.addListener('click', function () {
-            infoWindow.open(marker.get('map'), marker);
-        });
-    }
+    // for (var i = 0; i < stores.length; i++) {
+    //     console.log(stores[i]);
+    // }
+
+    // function initMap() {
+    //     var indonesia = {lat: -2.0372851958986224, lng: 117.06773251302911};
+    //     map = new google.maps.Map(document.getElementById('maps'), mapOption);
+    //     infoWindow = new google.maps.InfoWindow({map: map});
+
+    //     map.data.addGeoJson(stores);
+    //     map.data.setStyle(function (feature) {
+    //         return {
+    //             icon: '<?= base_url('asset/logo-agm/favicon.png');?>',
+    //             title: feature.getProperty('company_name')
+    //         }
+    //     })
+
+    //     map.data.addListener('click', function (e) {
+    //         console.log($(this))
+    //         var company_nameField = e.feature.getProperty('company_name');
+    //         var addressField = e.feature.getProperty('address');
+    //         var logo = "<?= base_url('asset/logo-agm/favicon.png');?>";
+    //         infoWindow.setContent("<div style='width: 150px;'><img src='"
+    //             + logo +
+    //             "'/><h4>"
+    //             + company_nameField +
+    //             "</h4><p>"
+    //             + addressField +
+    //             "</p></div>");
+    //         infoWindow.setPosition(e.feature.getGeometry().get());
+    //         infoWindow.setOptions({pixelOffest: new google.maps.Size(0, -30)});
+    //         infoWindow.open(map);
+    //         console.log(e.feature.getGeometry().get());
+    //     })
+
+    //     $.each(stores.features, function (index, store) {
+    //         item = '<a href="#" class="list-group-item" data-toggle="outlet-item" data-target=' + store.id + '>' +
+    //             '<h4 class="list-group-item-heading">' + store.properties.company_name + '</h4>' +
+    //             '<p class="list-group-item-heading">' +
+    //             '<strong>Address : </strong>' + store.properties.address +
+    //             '</p>' +
+    //             '<p class="list-group-item-heading">' +
+    //             '<strong>Phone : </strong>' + store.properties.phone +
+    //             '</p>'
+    //         '</a>';
+    //         $('#store').append(item);
+    //     });
+
+    //     $('a[data-toggle="outlet-item"]').click(function (e) {
+    //         e.preventDefault()
+    //         var target = $(this).data('target');
+    //         var result = $.grep(stores.features, function (e) {
+    //             return e.id == target;
+    //         });
+    //         $('div[title="' + result[0].properties.company_name + '"]').click()
+    //     })
+
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(function (position) {
+    //             var pos = {
+    //                 lat: position.coords.latitude,
+    //                 lng: position.coords.longitude,
+    //             };
+    //             lat.value = position.coords.latitude;
+    //             lng.value = position.coords.longitude;
+    //             // info.nodeValue = position.coords.longitude;
+
+    //             var marker = new google.maps.Marker({
+    //                 position: new google.maps.LatLng(pos),
+    //                 map: map,
+    //                 animation: google.maps.Animation.BOUNCE,
+    //             })
+    //             map.setCenter(pos);
+    //             map.setZoom(12);
+
+    //             // showLocation(mapOption, map, pos, km);
+    //         }, function () {
+    //             handleLocationError(true, map.getCenter());
+    //         });
+    //     } else {
+    //         handleLocationError(false, map.getCenter());
+    //     }
+    // }
+
+    // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    //     infoWindow.setPosition(pos);
+    //     infoWindow.setContent(browserHasGeolocation ?
+    //         'Error: Browser hasn\'t have location.' :
+    //         'Error: Browser doesn\'t support.');
+    // }
+
+    // function infoMarker(marker, info_marker) {
+    //     var infoWindow = new google.maps.InfoWindow({
+    //         content: info_marker
+    //     });
+
+    //     marker.addListener('click', function () {
+    //         infoWindow.open(marker.get('map'), marker);
+    //     });
+    // }
 
 </script>
-<script async defer type="text/javascript"
-        src="//maps.google.com/maps/api/js?key=AIzaSyD7Bogq9RONZQpDo-E2gU37FsnQUSSRIFs&callback=initMap"></script>
 <script>
     $(document).ready(function () {
         $('#province').change(function () {
@@ -293,17 +302,21 @@
             }
         });
 
-        $('#sub_district').change(function () {
+        $('#sub_district').change(function(){
             var selectedDistrict = $(this).children("option:selected").val();
-            var url = "<?= site_url('home/addToCart/');?>" + selectedDistrict
+            var url = "<?= site_url('home/addToCart/');?>"+selectedDistrict
             $('#cart_form').attr('action', url);
             console.log(url);
-        })
+        });
     });
 </script>
 <script>
     // process quantity or size item
     $(document).ready(function () {
+        const formatter = new Intl.NumberFormat('id-ID', {
+            minimumFractionDigits: 0
+        });
+
         $('#stockDetail').hide();
         $('#shoppingForm').hide();
         $('#sub_district').on('change', function () {
@@ -318,16 +331,18 @@
                     method: "GET",
                     dataType: "json",
                     success: function (response) {
-                        console.log(response[0].quantity);
                         if (response != '') {
                             $("div.toggle.active > label").trigger("click");
+                            $("#stockTitle").html("Available in your location");
                             $("#stockLabel").html('<i id="stockIcon" class="fa fa-check text-oldblue"></i> In Stock');
                             $('#stockDetail').show();
                             $('#shoppingForm').show();
                             $("#size").attr('disabled', false);
                             $("#size").empty();
-                            $("#price2").html("Rp.");
-                            $('#price2').append('<span class="totalprice" value=' + response[0].price + '>' + response[0].price + '</span>');
+                            var price = `Rp. <span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span>`
+                            $("#price2").html(price);
+                            //$('#price2').append("<span class='totalprice' value=" + response[0].price + "><?//=number_format(floatval(), 0, ',', '.')?>//" + "</span>");
+
                             $("#price").val(response[0].price);
                             $.each(response, function (key, value) {
                                 $("#size").append(
@@ -353,8 +368,6 @@
         $('#size').on('change', function () {
             var size = $("#size").val();
             var productId = $('#product_id').val();
-            var id_district = $('#')
-            console.log(productId)
             if (size) {
                 $.ajax({
                     url: "<?=site_url('home/checkPricebyProdSize/')?>" + productId + "/" + size,
@@ -362,8 +375,54 @@
                     dataType: "json",
                     success: function (response) {
                         console.log(response);
-                        $("#price2").html("Rp. " + response.price);
+                        $("#price2").html("Rp. " + formatter.format(response.price));
                         $("#price").val(response.price);
+                    }
+                });
+            }
+        });
+    });
+</script>
+<script type="text/javascript">
+    $('#pay-button').click(function (event) {
+        event.preventDefault();
+        $(this).attr("disabled", "disabled");
+
+        $.ajax({
+            url: '<?=site_url("snap/token")?>',
+            cache: false,
+            success: function(data) {
+                //location = data;
+                console.log('token = '+data);
+
+                var resultType = document.getElementById('result-type');
+                var resultData = document.getElementById('result-data');
+                function changeResult(type,data){
+                    $("#result-type").val(type);
+                    $("#result-data").val(JSON.stringify(data));
+                    //resultType.innerHTML = type;
+                    //resultData.innerHTML = JSON.stringify(data);
+                }
+                snap.pay(data, {
+
+                    onSuccess: function(result){
+                        changeResult('success', result);
+                        console.log(result.status_message);
+                        console.log(result);
+                        $("#payment-form").submit();
+                    },
+                    onPending: function(result){
+                        changeResult('pending', result);
+                        console.log(result.status_message);
+                        $("#payment-form").submit();
+                    },
+                    onError: function(result){
+                        changeResult('error', result);
+                        console.log(result.status_message);
+                        $("#payment-form").submit();
+                    },
+                    onClose: function(result){
+                        window.location = "<?=site_url('home/shop_summary')?>";
                     }
                 });
             }
@@ -397,6 +456,17 @@
 		})
 	})
 </script> -->
+
+<script>
+    grecaptcha.ready(function() {
+        // do request for recaptcha token
+        // response is promise with passed token
+        grecaptcha.execute('6Lcxm5wUAAAAAEhnAdo5xeknvh7RXGpTqWq5XDTO', {action: 'create_comment'}).then(function(token) {
+            // add token to form
+            $('#token').val(token)
+        });;
+    });
+</script>
 </body>
 
 </html>

@@ -44,7 +44,7 @@
                       <ul>
                         <?php for($i = 0; $i < count($sizes); $i++): ?>
                           <li><?= $sizes[$i][0]['name'];?> (<?= $sizes[$i][0]['size'];?>) -
-                            <b>Rp <?= number_format($prices[$i], 2, ",", ".");?></b></li>
+                            <b>Rp <?= number_format($prices[$i], 0, ",", ".");?></b></li>
                         <?php endfor; ?>
                       </ul>
                     </div>
@@ -57,7 +57,7 @@
             </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</button>
+            <a href="<?= site_url('admin/editProd/'.$product['id'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</a>
             <a href="<?= site_url('admin/allProd');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
           </div>
         </div>

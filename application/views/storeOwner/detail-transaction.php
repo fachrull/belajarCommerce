@@ -38,12 +38,31 @@
                                 <tr>
                                     <th>Status Transaksi</th>
                                     <td>
-                                        <p class="label label-danger"><?= $detailOrder[0]->status?></p>
-                                        <?php if ($detailOrder[0]->status_order != 1) {
-                                            echo " | <button type=\"button\" class=\"btn btn-sm btn-primary\" data-toggle=\"modal\" data-target=\"#modal-default\">
+                                        <?php
+                                        switch($detailOrder[0]->status_order) {
+                                            case 1:
+                                                echo "<p class=\"label label-success\">Pesanan Selesai</p>";
+                                                break;
+                                            case 2:
+                                                echo "<p class=\"label label-warning btn-sm\">Menunggu Pembayaran</p>";
+                                                echo " | <button type=\"button\" class=\"btn btn-sm btn-primary\" data-toggle=\"modal\" data-target=\"#modal-default\">
                                             Ubah Status
                                         </button>";
+                                                break;
+                                            case 3:
+                                                echo "<p class=\"label label-danger btn-sm\">Pesanan Dibatalkan</p>";
+
+                                                break;
+                                            case 4:
+                                                echo "<p class=\"label label-primary btn-sm\">Pesanan diproses</p>";
+                                                break;
+                                            case 5:
+                                                echo "<p class=\"label label-primary btn-sm\">Pesanan Dikirim</p>";
+                                                break;
+                                            default:
+                                                break;
                                         } ?>
+
                                     </td>
                                     <div class="modal fade" id="modal-default">
                                         <div class="modal-dialog">
@@ -105,7 +124,7 @@
                                         <td><?= $order->name?></td>
                                         <td><?= $order->size_name.' ('.$order->size.')'?></td>
                                         <td><?= $order->quantity?></td>
-                                        <td><?= 'Rp '.$order->subtotal?></td>
+                                        <td><?= 'Rp '.number_format(floatval($order->subtotal), 0, ',', '.')?></td>
                                     </tr>
                                 <?php $no++; endforeach; ?>
                             </tbody>

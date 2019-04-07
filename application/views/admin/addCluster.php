@@ -23,27 +23,35 @@
                   <!-- /ALERT -->
                   <form class="m-0 sky-form" action="<?= site_url('admin/addCluster/'.$id_store)?>" method="post">
                     <label class="input mb-10">
-                      <input type="text" name="name" value="<?= $address['prov_name']?>" disabled>
-                      <input type="hidden" name="province" value="<?= $address['province']?>">
-                    </label>
-                    <label class="input mb-10">
-                      <input type="text" name="name" value="<?= $address['city_name']?>" disabled>
-                      <input type="hidden" name="city" value="<?= $address['city']?>">
-                    </label>
-                    <label class="input mb-10">
-                      <input type="hidden" name="id_store" value="<?= $id_store?>">
-                    </label>
-                    <label class="input mb-10">
-                      <select class="select-form" name="sub_district">
-                        <option value="">Select Sub District</option>
-                        <?php foreach ($sub_districts as $sub_district): ?>
-                          <option value="<?= $sub_district['id_kec']?>"><?= $sub_district['nama']?></option>
+                      <label for="prov">Province</label>
+                      <select class="select-form form-control" id="province" name="province">
+                        <option value="">Select Province</option>
+                        <?php foreach ($provinces as $province): ?>
+                          <option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
                         <?php endforeach; ?>
                       </select>
                     </label>
+                    <label class="input mb-10">
+                      <label for="cty">City</label>
+                      <select class="select-form form-control" id="city" name="city">
+                        <option value="">Select City</option>
+                      </select>
+                    </label>
+                    <label class="input mb-10">
+                      <label for="subdist">Sub District</label>
+                      <select class="select-form form-control" id="sub_district" name="sub_district">
+                        <option value="">Select Sub District</option>
+                      </select>
+                    </label>
+                    <label class="input mb-10">
+                      <input class="form-control" type="hidden" name="id_store" value="<?= $id_store?>">
+                    </label>
                     <div class="col-xs-12">
                       <div class="row">
-                        <div class="col-md-12 text-right">
+                        <div class="col-md-6 pl-0">
+                          <a class="btn btn-default" href="<?= site_url('admin/stores/'.$id_store)?>">Back</a>
+                        </div>
+                        <div class="col-md-6 text-right">
                           <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> ADD</button>
                         </div>
                       </div>

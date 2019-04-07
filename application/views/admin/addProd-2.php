@@ -23,7 +23,7 @@
 								<div class="col-md-12 col-xs-12">
 									<div class="form-group">
 										<label><strong>Select Brand</strong></label>
-										<select class="form-control">
+										<select class="form-control" name="brand">
 										<option value=""selected disabled>Brand</option>
 											<?php foreach ($brands as $brand): ?>
                                   			<option value="<?= $brand['id'];?>"><?= $brand['name'];?></option>
@@ -34,7 +34,7 @@
 								<div class="col col-md-12 col-xs-12">
 									<div class="form-group">
 										<label><strong>Select Category</strong></label>
-										<select class="form-control">
+										<select class="form-control"name="cat">
 										<option value=""selected disabled>Category</option>
 											<?php foreach ($cats as $cat): ?>
 											<option value="<?= $cat['id'];?>">
@@ -47,13 +47,17 @@
 							</div>
 							<div class="form-group">
                   				<label><strong>Product Name</strong></label>
-                  				<input type="text" class="form-control" placeholder="Product Name">
+                  				<input type="text" class="form-control" name="pName" placeholder="Product Name">
                 			</div>
+                            <div class="form-group">
+                                <label><strong>SKU</strong></label>
+                                <input type="text" class="form-control" id="sku" name="pSku" placeholder="SKU">
+                            </div>
 							<div class="row mb-3">
 								<div class="col col-md-12 col-xs-12">
 								<div class="form-group">
 										<label><strong>Select Size</strong></label>
-										<select class="form-control">
+										<select class="form-control" id="size" name="size">
 										<option value=""selected disabled>Size</option>
 											<?php foreach($sizes as $size): ?>
 											<option value="<?= $size['id'];?>">
@@ -77,8 +81,10 @@
 								<div class="col-md-12 col-xs-12">
 									<table id="table_sizePrice" class="mb-10 table table-bordered table-striped">
 										<thead>
+                                            <th>SKU</th>
 											<th>Size</th>
 											<th>Price</th>
+                                            <th>Action</th>
 										</thead>
 										<tbody>
 										</tbody>
@@ -106,13 +112,19 @@
 							</div>
 							<label class="input"><b>Upload product image</b>
 							<p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
-								<input type="file" class="mt-5" name="productPict" />
+								<input type="file" class="mt-5" name="productPict[]" />
+                                <input type="file" class="mt-5" name="productPict[]" />
+                                <input type="file" class="mt-5" name="productPict[]" />
 							</label>
-							<div class="row">
-								<div class="col-md-12 text-right">
-									<button id="submit" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Product</button>
+							<div class="row mt-10">
+								<div class="col-md-6 text-left">
+									<a href="<?=site_url('admin/allProd')?>" class="btn btn-oldblue btn-default">Cancel</a>
 									<!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
 								</div>
+                                <div class="col-md-6 text-right">
+                                    <button id="submit" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Product</button>
+                                    <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
+                                </div>
 							</div>
 							</form>
 						</div>

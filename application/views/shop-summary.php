@@ -1,4 +1,8 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<script type="text/javascript"
+        src="https://app.sandbox.midtrans.com/snap/snap.js"
+        data-client-key="SB-Mid-client-37nPUlOf7Jos2Y8R"></script>
+
 <section class="page-header page-header-md">
   <div class="container">
     <h1>Cart Summary</h1>
@@ -86,8 +90,8 @@
                     </span>
                   </td>
                   <td><span><?= $cart['qty']?></span></td>
-                  <td><span class="float-left">Rp <?= $cart['subtotal']?></span></td>
-                  <td><font color="green">Available</font></td>
+                  <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
+                  <td><font color="green"><?= $cart['comment']?></font></td>
                 </tr>
               <?php else: ?>
                 <tr class="testimonial" style="background: #ffcccc;">
@@ -102,8 +106,8 @@
                     </span>
                   </td>
                   <td><span><?= $cart['qty']?></span></td>
-                  <td><span class="float-left">Rp <?= $cart['subtotal']?></span></td>
-                  <td><font color="red"><b>Out of stock</b></font></td>
+                  <td><span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span></td>
+                  <td><font color="red"><b><?= $cart['comment']?></b></font></td>
                 </tr>
               <?php endif; ?>
             <?php endforeach; ?>
@@ -112,19 +116,26 @@
         <?php if ($available == TRUE): ?>
           <div class="row">
             <div class="col-sm-6">
-              <a href="#" class="col-sm-12 btn btn-default">Cancel Order</a>
+              <a href="<?= site_url('home/shopCart')?>" class="col-sm-12 btn btn-default">Back to Cart</a>
             </div>
             <div class="col-sm-6 text-right">
-              <a href="#" class="col-sm-12 btn btn-oldblue">Purchase</a>
+<!--              <a href="--><?//= site_url('home/purchase')?><!--" class="col-sm-12 btn btn-oldblue">Purchase</a>-->
+                <button id="pay-button" class="col-sm-12 btn btn-oldblue">Purchase</button>
             </div>
           </div>
+            <div class="row">
+                <form id="payment-form" method="post" action="<?=site_url('snap/finish')?>">
+                    <input type="hidden" name="result_type" id="result-type" value=""></div>
+          <input type="hidden" name="result_data" id="result-data" value=""></div>
+        </form>
+            </div>
         <?php else: ?>
           <div class="row">
             <div class="col-sm-6">
               <a href="<?= site_url('home/shopCart')?>" class="col-sm-12 btn btn-default">Back to Cart</a>
             </div>
             <div class="col-sm-6 text-right">
-              <a href="#" class="col-sm-12 btn btn-danger">Cancel Order</a>
+              <a href="<?= site_url('home/deleteCart')?>" class="col-sm-12 btn btn-danger">Cancel Order</a>
             </div>
           </div>
         <?php endif; ?>

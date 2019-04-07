@@ -74,7 +74,7 @@
                       </div>
                       <div class="col col-md-6 mb-10">
                           <label class="input mb-10">
-                              <input class="form-control" name="lng" type="text" placeholder="Langtitude">
+                              <input class="form-control" name="lng" type="text" placeholder="longitude">
                           </label>
                       </div>
                   </div>
