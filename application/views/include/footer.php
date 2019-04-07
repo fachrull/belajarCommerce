@@ -410,6 +410,17 @@
 		})
 	})
 </script> -->
+
+<script>
+    grecaptcha.ready(function() {
+        // do request for recaptcha token
+        // response is promise with passed token
+        grecaptcha.execute('6Lcxm5wUAAAAAEhnAdo5xeknvh7RXGpTqWq5XDTO', {action: 'create_comment'}).then(function(token) {
+            // add token to form
+            $('#token').val(token)
+        });;
+    });
+</script>
 </body>
 
 </html>

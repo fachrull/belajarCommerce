@@ -289,16 +289,39 @@ class Home extends CI_Controller{
     $this->form_validation->set_rules('product-review-vote', 'Vote', 'required');
 
     if ($this->form_validation->run() == TRUE) {
-      $data = array(
-        'prod_id' =>  $idProduct,
-        'name'    =>  $this->input->post('name'),
-        'email'   =>  $this->input->post('email'),
-        'comment' =>  $this->input->post('comment'),
-        'stars'    =>  $this->input->post('product-review-vote'),
-        'display' =>  0,
-      );
-      $this->mhome->inputData('tm_review', $data);
-      redirect('home/detailProduct/'.$idProduct);
+        $secretKey = "6Lcxm5wUAAAAABvbtNLsnQwiPTQJNjM57xV7vOTA";
+        $captcha = $this->input->post('token');
+        $url = 'https://www.google.com/recaptcha/api/siteverify';
+        $data = array('secret' => $secretKey, 'response' => $captcha);
+
+        $options = array(
+            'http' => array(
+                'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                'method'  => 'POST',
+                'content' => http_build_query($data)
+            )
+        );
+        $context  = stream_context_create($options);
+        $response = file_get_contents($url, false, $context);
+        $responseKeys = json_decode($response,true);
+        header('Content-type: application/json');
+        if($responseKeys["success"]) {
+            $data = array(
+                'prod_id' =>  $idProduct,
+                'name'    =>  $this->input->post('name'),
+                'email'   =>  $this->input->post('email'),
+                'comment' =>  $this->input->post('comment'),
+                'stars'    =>  $this->input->post('product-review-vote'),
+                'display' =>  0,
+            );
+                $this->mhome->inputData('tm_review', $data);
+            $this->session->set_flashdata('success', 'Review Submitted');
+            redirect('home/detailProduct/'.$idProduct);
+        } else {
+            $this->session->set_flashdata('error', 'captcha error');
+            redirect('home/detailProduct/'.$idProduct);
+        }
+
     } else {
       $this->session->set_flashdata('error', validation_errors());
       redirect('home/detailProduct/'.$idProduct);
