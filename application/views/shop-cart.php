@@ -109,19 +109,19 @@
 				<!-- TOGGLE -->
 				<div class="toggle-transparent toggle-bordered-full clearfix">
 
-					<div class="toggle mt-0">
-						<label>Voucher</label>
-
-						<div class="toggle-content">
-							<p class="mb-20">Enter your discount coupon code.</p>
-
-							<form action="<?= site_url('home/addVoucher')?>" method="post" class="m-0">
-								<input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code"
-								 required="required">
-								<button class="btn btn-oldblue btn-block" type="submit">APPLY</button>
-							</form>
-						</div>
-					</div>
+<!--					<div class="toggle mt-0">-->
+<!--						<label>Voucher</label>-->
+<!---->
+<!--						<div class="toggle-content">-->
+<!--							<p class="mb-20">Enter your discount coupon code.</p>-->
+<!---->
+<!--							<form action="--><?//= site_url('home/addVoucher')?><!--" method="post" class="m-0">-->
+<!--								<input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code"-->
+<!--								 required="required">-->
+<!--								<button class="btn btn-oldblue btn-block" type="submit">APPLY</button>-->
+<!--							</form>-->
+<!--						</div>-->
+<!--					</div>-->
 
 					<!-- <div class="toggle">
 								<label>Shipping tax calculator</label>
@@ -165,10 +165,10 @@
 								<span class="float-right">Rp. <?=number_format($this->cart->total(),0,',','.')?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
-							<span class="clearfix">
-								<span class="float-right">Rp. 0</span>
-								<span class="float-left">Discount:</span>
-							</span>
+<!--							<span class="clearfix">-->
+<!--								<span class="float-right">Rp. 0</span>-->
+<!--								<span class="float-left">Discount:</span>-->
+<!--							</span>-->
 							<!-- <span class="clearfix">
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Shipping:</span>
