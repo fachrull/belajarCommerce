@@ -49,7 +49,7 @@
                 <li class="active"><a href="<?= site_url('admin/bed_linen');?>">Bed Linen</a></li>
                 <li class="active"><a href="<?= site_url('admin/beddingAcc');?>">Bedding Accessories</a></li>
                 <li class="active"><a href="<?= site_url('admin/bestSeller');?>">Best Seller</a></li>
-                <li class="active"><a href="<?= site_url('admin/listsubscriber');?>">Newsletter</a></li>
+                <li class="active"><a href="<?= site_url('admin/listsubscriber');?>">Incoming Subscriber</a></li>
               </li>
             </ul>
           </li>
