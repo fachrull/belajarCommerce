@@ -1507,7 +1507,7 @@ class Admin extends CI_Controller {
             $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
-            $this->load->view('admin/detailpromotion', $data);
+            $this->load->view('admin/detailPromotion', $data);
             $this->load->view('include/admin/footer');
         } else {
             $this->load->view('include/header2');
