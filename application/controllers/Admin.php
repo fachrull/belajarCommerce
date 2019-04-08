@@ -357,6 +357,35 @@ class Admin extends CI_Controller {
           // input data above to database
           $this->madmin->inputData('tm_product', $items);
 
+          $idProd = $this->madmin->getProducts($items, array('idField' => 'id'), 'tm_product', TRUE);
+          $cat_id = $this->input->post('cat');
+
+          if ($cat_id == 2) {
+            $max = $this->madmin->maxPosition_BedLinen();
+            $max['position'] = $max['position'] + 1;
+            print_r($max);
+
+            $data_BedLinen = array(
+              'prod_id'   =>  $idProd['id'],
+              'stars'     =>  0,
+              'position'  =>  $max['position']
+            );
+
+            $this->madmin->inputData('tr_product_bed_linen', $data_BedLinen);
+          }elseif ($cat_id != 1 || $cat_id != 2) {
+            $max = $this->madmin->maxPosition_BeddingAcc();
+            $max['position'] = $max['position'] + 1;
+            print_r($max);
+
+            $data_Bedding = array(
+              'prod_id'   =>  $idProd['id'],
+              'stars'     =>  0,
+              'position'  =>  $max['position']
+            );
+
+            $this->madmin->inputData('tr_product_bedding_acc', $data_Bedding);
+          }
+
           // select id from product
           $prod = $this->madmin->getProducts(array('name' => $this->input->post('pName')),
             array('idField' => 'id'), 'tm_product', TRUE);
@@ -840,8 +869,7 @@ class Admin extends CI_Controller {
       if ($this->form_validation->run() === FALSE) {
            $idStore = array('idStore' => $idSO);
            $data['storeId'] = $idStore;
-        $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'),
-         'tm_product', FALSE);
+           $data['products'] = $this->madmin->product_list();
 
          $this->load->view('include/admin/header');
          $this->load->view('include/admin/left-sidebar');

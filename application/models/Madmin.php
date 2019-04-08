@@ -57,7 +57,7 @@ class Madmin extends CI_Model {
   }
 
     public function getDetailProduct($productId){
-        $this->db->select('a.id, c.id as brand_id, c.name as brand_name, d.id as cat_id, d.name as cat_name, 
+        $this->db->select('a.id, c.id as brand_id, c.name as brand_name, d.id as cat_id, d.name as cat_name,
                             a.name as prod_name, a.description, b.id as item_id, b.price, b.sub_price, b.size_id, e.name as size_name, e.size');
         $this->db->from('tm_product a');
         $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
@@ -367,6 +367,18 @@ class Madmin extends CI_Model {
     }
   }
 
+  public function product_list(){
+    $this->db->select('id, name');
+    $this->db->from('tm_product');
+    $this->db->order_by('name', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
   public function detail_prod_bed_linen($idBedLinen){
     $this->db->select('a.id, b.name, b.image, a.stars, a.position');
     $this->db->from('tr_product_bed_linen a');
@@ -515,5 +527,27 @@ class Madmin extends CI_Model {
         }else {
             return FALSE;
         }
+    }
+
+    public function maxPosition_BedLinen(){
+      $this->db->select('MAX(position) as position');
+      $this->db->from('tr_product_bed_linen');
+      $query = $this->db->get();
+      if ($query->num_rows() != 0) {
+        return $query->row_array();
+      }else {
+        return FALSE;
+      }
+    }
+
+    public function maxPosition_BeddingAcc(){
+      $this->db->select('MAX(position) as position');
+      $this->db->from('tr_product_bedding_acc');
+      $query = $this->db->get();
+      if ($query->num_rows() != 0) {
+        return $query->row_array();
+      }else {
+        return FALSE;
+      }
     }
 }
