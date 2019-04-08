@@ -29,18 +29,18 @@
               <label class="input mb-10">
                   <input class="form-control" name="jumlah" type="text" placeholder="Limit Voucher">
               </label>
-              <div class="row mb-3">
-                <div class="col-md-12 cl-xs-12 select2-input-field">
-                  <label class="input mb-10">
-                    <select class="form-control select2" id="bonus" name="bonus[]" multiple="multiple"
-                     data-placeholder="Select a Bonus" data-role="tagsinput" style="width: 100%;">
-                      <?php foreach ($products as $product): ?>
-                        <option value="<?=$product['id']?>"><?= $product['name'];?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </label>
-                </div>
-              </div>
+<!--              <div class="row mb-3">-->
+<!--                <div class="col-md-12 cl-xs-12 select2-input-field">-->
+<!--                  <label class="input mb-10">-->
+<!--                    <select class="form-control select2" id="bonus" name="bonus[]" multiple="multiple"-->
+<!--                     data-placeholder="Select a Bonus" data-role="tagsinput" style="width: 100%;">-->
+<!--                      --><?php //foreach ($products as $product): ?>
+<!--                        <option value="--><?//=$product['id']?><!--">--><?//= $product['name'];?><!--</option>-->
+<!--                      --><?php //endforeach; ?>
+<!--                    </select>-->
+<!--                  </label>-->
+<!--                </div>-->
+<!--              </div>-->
               <div class="box-body pad pt-0 pl-0 pr-0 mb-10">
                 <textarea id="desc" name="desc" rows="10" cols="80" placeholder="Description"></textarea>
               </div>
