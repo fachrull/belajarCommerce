@@ -126,34 +126,6 @@
                             <!-- /item -->
 
                             <hr>
-                              <?php if($detailOrder[0]->status_order == 2) {
-                                  echo "<button type='button' class='btn btn-danger-secondary btn-block' data-toggle='modal' data-target='#cancelOrderModal' data-id='".$detailOrder[0]->id."'>Batalkan Pesanan</button>";
-                              }?>
-                              <div class="modal fade bs-example-modal-lg" id="cancelOrderModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                                  <div class="modal-dialog modal-lg">
-                                      <div class="modal-content">
-
-                                          <!-- header modal -->
-                                          <div class="modal-header">
-                                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                              <h4 class="modal-title" id="myLargeModalLabel">Batalkan Pesanan</h4>
-                                          </div>
-
-                                          <!-- body modal -->
-                                          <div class="modal-body">
-                                              <p>Apakah anda yakin ingin membatalkan pesanan?</p>
-                                          </div>
-
-                                          <div class="modal-footer">
-                                              <button type="button" class="btn btn-oldblue-secondary" data-dismiss="modal">Tidak</button>
-                                              <a href="<?=site_url('home/cancelOrder/'.$detailOrder[0]->id)?>" id="cancelButton" class="btn btn-oldblue">Ya</a>
-                                          </div>
-
-                                      </div>
-                                  </div>
-                              </div>
-
-
                           </div>
 
                         </div>
