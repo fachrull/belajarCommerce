@@ -61,8 +61,7 @@
 										<option value=""selected disabled>Size</option>
 											<?php foreach($sizes as $size): ?>
 											<option value="<?= $size['id'];?>">
-												<?=$size['name'];?> (
-												<?=$size['size'];?>)</option>
+												<?=$size['name'];?> (<?=$size['size'];?>)</option>
 											<?php endforeach; ?>
 										</select>
 								</div>
