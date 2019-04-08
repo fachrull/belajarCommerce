@@ -353,7 +353,11 @@ class Mhome extends CI_Model{
     }
 
   public function getOrderList($id) {
-      return $this->getProducts(array('id_userlogin' => $id), NULL, 'tm_order', FALSE);
+      $this->db->where('id_userlogin', $id);
+      $this->db->where('status_order != 1 AND status_order != 3');
+      $this->db->order_by('order_date', 'DESC');
+      $result = $this->db->get('tm_order');
+      return $result->result_array();
   }
 
     public function getOrderHistory($id) {
