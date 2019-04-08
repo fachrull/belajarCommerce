@@ -503,4 +503,17 @@ class Madmin extends CI_Model {
       return FALSE;
     }
   }
+
+    public function store_specialPackage($idStoreOwner){
+        $this->db->select('b.name, b.price, a.quantity');
+        $this->db->from('tr_storeowner_special_package a');
+        $this->db->join('tm_special_package b', 'b.id = a.id_special_package', 'left');
+        $this->db->where('a.id_store_owner', $idStoreOwner);
+        $query = $this->db->get();
+        if ($query->num_rows() != 0) {
+            return $query->result_array();
+        }else {
+            return FALSE;
+        }
+    }
 }
