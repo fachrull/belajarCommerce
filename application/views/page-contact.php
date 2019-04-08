@@ -95,35 +95,16 @@
 							</div>
 						</div>
 						<div class="row">
-							<div class="col-md-8">
+							<div class="col-md-12">
 								<label for="contact:subject">Subject *</label>
 								<input required type="text" value="" class="form-control" name="contact[subject][required]" id="contact:subject">
 							</div>
-							<div class="col-md-4">
-								<label for="contact_department">Department</label>
-								<select class="form-control pointer" name="contact[department]">
-									<option value="Select" selected disabled> Select </option>
-									<option value="Marketing">Marketing</option>
-									<option value="Webdesign">Webdesign</option>
-									<option value="Architecture">Architecture</option>
-								</select>
-							</div>
+
 						</div>
 						<div class="row">
 							<div class="col-md-12">
 								<label for="contact:message">Message *</label>
 								<textarea required maxlength="10000" rows="8" class="form-control" name="contact[message]" id="contact:message"></textarea>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col-md-12">
-								<label for="contact:attachment">File Attachment</label>
-
-								<!-- custom file upload -->
-								<input class="custom-file-upload" type="file" id="file" name="contact[attachment]" id="contact:attachment"
-								 data-btn-text="Select a File" />
-								<small class="text-muted block">Max file size: 10Mb (zip/pdf/jpg/png)</small>
-
 							</div>
 						</div>
 
@@ -146,8 +127,7 @@
 				<h2>Visit Us</h2>
 
 				<p>
-					Lid est laborum dolo rumes fugats untras. Etharums ser quidem rerum facilis dolores nemis omnis fugats vitaes
-					nemo minima rerums unsers sadips amets.
+					&nbsp;
 				</p>
 
 				<hr />
@@ -160,12 +140,6 @@
 
 				<hr />
 
-				<h4 class="font300">Business Hours</h4>
-				<p>
-					<span class="block"><strong>Monday - Friday:</strong> 10am to 6pm</span>
-					<span class="block"><strong>Saturday:</strong> 10am to 2pm</span>
-					<span class="block"><strong>Sunday:</strong> Closed</span>
-				</p>
 
 			</div>
 			<!-- /INFO -->
