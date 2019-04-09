@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lcxm5wUAAAAAEhnAdo5xeknvh7RXGpTqWq5XDTO"></script>
 
 <section class="page-header page-header-md">
 	<div class="container">
@@ -106,7 +107,9 @@
 								<label for="contact:message">Message *</label>
 								<textarea required maxlength="10000" rows="8" class="form-control" name="contact[message]" id="contact:message"></textarea>
 							</div>
-						</div>
+                            <input type="hidden" name="token" id="token">
+
+                        </div>
 
 					</fieldset>
 
