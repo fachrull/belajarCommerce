@@ -146,11 +146,15 @@
 						</div>
 
 						<div class="mb-15 pl-0">
-							<p class="text-left fs-18 bold" id="price2">
-							Rp. <span ><?=number_format(floatval($product['min_price']), 0, ',', '.')?></span>
-							-
-							Rp. <span><?=number_format(floatval($product['max_price']), 0, ',', '.')?></span>
-							</p>
+                            <p class="text-left fs-18 bold" id="price2">
+                                <?php if ($product['min_price'] != $product['max_price']) { ?>
+                                    Rp. <span><?= number_format(floatval($product['min_price']), 0, ',', '.') ?></span>
+                                    -
+                                    Rp. <span><?= number_format(floatval($product['max_price']), 0, ',', '.') ?></span>
+                                <?php } else { ?>
+                                    Rp. <span><?= number_format(floatval($product['min_price']), 0, ',', '.') ?></span>
+                                <?php } ?>
+                            </p>
 
 						</div>
 
