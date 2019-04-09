@@ -28,8 +28,7 @@ class Snap extends CI_Controller {
 		        'id' => $item['id'],
                 'price' => $item['price'],
                 'quantity' => $item['qty'],
-                'brand' => $item['name'],
-                'name' => $item['sizeName']
+                'name' => $item['name'] . ' - ' . $item['sizeName']
             );
 		    array_push($item_details, $item_detail);
         }
