@@ -2341,4 +2341,55 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
+
+    public function mail() {
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('email', 'Email', 'required');
+            $this->form_validation->set_rules('password', 'Password', 'required');
+            $this->form_validation->set_rules('host', 'Host', 'required');
+            $this->form_validation->set_rules('port', 'Port', 'required');
+
+            if ($this->form_validation->run() == TRUE) {
+                $id = $this->input->post('id');
+                $email = $this->input->post('email');
+                $password = base64_encode($this->input->post('password'));
+                $host = $this->input->post('host');
+                $port = $this->input->post('port');
+
+                $mailConfig = array(
+                    'email' => $email,
+                    'password' => $password,
+                    'host' => $host,
+                    'port' => $port
+                );
+
+                $priorConfig = $this->madmin->getProducts(array('id' => $id), NULL, 'mail_config', TRUE);
+                if ($priorConfig == NULL) {
+                    $this->madmin->inputData('mail_config', $mailConfig);
+                } else {
+                    $this->madmin->updateData(array('id' => $id), 'mail_config', $mailConfig);
+                }
+
+                $this->session->set_flashdata('success', 'Mail configuration saved');
+
+                redirect('admin/mail');
+
+            } else {
+                $data['mailConfig'] = $this->madmin->getProducts(NULL, NULL, 'mail_config', TRUE);
+
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/mail_config', $data);
+
+                $this->load->view('include/admin/footer');
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
 }
