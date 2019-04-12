@@ -20,6 +20,7 @@
                             <thead>
                             <th>No.</th>
                             <th>Email</th>
+                            <th>Subscribe Date</th>
                             <th>Action</th>
 
                             </thead>
@@ -28,6 +29,7 @@
                                 <tr>
                                     <td><?= $no.'.';?></td>
                                     <td><?= $subscriber['email']?></td>
+                                    <td><?= date_format(date_create($subscriber['subscribe_date']), "d M Y")?></td>
 
                                     <td>
                                         <a href="<?= site_url('admin/deletesubscriber/'.$subscriber['id']);?>"><i class="btn btn-danger fa fa-trash"></i></a>

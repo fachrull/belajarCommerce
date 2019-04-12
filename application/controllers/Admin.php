@@ -2324,12 +2324,12 @@ class Admin extends CI_Controller {
             header("Content-Type: application/csv; ");
 
             // get data
-            $subscribersData = $this->madmin->getProducts(NULL,array('email'=>'email'),'tm_newsletter', FALSE);
+            $subscribersData = $this->madmin->getProducts(NULL,array('email'=>'email', 'subscribe_date'=>'subscribe_date'),'tm_newsletter', FALSE);
 
             // file creation
             $file = fopen('php://output', 'w');
 
-            $header = array("Email");
+            $header = array("Email","subscribe date");
             fputcsv($file, $header);
             foreach ($subscribersData as $key=>$line){
                 fputcsv($file,$line);
