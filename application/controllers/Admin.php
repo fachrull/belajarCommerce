@@ -2313,4 +2313,35 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
+
+    public function exportCSV(){
+
+        if ($this->session->userdata('uType') == 1) {
+            // file name
+            $filename = 'subscriber_'.date('Ymd').'.csv';
+            header("Content-Description: File Transfer");
+            header("Content-Disposition: attachment; filename=$filename");
+            header("Content-Type: application/csv; ");
+
+            // get data
+            $subscribersData = $this->madmin->getProducts(NULL,array('email'=>'email'),'tm_newsletter', FALSE);
+
+            // file creation
+            $file = fopen('php://output', 'w');
+
+            $header = array("Email");
+            fputcsv($file, $header);
+            foreach ($subscribersData as $key=>$line){
+                fputcsv($file,$line);
+            }
+            fclose($file);
+            exit;
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+
+    }
+
 }

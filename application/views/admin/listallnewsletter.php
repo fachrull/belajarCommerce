@@ -14,8 +14,9 @@
                             <div class="col-md-4">
                             </div>
                         </div>
+                        <a href="<?= site_url('admin/exportCSV');?>" class="mb-10 btn btn-oldblue ">Export to CSV</a>
                         <hr class="col-xs-12 mt-10">
-                        <table id="dataTable" class="table table-bordered table-striped">
+                       <table id="dataTable" class="table table-bordered table-striped">
                             <thead>
                             <th>No.</th>
                             <th>Email</th>
