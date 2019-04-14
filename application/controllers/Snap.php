@@ -16,11 +16,8 @@ class Snap extends CI_Controller {
     {
         $carts = $this->cart->contents();
         $address = $this->mhome->customer_detail($carts[key($carts)]['id_address']);
-		// Required
-		$transaction_details = array(
-		  'order_id' => 'AGM'.date("dmy").rand(1, 999),
-		  'gross_amount' => $this->cart->total() // no decimal allowed for creditcard
-		);
+
+        $discount = 0;
 
 		$item_details = array();
 		foreach ($carts as $item) {
@@ -28,30 +25,34 @@ class Snap extends CI_Controller {
 		        'id' => $item['id'],
                 'price' => $item['price'],
                 'quantity' => $item['qty'],
-                'brand' => $item['name'],
-                'name' => $item['sizeName']
+                'name' => $item['name'] . ' - ' . $item['sizeName']
             );
 		    array_push($item_details, $item_detail);
         }
 
-		// Optional
-		$item1_details = array(
-		  'id' => 'a1',
-		  'price' => 18000,
-		  'quantity' => 3,
-		  'name' => "Apple"
-		);
+		// Voucher item
+        $keys = array_keys($carts);
+        $voucher = $carts[$keys[0]]["voucher"];
 
-		// Optional
-		$item2_details = array(
-		  'id' => 'a2',
-		  'price' => 20000,
-		  'quantity' => 2,
-		  'name' => "Orange"
-		);
+        if ($voucher != "") {
+            $result = $this->mhome->getProducts(array('kode_voucher' => $voucher), array('discount', 'discount'), 'tm_voucher', TRUE);
+            $discount = floatval($this->cart->total() * $result['discount']);
 
-		// Optional
-//		$item_details = array ($item1_details, $item2_details);
+            $voucher_details = array(
+                'id' => $voucher,
+                'price' => (-1 * $discount),
+                'quantity' => 1,
+                'name' => "Voucher: " . $voucher
+            );
+
+            array_push($item_details, $voucher_details);
+        }
+
+        // Required
+        $transaction_details = array(
+            'order_id' => 'AGM'.date("dmy").rand(1, 999),
+            'gross_amount' => ($this->cart->total() - $discount) // no decimal allowed for creditcard
+        );
 
 		// Optional
 		$billing_address = array(

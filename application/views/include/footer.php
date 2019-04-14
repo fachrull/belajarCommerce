@@ -467,6 +467,65 @@
         });;
     });
 </script>
+
+<script>
+    var label = $('#voucher-label');
+    label.hide();
+    $('#btn-voucher').click(function (event) {
+        event.preventDefault();
+        $(this).attr("disabled", "disabled");
+        var voucher = $('#cart-code').val();
+
+        if(voucher === "") {
+            label.html('<i class="fa fa-times text-danger"></i> Please input voucher code');
+            label.attr("class","text-danger");
+            label.show();
+            $(this).removeAttr("disabled");
+        } else {
+            $.ajax({
+                url: '<?=site_url("home/check_voucher/")?>' + voucher,
+                cache: false,
+                dataType: 'json',
+                success: function(data) {
+                    //location = data;
+                    console.log('data = '+data);
+
+                    if(data.status === 0) {
+                        label.html('<i class="fa fa-times text-danger"></i> Voucher invalid');
+                        label.attr("class","text-danger");
+                        label.show();
+                        $('#btn-voucher').removeAttr("disabled");
+                    } else {
+                        label.html("");
+                        label.hide();
+                        $('#voucher-input').submit();
+                        // $('#voucher-input').remove();
+                        // label.after(`
+                        //             <div id="voucher-detail" class="row">
+                        //             <div class="col-6">
+                        //                 <p>${voucher}</p>
+                        //             </div>
+                        //             <div class="col-6">
+                        //                 <a href="#" class="float-right" id="remove-voucher" >remove</a>
+                        //             </div>
+                        //             </div>`);
+                    }
+                }
+            });
+        }
+    });
+    $('#remove-voucher').click(function (event) {
+        $('#voucher-detail').empty();
+        label.after(` <form id="voucher-input" action="#" method="post" class="m-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code" required="required">
+                                        <button class="btn btn-oldblue btn-block" id="btn-voucher" type="button">APPLY</button>
+                                    </div>
+                                </div>
+                        </form> `);
+    });
+</script>
 </body>
 
 </html>

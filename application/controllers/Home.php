@@ -402,6 +402,10 @@ class Home extends CI_Controller{
     redirect('home/shopCart');
   }
 
+  public function printCart() {
+      print_r($this->cart->contents());
+  }
+
   public function addVoucher(){
     if ($this->cart->contents() != NULL) {
       $voucherCode = $this->input->post('voucher');
@@ -409,22 +413,54 @@ class Home extends CI_Controller{
       foreach ($carts as $cart) {
         $rowId = $cart['rowid'];
         $addVoucher = array(
-          'rowid'   =>  $rowId,
+          'rowid'   =>  $cart['rowid'],
           'voucher' =>  $voucherCode
         );
         $this->cart->update($addVoucher);
-        print_r($cart);
-        echo "</br></br>";
       }
-      exit();
-      print_r($voucherCode);
-    } else {
-      redirect('');
+        $qty = $this->mhome->getProducts(array('kode_voucher' => $voucherCode), array('jumlah' => 'jumlah'), 'tm_voucher', TRUE);
+        $quantity = $qty['jumlah'] - 1;
+        $data = array('jumlah' => $quantity);
+
+      $this->mhome->updateData(array('kode_voucher' => $voucherCode), $data, 'tm_voucher' );
+      redirect('home/shopCart');
     }
   }
 
+  public function removeVoucher() {
+      $carts = $this->cart->contents();
+      foreach ($carts as $cart) {
+          $rowId = $cart['rowid'];
+          $addVoucher = array(
+              'rowid'   =>  $cart['rowid'],
+              'voucher' =>  ''
+          );
+          $voucher = $cart['voucher'];
+          $this->cart->update($addVoucher);
+      }
+      $qty = $this->mhome->getProducts(array('kode_voucher' => $voucher), array('jumlah' => 'jumlah'), 'tm_voucher', TRUE);
+      $quantity = $qty['jumlah'] + 1;
+      $data = array('jumlah' => $quantity);
+
+      $this->mhome->updateData(array('kode_voucher' => $voucher), $data, 'tm_voucher' );
+      redirect('home/shopCart');
+  }
+
   public function shopCart(){
-      $data['cart'] = $this->cart->contents();
+      $cart = $this->cart->contents();
+      $data['cart'] = $cart;
+
+      if($cart) {
+          $keys = array_keys($cart);
+          $voucher = $cart[$keys[0]]["voucher"];
+
+          if($voucher === "") {
+              $data['discount'] = 0;
+          } else {
+              $result = $this->mhome->getProducts(array('kode_voucher' => $voucher), array('discount', 'discount'), 'tm_voucher', TRUE);
+              $data['discount'] = floatval($this->cart->total() * $result['discount']);
+          }
+      }
       $this->load->view('include/header2');
       $this->load->view('shop-cart', $data);
       $this->load->view('include/footer');
@@ -597,6 +633,18 @@ class Home extends CI_Controller{
 
         // load detail district, city, and province, and store it to view
         $data['addressCart'] = $this->mhome->detail_district_cart($district_cart[0]);
+
+          $cart = $this->cart->contents();
+          $data['cart'] = $cart;
+          $keys = array_keys($cart);
+          $voucher = $cart[$keys[0]]["voucher"];
+
+          if($voucher === "") {
+              $data['discount'] = 0;
+          } else {
+              $result = $this->mhome->getProducts(array('kode_voucher' => $voucher), array('discount', 'discount'), 'tm_voucher', TRUE);
+              $data['discount'] = floatval($this->cart->total() * $result['discount']);
+          }
 
         // load view
         $this->load->view('include/header2');
@@ -1334,6 +1382,23 @@ class Home extends CI_Controller{
     $this->load->view('detail_special', $data);
     $this->load->view('include/footer');
   }
+
+  public function check_voucher($voucher) {
+      $voucherDetail = $this->mhome->getProducts(array('kode_voucher' => $voucher, 'jumlah !=' => 0, 'active' => 1 ), NULL, 'tm_voucher', TRUE);
+      if($voucherDetail != NULL) {
+          $data = array(
+              "status" => 1,
+              "discount" => $voucherDetail['discount']
+          );
+      } else {
+          $data = array(
+              "status" => 0
+          );
+      }
+
+      print_r(json_encode($data));
+  }
+
 }
 
 

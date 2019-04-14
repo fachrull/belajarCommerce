@@ -109,19 +109,39 @@
 				<!-- TOGGLE -->
 				<div class="toggle-transparent toggle-bordered-full clearfix">
 
-<!--					<div class="toggle mt-0">-->
-<!--						<label>Voucher</label>-->
-<!---->
-<!--						<div class="toggle-content">-->
-<!--							<p class="mb-20">Enter your discount coupon code.</p>-->
-<!---->
-<!--							<form action="--><?//= site_url('home/addVoucher')?><!--" method="post" class="m-0">-->
-<!--								<input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code"-->
-<!--								 required="required">-->
-<!--								<button class="btn btn-oldblue btn-block" type="submit">APPLY</button>-->
-<!--							</form>-->
-<!--						</div>-->
-<!--					</div>-->
+					<div class="toggle mt-0">
+						<label>Voucher</label>
+
+						<div class="toggle-content">
+							<p class="mb-20">Enter your discount voucher code.</p>
+                            <span id="voucher-label"></span>
+                            <?php
+                            if($cart) {
+                                $keys = array_keys($cart);
+                                $voucher = $cart[$keys[0]]["voucher"];
+                            }
+                            if ($voucher === "") {
+                            ?>
+							<form id="voucher-input" action="<?= site_url('home/addVoucher')?>" method="post" class="m-0">
+								<div class="row">
+                                    <div class="col-12">
+                                        <input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code" required="required">
+                                        <button id="btn-voucher" class="btn btn-oldblue btn-block" type="button">APPLY</button>
+                                    </div>
+                                </div>
+							</form>
+                            <?php } else { ?>
+                            <div id="voucher-detail" class="row">
+                                <div class="col-6">
+                                    <p><?=$voucher?></p>
+                                </div>
+                                <div class="col-6">
+                                    <a href="<?= site_url('home/removeVoucher')?>" class="float-right" id="remove-voucher" >remove</a>
+                                </div>
+                            </div>
+                            <?php } ?>
+						</div>
+					</div>
 
 					<!-- <div class="toggle">
 								<label>Shipping tax calculator</label>
@@ -165,10 +185,10 @@
 								<span class="float-right">Rp. <?=number_format($this->cart->total(),0,',','.')?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
-<!--							<span class="clearfix">-->
-<!--								<span class="float-right">Rp. 0</span>-->
-<!--								<span class="float-left">Discount:</span>-->
-<!--							</span>-->
+							<span class="clearfix">
+								<span class="float-right">Rp. <?=number_format($discount,0,',','.')?></span>
+								<span class="float-left">Discount:</span>
+							</span>
 							<!-- <span class="clearfix">
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Shipping:</span>
@@ -177,7 +197,7 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. <?=number_format($this->cart->total(),0,',','.')?></span>
+								<span class="float-right fs-20">Rp. <?=number_format(($this->cart->total() - $discount),0,',','.')?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 
