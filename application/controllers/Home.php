@@ -165,7 +165,7 @@ class Home extends CI_Controller{
     }
     // print_r($data['category']);
     // exit();
-
+      $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
     $this->load->view('include/header2');
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
@@ -229,7 +229,7 @@ class Home extends CI_Controller{
   }
 
   public function detailProduct($idProduct){
-    $specs = [];
+    $specs = array();
     $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
     $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
     $data['brand'] = $id_brand['brand_id'];
@@ -250,6 +250,7 @@ class Home extends CI_Controller{
          array('nameField' => 'name'), 'tm_spec', TRUE));
       }
     $data['specs'] = $specs;
+    $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
     // print_r($data['specs']);echo "</br></br>";
     // print_r($data['prices']);echo "</br></br>";
     // print_r($data['sizes']);echo "</br></br>";exit();

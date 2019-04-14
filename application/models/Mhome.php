@@ -383,9 +383,10 @@ class Mhome extends CI_Model{
   }
 
   public function getShop_product($brand = NULL, $category = NULL){
-    $this->db->select('a.id, a.name, a.image, b.stars, b.position');
+    $this->db->select('a.id, a.name, a.image, b.stars, b.position, c.image_1');
     $this->db->from('tm_product a');
     $this->db->join('tr_product_best_seller b', 'b.prod_id = a.id', 'left');
+      $this->db->join('tr_product_image c', 'c.id_prod = a.id', 'left');
     if ($brand != NULL) {
       $this->db->where('a.brand_id', $brand);
     }

@@ -135,9 +135,15 @@
 
 										<div class="thumbnail">
 											<!-- product image(s) -->
+                                            <?php if($product['image_1'] === NULL) {?>
 											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
 												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="product name" />
 											</a>
+                                            <?php } else { ?>
+                                                <a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+                                                    <img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image_1']);?>" alt="product name" />
+                                                </a>
+                                            <?php } ?>
 											<!-- /product image(s) -->
 
 											<div class="shop-item-summary text-center">
