@@ -2205,11 +2205,20 @@ class Admin extends CI_Controller {
     }
   }
   public function historyTransaction(){
+      $data['transactions'] = $this->madmin->order_list();
     $this->load->view('include/admin/header');
     $this->load->view('include/admin/left-sidebar');
-    $this->load->view('admin/sa_historyTransaction');
+    $this->load->view('admin/sa_historyTransaction', $data);
     $this->load->view('include/admin/footer');
   }
+
+    public function detailTransaction($idOrder){
+        $this->load->view('include/admin/header');
+        $data['detailOrder'] = $this->madmin->getDetailOrder($idOrder);
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/detail-transaction', $data);
+        $this->load->view('include/admin/footer');
+    }
 
     public function editVoucher($idVoucher){
         if ($this->session->userdata('uType') == 1) {
