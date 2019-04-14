@@ -163,6 +163,7 @@ class Home extends CI_Controller{
       $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     }
+    $data['bestSellers'] = $this->mhome->topthree_bestSeller();
     // print_r($data['category']);
     // exit();
 
@@ -250,6 +251,7 @@ class Home extends CI_Controller{
          array('nameField' => 'name'), 'tm_spec', TRUE));
       }
     $data['specs'] = $specs;
+    $data['bestSellers'] = $this->mhome->topthree_bestSeller();
     // print_r($data['specs']);echo "</br></br>";
     // print_r($data['prices']);echo "</br></br>";
     // print_r($data['sizes']);echo "</br></br>";exit();
@@ -372,32 +374,90 @@ class Home extends CI_Controller{
   }
 
   public function addToCart($idDistrict) {
-    $size_name = $this->mhome->sizeStock($this->input->post('size'));
-    $idTrProduct['id_trProduct'] = $this->mhome->getProducts(array('id_product' => $this->input->post('product_id'),
-      'id_product_size' => $this->input->post('size')), array('idField' => 'id'), 'tr_product', TRUE);
-    // $idUserLogin = $this->session->userdata('uId');
-    $product = $this->mhome->getProducts(array('id'=>$this->input->post('product_id')), NULL, 'tm_product', TRUE);
+    // store id product to variable id_prod
+    $id_prod = $this->input->post('product_id');
+
+    // quantity order
+    $qty = $this->input->post('qty');
+
+    // product name rules
+    $product_name_rules = '\.\:\-_ a-z0-9\d\D)'; // alpha-numeric, dashes, underscores, colons or periods
+    // product name
+    $prod_name = $this->input->post('product_name');
+    // delete some character
+    $prod_name = rtrim($prod_name, $product_name_rules);
+    $prod_name = str_replace('(', '- ', $prod_name);
+
+    $price = $this->mhome->getProducts(array('prod_id' => $id_prod), array('prc' => 'price'), 'tr_product_size', TRUE);
+
+    // checking brand product
+    $product = $this->mhome->getProducts(array('id' => $id_prod), NULL, 'tm_product', TRUE);
+
+
+    if ($product['brand_id'] != 0) {
+      echo "Bukan Special Package";echo "</br></br>";
+      echo "Brand = ";print_r($product['brand_id']);echo "</br></br>";
+      echo "ID product = ";print_r($id_prod);echo "</br></br>";
+
+      // store id product size to variable to id_tr_prod_size
+      $tr_prod_size['id'] = $this->input->post('size');
+
+      // set type of product special package or retail?
+      $type = 'retail';
+
+      // image product
+      $img = $product['image'];
+
+      // search size_name and it detail
+      $size_name = $this->mhome->sizeStock($tr_prod_size['id']);
+    }else {
+      echo "Special Package";echo "</br></br>";
+      echo "Brand = ";print_r($product['brand_id']);echo "</br></br>";
+      echo "ID product = ";print_r($id_prod);echo "</br></br>";
+
+      // set type of product special package or retail?
+      $type = 'special';
+
+      // image product
+      $img = 'special-package/'.$product['image'];
+
+      // store id product size to variable to id_tr_prod_size
+      $tr_prod_size = $this->mhome->getProducts(array('prod_id' => $id_prod), array('idField' => 'id'),
+        'tr_product_size', TRUE);
+
+      // search size_name and it detail (special package hasn't specific size so I set it blank)
+      $size_name['name_size'] = '';
+      $size_name['detail_size'] = '';
+    }
+
     $data = array(
-      'id'          => $this->input->post('product_id'),
-      'image'       => $product['image'],
-      'qty'         => $this->input->post('qty'),
-      'price'       => $this->input->post('price'),
-      'name'        => $this->input->post('product_name'),
-      'id_trProduct'=> $idTrProduct['id_trProduct']['id'],
-      'voucher'     => '',
-      'id_address'  => '',
-      'available'   => FALSE,
-      'comment'     => '',
-      'sizeName'    => $size_name[0]['name_size'],
-      'detailSize'  => $size_name[0]['detail_size'],
-      'sub_district'=> $idDistrict,
-      'options'     => array('Size' => $this->input->post('size'))
+      'id'            => $id_prod,
+      'type'          => $type,
+      'image'         => $img,
+      'qty'           => $qty,
+      'price'         => $price['price'],
+      'name'          => $prod_name,
+      'id_trProduct'  => $tr_prod_size['id'],
+      'voucher'       => '',
+      'id_address'    => '',
+      'available'      => FALSE,
+      'comment'       => '',
+      'sizeName'      => $size_name['name_size'],
+      'detailSize'    => $size_name['detail_size'],
+      'sub_district'  => $idDistrict,
+      'option'        => '',
+      // 'option'        => array(
+      //                   'id'            =>
+      //                   'type'          =>
+      //                   'id_trProduct'  =>
+      //                   'price'         =>
+      //                   'voucher'       =>
+      // ),
     );
-    // print_r($this->session->userdata());
-    // print_r($data);
+    print_r($data);echo "</br></br>";
     // exit();
     $this->cart->insert($data);
-    // print_r($this->cart->contents());
+    print_r($this->cart->contents());
     // exit();
     redirect('home/shopCart');
   }
@@ -552,7 +612,7 @@ class Home extends CI_Controller{
 
         $cart_availablelity = $this->cart->contents();
         foreach ($cart_availablelity as $cart) {
-          $quantity_Prod = $this->mhome->getProducts(array('id' => $cart['id_trProduct']),
+          $quantity_Prod = $this->mhome->getProducts(array('id_product_size' => $cart['id_trProduct']),
             array('quantityF' => 'quantity'), 'tr_product', TRUE);
           if ($quantity_Prod['quantity'] > 3) {
             if ($cart['qty'] < $quantity_Prod['quantity']) {
@@ -644,7 +704,7 @@ class Home extends CI_Controller{
             // id tr_product from cart
             $id_trProduct = $cart['id_trProduct'];
             // checking the stock
-            $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+            $prod_qty = $this->mhome->getProducts(array('id_product_size' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
 
             // checking is the stock more than 3 and insert id shipping address
             if ($prod_qty['quantity'] > 3) {
@@ -713,7 +773,7 @@ class Home extends CI_Controller{
               print_r($id_trProduct);echo "</br></br>";
 
               // checking the stock
-              $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $prod_qty = $this->mhome->getProducts(array('id_product_size' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
 
               // checking is the stock more than 3 and insert id shipping address
               if ($prod_qty['quantity'] > 3) {
@@ -765,7 +825,7 @@ class Home extends CI_Controller{
               print_r($id_trProduct);echo "</br></br>";
 
               // checking the stock
-              $prod_qty = $this->mhome->getProducts(array('id' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $prod_qty = $this->mhome->getProducts(array('id_product_size' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
 
               // checking is the stock more than 3 and insert id shipping address
               if ($prod_qty['quantity'] > 3) {
@@ -1014,9 +1074,11 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function bestSeller(){
+  public function bestSeller($brand = NULL, $cat = NULL){
+    $data['products'] = $this->mhome->listBestSeller_Product($brand, $cat);
+
     $this->load->view('include/header2');
-    $this->load->view('best-seller');
+    $this->load->view('best-seller', $data);
     $this->load->view('include/footer');
   }
 
@@ -1218,6 +1280,7 @@ class Home extends CI_Controller{
       $data['products'] = $this->mhome->bed_linenProducts($brand);
     }
     $data['brands'] = $this->mhome->bed_linenBrands();
+    $data['bestSellers'] = $this->mhome->topthree_bestSeller();
 
     $this->load->view('include/header2');
     $this->load->view('bed_linen', $data);
@@ -1317,8 +1380,8 @@ class Home extends CI_Controller{
 	}
 
   public function specialPackage() {
-    $data['special_packages'] = $this->mhome->getProducts(array('active' => 1), array('idField' => 'id', 'nameField' => 'name',
-      'imageField' => 'image'), 'tm_special_package', FALSE);
+    $data['special_packages'] = $this->mhome->getProducts(array('active' => 1, 'brand_id' => 0, 'cat_id' => 0),
+      array('idField' => 'id', 'nameField' => 'name', 'img' => 'image'), 'tm_product', FALSE);
 
     $this->load->view('include/header2');
     $this->load->view('special_package', $data);
@@ -1326,14 +1389,16 @@ class Home extends CI_Controller{
   }
 
   public function detailSpecial($idSpecialPckg) {
-    $data['specialPckg'] = $this->mhome->getProducts(array('id' => $idSpecialPckg), array('nameField' => 'name', 'img' => 'image',
-      'desc' => 'description', 'prc' => 'price'), 'tm_special_package', TRUE);
+    $data['specialPckg'] = $this->mhome->prime_specialPKG($idSpecialPckg);
     $data['details'] = $this->mhome->detail_specialPackage($idSpecialPckg);
+    $data['bestSellers'] = $this->mhome->topthree_bestSeller();
+    $data['reviews'] = $this->mhome->getProducts(array('prod_id' => $idSpecialPckg, 'display' => 1), array('nameField' => 'name',
+    'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
+    $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
+      'provinsi', FALSE);
 
     $this->load->view('include/header2');
     $this->load->view('detail_special', $data);
     $this->load->view('include/footer');
   }
 }
-
-

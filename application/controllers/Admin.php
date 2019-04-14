@@ -262,8 +262,8 @@ class Admin extends CI_Controller {
 
       if ($this->form_validation->run() == FALSE){
         $data['products'] = $this->madmin->listProduct();
-        $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
-        $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
+        $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+        $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_category', FALSE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -325,9 +325,9 @@ class Admin extends CI_Controller {
 
         $this->load->library('upload',$config);
         if(! $this->upload->do_upload('productPict')){
-          $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+          $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), array('idField' => 'id',
             'nameField' => 'name'), 'tm_brands', FALSE);
-          $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+          $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), array('idField' => 'id',
             'nameField' => 'name'), 'tm_category', FALSE);
           $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
             'nameField' => 'name'), 'tm_spec', FALSE);
@@ -344,6 +344,13 @@ class Admin extends CI_Controller {
           // $data = array('upload_data' => $this->upload->data());
           $pName = $this->upload->data();
 
+          $brand_id = $this->input->post('brand');
+          $cat_id = $this->input->post('cat');
+          $max_position_prod = $this->madmin->getProducts(array('brand_id' => $brand_id),
+            array('pos' => 'MAX(position) as position'), 'tm_product', TRUE);
+
+          $max_position_prod['position'] = $max_position_prod['position'] + 1;
+
           // data for input tm_product
           $items = array(
             'brand_id'    => $this->input->post('brand'),
@@ -351,6 +358,8 @@ class Admin extends CI_Controller {
             'name'        => $this->input->post('pName'),
             'description' => $this->input->post('desc'),
             'image'       => $pName['orig_name'],
+            'stars'       => 0,
+            'position'    => $max_position_prod['position'],
             'created_at'  => date('Ymd')
           );
 
@@ -367,19 +376,17 @@ class Admin extends CI_Controller {
 
             $data_BedLinen = array(
               'prod_id'   =>  $idProd['id'],
-              'stars'     =>  0,
               'position'  =>  $max['position']
             );
 
             $this->madmin->inputData('tr_product_bed_linen', $data_BedLinen);
-          }elseif ($cat_id != 1 || $cat_id != 2) {
+          }elseif ($cat_id > 2) {
             $max = $this->madmin->maxPosition_BeddingAcc();
             $max['position'] = $max['position'] + 1;
             print_r($max);
 
             $data_Bedding = array(
               'prod_id'   =>  $idProd['id'],
-              'stars'     =>  0,
               'position'  =>  $max['position']
             );
 
@@ -420,9 +427,9 @@ class Admin extends CI_Controller {
           redirect('admin/allProd');
         }
       }else{
-        $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+        $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), array('idField' => 'id',
           'nameField' => 'name'), 'tm_brands', FALSE);
-        $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+        $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), array('idField' => 'id',
           'nameField' => 'name'), 'tm_category', FALSE);
         $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
           'nameField' => 'name'), 'tm_spec', FALSE);
@@ -910,20 +917,33 @@ class Admin extends CI_Controller {
 
       if ($this->form_validation->run() === FALSE) {
         $data['id_store'] = $idStoreOwner;
-        $data['special_packages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_special_package', FALSE);
+        $data['special_packages'] = $this->madmin->getProducts(array('brand_id' => 0, 'cat_id' => 0), array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/addStore_SpecialPackage', $data);
         $this->load->view('include/admin/footer');
       }else{
-        $dataStore_SpclPckg = array(
-          'id_special_package'  =>  $this->input->post('specialPackage'),
-          'id_store_owner'      =>  $idStoreOwner,
-          'quantity'            =>  0
-        );
+        // id product (special package) from input
+        $id_prod = $this->input->post('specialPackage');
 
-        $this->madmin->inputData('tr_storeowner_special_package', $dataStore_SpclPckg);
+        // id super admin who's input this data
+        $idAdmin = $this->session->userdata('uId');
+
+        // search id product (special package) from table tr_product_size
+        $id_prod_size = $this->madmin->getProducts(array('prod_id' => $id_prod), array('idField' => 'id'), 'tr_product_size', TRUE);
+
+        // this array are set to fill tr_product table (assign special package to store)
+        $dataStore_SpclPckg = array(
+          'id_store'        =>  $idStoreOwner,
+          'id_product'      =>  $id_prod,
+          'id_product_size' => $id_prod_size['id'],
+          'quantity'        =>  0,
+          'new'             =>  0,
+          'id_admin'        =>  $idAdmin
+        );
+        $this->madmin->inputData('tr_product', $dataStore_SpclPckg);
+
         redirect('admin/stores/'.$idStoreOwner);
       }
     } else {
@@ -1363,7 +1383,7 @@ class Admin extends CI_Controller {
       $this->load->library('upload', $config);
       if (! $this->upload->do_upload('cover_bestSeller')) {
           $this->session->set_flashdata('error', $this->upload->display_errors());
-          $data['best_seller'] = $this->madmin->best_seler();
+          $data['best_seller'] = $this->madmin->best_seller();
           $data['slides'] = $this->madmin->getProducts(array('cover' => 2), array('idField' => 'id', 'slideField' => 'slide'),
             'tm_cover', TRUE);
 
@@ -1390,6 +1410,58 @@ class Admin extends CI_Controller {
     }
   }
 
+  public function addBestSeller(){
+    if ($this->session->userdata('uType') == 1) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('product', 'Product', 'required|callback_checkingProd_BestSeller');
+
+      if ($this->form_validation->run() === FALSE) {
+        $data['products'] = $this->madmin->sortingProduct_AscName();
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('admin/addBest_seller', $data);
+        $this->load->view('include/admin/footer');
+      }else{
+        $max = $this->madmin->maxPosition_BestSeller();
+        $max['position'] = $max['position'] + 1;
+        print_r($max['position']);
+
+        $data_bestSeller = array(
+          'prod_id'   =>  $this->input->post('product'),
+          'position'  =>  $max['position']
+        );
+
+        echo "</br></br>";print_r($data_bestSeller);
+        $this->madmin->inputData('tr_product_best_seller', $data_bestSeller);
+        redirect('admin/bestSeller');
+      }
+    }else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingProd_BestSeller($idProduct){
+    if ($this->session->userdata('uType') == 1) {
+      $prod = $this->madmin->getProducts(array('prod_id' => $idProduct), NULL, 'tr_product_best_seller', TRUE);
+
+      if (isset($prod)) {
+        $this->session->set_flashdata('error', 'Product has been added to best seller');
+        return FALSE;
+      }else {
+        return TRUE;
+      }
+    }else{
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
   public function delete_cover_bestSeller($idSlider){
     if ($this->session->userdata('uType') == 1) {
       $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tn_cover', TRUE);
@@ -1410,7 +1482,6 @@ class Admin extends CI_Controller {
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('stars', 'Stars', 'required');
       $this->form_validation->set_rules('position', 'Position', 'required');
 
       if ($this->form_validation->run() == TRUE) {
@@ -1426,9 +1497,8 @@ class Admin extends CI_Controller {
         $positionProduct_lastdestination = $this->madmin->getProducts(array('id' => $idBestSeller), array('positionField' => 'position'),
           'tr_product_best_seller', TRUE);
 
-        // data new stars and new position for idBedLinen
+        // data new position for idBestSeller
         $data_newDestination = array(
-          'stars'     => $stars,
           'position'  => $position
         );
         $this->madmin->updateData(array('id' => $idBestSeller), 'tr_product_best_seller', $data_newDestination);
@@ -1670,8 +1740,7 @@ class Admin extends CI_Controller {
       $this->load->library('upload', $config);
       if (! $this->upload->do_upload('cover_spPackage')) {
         $this->session->set_flashdata('error', $this->upload->display_errors());
-        $data['specialPackages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name','priceField' => 'price', 'activeField' => 'active'),
-         'tm_special_package', FALSE);
+        $data['specialPackages'] = $this->madmin->listSpecialPackage();
         $data['slides'] = $this->madmin->getProducts(array('cover' => 3), array('idField' => 'id', 'slideField' => 'slide'),
         'tm_cover', TRUE);
 
@@ -1743,33 +1812,50 @@ class Admin extends CI_Controller {
           $this->load->view('include/admin/footer');
         } else {
           $sp_name = $this->upload->data();
+
+          // sum price special package
           $priceSpcl = $this->input->post('priceSpcl[]');
           $total_priceSpcl = array_sum($priceSpcl);
 
+          // data special package
           $data = array(
+            'brand_id'    => 0,
+            'cat_id'      => 0,
             'name'        => $this->input->post('name'),
-            'image'       => $sp_name['orig_name'],
             'description' => $this->input->post('desc'),
+            'image'       => $sp_name['orig_name'],
             'active'      => 1,
-            'price'       => $total_priceSpcl
           );
 
-          $this->madmin->inputData('tm_special_package', $data);
+          // input special package to master product
+          $this->madmin->inputData('tm_product', $data);
 
-          $idSP = $this->madmin->getProducts(array('name' => $this->input->post('name')), array('idField' => 'id'), 'tm_special_package', TRUE);
-          // print_r($idSP);
-          // exit();
+          // get id spacial package from master product
+          $idSP = $this->madmin->getProducts($data, array('idField' => 'id'), 'tm_product', TRUE);
 
+          // data special package price
+          $data_pricePKG = array(
+            'sku'     =>  'SKUPKG',
+            'prod_id' =>  $idSP['id'],
+            'size_id' =>  8,
+            'price'   =>  $total_priceSpcl,
+          );
+          // input special package price to product size
+          $this->madmin->inputData('tr_product_size', $data_pricePKG);
+
+          // counting product that added to special package
           $prods = count($this->input->post('sizeSpcl[]'));
           $sizeSpcl = $this->input->post('sizeSpcl[]');
           $qtySpcl = $this->input->post('qtySpcl[]');
           $priceSpcl = $this->input->post('priceSpcl[]');
+
+
           for ($i=0; $i < $prods; $i++) {
             $dataRelation_SpecialPackage = array(
-              'id_special_package' => $idSP['id'],
-              'id_tr_prod_size'    => $sizeSpcl[$i],
-              'priceSpcl'          => $priceSpcl[$i],
-              'quantity'           => $qtySpcl[$i]
+              'id_prod_spclPkg' => $idSP['id'],
+              'size_spclPkg'    => $sizeSpcl[$i],
+              'quantity'        => $qtySpcl[$i],
+              'priceSpcl'       => $priceSpcl[$i],
             );
             $this->madmin->inputData('tr_special_package', $dataRelation_SpecialPackage);
           }
@@ -1820,15 +1906,15 @@ class Admin extends CI_Controller {
 
   public function activeSpecialPackage($idSP){
     if ($this->session->userdata('uType') == 1) {
-      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active'), 'tm_special_package', TRUE);
+      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active'), 'tm_product', TRUE);
       if ($isActive['active'] == 1) {
         echo "this is active";
         $item = array('active' => 0);
-        $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
+        $this->madmin->updateData(array('id' => $idSP), 'tm_product', $item);
       } else {
         echo "this is inactive";
         $item = array('active' => 1);
-        $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
+        $this->madmin->updateData(array('id' => $idSP), 'tm_product', $item);
       }
       redirect('admin/special_package');
     } else {
@@ -1952,8 +2038,8 @@ class Admin extends CI_Controller {
       if (! $this->upload->do_upload('cover_bedLinen')) {
         $this->session->set_flashdata('error', $this->upload->display_errors());
         $data['product_bedlinen'] = $this->madmin->product_bed_linen();
-        $data['slides'] = $this->madmin->getProducts(array('cover' => 4), array('idField' => 'id', 'slideField' => 'slide'),
-        'tm_cover', TRUE);
+        $data['slides'] = $this->madmin->getProducts(array('cover' => 4),
+          array('idField' => 'id', 'slideField' => 'slide'), 'tm_cover', TRUE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -1998,25 +2084,23 @@ class Admin extends CI_Controller {
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('stars', 'Stars', 'required');
       $this->form_validation->set_rules('position', 'Position', 'required');
 
       if ($this->form_validation->run() == TRUE) {
-        // new stars
-        $stars = $this->input->post('stars');
         // new position
         $position = $this->input->post('position');
 
         // search id from new position
-        $positionProduct_destination = $this->madmin->getProducts(array('position' => $position), array('idField' => 'id'),
-          'tr_product_bed_linen', TRUE);
+        $positionProduct_destination = $this->madmin->getProducts(array('position' => $position),
+          array('idField' => 'id'), 'tr_product_bed_linen', TRUE);
         // search last position from idBedLinen
-        $positionProduct_lastdestination = $this->madmin->getProducts(array('id' => $idBedLinen), array('positionField' => 'position'),
-          'tr_product_bed_linen', TRUE);
+        $positionProduct_lastdestination = $this->madmin->getProducts(array('id' => $idBedLinen),
+          array('positionField' => 'position'), 'tr_product_bed_linen', TRUE);
+
+        // print_r($positionProduct_lastdestination);exit();
 
         // data new stars and new position for idBedLinen
         $data_newDestination = array(
-          'stars'     => $stars,
           'position'  => $position
         );
         $this->madmin->updateData(array('id' => $idBedLinen), 'tr_product_bed_linen', $data_newDestination);
@@ -2102,7 +2186,6 @@ class Admin extends CI_Controller {
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('stars', 'Stars', 'required');
       $this->form_validation->set_rules('position', 'Position', 'required');
 
       if ($this->form_validation->run() == TRUE) {
@@ -2120,7 +2203,6 @@ class Admin extends CI_Controller {
 
         // data new stars and new position for idBedLinen
         $data_newDestination = array(
-          'stars'     => $stars,
           'position'  => $position
         );
         $this->madmin->updateData(array('id' => $idBeddingACC), 'tr_product_bedding_acc', $data_newDestination);
@@ -2190,8 +2272,7 @@ class Admin extends CI_Controller {
 
   public function detailSpecialPackage($idSpecialPckg){
     if ($this->session->userdata('uType') == 1) {
-      $data['detail_SpclPckg'] = $this->madmin->getProducts(array('id' => $idSpecialPckg), array('nameField' => 'name',
-        'img' => 'image', 'desc' => 'description', 'priceField' => 'price'), 'tm_special_package', TRUE);
+      $data['detail_SpclPckg'] = $this->madmin->prime_specialPKG($idSpecialPckg);
       $data['prod_SpclPckg'] = $this->madmin->detail_specialPackage($idSpecialPckg);
 
       $this->load->view('include/admin/header');
