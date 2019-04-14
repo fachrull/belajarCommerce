@@ -400,7 +400,7 @@
 								<strong class="float-left">Subtotal:</strong>
 							</span>
 							<span class="clearfix">
-								<span class="float-right">Rp. 0</span>
+								<span class="float-right">Rp. <?=number_format($discount,0,',','.')?></span>
 								<span class="float-left">Discount:</span>
 							</span>
 							<!-- <span class="clearfix">
@@ -411,7 +411,7 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. <?= number_format($this->cart->total(),0,',','.');?></span>
+								<span class="float-right fs-20">Rp. <?=number_format(($this->cart->total() - $discount),0,',','.')?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 
