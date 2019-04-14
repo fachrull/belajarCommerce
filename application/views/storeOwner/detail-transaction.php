@@ -55,6 +55,9 @@
                                                 break;
                                             case 4:
                                                 echo "<p class=\"label label-primary btn-sm\">Pesanan diproses</p>";
+                                                echo " | <button type=\"button\" class=\"btn btn-sm btn-primary\" data-toggle=\"modal\" data-target=\"#modal-default\">
+                                            Ubah Status
+                                        </button>";
                                                 break;
                                             case 5:
                                                 echo "<p class=\"label label-primary btn-sm\">Pesanan Dikirim</p>";
@@ -77,10 +80,18 @@
                                                       method="post">
                                                     <div class="modal-body">
                                                         <select name="status" class="form-control">
-                                                            <option value="3">Pesanan Dibatalkan</option>
-                                                            <option value="4">Pesanan Diproses</option>
-                                                            <option value="5">Pesanan Dikirim</option>
-                                                            <option value="1">Pesanan Selesai</option>
+                                                            <option selected disabled>Pilih status</option>
+                                                            <?php
+                                                            switch($detailOrder[0]->status_order) {
+                                                                case 2:
+                                                                    echo "<option value=\"3\">Pesanan Dibatalkan</option>";
+                                                                    break;
+                                                                case 4:
+                                                                    echo "<option value=\"1\">Pesanan Selesai</option>";
+                                                                    break;
+                                                                default:
+                                                                    break;
+                                                            } ?>
                                                         </select>
                                                     </div>
                                                     <div class="modal-footer">
