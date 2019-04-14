@@ -2228,7 +2228,7 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
-  }
+  
   public function historyTransaction(){
       $data['transactions'] = $this->madmin->order_list();
     $this->load->view('include/admin/header');
