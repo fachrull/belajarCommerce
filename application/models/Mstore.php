@@ -123,6 +123,8 @@ class Mstore extends CI_Model{
     $this->db->where($where);
     if ($history) {
         $this->db->where("a.status_order = 1 or a.status_order = 3");
+    } else {
+        $this->db->where("a.status_order != 1 and a.status_order != 3");
     }
     $query = $this->db->get();
 
