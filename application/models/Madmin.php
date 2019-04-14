@@ -550,4 +550,48 @@ class Madmin extends CI_Model {
         return FALSE;
       }
     }
+
+    public function order_list(){
+        $this->db->select('a.id, a.order_number, a.order_date, a.total, a.status_order, d.company_name');
+        $this->db->from('tm_order as a');
+        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+        $this->db->join('tm_customer_detail as b', 'b.id = a.address_detail', 'left');
+        $this->db->join('tr_product as c', 'c.id = aa.id_tr_Product', 'left');
+        $this->db->join('tm_store_owner as d', 'd.id = c.id_store', 'left');
+        $this->db->group_by('a.order_number');
+        $query = $this->db->get();
+
+        if($query->num_rows() != 0){
+            return $query->result_array();
+        }else{
+            return FALSE;
+        }
+    }
+
+    public function getDetailOrder($idOrder){
+        $this->db->select('a.id, a.order_number, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, aa.id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
+      f.first_name, f.last_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
+      k.name as size_name, k.size, l.first_name, l.last_name');
+
+        $this->db->from('tm_order a');
+        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+        $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
+        $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
+        $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
+        $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
+        $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
+        $this->db->join('kabupaten h', 'h.id_kab = f.city', 'left');
+        $this->db->join('kecamatan i', 'i.id_kec = f.sub_district', 'left');
+        $this->db->join('tr_product_size j', 'j.id = b.id_product_size', 'left');
+        $this->db->join('tm_size k', 'k.id = j.size_id', 'left');
+        $this->db->join('tm_customer l', 'l.id_userlogin = a.id_userlogin');
+        $where = array('a.id' => $idOrder);
+        $this->db->where($where);
+        $query = $this->db->get();
+        if ($query->num_rows() != 0) {
+            return $query->result();
+        } else {
+            return FALSE;
+        }
+    }
 }

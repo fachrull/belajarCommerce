@@ -45,9 +45,6 @@
                                                 break;
                                             case 2:
                                                 echo "<p class=\"label label-warning btn-sm\">Menunggu Pembayaran</p>";
-                                                echo " | <button type=\"button\" class=\"btn btn-sm btn-primary\" data-toggle=\"modal\" data-target=\"#modal-default\">
-                                            Ubah Status
-                                        </button>";
                                                 break;
                                             case 3:
                                                 echo "<p class=\"label label-danger btn-sm\">Pesanan Dibatalkan</p>";
@@ -55,9 +52,6 @@
                                                 break;
                                             case 4:
                                                 echo "<p class=\"label label-primary btn-sm\">Pesanan diproses</p>";
-                                                echo " | <button type=\"button\" class=\"btn btn-sm btn-primary\" data-toggle=\"modal\" data-target=\"#modal-default\">
-                                            Ubah Status
-                                        </button>";
                                                 break;
                                             case 5:
                                                 echo "<p class=\"label label-primary btn-sm\">Pesanan Dikirim</p>";
@@ -67,47 +61,6 @@
                                         } ?>
 
                                     </td>
-                                    <div class="modal fade" id="modal-default">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span></button>
-                                                    <h4 class="modal-title">Ubah Status Transaksi</h4>
-                                                </div>
-                                                <form action="<?= site_url('stores/updateTransactionStatus/' . $detailOrder[0]->id . '/' .$detailOrder[0]->id_userlogin); ?>"
-                                                      method="post">
-                                                    <div class="modal-body">
-                                                        <select name="status" class="form-control">
-                                                            <option selected disabled>Pilih status</option>
-                                                            <?php
-                                                            switch($detailOrder[0]->status_order) {
-                                                                case 2:
-                                                                    echo "<option value=\"3\">Pesanan Dibatalkan</option>";
-                                                                    break;
-                                                                case 4:
-                                                                    echo "<option value=\"1\">Pesanan Selesai</option>";
-                                                                    break;
-                                                                default:
-                                                                    break;
-                                                            } ?>
-                                                        </select>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default pull-left"
-                                                                data-dismiss="modal">Batal
-                                                        </button>
-                                                        <button type="submit" class="btn btn-primary">Simpan perubahan
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                            <!-- /.modal-content -->
-                                        </div>
-                                        <!-- /.modal-dialog -->
-                                    </div>
-                                    <!-- /.modal -->
                                 </tr>
 
                             </table>
