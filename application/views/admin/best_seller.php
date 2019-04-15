@@ -16,30 +16,37 @@
 
               <div class="tab-content">
                 <div class="tab-pane active" id="table">
-                  <table id="dataTable" class="table table-bordered table-striped">
-                    <thead>
-                      <th>No.</th>
-                      <th>Product</th>
-                      <th>Stars</th>
-                      <th>Position</th>
-                      <th>Action</th>
-                    </thead>
-                    <tbody>
-                      <?php $no=1; ?>
-                      <?php foreach($best_seller as $product): ?>
-                        <tr>
-                          <td><?= $no;?></td>
-                          <td><?= $product['name'];?></td>
-                          <td><?= $product['stars']?></td>
-                          <td><?= $product['position']?></td>
-                          <td>
-                            <a href="<?= site_url('admin/edit_best_seller/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-gear"></i></a>
-                          </td>
-                        </tr>
-                        <?php $no++; ?>
-                      <?php endforeach; ?>
-                    </tbody>
-                  </table>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <a href="<?= site_url('admin/addBestSeller') ?>" class="btn btn-default btn-oldblue"><i class="fa fa-plus"></i> Add Best Seller</a>
+                    </br></br>
+                    </div>
+                    <div class="col-md-12">
+                      <table id="dataTable" class="table table-bordered table-striped">
+                        <thead>
+                          <th>No.</th>
+                          <th>Product</th>
+                          <th>Position</th>
+                          <th>Action</th>
+                        </thead>
+                        <tbody>
+                          <?php if (is_array($best_seller)): ?>
+                            <?php $no = 1;foreach($best_seller as $product): ?>
+                              <tr>
+                                <td><?= $no;?></td>
+                                <td><?= $product['name'];?></td>
+                                <td><?= $product['position']?></td>
+                                <td>
+                                  <a href="<?= site_url('admin/edit_best_seller/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-gear"></i></a>
+                                </td>
+                              </tr>
+                              <?php $no++; ?>
+                            <?php endforeach; ?>
+                          <?php endif; ?>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="tab-pane" id="addcover">

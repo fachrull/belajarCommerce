@@ -20,7 +20,6 @@
                     <thead>
                       <th>No.</th>
                       <th>Product</th>
-                      <th>Stars</th>
                       <th>Position</th>
                       <th>Action</th>
                     </thead>
@@ -30,7 +29,6 @@
                         <tr>
                           <td><?= $no;?></td>
                           <td><?= $product['name'];?></td>
-                          <td><?= $product['stars']?></td>
                           <td><?= $product['position']?></td>
                           <td>
                             <a href="<?= site_url('admin/edit_bed_linen/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-gear"></i></a>

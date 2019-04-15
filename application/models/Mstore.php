@@ -58,12 +58,79 @@ class Mstore extends CI_Model{
     $this->db->join('tm_brands f', 'b.brand_id = f.id', 'left');
     $this->db->join('tm_category g', 'b.cat_id = g.id', 'left');
     $this->db->from('tr_product a');
-    $where = array('a.id_store'=>$store_id);
+    $where = array(
+      'a.id_store'      =>  $store_id,
+      'b.brand_id !='   => 0,
+      'b.cat_id !='     => 0
+    );
     $this->db->where($where);
     $query = $this->db->get();
     if($query->num_rows() != 0){
       return $query->result_array();
     }else{
+      return FALSE;
+    }
+  }
+
+  public function specialPkgAcceptStore($store_id){
+    $this->db->select('a.id_store, a.id_product, a.quantity, b.name');
+    $this->db->from('tr_product a');
+    $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
+    $where = array(
+      'a.id_store'  =>  $store_id,
+      'b.brand_id'  =>  0,
+      'b.cat_id'    =>  0
+    );
+    $this->db->where($where);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function qtySpecial_Pkg($store_id, $prod_id){
+    $this->db->select('a.quantity, b.name');
+    $this->db->from('tr_product a');
+    $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
+    $where = array(
+      'a.id_store'    =>  $store_id,
+      'a.id_product'  =>  $prod_id
+    );
+    $this->db->where($where);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function detailSpecialPackage($prod_id){
+    $this->db->select('a.name, a.image, a.description, b.price');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $this->db->where('a.id', $prod_id);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function prodSpecial_Pkg($prod_id){
+    $this->db->select('a.quantity, c.name as prod, a.priceSpcl, c.image, d.name as sizeName, d.size as sizeDetail');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.size_spclPkg', 'left');
+    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
+    $this->db->join('tm_size d', 'd.id = size_id', 'left');
+    $this->db->where('a.id_prod_spclPkg', $prod_id);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
       return FALSE;
     }
   }

@@ -50,33 +50,24 @@
 				<!-- BRANDS -->
 
 				<!-- BANNER ROTATOR MD -->
-                <div class="hidden-sm-down  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:45%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 1</p>
-								</a>
+				<div class="hidden-sm-down  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+					<?php foreach ($bestSellers as $bestSeller): ?>
+						<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
+								<div class="absolute" style="top:45%;">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+									</a>
 								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
+								<div class="absolute position-bottom">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+										<p>
+											<?= $bestSeller['name']?><br>
+											View Detail
+										</p>
+									</a>
 								</div>
-							</div>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:45%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 2</p>
-								</a>
-								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
-								</div>
-							</div>
+						</div>
+					<?php endforeach; ?>
 				</div>
 				<!-- /BANNER ROTATOR -->
 
@@ -164,8 +155,9 @@
 											<label>Province</label>
 											<select id="province" name="province" class="form-control pointer mb-20">
 												<option value="Select" selected disabled> Select </option>
-													<option value="">Dummy</option>
-												<!-- add all here -->
+												<?php foreach ($provinces as $province): ?>
+													<option value="<?= $province['id_prov']?>"><?= $province['nama']?></option>
+												<?php endforeach; ?>
 											</select>
 
 											<label>City</label>
@@ -188,9 +180,10 @@
 						<!-- FORM -->
 						<div id="shoppingForm" class="row text-center">
 							<form id="cart_form" class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
-								<input type="hidden" id="product_id" name="product_id" value="" />
-								<input type="hidden" name="product_name" value="" />
+								<input type="hidden" id="product_id" name="product_id" value="<?= $specialPckg['id'];?>" />
+								<input type="hidden" name="product_name" value="<?= $specialPckg['name'];?>" />
 								<input type="hidden" id="price" name="price" />
+								<input type="hidden" id="size-name" name="size-name" />
 
 								<!-- <div class="col-2 col-md-2 mb-8">&nbsp;Price:</div> -->
 								<!-- <div class="col-2 col-md-10 mb-10"><p class="text-left" id="price2"></p></div> -->
@@ -220,32 +213,23 @@
 
 				<!-- BANNER ROTATOR SM -->
 				<div class="hidden-md-up  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:48%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p style="bottom:0px;">Best Seller 1</p>
-								</a>
+					<?php foreach ($bestSellers as $bestSeller): ?>
+						<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
+								<div class="absolute" style="top:45%;">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+									</a>
 								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
+								<div class="absolute position-bottom">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+										<p>
+											<?= $bestSeller['name']?><br>
+											View Detail
+										</p>
+									</a>
 								</div>
-							</div>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:48%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 2</p>
-								</a>
-								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
-								</div>
-							</div>
+						</div>
+					<?php endforeach; ?>
 				</div>
 				<!-- /BANNER ROTATOR -->
 
@@ -257,43 +241,58 @@
 					<!-- REVIEWS -->
 					<div role="tabpanel" id="reviews">
 								<!-- REVIEW ITEM -->
-									<div class="block mb-60">
-
-										<span class="user-avatar">
-											<!-- user-avatar -->
-											<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
-										</span>
-
-										<div class="media-body">
-											<h4 class="media-heading fs-14">
-												dummy &ndash;
-												<span class="text-muted">12-12-2012</span> &ndash;
-												<span class="fs-14 text-muted">
-														<i class="fa fa-star"></i>
-												</span>
-											</h4>
-
-											<p>
-												Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate odit quidem suscipit, voluptatum tempore libero impedit animi in explicabo expedita placeat mollitia pariatur doloremque veritatis veniam dolor! Possimus nemo culpa dignissimos doloremque, corporis aperiam molestias maxime nulla ad excepturi maiores impedit iure a architecto quod, fugit quisquam. Ullam, provident quisquam!
-											</p>
-
+									<?php if ($reviews == NULL): ?>
+										<div class="bloc mb-60 text-center border">
+											<p>Komentar tidak ada.</p>
 										</div>
+									<?php else: ?>
+										<?php foreach ($reviews as $review): ?>
+											<div class="block mb-60">
 
-									</div>
+												<span class="user-avatar">
+													<!-- user-avatar -->
+													<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
+												</span>
+
+												<div class="media-body">
+													<h4 class="media-heading fs-14">
+														<?= $review['name']?> &ndash;
+														<span class="text-muted"><?= $review['date_attempt']?></span> &ndash;
+														<span class="fs-14 text-muted">
+																<?php for($i = 0; $i < $review['stars']; $i++): ?>
+																	<i class="fa fa-star"></i>
+																<?php endfor; ?>
+														</span>
+													</h4>
+
+													<p>
+														<?= $review['comment']?>
+													</p>
+
+												</div>
+
+											</div>
+										<?php endforeach; ?>
+									<?php endif; ?>
 								<!-- /REVIEW ITEM -->
 
-									<!-- <div class="text-center">
+								<?php if ($this->session->has_userdata('error')): ?>
+									<div class="text-center">
 										<div class="container">
 											<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
 												<?= $this->session->userdata('error');?>
 											</div>
+																						<div class="container text-center" style="background: greenyellow; border: 1px solid lawngreen;">
+																								<?= $this->session->userdata('success');?>
+																						</div>
 										</div>
-									</div> -->
+									</div>
+								<?php endif; ?>
 
 
 								<!-- REVIEW FORM -->
 								<h4 class="page-header mb-40">ADD A REVIEW</h4>
-								<form method="post" action="#" id="form">
+								<form method="post" action="<?= site_url('home/reviewProduct/'.$specialPckg['id'])?>" id="form-review">
 
 									<div class="row mb-10">
 

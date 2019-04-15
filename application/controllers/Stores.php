@@ -39,7 +39,8 @@ class Stores extends CI_Controller{
 
         $idStore = $this->mstore->getProducts(array('id_userlogin' => $this->session->userdata('uId')), array('idField' => 'id'), 'tm_store_owner', TRUE);
         $data['products'] = $this->mstore->productAcceptStore($idStore['id']);
-        
+        $data['special_packages'] = $this->mstore->specialPkgAcceptStore($idStore['id']);
+
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('storeOwner/productStore', $data);
@@ -114,7 +115,57 @@ class Stores extends CI_Controller{
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
+  }
 
+  public function addQuantity_SpecialPkg($idStore, $idProd){
+    if ($this->session->userdata('uType') == 3) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('quantity', 'Quantity', 'required');
+
+      if ($this->form_validation->run() === FALSE) {
+        $data['core'] = array('idStore' => $idStore, 'idProd' => $idProd);
+        $data['qty'] = $this->mstore->qtySpecial_Pkg($idStore, $idProd);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('storeOwner/addQty_SpecialPkg', $data);
+        $this->load->view('include/admin/footer');
+      }else {
+        $condition = array(
+          'id_store'    =>  $idStore,
+          'id_product'  =>  $idProd,
+        );
+
+        $addQuantity = array(
+          'quantity'    =>  $this->input->post('quantity')
+        );
+
+        $this->mstore->updateData($condition, $addQuantity, 'tr_product');
+        redirect('stores/storeProduct');
+      }
+    }else{
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function detailSpecialPackage($prod_id){
+    if ($this->session->userdata('uType') == 3) {
+      $data['detail_SpclPckg'] = $this->mstore->detailSpecialPackage($prod_id);
+      $data['prod_SpclPckg'] = $this->mstore->prodSpecial_Pkg($prod_id);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('storeOwner/detail_specialPkg', $data);
+      $this->load->view('include/admin/footer');
+    }else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
   }
 
   public function updateTransactionStatus($idOrder, $idCustomer) {
