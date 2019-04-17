@@ -112,6 +112,10 @@
 								<label><strong>Add Description</strong></label>
 								<textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description"><?=$products[0]->description?></textarea>
 							</div>
+                            <div class="form-group">
+                                <label><strong>Star</strong></label>
+                                <input type="number" class="form-control" min="0" max="5" name="star" value="<?=$products[0]->stars?>" placeholder="Product Star">
+                            </div>
 							<label class="input"><b>Upload product image</b>
 							<p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
 								<input type="file" class="mt-5" name="productPict[]" />
