@@ -153,31 +153,59 @@
     <h3 class="text-center">AGMPEDIA</h3>
     <h5 class="text-center">lastest news of week</h5>
   </a>
-  <div class="row">
-    <div class="col-12 col-md-5 pb-5">
-      <?php foreach ($pedias as $pedia): ?>
-      <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
-        <div>
-            <img class="pedia-img-1" src="<?= base_url('asset/content-images/slider-1.jpg');?>" style="width:100%;" alt="agmpedia title">
-            <div class="absolute pt-30">
-              <h4 class="text-white text-center mb-20"><?= $pedia['title'];?></h4>
-              <p class="fs-13 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
-                <?= $pedia['sub_content'];?>
-              </p>
-              <p class="text-center to-center fs-13 pt-10">
-                  <a class="text-white block" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">read more<i class="fa fa-chevron-right pl-5"
-                   aria-hidden="true"></i></a></p>
+    <?php
+    $i = 1;
+    foreach ($pedias as $pedia):
+        if ($i % 2 == 1) {?>
+            <div class="row">
+                <div class="col-12 col-md-5 pb-5">
+                    <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
+                        <div>
+                            <img class="pedia-img-1" src="<?= base_url('asset/content-images/slider-1.jpg');?>" style="width:100%;" alt="agmpedia title">
+                            <div class="absolute pt-30">
+                                <h4 class="text-white text-center mb-20"><?= $pedia['title'];?></h4>
+                                <p class="fs-13 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
+                                    <?= $pedia['sub_content'];?>
+                                </p>
+                                <p class="text-center to-center fs-13 pt-10">
+                                    <a class="text-white block" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">read more<i class="fa fa-chevron-right pl-5"
+                                                                                                                                     aria-hidden="true"></i></a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-md-7 pb-5">
+                    <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
+                        <img class="pedia-img-1" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" alt="agmpedia">
+                    </div>
+                </div>
             </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-7 pb-5">
-      <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
-          <img class="pedia-img-1" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" alt="agmpedia">
-      </div>
-    </div>
-  <?php endforeach; ?>
-  </div>
+        <?php } else { ?>
+            <div class="row">
+                <div class="col-12 col-md-7 order-2 order-md-1">
+                    <img class="pedia-img-1" src="<?= base_url('asset/upload/pedia/'.$pedia['thumbnail']);?>" alt="agmpedia">
+                </div>
+                <div class="col-12 col-md-5 pb-30 order-1 order-md-2">
+                    <div class="buttons-autohide controlls-over mb-30" data-plugin-options='{"singleItem": true, "navigation": false, "autoPlay": 3000, "pagination": false, "transitionStyle":"fade"}'>
+                        <div>
+                            <img class="pedia-img-1" src="<?= base_url('asset/content-images/slider-1.jpg');?>" style="width:100%;" alt="agmpedia title">
+                            <div class="absolute pt-20">
+                                <h4 class="text-white text-center mb-20"><?= $pedia['title'];?></h4>
+                                <p class="fs-13 text-white text-justify pedia-text hidden-xs-down hidden-md-down just-hidden">
+                                    <?= $pedia['sub_content'];?>
+                                </p>
+                                <p class="text-center to-center fs-13 pt-10">
+                                    <a class="text-white" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">read more<i class="fa fa-chevron-right pl-5"
+                                                                                                                               aria-hidden="true"></i></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php }
+        $i++;
+    endforeach;?>
 </section>
 <!-- /AGMPEDIA -->
 
