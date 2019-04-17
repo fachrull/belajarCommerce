@@ -251,7 +251,7 @@ class Home extends CI_Controller{
          array('nameField' => 'name'), 'tm_spec', TRUE));
       }
     $data['specs'] = $specs;
-    $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
+    $data['image'] = $this->mhome->getProductImage($idProduct);
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
     // print_r($data['specs']);echo "</br></br>";
     // print_r($data['prices']);echo "</br></br>";
