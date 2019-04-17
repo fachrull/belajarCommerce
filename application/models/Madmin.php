@@ -34,7 +34,7 @@ class Madmin extends CI_Model {
   }
 
   public function listProduct($filters = NULL){
-    $this->db->select('a.id, c.name as brand_name, d.name as cat_name, a.name as product, b.price');
+    $this->db->select('a.id, c.name as brand_name, d.name as cat_name, a.name as product, a.stars');
     $this->db->from('tm_product a');
     $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
     $this->db->join('tm_brands c', 'c.id = a.brand_id', 'inner');

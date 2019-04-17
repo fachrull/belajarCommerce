@@ -27,7 +27,10 @@
                   <input type="file" name="brandPict" />
                 </label>
                 <div class="row">
-                  <div class="col-md-12 text-right">
+                  <div class="col-md-6">
+                    <a href="<?= site_url('admin/sa_brand')?>" class="btn btn-oldblue btn-default">Back</a>
+                  </div>
+                  <div class="col-md-6 text-right">
                     <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i>ADD</button>
                   </div>
                 </div>
