@@ -668,9 +668,9 @@ class Admin extends CI_Controller {
 
     public function detailProd($idProd){
         if ($this->session->userdata('uType') == 1) {
-            $specs = [];
-            $prices = [];
-            $sizes = [];
+            $specs = array();
+            $prices = array();
+            $sizes = array();
             $data['product'] = $this->madmin->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
             $data['brand'] = $this->madmin->getProducts(array('id' => $data['product']['brand_id']),
                 array('nameField' => 'name'), 'tm_brands', TRUE);
@@ -680,6 +680,8 @@ class Admin extends CI_Controller {
                 array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
             $idSize = $this->madmin->getProducts(array('prod_id' => $idProd),
                 array('idField' => 'size_id', 'priceField' => 'price'), 'tr_product_size', FALSE);
+
+            $data['image'] = $this->madmin->getProductImage($idProd);
 
             for ($i=0; $i < count($idSpec) ; $i++) {
                 array_push($specs, $this->madmin->getProducts(array('id' => $idSpec[$i]['spec_id']),

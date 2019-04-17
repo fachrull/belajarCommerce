@@ -15,7 +15,8 @@
             </h2>
           <div class="row">
             <div class="col-xs-6 mb-20">
-            <img src="<?= base_url('asset/upload/'.$product['image']);?>" alt="<?= $product['name'];?>">
+                <?php $img = $image['image_1'] != NULL ? $image['image_1'] : $product['image']; ?>
+            <img src="<?= base_url('asset/upload/'.$img);?>" alt="<?= $img;?>">
             </div>
             <div class="product-detail">
                 <div class="col-xs-12 col-md-6 mb-20">

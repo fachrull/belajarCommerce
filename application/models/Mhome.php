@@ -638,4 +638,17 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+
+  public function getProductImage($idProduct) {
+      $this->db->select('a.image_1, a.image_2, a.image_3');
+      $this->db->from('tr_product_image a');
+      $this->db->join('tm_product b', 'a.id_prod = b.id', 'inner');
+      $this->db->where('b.id', $idProduct);
+      $query = $this->db->get();
+      if ($query->num_rows() != 0) {
+          return $query->row_array();
+      } else {
+          return FALSE;
+      }
+  }
 }

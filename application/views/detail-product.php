@@ -97,7 +97,7 @@
 					<div class="col-lg-6 col-sm-6">
 
 					<div class="owl-carousel buttons-autohide controlls-over text-center mb-0" data-plugin-options='{"singleItem": true, "autoPlay": 8000, "navigation": true, "pagination": false}'>
-                        <?php if($image === NULL) { ?>
+                        <?php if($image == NULL) { ?>
                             <div class="relative mb-3">
                                 <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'>
                                     <img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
