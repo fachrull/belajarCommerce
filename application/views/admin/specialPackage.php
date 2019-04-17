@@ -32,6 +32,7 @@
                       <th>Action</th>
                     </thead>
                     <tbody>
+                      <?php if ($specialPackages != NULL): ?>
                         <?php $no= 1;foreach ($specialPackages as $specialPackage): ?>
                           <tr>
                             <td><?= $no.'.';?></td>
@@ -46,7 +47,8 @@
                               <?php endif; ?>
                             </td>
                           </tr>
-                        <?php $no++;endforeach; ?>
+                          <?php $no++;endforeach; ?>
+                      <?php endif; ?>
                     </tbody>
                   </table>
                   <div class="row pb-10">

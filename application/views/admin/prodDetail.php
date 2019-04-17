@@ -48,6 +48,16 @@
                         <?php endfor; ?>
                       </ul>
                     </div>
+                    <div class="col-xs-12">
+                      <label class="input"> Stars</label>
+                      <?php if ($product['stars'] == 0): ?>
+                        <p><?= $product['stars']?></p>
+                      <?php else: ?>
+                        <?php ;for($i = 0; $i < $product['stars']; $i++): ?>
+                          <span class="glyphicon glyphicon-star"></span>
+                        <?php endfor; ?>
+                      <?php endif; ?>
+                    </div>
                   </div>
                 </div>
             <div class="col-xs-12">

@@ -78,37 +78,85 @@
           <tbody>
             <?php foreach ($carts as $cart): ?>
               <?php if ($cart['available'] == TRUE): ?>
-                <tr class="testimonial">
-                  <td>
-                    <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
-                  </td>
-                  <td>
-                    <span class="clearfix">
-                      <span class="float-left"><?= $cart['name']?></span>
-                      <br>
-                      <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
-                    </span>
-                  </td>
-                  <td><span><?= $cart['qty']?></span></td>
-                  <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
-                  <td><font color="green"><?= $cart['comment']?></font></td>
-                </tr>
+                <?php if ($cart['type'] == 'special'): ?>
+                  <tr class="testimonial">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+                        <span class="float-left"><?= $cart['name']?></span>
+                        <br>
+                        <ul>
+                          <?php foreach ($cart['option'] as $option): ?>
+                            <li>
+                              <small><?= $option['prod']?> × <?= $option['quantity']?></small>
+                            </li>
+                          <?php endforeach; ?>
+                        </ul>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
+                    <td><font color="green"><?= $cart['comment']?></font></td>
+                  </tr>
+                <?php else: ?>
+                  <tr class="testimonial">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+                        <span class="float-left"><?= $cart['name']?></span>
+                        <br>
+                        <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span></td>
+                    <td><font color="green"><b><?= $cart['comment']?></b></font></td>
+                  </tr>
+                <?php endif; ?>
               <?php else: ?>
-                <tr class="testimonial" style="background: #ffcccc;">
-                  <td>
-                    <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
-                  </td>
-                  <td>
-                    <span class="clearfix">
-                      <span class="float-left"><?= $cart['name']?></span>
-                      <br>
-                      <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
-                    </span>
-                  </td>
-                  <td><span><?= $cart['qty']?></span></td>
-                  <td><span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span></td>
-                  <td><font color="red"><b><?= $cart['comment']?></b></font></td>
-                </tr>
+                <?php if ($cart['type'] == 'special'): ?>
+                  <tr class="testimonial">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+                        <span class="float-left"><?= $cart['name']?></span>
+                        <br>
+                        <ul>
+                          <?php foreach ($cart['option'] as $option): ?>
+                            <li>
+                              <small><?= $option['prod']?> × <?= $option['quantity']?></small>
+                            </li>
+                          <?php endforeach; ?>
+                        </ul>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
+                    <td><font color="green"><?= $cart['comment']?></font></td>
+                  </tr>
+                <?php else: ?>
+                  <tr class="testimonial" style="background: #ffcccc;">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+                        <span class="float-left"><?= $cart['name']?></span>
+                        <br>
+                        <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span></td>
+                    <td><font color="red"><b><?= $cart['comment']?></b></font></td>
+                  </tr>
+                <?php endif; ?>
               <?php endif; ?>
             <?php endforeach; ?>
           </tbody>

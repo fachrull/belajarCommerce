@@ -374,6 +374,11 @@ class Home extends CI_Controller{
     }
   }
 
+  public function testSP(){
+    $idSP = 154;
+
+  }
+
   public function addToCart($idDistrict) {
     // store id product to variable id_prod
     $id_prod = $this->input->post('product_id');
@@ -411,6 +416,7 @@ class Home extends CI_Controller{
 
       // search size_name and it detail
       $size_name = $this->mhome->sizeStock($tr_prod_size['id']);
+      $options = '';
     }else {
       echo "Special Package";echo "</br></br>";
       echo "Brand = ";print_r($product['brand_id']);echo "</br></br>";
@@ -429,6 +435,11 @@ class Home extends CI_Controller{
       // search size_name and it detail (special package hasn't specific size so I set it blank)
       $size_name['name_size'] = '';
       $size_name['detail_size'] = '';
+      $detailSP = $this->mhome->detail_SPCart($id_prod);
+      $options = array();
+      foreach ($detailSP as $SP) {
+        array_push($options, $SP);
+      }
     }
 
     $data = array(
@@ -446,7 +457,7 @@ class Home extends CI_Controller{
       'sizeName'      => $size_name['name_size'],
       'detailSize'    => $size_name['detail_size'],
       'sub_district'  => $idDistrict,
-      'option'        => '',
+      'option'        => $options,
       // 'option'        => array(
       //                   'id'            =>
       //                   'type'          =>
@@ -514,6 +525,13 @@ class Home extends CI_Controller{
       if($cart) {
           $keys = array_keys($cart);
           $voucher = $cart[$keys[0]]["voucher"];
+          $address = $cart[$keys[0]]["id_address"];
+
+          if ($address === "") {
+            $data['add'] = 0;
+          }else{
+            $data['add'] = 1;
+          }
 
           if($voucher === "") {
               $data['discount'] = 0;

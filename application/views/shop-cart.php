@@ -64,29 +64,44 @@
 							<span class="qty fs-13 bold">QUANTITY</span>
 						</div>
 						<!-- /cart header -->
-						<?php
-							foreach ($cart as $item) {
-
-						?>
+						<?php foreach ($cart as $item) :?>
 						<!-- cart item -->
-						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
-								 width="80" /></div>
-							<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
-								<span><?=$item['name']?></span>
-								<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
-							</a>
-							<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
-							<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
-							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
-								<?=number_format($item['price'],0,',','.')?></div>
-							<div class="clearfix"></div>
-						</div>
+						<?php if ($item['type'] == 'special'): ?>
+							<div class="item">
+								<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
+									width="80" /></div>
+									<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
+										<span><?=$item['name']?></span>
+										<ul>
+											<?php foreach ($item['option'] as $option): ?>
+												<li><small><?= $option['prod']?> × <?= $option['quantity']?></small></li>
+											<?php endforeach; ?>
+										</ul>
+									</a>
+									<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
+									<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
+									<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
+										<?=number_format($item['price'],0,',','.')?></div>
+										<div class="clearfix"></div>
+									</div>
+						<?php else: ?>
+							<div class="item">
+								<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
+									width="80" /></div>
+									<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
+										<span><?=$item['name']?></span>
+										<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
+									</a>
+									<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
+									<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
+									<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
+										<?=number_format($item['price'],0,',','.')?></div>
+										<div class="clearfix"></div>
+									</div>
+						<?php endif; ?>
 						<!-- /cart item -->
 
-						<?php
-							}
-						?>
+					<?php endforeach;?>
 
 						<!-- update cart -->
 						<button class="btn btn-oldblue mt-20 mr-10 float-right"><i class="glyphicon glyphicon-ok"></i> UPDATE CART</button>
@@ -203,8 +218,13 @@
 
 							<hr />
 
-							<a href="<?= site_url('home/shopCheckout');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
-								Check Out</a>
+							<?php if ($add == 1): ?>
+								<a href="<?= site_url('home/shop_summary');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
+									Check Out</a>
+							<?php else: ?>
+								<a href="<?= site_url('home/shopCheckout');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
+									Check Out</a>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>

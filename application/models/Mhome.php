@@ -563,6 +563,21 @@ class Mhome extends CI_Model{
     }
   }
 
+  public function detail_SPCart($idSpecialPckg){
+    $this->db->select('a.quantity, c.name as prod');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.size_spclPkg', 'left');
+    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
+    $this->db->join('tm_size d', 'd.id = b.size_id', 'left');
+    $this->db->where('a.id_prod_spclPkg', $idSpecialPckg);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
   public function prime_specialPKG($prod_id){
     $this->db->select('a.id, a.name, a.image, a.description, b.price');
     $this->db->from('tm_product a');
