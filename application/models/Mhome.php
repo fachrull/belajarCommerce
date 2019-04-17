@@ -70,7 +70,11 @@ class Mhome extends CI_Model{
 
   public function getPedia()
   {
-    return $this->db->get('tm_agmpedia');
+      $this->db->where('status', 1);
+      $this->db->order_by('date', 'DESC');
+      $this->db->limit(2);
+      $query = $this->db->get('tm_agmpedia');
+      return $query->result_array();
   }
 
   public function pediaInput($data)

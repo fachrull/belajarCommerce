@@ -62,7 +62,7 @@ class Home extends CI_Controller{
         $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
         $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
         $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
-        $data['pedias'] = $this->mhome->getProducts(array('status' => 1), NULL, 'tm_agmpedia', FALSE);
+        $data['pedias'] = $this->mhome->getPedia();
         $data['stores'] = $this->storesToGeoJson();
 
         $this->load->view('include/header');
@@ -75,7 +75,7 @@ class Home extends CI_Controller{
       $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
       $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
-      $data['pedias'] = $this->mhome->getProducts(array('status' => 1), NULL, 'tm_agmpedia', FALSE);
+      $data['pedias'] = $this->mhome->getPedia();
       $data['stores'] = $this->storesToGeoJson();
 
       $this->load->view('include/header');
