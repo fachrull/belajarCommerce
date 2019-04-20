@@ -1307,23 +1307,6 @@ class Home extends CI_Controller{
     }
   }
 
-  public function reset_password_profile(){
-    if ($this->session->userdata('uType') == 4) {
-      $this->load->helper('form');
-      $this->load->library('form_validation');
-
-
-
-      if ($this->form_validation->run() === TRUE) {
-
-      } else {
-        redirect('home/profileSetting');
-      }
-    } else {
-      redirect();
-    }
-  }
-
   public function checkingCurrentPass($current_password){
     $id_userlogin = $this->session->userdata('uId');
     $currentPass = $this->mhome->getProducts(array('user_id' => $id_userlogin),

@@ -23,10 +23,11 @@
                   <textarea id="editor1" name="desc" rows="8" cols="43" placeholder="Description"><?= $brand['description']?></textarea>
                 </label>
                 <div class="col-xs-12 text-center mb-20">
-                  <img style="width:100px !important; height:100px;" src="<?= base_url('asset/brands/'.$brand['logo']);?>">
+                  <img id="logoBrand" style="width:100px !important; height:100px;" src="<?= base_url('asset/brands/'.$brand['logo']);?>">
                 </div>
                 <label class="input mb-10">
-                  <input type="file" name="brandPict" />
+                  <input type="file" name="brandPict" id="file"/>
+                  <input type="text" name="file" onchange="thumbnail();">
                 </label>
                 <div class="row">
                   <div class="col-md-6">

@@ -192,7 +192,7 @@ class Admin extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('items', 'Brand Name', 'required|callback_checkingBrand');
+        $this->form_validation->set_rules('items', 'Brand Name', 'required');
         $this->form_validation->set_rules('desc', 'Brand Description', 'required');
 
         if ($this->form_validation->run() === FALSE) {
@@ -203,7 +203,20 @@ class Admin extends CI_Controller {
           $this->load->view('admin/editBrand', $data);
           $this->load->view('include/admin/footer');
         }else {
-          // code...
+          if (!empty($this->input->post('file'))) {
+            $post = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
+            $file_name = strtolower('brand-logo-'.$this->input->post('items'));
+
+            $config['upload_path']    = './asset/upload/';
+            $config['allowed_types']  = 'jpg|jpeg|png|svg';
+            $config['file_name']      = $file_name;
+            $config['overwrite']      = true;
+
+            $this->load->library('upload', $config);
+          } else{
+            $file = $this->input->post('brandPict');
+            print_r($file);
+          }
         }
       }else {
         $this->load->view('include/header2');
