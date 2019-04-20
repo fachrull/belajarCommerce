@@ -31,7 +31,7 @@ class Mailer extends CI_Controller {
                 $mail_to = $email['mail_to'];
                 $subject = $email['mail_subject'];
                 $data['message'] = $email['message'];
-                $message = $this->load->view('email/default', $data, TRUE);
+                $message = $this->load->view('email/'.$email['template'], $data, TRUE);
 
                 $mail = $this->email
                     ->from($mailConfig['email'])   // Optional, an account where a human being reads.
