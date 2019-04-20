@@ -241,7 +241,8 @@ class Auth extends CI_Controller{
       $mail = array(
         'mail_to'       =>  $email,
         'mail_subject'  =>  'Forgot Password',
-        'message'       =>  $message
+        'message'       =>  $message,
+          'template'    =>  'forgot_pass'
       );
       $this->mauth->inputData('mail_queue', $mail);
       // print_r($mail);echo "</br></br>";
