@@ -53,7 +53,7 @@ class Admin extends CI_Controller {
     }
 
     public function listStoreOwner(){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2 ) {
             $data['posts'] = $this->madmin->joinDetailStore();
 
             $this->load->view('include/admin/header');
@@ -740,7 +740,7 @@ class Admin extends CI_Controller {
     }
 
     public function sa_agmpedia(){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $data['pedias'] = $this->madmin->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
 
             $this->load->view('include/admin/header');
@@ -755,7 +755,7 @@ class Admin extends CI_Controller {
     }
 
     public function addPedia(){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
@@ -809,7 +809,7 @@ class Admin extends CI_Controller {
     }
 
     public function detailPedia($articleId) {
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $data['article'] = $this->madmin->getProducts(array('id' => $articleId), NULL, 'tm_agmpedia', TRUE);
 
             $this->load->view('include/admin/header');
@@ -822,6 +822,44 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
+
+    public function activePedia($idPedia){
+      if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+        $pedia = $this->madmin->getProducts(array('id' => $idPedia), array('stats' => 'status'),
+          'tm_agmpedia', TRUE);
+        if ($pedia['status'] == 1) {
+          $this->madmin->updateData(array('id' => $idPedia),'tm_agmpedia',
+            array('status' => 0));
+        }else{
+          $this->madmin->updateData(array('id' => $idPedia),'tm_agmpedia',
+            array('status' => 1));
+        }
+        redirect('admin/sa_agmpedia');
+      }else {
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
+      }
+    }
+
+    public function deletePedia($idPedia){
+      if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+        $file = $this->madmin->getProducts(array('id' => $idPedia), array('thumb' => 'thumbnail',
+          'photos' => 'photo'), 'tm_agmpedia', TRUE);
+        $file_path_thumbnail = 'asset/upload/pedia/'.$file['thumbnail'];
+        $file_path_photo = 'asset/upload/pedia/'.$file['photo'];
+        unlink($file_path_thumbnail);
+        unlink($file_path_photo);
+        print_r($file_path);
+        $this->madmin->deleteData(array('id' => $idPedia), 'tm_agmpedia');
+        redirect('admin/sa_agmpedia');
+      }else {
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
+      }
+    }
+
     public function editPedia($id) {
         $data['article'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_agmpedia', TRUE);
         global $photos;
@@ -829,7 +867,7 @@ class Admin extends CI_Controller {
         global $thumbnailUploadStatus;
         global $photoUploadStatus;
 
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
@@ -991,7 +1029,7 @@ class Admin extends CI_Controller {
     }
 
     public function addStore_SpecialPackage($idStoreOwner){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
@@ -1029,6 +1067,17 @@ class Admin extends CI_Controller {
         redirect('admin/stores/'.$idStoreOwner);
       }
     } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function deleteStoreProd($idStore ,$idProd_store){
+    if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+      $this->madmin->deleteData(array('id' => $idProd_store, 'id_store' => $idStore), 'tr_product');
+      redirect('admin/stores/'.$idStore);
+    }else{
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
@@ -1342,7 +1391,7 @@ class Admin extends CI_Controller {
     }
 
     public function stores($link = FALSE){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2 ) {
             if($link === FALSE){
                 $data['provinces'] = [];
                 $data['cities'] = [];
@@ -1385,7 +1434,7 @@ class Admin extends CI_Controller {
     }
 
     public function addCluster($idStore){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
@@ -1422,7 +1471,7 @@ class Admin extends CI_Controller {
     }
 
     public function deleteCluster_Store($idStore, $sub){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $dataCluster_Store = array(
                 'id_store'      => $idStore,
                 'sub_district'  => $sub
@@ -1437,7 +1486,7 @@ class Admin extends CI_Controller {
     }
 
     public function checkingClusterSub($subDistrict){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $idStore = $this->input->post('id_store');
             $hasSub = $this->madmin->getProducts(array('sub_district' => $subDistrict), array('subField' => 'sub_district'),
                 'tr_store_owner_cluster', TRUE);
@@ -1617,7 +1666,7 @@ class Admin extends CI_Controller {
     }
 
     public function promotions() {
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $data['promotion'] = $this->madmin->getProducts(NULL, NULL,'tm_promotion', FALSE);
 
             $this->load->view('include/admin/header');
@@ -1683,7 +1732,7 @@ class Admin extends CI_Controller {
     }
 
     public function detailPromotion($id) {
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -1697,7 +1746,7 @@ class Admin extends CI_Controller {
     }
 
     public function activePromotion($id) {
-        if($this->session->userdata('uType') == 1){
+        if($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2){
             $stat = $this->madmin->getProducts(array('id' => $id), array('statField' => 'status'), 'tm_promotion',TRUE);
             if($stat['status'] == 1){
                 $items = array('status' => 0);
@@ -2003,7 +2052,7 @@ class Admin extends CI_Controller {
   }
 
     public function allVoucher(){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $data['vouchers'] = $this->madmin->getProduct_orderBy(NULL, NULL, 'tm_voucher', 'kode_voucher', FALSE);
 
             $this->load->view('include/admin/header');
@@ -2071,7 +2120,7 @@ class Admin extends CI_Controller {
     }
 
     public function active_voucher($idVoucher, $active){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             if ($active == 1) {
                 $items = array('active' => 0);
                 $this->madmin->updateData(array('id' => $idVoucher), 'tm_voucher', $items);
@@ -2087,7 +2136,7 @@ class Admin extends CI_Controller {
         }
     }
     public function detail_voucher($idVoucher){
-        if ($this->session->userdata('uType') == 1) {
+        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $data['voucher'] = $this->madmin->getProducts(array('id' => $idVoucher), NULL, 'tm_voucher', TRUE);
             $data['detail_voucher'] = $this->madmin->detail_voucher($idVoucher);
             // print_r($data['voucher']);

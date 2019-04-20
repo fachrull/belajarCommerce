@@ -179,12 +179,12 @@ class Madmin extends CI_Model {
   }
 
   public function joinStoreProd($store_id){
-    $this->db->select('a.name as product_name, d.name as size_name, d.size, b.quantity');
-    $this->db->from('tm_product a');
-    $this->db->join('tr_product b', 'b.id_product = a.id', 'left');
-    $this->db->join('tr_product_size c', 'c.id = b.id_product_size', 'left');
+    $this->db->select('a.id, b.name as product_name, d.name as size_name, d.size, a.quantity');
+    $this->db->from('tr_product a');
+    $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
+    $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
     $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
-    $this->db->where('b.id_store', $store_id);
+    $this->db->where('a.id_store', $store_id);
     $query = $this->db->get();
     if($query->num_rows() != 0){
       return $query->result_array();

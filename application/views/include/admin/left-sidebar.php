@@ -57,7 +57,7 @@
             <a href="<?= site_url('admin/sa_slider');?>"><i class="fa fa-pencil-square-o"></i><span> Cover</span></a>
           </li>
           <li>
-          <a href="<?= site_url('admin/promotions');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
+            <a href="<?= site_url('admin/promotions');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
           </li>
           <li>
             <a href="<?= site_url('admin/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
@@ -74,25 +74,31 @@
           </li>
         <?php endif; ?>
         <?php if($this->session->userdata('uType') == 2): ?>
-          <li class="active treeview">
+          <li class="treeview">
             <a href="#">
-              <i class="fa fa-id-badge"></i> <span>Store Owners</span>
+              <i class="fa fa-id-badge"></i> <span>Store Owner</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="<?=site_url('auth/regis');?>"><i class="fa fa-user-plus"></i> Store Owner</a></li>
+              <li>
+                <li class="active"><a href="<?=site_url('auth/regisSO');?>"><i class="fa fa-user-plus"></i><span> Admin</span></a></li>
+                <li class="active"><a href="<?= site_url('admin/listStoreOwner')?>">List Store Owner</a></li>
+              </li>
             </ul>
           </li>
           <li>
-            <a href="#">Voucher</a>
+            <a href="<?= site_url('admin/sa_agmpedia');?>"><i class="fa fa-book"></i><span>AGM-Pedia</span></a>
           </li>
           <li>
-            <a href="#">Distributor</a>
+            <a href="<?= site_url('admin/promotions');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
           </li>
           <li>
-            <a href="#">Products</a>
+            <a href="<?= site_url('admin/allVoucher')?>"><i class="fa fa-percent"></i> Voucher</a>
+          </li>
+          <li>
+            <a href="<?= site_url('admin/stores');?>"><i class="fa fa-map"></i><span>Manage store</span></a>
           </li>
         <?php endif; ?>
         <?php if ($this->session->userdata('uType') == 3): ?>

@@ -40,7 +40,9 @@
                 </div>
               </div>
             </div>
-            <a href="<?=site_url('admin/editpromotion/'.$promotion['id'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Promotion</a>
+            <?php if ($this->session->userdata('uType') == 1): ?>
+              <a href="<?=site_url('admin/editpromotion/'.$promotion['id'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Promotion</a>
+            <?php endif; ?>
             <a href="<?= site_url('admin/promotions');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
           </div>
         </div>

@@ -102,7 +102,7 @@
                           <td><?=$product['size_name'];?> (<?= $product['size']; ?>)</td>
                           <td><?= ($product['quantity'] != NULL? $product['quantity']:'-');?></td>
                           <td>
-                            <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
+                            <a href="<?= site_url('admin/deleteStoreProd/'.$post['id'].'/'.$product['id'])?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
                           </td>
                         </tr>
                         <?php $no++; ?>
