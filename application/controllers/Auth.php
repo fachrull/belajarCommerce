@@ -210,50 +210,94 @@ class Auth extends CI_Controller{
     }
   }
 
-  public function checkForgot(){
+  public function reset_password_profile(){
     $this->load->helper('form');
     $this->load->library('form_validation');
 
-    $this->form_validation->set_rules('search', 'Search', 'required|callback_checkingUnameMail');
-    $this->form_validation->set_rules('pass', 'Password', 'required');
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_checkingForgotPass');
 
-    if($this->form_validation->run() === FALSE){
+    if ($this->form_validation->run() === FALSE) {
       $this->load->view('include/header2');
       $this->load->view('forgot_pass');
       $this->load->view('include/footer');
-    }else{
-      $uname = $this->mauth->getData(array('username' => $this->input->post('search')),
-        array('usernameField' => 'username'), TRUE);
+    } else {
+      $email = $this->input->post('email');
+      $id_userlogin = $this->mauth->getProducts(array('email' => $email),
+        array('idField' => 'user_id'), 'user_login', TRUE);
+      $uniqueID = uniqid(rand(), TRUE);
 
+      $data = array (
+        'id_userLogin' => $id_userlogin['user_id'],
+        'uniqueCode'   => $uniqueID,
+      );
+      $this->mauth->inputData('tm_forgot_pass', $data);
+      $idForgot = $this->mauth->getProducts($data, array('idField' => 'id'),
+        'tm_forgot_pass', TRUE);
 
-      $mail = $this->mauth->getData(array('email' => $this->input->post('search')),
-        array('emailField' => 'email'), TRUE);
+      // print_r($data);echo "</br></br>";
 
+      $message = $id_userlogin['user_id'].'/'.$uniqueID;
 
-      if(isset($uname)){
-          $username = $uname->username;
-          $this->mauth->forgotPass(NULL, $username);
-      }
-      if (isset($mail)) {
-        $email = $mail->email;
-        $this->mauth->forgotPass($email, NULL);
-      }
-      redirect('auth/login');
+      $mail = array(
+        'mail_to'       =>  $email,
+        'mail_subject'  =>  'Forgot Password',
+        'message'       =>  $message
+      );
+      $this->mauth->inputData('mail_queue', $mail);
+      // print_r($mail);echo "</br></br>";
+      $this->load->view('include/header2');
+      $this->load->view('finishForgotPass');
+      $this->load->view('include/footer');
     }
   }
 
-  public function checkingUnameMail($search){
-    $uname = $this->mauth->getData(array('username' => $search),
-      array('usernameField' => 'username'), TRUE);
-    $mail = $this->mauth->getData(array('email' => $search),
-      array('emailField' => 'email'), TRUE);
+  public function checkingForgotPass($email){
+    $hasEmail = $this->mhome->getProducts(array('email' => $email),
+      array('emailField' => 'email'), 'user_login', TRUE);
 
-    if (isset($uname) || isset($mail)) {
-      $this->session->set_flashdata('updatePass', TRUE);
-      return TRUE;
-    }else{
-      $this->session->set_flashdata('wrongUnameOrPass', 'No search results');
-      return FALSE;
+      if (isset($hasEmail)) {
+        return TRUE;
+      }else {
+        $this->session->set_flashdata('error', 'Email tidak ada atau email belum terdaftar');
+        return FALSE;
+      }
+  }
+
+  public function changeForgotPass($idForgot, $uniqID){
+    $check_data = array(
+      'id_userLogin' => $idForgot,
+      'uniqueCode'   => $uniqID
+    );
+    $checkForgot = $this->mauth->getProducts($check_data, NULL, 'tm_forgot_pass', TRUE);
+    if (isset($checkForgot)) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('pass', 'New Password', 'required');
+      $this->form_validation->set_rules('repass', 'Re-type Password', 'required|matches[pass]');
+
+      if ($this->form_validation->run() === TRUE) {
+        $newPass = $this->input->post('pass');
+        $new_password = password_hash(($newPass), PASSWORD_DEFAULT);
+        $dataPass = array(
+          'password' => $new_password
+        );
+        $this->mauth->updateData(array('user_id' => $idForgot), 'user_login', $dataPass);
+        $this->mauth->deleteData(array('id' => $checkForgot['id']), 'tm_forgot_pass');
+        redirect('auth/login');
+      }else {
+        $data['ForgotPass'] = array(
+          'uniqID'    => $uniqID,
+          'idForgot'  => $idForgot
+        );
+        $this->load->view('include/header2');
+        $this->load->view('changeForgotPass', $data);
+        $this->load->view('include/footer');
+      }
+    }else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
     }
   }
 
@@ -304,7 +348,7 @@ class Auth extends CI_Controller{
       $data['user'] = $this->mauth->getUData(array('id_userlogin' => $this->session->userdata('uId')),
         NULL, 'tm_store_owner', TRUE);
         $data['provinces'] = $this->mauth->getProducts(NULL, NULL, 'provinsi', FALSE);
-        
+
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
