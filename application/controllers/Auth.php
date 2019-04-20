@@ -143,6 +143,7 @@ class Auth extends CI_Controller{
         $this->load->view('include/footer');
       } else {
         $this->mauth->regis();
+        $this->session->set_flashdata('successmsg', 'Your account was successfully created');
         redirect('auth/login');
       }
     }
