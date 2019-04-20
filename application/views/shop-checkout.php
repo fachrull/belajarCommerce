@@ -47,7 +47,7 @@
 		<?php endif; ?>
 		<form class="row clearfix" method="post" action="<?= site_url('home/shopCheckout');?>">
 
-			<div class="col-lg-6 col-sm-6">
+			<div class="col-lg-5 col-sm-5">
 
 				<?php if ($alamat_default['sub_district'] == $addressCart['id_kec']): ?>
 					<div class="heading-title">
@@ -191,7 +191,7 @@
 
 
 
-			<div class="col-lg-6 col-sm-6">
+			<div class="col-lg-7 col-sm-7">
 				<div class="heading-title mb-10">
 					<h4>Summary</h4>
 				</div>

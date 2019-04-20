@@ -80,29 +80,28 @@
 				<div class="row">
 
                 <!-- SPECIAL PACKAGE IMAGE -->
-                <img src="<?= base_url('asset/upload/special-package/'.$specialPckg['image']);?>" alt="<?= $specialPckg['name']?>" class="special-package-cover">
 
 					<!-- IMAGE -->
 					<div class="col-lg-6 col-sm-6">
-
+					<img src="<?= base_url('asset/upload/special-package/'.$specialPckg['image']);?>" alt="<?= $specialPckg['name']?>" class="special-package-cover">
 					<table class="table table-bordered text-center">
-                                    <tbody class="text-center">
-                                    <tr>
-                                      <th>Product</th>
-                                      <th>Size</th>
-                                      <th style="width: 10px">Qty</th>
-                                      <th>Price</th>
-                                    </tr>
-                                    <?php foreach ($details as $detail): ?>
-                                      <tr>
-                                        <td><?= $detail['prod']?></td>
-                                        <td><?= $detail['sizeName'].' ('.$detail['sizeDetail'].')'?></td>
-                                        <td><?= $detail['quantity']?></td>
-                                        <td>Rp. <?= number_format(floatval($detail['priceSpcl']),0,',','.')?></td>
-                                      </tr>
-                                    <?php endforeach; ?>
-                                    </tbody>
-                                </table>
+                <tbody class="text-center">
+                <tr style="font-size:16px;">
+                  <th>Product</th>
+                  <th>Size</th>
+                  <th style="width: 10px">Qty</th>
+                  <th>Price</th>
+                </tr>
+                <?php foreach ($details as $detail): ?>
+                  <tr style="font-size:10px;">
+                    <td><?= $detail['prod']?></td>
+                    <td><?= $detail['sizeName'].' ('.$detail['sizeDetail'].')'?></td>
+                    <td><?= $detail['quantity']?></td>
+                    <td>Rp. <?= number_format(floatval($detail['priceSpcl']),0,',','.')?></td>
+                  </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>						
 
 					</div>
 					<!-- /IMAGE -->
@@ -203,12 +202,8 @@
 							<!-- /FORM -->
 
 							<hr>
-
-
-
 					</div>
 					<!-- /ITEM DESC -->
-
 				</div>
 
 				<!-- BANNER ROTATOR SM -->
@@ -232,128 +227,6 @@
 					<?php endforeach; ?>
 				</div>
 				<!-- /BANNER ROTATOR -->
-
-				<ul id="myTab" class="nav nav-tabs nav-top-border mt-80" role="tablist">
-					<li class="nav-item"><a class="nav-links active" href="#reviews" data-toggle="tab">Reviews</a></li>
-				</ul>
-
-				<div class="tab-content pt-20">
-					<!-- REVIEWS -->
-					<div role="tabpanel" id="reviews">
-								<!-- REVIEW ITEM -->
-									<?php if ($reviews == NULL): ?>
-										<div class="bloc mb-60 text-center border">
-											<p>Komentar tidak ada.</p>
-										</div>
-									<?php else: ?>
-										<?php foreach ($reviews as $review): ?>
-											<div class="block mb-60">
-
-												<span class="user-avatar">
-													<!-- user-avatar -->
-													<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
-												</span>
-
-												<div class="media-body">
-													<h4 class="media-heading fs-14">
-														<?= $review['name']?> &ndash;
-														<span class="text-muted"><?= $review['date_attempt']?></span> &ndash;
-														<span class="fs-14 text-muted">
-																<?php for($i = 0; $i < $review['stars']; $i++): ?>
-																	<i class="fa fa-star"></i>
-																<?php endfor; ?>
-														</span>
-													</h4>
-
-													<p>
-														<?= $review['comment']?>
-													</p>
-
-												</div>
-
-											</div>
-										<?php endforeach; ?>
-									<?php endif; ?>
-								<!-- /REVIEW ITEM -->
-
-								<?php if ($this->session->has_userdata('error')): ?>
-									<div class="text-center">
-										<div class="container">
-											<div class="container text-center" style="background: #ffcccc; border: 1px solid red;">
-												<?= $this->session->userdata('error');?>
-											</div>
-																						<div class="container text-center" style="background: greenyellow; border: 1px solid lawngreen;">
-																								<?= $this->session->userdata('success');?>
-																						</div>
-										</div>
-									</div>
-								<?php endif; ?>
-
-
-								<!-- REVIEW FORM -->
-								<h4 class="page-header mb-40">ADD A REVIEW</h4>
-								<form method="post" action="<?= site_url('home/reviewProduct/'.$specialPckg['id'])?>" id="form-review">
-
-									<div class="row mb-10">
-
-										<div class="col-md-6 mb-10">
-											<!-- Name -->
-											<input type="text" name="name" id="name" class="form-control" placeholder="Name *" maxlength="100" required="">
-										</div>
-
-										<div class="col-md-6">
-											<!-- Email -->
-											<input type="email" name="email" id="email" class="form-control" placeholder="Email *" maxlength="100"
-											 required="">
-										</div>
-
-									</div>
-
-									<!-- Comment -->
-									<div class="mb-30">
-										<textarea name="comment" id="text" class="form-control" rows="6" placeholder="Comment" maxlength="1000"></textarea>
-									</div>
-
-									<!-- Stars -->
-									<div class="product-star-vote clearfix">
-
-										<label class="radio float-left">
-											<input type="radio" name="product-review-vote" value="1" />
-											<i></i> 1 Star
-										</label>
-
-										<label class="radio float-left">
-											<input type="radio" name="product-review-vote" value="2" />
-											<i></i> 2 Stars
-										</label>
-
-										<label class="radio float-left">
-											<input type="radio" name="product-review-vote" value="3" />
-											<i></i> 3 Stars
-										</label>
-
-										<label class="radio float-left">
-											<input type="radio" name="product-review-vote" value="4" />
-											<i></i> 4 Stars
-										</label>
-
-										<label class="radio float-left">
-											<input type="radio" name="product-review-vote" value="5" />
-											<i></i> 5 Stars
-										</label>
-
-									</div>
-
-									<!-- Send Button -->
-									<button type="submit" class="btn btn-oldblue"><i class="fa fa-check"></i> Send Review</button>
-
-								</form>
-								<!-- /REVIEW FORM -->
-
-							</div>
-					</div>
-
-
 			</div>
 
 
