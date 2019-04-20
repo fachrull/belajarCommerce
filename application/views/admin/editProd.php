@@ -118,9 +118,9 @@
                             </div>
 							<label class="input"><b>Upload product image</b>
 							<p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
-								<input type="file" class="mt-5" name="productPict[]" />
-                                <input type="file" class="mt-5" name="productPict[]" />
-                                <input type="file" class="mt-5" name="productPict[]" />
+								<input type="file" class="mt-5" name="image_1" />
+                                <input type="file" class="mt-5" name="image_2" />
+                                <input type="file" class="mt-5" name="image_3" />
 							</label>
 							<div class="row mt-10">
 								<div class="col-md-6 text-left">
