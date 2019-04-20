@@ -72,6 +72,19 @@ $(function () {
 });
 </script>
 <script>
+    const autoNumericOptionsIdr = {
+        digitGroupSeparator        : '.',
+        decimalCharacter           : ',',
+        decimalCharacterAlternative: '.',
+        decimalPlaces   : 0,
+        roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
+    };
+    var inputPrice = new AutoNumeric('#price', autoNumericOptionsIdr);
+    // var editPrice = new AutoNumeric('#editPrice', autoNumericOptionsIdr);
+    var editPrice = new AutoNumeric('#editPrice', autoNumericOptionsIdr);
+    var subPrice = new AutoNumeric('#subPrice', autoNumericOptionsIdr);
+</script>
+<script>
 $(function(){
   $('.select2').select2()
 });
@@ -179,23 +192,27 @@ $(function () {
         var id = button.data('id');
         var selector = '#'+id;
         console.log(selector);
-        var price = $(selector + ' .price-value').html().trim();
+        var price = $(selector + ' .price-value').html().trim().split('.').join("");
         var sizeName = $(selector + ' .size-name-value').html().trim();
-        var subprice = $(selector + ' .subprice-value').html().trim();
+        var subprice = $(selector + ' .subprice-value').html().split('.').join("").trim();
         var modal = $(this);
 
 
-        modal.find('#editPrice').val(price);
+        editPrice.set(price);
+        modal.find('#editPrice').val(editPrice.getFormatted());
         modal.find('#sizeEdit').val(id);
-        if (subprice != '-') {
-            modal.find('#subPrice').val(subprice);
+        if (subprice !== '-') {
+            // console.log(subprice);
+            subPrice.set(subprice);
+            modal.find('#subPrice').val(subPrice.getFormatted());
         } else {
+            subPrice.setUnformatted(0);
             modal.find('#subPrice').val(0);
         }
 
         modal.find('#rowId').val(id);
-        new AutoNumeric('#editPrice', autoNumericOptionsIdr);
-        new AutoNumeric('#subPrice', autoNumericOptionsIdr);
+        // new AutoNumeric('#editPrice', autoNumericOptionsIdr);
+        // new AutoNumeric('#subPrice', autoNumericOptionsIdr);
 
         //$.ajax({
         //    url: "<?//=site_url('/admin/getItem/');?>//"+id,
@@ -320,17 +337,6 @@ $(function () {
  //     // "dom": '<"top"f>rt<"bottom"ilp><"clear">'
  //   });
  // })
-</script>
-<script>
-  const autoNumericOptionsIdr = {
-    digitGroupSeparator        : '.',
-    decimalCharacter           : ',',
-    decimalCharacterAlternative: '.',
-    decimalPlaces   : 0,
-    roundingMethod             : AutoNumeric.options.roundingMethod.halfUpSymmetric,
-};
-    var inputPrice = new AutoNumeric('#price', autoNumericOptionsIdr);
-    // var editPrice = new AutoNumeric('#editPrice', autoNumericOptionsIdr);
 </script>
 <script>
     $(document).ready(function(){
