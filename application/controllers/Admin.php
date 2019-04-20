@@ -110,7 +110,7 @@ class Admin extends CI_Controller {
             if ($this->form_validation->run() == TRUE) {
                 $file_name = strtolower('brand-logo-'.$this->input->post('items'));
 
-                $config['upload_path'] = './asset/upload/';
+                $config['upload_path'] = './asset/brands/';
                 $config['allowed_types'] = 'jpg|jpeg|png|svg';
                 $config['file_name']  = $file_name;
 
@@ -192,32 +192,82 @@ class Admin extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('items', 'Brand Name', 'required|callback_checkingBrand');
+        $this->form_validation->set_rules('items', 'Brand Name', 'required');
         $this->form_validation->set_rules('desc', 'Brand Description', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-          $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
+            $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
+  
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/editBrand', $data);
+            $this->load->view('include/admin/footer');
+          }else {
+            $file_name = strtolower('brand-logo-'.$this->input->post('items'));
+            $config['upload_path'] = './asset/brands/';
+            $config['allowed_types'] = 'jpg|jpeg|png|svg';
+            $config['file_name']  = $file_name;
+            $config['overwrite']        = true;
 
-          $this->load->view('include/admin/header');
-          $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/editBrand', $data);
-          $this->load->view('include/admin/footer');
-        }else {
-            $items = array(
-                'name'          => $this->input->post('items'),
-                'description'   => $this->input->post('desc'),
-                'status' => 1,
-            );
-            $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
-            redirect('admin/sa_brand', 'refresh');
+            $this->load->library('upload', $config);
+            if (! $this->upload->do_upload('brandPict')) {
+                $this->session->set_flashdata('error', $this->upload->display_errors());
 
-        }
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/editBrand', $data);
+                $this->load->view('include/admin/footer');
+            }else{
+                $pName = $this->upload->data();
+                $items = array(
+                    'name'          => $this->input->post('items'),
+                    'logo'          => $pName['orig_name'],
+                    'description'   => $this->input->post('desc'),
+                    'status' => 1,
+                );
+                $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
+                redirect('admin/sa_brand','refresh');
+            }
+  
+          }
       }else {
         $this->load->view('include/header2');
         $this->load->view('un-authorise');
         $this->load->view('include/footer');
       }
     }
+
+    // public function editBrand($idBrand){
+    //     if ($this->session->userdata('uType') == 1) {
+    //       $this->load->helper('form');
+    //       $this->load->library('form_validation');
+  
+    //       $this->form_validation->set_rules('items', 'Brand Name', 'required|callback_checkingBrand');
+    //       $this->form_validation->set_rules('desc', 'Brand Description', 'required');
+  
+    //       if ($this->form_validation->run() === FALSE) {
+    //         $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
+  
+    //         $this->load->view('include/admin/header');
+    //         $this->load->view('include/admin/left-sidebar');
+    //         $this->load->view('admin/editBrand', $data);
+    //         $this->load->view('include/admin/footer');
+    //       }else {
+    //           $items = array(
+    //               'name'          => $this->input->post('items'),
+    //               'description'   => $this->input->post('desc'),
+    //               'status' => 1,
+    //           );
+    //           $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
+    //           redirect('admin/sa_brand', 'refresh');
+  
+    //       }
+    //     }else {
+    //       $this->load->view('include/header2');
+    //       $this->load->view('un-authorise');
+    //       $this->load->view('include/footer');
+    //     }
+    //   }
 
     public function sa_cat(){
         if ($this->session->userdata('uType') == 1) {
@@ -320,7 +370,7 @@ class Admin extends CI_Controller {
           $this->load->helper('form');
           $this->load->library('form_validation');
   
-          $this->form_validation->set_rules('items', 'Category Name', 'required|callback_checkingCat');
+          $this->form_validation->set_rules('items', 'Category Name', 'required');
           $this->form_validation->set_rules('desc', 'Category Description', 'required');
   
           if ($this->form_validation->run() === FALSE) {
@@ -1319,7 +1369,7 @@ class Admin extends CI_Controller {
           $this->load->helper('form');
           $this->load->library('form_validation');
   
-          $this->form_validation->set_rules('items', 'Spec Name', 'required|callback_checkingSpec');
+          $this->form_validation->set_rules('items', 'Spec Name', 'required');
 
           if ($this->form_validation->run() === FALSE) {
             $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec), NULL, 'tm_spec', TRUE);
@@ -1447,7 +1497,7 @@ class Admin extends CI_Controller {
           $this->load->helper('form');
           $this->load->library('form_validation');
   
-          $this->form_validation->set_rules('items', 'Size Name', 'required|callback_checkingSize');
+          $this->form_validation->set_rules('items', 'Size Name', 'required');
           $this->form_validation->set_rules('size', 'Size', 'required');
   
           if ($this->form_validation->run() === FALSE) {
