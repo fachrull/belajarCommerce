@@ -29,7 +29,10 @@
                   <td><?= $no?></td>
                   <td><?= $spec['name'];?></td>
                   <!-- <td><a href="<?= site_url(''.$spec['id']);?>" class="btn btn-default"><i class="fa fa-edit"></i></a></td> -->
-                  <td><a href="<?= site_url('admin/deleteSpec/'.$spec['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
+                  <td>
+                  <a href="<?= site_url('admin/deleteSpec/'.$spec['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
+                  <a href="<?= site_url('admin/infoSpec/'.$spec['id'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                  </td>
                 </tr>
                 <?php $no++; ?>
               <?php endforeach; ?>

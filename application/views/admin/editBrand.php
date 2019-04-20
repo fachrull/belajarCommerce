@@ -12,10 +12,11 @@
                 <div class="alert alert-mini alert-danger mb-30">
                   <strong>Oh snap!</strong> <?= $this->session->userdata('error')?>
                 </div>
-              <?php endif; ?>
-              <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
+              <?php elseif($this->input->post('items') == NULL): ?>
+                <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
+              <?php endif;?>
               <!-- /ALERT -->
-              <form class="m-0 sky-form" action="<?= site_url('admin/editBrand/'.$brand['id']);?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+              <?= form_open_multipart('admin/editBrand/'.$brand['id'], array('class' => 'm-0 sky-form')); ?>
                 <label class="input mb-10">
                   <input class="form-control" name="items" type="text" placeholder="Brand" value="<?= $brand['name']?>">
                 </label>
@@ -33,7 +34,7 @@
                     <a href="<?= site_url('admin/sa_brand')?>" class="btn btn-oldblue btn-default">Back</a>
                   </div>
                   <div class="col-md-6 text-right">
-                    <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i>ADD</button>
+                    <button type="submit" class="btn btn-oldblue btn-default"></i>Submit</button>
                   </div>
                 </div>
               </form>

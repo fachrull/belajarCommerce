@@ -203,7 +203,14 @@ class Admin extends CI_Controller {
           $this->load->view('admin/editBrand', $data);
           $this->load->view('include/admin/footer');
         }else {
-          // code...
+            $items = array(
+                'name'          => $this->input->post('items'),
+                'description'   => $this->input->post('desc'),
+                'status' => 1,
+            );
+            $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
+            redirect('admin/sa_brand', 'refresh');
+
         }
       }else {
         $this->load->view('include/header2');
@@ -292,6 +299,53 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
+
+    public function infoCat($idCat){
+        if ($this->session->userdata('uType') == 1 ){
+            $data['cat'] = $this->madmin->getProducts(array('id' => $idCat), NULL, 'tm_category', TRUE);
+
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/detail_cat', $data);
+            $this->load->view('include/admin/footer');
+        }else{
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
+    public function editCat($idCat){
+        if ($this->session->userdata('uType') == 1) {
+          $this->load->helper('form');
+          $this->load->library('form_validation');
+  
+          $this->form_validation->set_rules('items', 'Category Name', 'required|callback_checkingCat');
+          $this->form_validation->set_rules('desc', 'Category Description', 'required');
+  
+          if ($this->form_validation->run() === FALSE) {
+            $data['cat'] = $this->madmin->getProducts(array('id' => $idCat), NULL, 'tm_category', TRUE);
+  
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/editCat', $data);
+            $this->load->view('include/admin/footer');
+          }else {
+              $items = array(
+                  'name'          => $this->input->post('items'),
+                  'description'   => $this->input->post('desc'),
+                  'status' => 1,
+              );
+              $this->madmin->updateData(array('id' => $idCat), 'tm_category', $items);
+              redirect('admin/sa_cat', 'refresh');
+  
+          }
+        }else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+        }
+      }
 
     public function allProd(){
         if ($this->session->userdata('uType') == 1) {
@@ -1245,6 +1299,51 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function infoSpec($idSpec){
+        if ($this->session->userdata('uType') == 1) {
+          $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec), NULL, 'tm_spec', TRUE);
+  
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/detail_spec', $data);
+          $this->load->view('include/admin/footer');
+        }else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+        }
+      }
+
+    public function editSpec($idSpec){
+        if ($this->session->userdata('uType') == 1) {
+          $this->load->helper('form');
+          $this->load->library('form_validation');
+  
+          $this->form_validation->set_rules('items', 'Spec Name', 'required|callback_checkingSpec');
+
+          if ($this->form_validation->run() === FALSE) {
+            $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec), NULL, 'tm_spec', TRUE);
+  
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/editSpec', $data);
+            $this->load->view('include/admin/footer');
+          }else {
+              $items = array(
+                  'name'          => $this->input->post('items'),
+                  'status' => 1,
+              );
+              $this->madmin->updateData(array('id' => $idSpec), 'tm_spec', $items);
+              redirect('admin/sa_spec', 'refresh');
+  
+          }
+        }else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+        }
+      }
+
     public function sa_size(){
         if ($this->session->userdata('uType') == 1) {
             $data['sizes'] = $this->madmin->getProducts(NULL, NULL,'tm_size', FALSE);
@@ -1327,6 +1426,52 @@ class Admin extends CI_Controller {
             $this->load->view('include/footer');
         }
     }
+
+    public function infoSize($idSize){
+        if ($this->session->userdata('uType') == 1) {
+          $data['size'] = $this->madmin->getProducts(array('id' => $idSize), NULL, 'tm_size', TRUE);
+  
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/detail_size', $data);
+          $this->load->view('include/admin/footer');
+        }else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+        }
+      }
+
+    public function editSize($idSize){
+        if ($this->session->userdata('uType') == 1) {
+          $this->load->helper('form');
+          $this->load->library('form_validation');
+  
+          $this->form_validation->set_rules('items', 'Size Name', 'required|callback_checkingSize');
+          $this->form_validation->set_rules('size', 'Size', 'required');
+  
+          if ($this->form_validation->run() === FALSE) {
+            $data['size'] = $this->madmin->getProducts(array('id' => $idSize), NULL, 'tm_size', TRUE);
+  
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/editSize', $data);
+            $this->load->view('include/admin/footer');
+          }else {
+              $items = array(
+                  'name'          => $this->input->post('items'),
+                  'size'   => $this->input->post('size'),
+                  'status' => 1,
+              );
+              $this->madmin->updateData(array('id' => $idSize), 'tm_size', $items);
+              redirect('admin/sa_size', 'refresh');
+          }
+        }else {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+        }
+      }
 
     public function stores($link = FALSE){
         if ($this->session->userdata('uType') == 1) {
