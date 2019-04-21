@@ -60,8 +60,8 @@
 							<span class="cart_img"></span>
 							<span class="product_name fs-13 bold">PRODUCT NAME</span>
 							<span class="remove_item fs-13 bold"></span>
-							<span class="total_price fs-13 bold">TOTAL</span>
-							<span class="qty fs-13 bold">QUANTITY</span>
+							<span class="total_price fs-13 bold" style="padding-top:4px">TOTAL</span>
+							<span class="qty fs-13 bold" style="margin-right:13px">QUANTITY</span>
 						</div>
 						<!-- /cart header -->
 						<?php foreach ($cart as $item) :?>
@@ -80,7 +80,7 @@
 									</a>
 									<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
 									<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
-									<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
+									<div class="qty" style="width:200px !important;"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
 										<?=number_format($item['price'],0,',','.')?></div>
 										<div class="clearfix"></div>
 									</div>
@@ -94,7 +94,7 @@
 									</a>
 									<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
 									<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
-									<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
+									<div class="qty" style="width:200px !important;"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
 										<?=number_format($item['price'],0,',','.')?></div>
 										<div class="clearfix"></div>
 									</div>
