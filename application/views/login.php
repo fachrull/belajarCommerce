@@ -18,6 +18,11 @@
     <div class="row">
       <div class="col-md-6 offset-md-3 col-sm-6 offset-sm-3">
         <!-- ALERT -->
+        <?php if($this->session->has_userdata('successmsg')): ?>
+          <div class="alert alert-success mb-30">
+	          <strong><?= $this->session->userdata('successmsg');?></strong>
+          </div>
+        <?php endif; ?>
         <?php if($this->session->has_userdata('error')): ?>
           <div class="alert alert-mini alert-danger mb-30">
             <strong>Oh snap!</strong> <?= $this->session->userdata('error');?>
