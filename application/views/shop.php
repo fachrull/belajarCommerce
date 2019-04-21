@@ -35,7 +35,7 @@
 							<?php if($category != NULL):?>
 								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
-								<li class="list-group-noicon active">
+								<li class="list-group-noicon">
 									<a class="pt-4 pb-4" href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
 								</li>
 									<?php endforeach;?>
@@ -53,12 +53,12 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>">Aireloom</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>">Kingkoil</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>">Serta</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>">Tempur</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>">Florence</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>">Stressless</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Serta</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Tempur</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Florence</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/6');?>">Stressless</a></li>
 							</ul>
 
 						</div>
@@ -104,17 +104,6 @@
 							</ul>
 							<!-- /Pagination Default -->
 
-							<div class="options-left">
-								<select>
-									<option value="pos_asc">A-Z</option>
-									<option value="pos_desc">Z-A</option>
-									<option value="name_asc">Price Low to High</option>
-									<option value="name_desc">Price High to Low</option>
-									<option value="price_asc">Position ASC</option>
-									<option value="price_desc">Position DESC</option>
-								</select>
-							</div>
-
 						</div>
 						<!-- /LIST OPTIONS -->
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
@@ -157,8 +146,8 @@
 
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-												<a class="btn btn-oldblue" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
-													<i class="fa fa-cart-plus"></i> Add to Cart
+												<a class="btn btn-sm btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+													<i class="fa fa-eye"></i> View Detail
 												</a><!-- add .clean to remove css characteres -->
 											</div>
 											<!-- /buttons -->

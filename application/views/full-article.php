@@ -134,18 +134,6 @@
 						<!-- /SHARE POST -->
 
 
-						<?php if(count($pedias) > 1) { ?>
-							<div class="divider">
-							<!-- divider -->
-							</div>
-							<ul class="pager">
-								<li class="previous"><a class="b-0" href="#">&larr; Previous Post</a></li>
-								<li class="next"><a class="b-0" href="#">Next Post &rarr;</a></li>
-							</ul>
-							<div class="divider">
-								<!-- divider -->
-							</div>
-						<?php } ?>
 
 					</div>
 

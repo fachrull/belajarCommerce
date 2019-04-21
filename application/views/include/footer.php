@@ -526,6 +526,17 @@
                         </form> `);
     });
 </script>
+
+<script>
+$(document).ready(function () {
+    var url = window.location.href.replace(window.location.search,'');
+    $('ul li a[href="'+ url +'"]').parent().addClass('active');
+    $('ul li a').filter(function() {
+        return this.href == url;
+    }).parent().addClass('active');
+});
+</script>
+
 </body>
 
 </html>
