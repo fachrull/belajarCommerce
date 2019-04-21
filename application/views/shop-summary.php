@@ -11,7 +11,7 @@
 <section>
   <div class="container">
     <div class="row">
-      <div class="col-lg-6 col-sm-6">
+      <div class="col-lg-5 col-sm-5">
         <table class="table">
           <tbody>
             <tr>
@@ -62,7 +62,7 @@
           </tbody>
         </table>
       </div>
-      <div class="col-lg-6 col-sm-6">
+      <div class="col-lg-7 col-sm-7">
         <table class="table toggle-transparent toggle-bordered-full clearfix">
           <thead>
             <tr class="toggle active">
