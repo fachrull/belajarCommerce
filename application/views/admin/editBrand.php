@@ -28,7 +28,6 @@
                 </div>
                 <label class="input mb-10">
                   <input type="file" name="brandPict" id="file"/>
-                  <input type="text" name="file" onchange="thumbnail();">
                 </label>
                 <div class="row">
                   <div class="col-md-6">
