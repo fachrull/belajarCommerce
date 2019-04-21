@@ -2359,7 +2359,7 @@ class Admin extends CI_Controller {
     public function detail_voucher($idVoucher){
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $data['voucher'] = $this->madmin->getProducts(array('id' => $idVoucher), NULL, 'tm_voucher', TRUE);
-            $data['detail_voucher'] = $this->madmin->detail_voucher($idVoucher);
+//            $data['detail_voucher'] = $this->madmin->detail_voucher($idVoucher);
             // print_r($data['voucher']);
             // exit();
 
