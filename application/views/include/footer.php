@@ -339,7 +339,8 @@
                             $('#shoppingForm').show();
                             $("#size").attr('disabled', false);
                             $("#size").empty();
-                            var price = `Rp. <span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span>`
+                            var price = `<span class='line-through fw-500 fs-15 mr-15'>Rp.<span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span></span>
+                            Rp.<span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span>`
                             $("#price2").html(price);
                             //$('#price2').append("<span class='totalprice' value=" + response[0].price + "><?//=number_format(floatval(), 0, ',', '.')?>//" + "</span>");
 
