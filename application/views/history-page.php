@@ -90,7 +90,7 @@
                                                 <div class="row ml-0 mr-0">
                                                     <div class="col-6 col-md-6">
                                                         <label class="fs-11 mb-0">Total Item</label>
-                                                        <strong>10</strong>
+                                                        <strong><?=$myOrder['item_number']?></strong>
                                                     </div>
                                                     <div class="col-4 col-md-4">
                                                         <label class="fs-11 mb-0">Total Pembayaran</label>
