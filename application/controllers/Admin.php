@@ -203,32 +203,41 @@ class Admin extends CI_Controller {
             $this->load->view('admin/editBrand', $data);
             $this->load->view('include/admin/footer');
           }else {
-            $file_name = strtolower('brand-logo-'.$this->input->post('items'));
-            $config['upload_path'] = './asset/brands/';
-            $config['allowed_types'] = 'jpg|jpeg|png|svg';
-            $config['file_name']  = $file_name;
-            $config['overwrite']        = true;
+            if ($_FILES['brandPict']['size'] != 0) {
+                $file_name = strtolower('brand-logo-'.$this->input->post('items'));
+                $config['upload_path'] = './asset/brands/';
+                $config['allowed_types'] = 'jpg|jpeg|png|svg';
+                $config['file_name']  = $file_name;
+                $config['overwrite']        = true;
 
-            $this->load->library('upload', $config);
-            if (! $this->upload->do_upload('brandPict')) {
-                $this->session->set_flashdata('error', $this->upload->display_errors());
-
-                $this->load->view('include/admin/header');
-                $this->load->view('include/admin/left-sidebar');
-                $this->load->view('admin/editBrand', $data);
-                $this->load->view('include/admin/footer');
-            }else{
-                $pName = $this->upload->data();
+                $this->load->library('upload', $config);
+                if (! $this->upload->do_upload('brandPict')) {
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
+                    $this->load->view('include/admin/header');
+                    $this->load->view('include/admin/left-sidebar');
+                    $this->load->view('admin/editBrand', $data);
+                    $this->load->view('include/admin/footer');
+                }else{
+                    $pName = $this->upload->data();
+                    $items = array(
+                        'name'          => $this->input->post('items'),
+                        'logo'          => $pName['orig_name'],
+                        'description'   => $this->input->post('desc'),
+                        'status' => 1,
+                    );
+                    $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
+                    redirect('admin/sa_brand','refresh');
+                }
+            } else {
                 $items = array(
                     'name'          => $this->input->post('items'),
-                    'logo'          => $pName['orig_name'],
                     'description'   => $this->input->post('desc'),
                     'status' => 1,
                 );
                 $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
                 redirect('admin/sa_brand','refresh');
             }
-  
           }
       }else {
         $this->load->view('include/header2');
@@ -686,24 +695,30 @@ class Admin extends CI_Controller {
 //                        print_r($prodSizePrice);
                 }
 
-                // upload image
-                if (isset($_FILES)) {
-                    $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
-                        array('nameField' => 'name'), 'tm_brands', TRUE);
-                    $cName = $this->madmin->getProducts(array('id' => $this->input->post('cat')),
-                        array('nameField' => 'name'), 'tm_category', TRUE);
-                    $config['upload_path'] = './asset/upload/';
-                    $config['allowed_types'] = 'jpg|jpeg|png';
-                    $this->load->library('upload',$config);
+                $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
+                    array('nameField' => 'name'), 'tm_brands', TRUE);
+                $cName = $this->madmin->getProducts(array('id' => $this->input->post('cat')),
+                    array('nameField' => 'name'), 'tm_category', TRUE);
+                $config['upload_path'] = './asset/upload/';
+                $config['allowed_types'] = 'jpg|jpeg|png';
+                $this->load->library('upload',$config);
 
-                    $images = $this->madmin->getProducts(array('id_prod' => $productId), NULL, 'tr_product_image', TRUE);
+                $images = $this->madmin->getProducts(array('id_prod' => $productId), NULL, 'tr_product_image', TRUE);
+                $imageData = array('id_prod' => $productId);
 
-                    if(isset($_FILES['image_1'])) {
-                        $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
-                        $config['file_name']  = $file_name;
-                        $this->upload->initialize($config);
+                for ($i = 0; $i < 3; $i++) {
+                    $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
+                    $config['file_name']  = $file_name;
+                    $this->upload->initialize($config);
 
-                        if(! $this->upload->do_upload('image_1')) {
+                    $_FILES['image']['name']     = $_FILES['productPict']['name'][$i];
+                    $_FILES['image']['type']     = $_FILES['productPict']['type'][$i];
+                    $_FILES['image']['tmp_name'] = $_FILES['productPict']['tmp_name'][$i];
+                    $_FILES['image']['error']     = $_FILES['productPict']['error'][$i];
+                    $_FILES['image']['size']     = $_FILES['productPict']['size'][$i];
+
+                    if ($_FILES['image']['size'] != 0) {
+                        if(! $this->upload->do_upload('image')){
                             $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
                                 'nameField' => 'name'), 'tm_brands', FALSE);
                             $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
@@ -717,88 +732,24 @@ class Admin extends CI_Controller {
 
                             $this->load->view('include/admin/header');
                             $this->load->view('include/admin/left-sidebar');
-                            $this->load->view('admin/editProd', $data);
+                            $this->load->view('admin/addProd-2', $data);
                             $this->load->view('include/admin/footer');
-                        } else {
-                            $file_path = './asset/upload/'.$images['image_1'];
-                            unlink($file_path);
-
+                            break;
+                        }else {
                             $uploadData = $this->upload->data();
-                            $imageData = array(
-                                'image_1' => $uploadData['orig_name']
-                            );
-                            $this->madmin->updateData(array('id_prod' => $productId), 'tr_product_image', $imageData);
-                        }
-                    }
-                    if(isset($_FILES['image_2'])) {
-                        $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
-//                        $config['file_name']  = $file_name;
-//                        $this->upload->initialize($config);
-
-                        if(! $this->upload->do_upload('image_2')) {
-                            $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name'), 'tm_brands', FALSE);
-                            $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name'), 'tm_category', FALSE);
-                            $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name'), 'tm_spec', FALSE);
-                            $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
-
-                            $this->session->set_flashdata('error', $this->upload->display_errors());
-
-                            $this->load->view('include/admin/header');
-                            $this->load->view('include/admin/left-sidebar');
-                            $this->load->view('admin/editProd', $data);
-                            $this->load->view('include/admin/footer');
-                        } else {
-                            $file_path = './asset/upload/'.$images['image_2'];
+                            $imageData['image_'.($i+1)] = $uploadData['orig_name'];
+                            $file_path = './asset/upload/'.$images['image_'.($i+1)];
                             unlink($file_path);
-
-                            $uploadData = $this->upload->data();
-                            $imageData = array(
-                                'image_2' => $uploadData['orig_name']
-                            );
-                            $this->madmin->updateData(array('id_prod' => $productId),'tr_product_image', $imageData);
                         }
+                    } else {
+                        continue;
                     }
-                    if(isset($_FILES['image_3'])) {
-                        $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
-//                        $config['file_name']  = $file_name;
-//                        $this->upload->initialize($config);
 
-                        if(! $this->upload->do_upload('image_3')) {
-                            $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name'), 'tm_brands', FALSE);
-                            $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name'), 'tm_category', FALSE);
-                            $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name'), 'tm_spec', FALSE);
-                            $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                                'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
-
-                            $this->session->set_flashdata('error', $this->upload->display_errors());
-
-                            $this->load->view('include/admin/header');
-                            $this->load->view('include/admin/left-sidebar');
-                            $this->load->view('admin/editProd', $data);
-                            $this->load->view('include/admin/footer');
-                        } else {
-                            $file_path = './asset/upload/'.$images['image_3'];
-                            unlink($file_path);
-
-                            $uploadData = $this->upload->data();
-                            $imageData = array(
-                                'image_3' => $uploadData['orig_name']
-                            );
-                            $this->madmin->updateData(array('id_prod' => $productId), 'tr_product_image', $imageData);
-                        }
-                    }
                 }
 
-//                    exit();
+                $this->madmin->updateData(array('id_prod' => $productId), 'tr_product_image', $imageData);
                 redirect('admin/allProd');
-//                }
+
             }else{
                 $data['products'] = $this->madmin->getDetailProduct($productId);
                 $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
@@ -2035,17 +1986,16 @@ class Admin extends CI_Controller {
             $this->form_validation->set_rules('desc', 'Description', 'required');
             $this->form_validation->set_rules('start', 'Start Period', 'required');
             $this->form_validation->set_rules('end', 'End Period', 'required');
-
+            $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
             if ($this->form_validation->run() === FALSE) {
-                $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
+
                 $this->load->view('include/admin/header');
                 $this->load->view('include/admin/left-sidebar');
                 $this->load->view('admin/editPromotion', $data);
                 $this->load->view('include/admin/footer');
             } else {
-                if (isset($_FILES)) {
+                if ($_FILES['promotionImage']['size'] != 0) {
                     $file_name = strtolower('promotion-image-'.uniqid());
-
                     $config['upload_path'] = './asset/upload/';
                     $config['allowed_types'] = 'jpg|jpeg|png|svg';
                     $config['file_name']  = $file_name;
@@ -2055,9 +2005,11 @@ class Admin extends CI_Controller {
 
                         $this->load->view('include/admin/header');
                         $this->load->view('include/admin/left-sidebar');
-                        $this->load->view('admin/addPromotion');
+                        $this->load->view('admin/editPromotion', $data);
                         $this->load->view('include/admin/footer');
                     } else {
+                        $file = './asset/upload/' . $data['promotion']['image'];
+                        unlink($file);
                         $image = $this->upload->data();
                         $promotion = array(
                             'name'         => $this->input->post('name'),
