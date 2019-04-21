@@ -23,29 +23,13 @@ class Home extends CI_Controller{
           $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 2) {
-      if($this->session->userdata('uNew') == 1){
+      if ($this->session->userdata('uNew') == 1) {
         redirect('auth/completing_profile');
       }else{
-        if($link === FALSE){
-          $data['posts'] = $this->mhome->getDataIndex();
-
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/stores', $data);
+          $this->load->view('admin/home');
           $this->load->view('include/admin/footer');
-        } else {
-          $idStore = array('idStore' => $link);
-          $this->session->set_userdata($idStore);
-          $id = $this->mhome->getProducts(array('id' => $link),
-            array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
-          $data['post'] = $this->mhome->getDataIndex($link);
-          $data['prime'] = $this->mhome->dataPrime($id['id_userlogin']);
-
-          $this->load->view('include/admin/header');
-          $this->load->view('include/admin/left-sidebar');
-          $this->load->view('admin/detail_store', $data);
-          $this->load->view('include/admin/footer');
-        }
       }
     } elseif ($this->session->userdata('uType') == 3) {
       if ($this->session->userdata('uNew') == 1) {

@@ -179,7 +179,7 @@ class Auth extends CI_Controller{
   }
 
   public function regisSO(){
-    if ($this->session->userdata('uType') == 1) {
+    if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
       $this->load->helper('form');
       $this->load->library('form_validation');
 

@@ -558,5 +558,23 @@ $(function () {
     })
   });
 </script>
+<script type="text/javascript">
+  function thumbnail(){
+    var preview = document.querySelector('#logoBrand');
+    console.log(preview);
+    var file    = document.querySelector('input[type=file]').files[0];
+    var reader  = new FileReader();
+
+    reader.onloadend = function(){
+      perview.src = reader.result;
+    }
+
+    if(file){
+      redear.readAsDataURL(file);
+    }else{
+      preview.src = "";
+    }
+  }
+</script>
 </body>
 </html>
