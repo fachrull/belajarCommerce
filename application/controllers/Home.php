@@ -1452,4 +1452,20 @@ class Home extends CI_Controller{
       print_r(json_encode($data));
   }
 
+  function search_keyword($brand = NULL, $category = NULL)
+  {
+      $keyword = $this->input->post('keyword');
+      $data['products'] = $this->mhome->search($keyword);
+      // $data['products'] = $this->mhome->getShop_product($brand, $category);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->mhome->brand_categories($brand);
+      $data['bestSellers'] = $this->mhome->topthree_bestSeller();
+      // $data['image'] = $this->mhome->getProducts(array('id_prod'=>$data['products']['id']), NULL, 'tr_product_image', TRUE);
+      // print_r($data);
+      // print_r($this->db->last_query());
+      $this->load->view('include/header2');
+      $this->load->view('search_result', $data);
+      $this->load->view('include/footer');
+  }
+
 }
