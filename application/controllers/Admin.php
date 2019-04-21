@@ -69,7 +69,7 @@ class Admin extends CI_Controller {
 
     public function sa_brand(){
         if ($this->session->userdata('uType') == 1) {
-            $data['brands'] = $this->madmin->getProducts(array('id !=' => 0), NULL, 'tm_brands', FALSE);
+            $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'deleted' => 0), NULL, 'tm_brands', FALSE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -178,7 +178,8 @@ class Admin extends CI_Controller {
 
     public function deleteBrand($brand){
         if ($this->session->userdata('uType') == 1) {
-            $this->madmin->deleteData(array('id' => $brand), 'tm_brands');
+//            $this->madmin->deleteData(array('id' => $brand), 'tm_brands');
+            $this->madmin->updateData(array('id' => $brand), 'tm_brands', array('deleted' => 1));
             redirect('admin/sa_brand', 'refresh');
         }else{
             $this->load->view('include/header2');
@@ -280,7 +281,7 @@ class Admin extends CI_Controller {
 
     public function sa_cat(){
         if ($this->session->userdata('uType') == 1) {
-            $data['categories'] = $this->madmin->getProducts(NULL, NULL, 'tm_category', FALSE);
+            $data['categories'] = $this->madmin->getProducts(array('id !=' => 0, 'deleted' => 0), NULL, 'tm_category', FALSE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -350,7 +351,8 @@ class Admin extends CI_Controller {
 
     public function deleteCat($cat){
         if ($this->session->userdata('uType') == 1) {
-            $this->madmin->deleteData(array('id' => $cat), 'tm_category');
+//            $this->madmin->deleteData(array('id' => $cat), 'tm_category');
+            $this->madmin->updateData(array('id' => $cat), 'tm_category', array('deleted' => 1));
             redirect('admin/sa_cat', 'refresh');
         } else {
             $this->load->view('include/header2');
@@ -850,9 +852,10 @@ class Admin extends CI_Controller {
 
     public function deleteProd($idProd){
         if ($this->session->userdata('uType') == 1) {
-            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_spec');
-            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_size');
-            $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
+//            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_spec');
+//            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_size');
+//            $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
+            $this->madmin->updateData(array('id' => $idProd), 'tm_product', array('deleted' => 1));
             redirect('admin/allProd');
         } else {
             $this->load->view('include/header2');
@@ -863,7 +866,7 @@ class Admin extends CI_Controller {
 
     public function sa_agmpedia(){
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $data['pedias'] = $this->madmin->getProducts(NULL, NULL, 'tm_agmpedia', FALSE);
+            $data['pedias'] = $this->madmin->getProducts(array('deleted' => 0), NULL, 'tm_agmpedia', FALSE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -966,14 +969,15 @@ class Admin extends CI_Controller {
 
     public function deletePedia($idPedia){
       if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-        $file = $this->madmin->getProducts(array('id' => $idPedia), array('thumb' => 'thumbnail',
-          'photos' => 'photo'), 'tm_agmpedia', TRUE);
-        $file_path_thumbnail = 'asset/upload/pedia/'.$file['thumbnail'];
-        $file_path_photo = 'asset/upload/pedia/'.$file['photo'];
-        unlink($file_path_thumbnail);
-        unlink($file_path_photo);
-        print_r($file_path);
-        $this->madmin->deleteData(array('id' => $idPedia), 'tm_agmpedia');
+//        $file = $this->madmin->getProducts(array('id' => $idPedia), array('thumb' => 'thumbnail',
+//          'photos' => 'photo'), 'tm_agmpedia', TRUE);
+//        $file_path_thumbnail = 'asset/upload/pedia/'.$file['thumbnail'];
+//        $file_path_photo = 'asset/upload/pedia/'.$file['photo'];
+//        unlink($file_path_thumbnail);
+//        unlink($file_path_photo);
+//        print_r($file_path);
+//        $this->madmin->deleteData(array('id' => $idPedia), 'tm_agmpedia');
+          $this->madmin->updateData(array('id' => $idPedia), 'tm_agmpedia', array('deleted' => 1));
         redirect('admin/sa_agmpedia');
       }else {
         $this->load->view('include/header2');
@@ -1348,7 +1352,7 @@ class Admin extends CI_Controller {
 
     public function sa_spec(){
         if ($this->session->userdata('uType') == 1) {
-            $data['specs'] = $this->madmin->getProducts(NULL, NULL, 'tm_spec', FALSE);
+            $data['specs'] = $this->madmin->getProducts(array('deleted' => 0), NULL, 'tm_spec', FALSE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -1420,7 +1424,8 @@ class Admin extends CI_Controller {
 
     public function deleteSpec($specId){
         if ($this->session->userdata('uType') == 1) {
-            $this->madmin->deleteData(array('id' => $specId), 'tm_spec');
+//            $this->madmin->deleteData(array('id' => $specId), 'tm_spec');
+            $this->madmin->updateData(array('id'=>$specId), 'tm_spec', array('deleted' => 1));
             redirect('admin/sa_spec');
         }else{
             $this->load->view('include/header2');
@@ -1476,7 +1481,7 @@ class Admin extends CI_Controller {
 
     public function sa_size(){
         if ($this->session->userdata('uType') == 1) {
-            $data['sizes'] = $this->madmin->getProducts(NULL, NULL,'tm_size', FALSE);
+            $data['sizes'] = $this->madmin->getProducts(array('deleted' => 0), NULL,'tm_size', FALSE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -1548,7 +1553,8 @@ class Admin extends CI_Controller {
 
     public function deleteSize($sizeId){
         if ($this->session->userdata('uType') == 1) {
-            $this->madmin->deleteData(array('id' => $sizeId), 'tm_size');
+//            $this->madmin->deleteData(array('id' => $sizeId), 'tm_size');
+            $this->madmin->updateData(array('id' => $sizeId), 'tm_size', array('deleted' => 1));
             redirect('admin/sa_size');
         } else {
             $this->load->view('include/header2');
@@ -1880,7 +1886,7 @@ class Admin extends CI_Controller {
 
     public function promotions() {
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $data['promotion'] = $this->madmin->getProducts(NULL, NULL,'tm_promotion', FALSE);
+            $data['promotion'] = $this->madmin->getProducts(array('deleted' => 0), NULL,'tm_promotion', FALSE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -2045,9 +2051,10 @@ class Admin extends CI_Controller {
 
     public function deletePromotion($id) {
         if ($this->session->userdata('uType') == 1) {
-            $data = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
-            $this->madmin->deleteData(array('id' => $id), 'tm_promotion');
-            unlink('./asset/upload/'.$data['image']);
+//            $data = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
+//            $this->madmin->deleteData(array('id' => $id), 'tm_promotion');
+//            unlink('./asset/upload/'.$data['image']);
+            $this->madmin->updateData(array('id' => $id), 'tm_promotion', array('deleted' => 1));
             redirect('admin/promotions', 'refresh');
         }else{
             $this->load->view('include/header2');

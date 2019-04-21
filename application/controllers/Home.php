@@ -48,8 +48,9 @@ class Home extends CI_Controller{
         $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
         $data['pedias'] = $this->mhome->getPedia();
         $data['stores'] = $this->storesToGeoJson();
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-        $this->load->view('include/header');
+        $this->load->view('include/header', $brands);
         $this->load->view('home', $data);
         $this->load->view('include/footer');
 
@@ -61,8 +62,9 @@ class Home extends CI_Controller{
       $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $data['pedias'] = $this->mhome->getPedia();
       $data['stores'] = $this->storesToGeoJson();
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header');
+      $this->load->view('include/header', $brands);
       $this->load->view('home', $data);
       $this->load->view('include/footer');
     }
@@ -101,12 +103,15 @@ class Home extends CI_Controller{
     if ($this->session->userdata('uType') == 3) {
       $id = $this->session->userdata('uId');
       $data['post'] = $this->mhome->dataStores($id);
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header');
+      $this->load->view('include/header', $brands);
       $this->load->view('customer', $data);
       $this->load->view('include/footer');
     }else {
-      $this->load->view('include/header');
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        $this->load->view('include/header', $brands);
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -116,12 +121,15 @@ class Home extends CI_Controller{
     if ($this->session->userdata('uType') == 3) {
       $id = $this->session->userdata('uId');
       $data['post'] = $this->mhome->dataStores($id);
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header');
+        $this->load->view('include/header', $brands);
       $this->load->view('edit_profile', $data);
       $this->load->view('include/footer');
     }else {
-      $this->load->view('include/header');
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        $this->load->view('include/header', $brands);
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
@@ -151,7 +159,9 @@ class Home extends CI_Controller{
     // print_r($data['category']);
     // exit();
       $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
   }
@@ -174,10 +184,12 @@ class Home extends CI_Controller{
   // }
 
   public function listArticle(){
-    $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
+    $data['pedias'] = $this->mhome->getProducts(array('status' => 1, 'deleted' => 0), array('idField' => 'id', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('list-article', $data);
     $this->load->view('include/footer');
   }
@@ -187,7 +199,9 @@ class Home extends CI_Controller{
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
     $data['article'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_agmpedia', TRUE);
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('full-article', $data);
     $this->load->view('include/footer');
   }
@@ -241,7 +255,9 @@ class Home extends CI_Controller{
     // print_r($data['prices']);echo "</br></br>";
     // print_r($data['sizes']);echo "</br></br>";exit();
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('detail-product', $data);
     $this->load->view('include/footer');
   }
@@ -524,7 +540,9 @@ class Home extends CI_Controller{
               $data['discount'] = floatval($this->cart->total() * $result['discount']);
           }
       }
-      $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
       $this->load->view('shop-cart', $data);
       $this->load->view('include/footer');
   }
@@ -601,7 +619,9 @@ class Home extends CI_Controller{
         $data['address_shipping'] = $this->mhome->customer_detail($id_address[0]['id_cs_detail']);
         $data['carts']  = $this->cart->contents();
 
-        $this->load->view('include/header2');
+          $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+          $this->load->view('include/header2', $brands);
         $this->load->view('shop-summary', $data);
         $this->load->view('include/footer');
       } else {
@@ -710,7 +730,9 @@ class Home extends CI_Controller{
           }
 
         // load view
-        $this->load->view('include/header2');
+          $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+          $this->load->view('include/header2', $brands);
         $this->load->view('shop-checkout', $data);
         $this->load->view('include/footer');
 
@@ -1055,7 +1077,9 @@ class Home extends CI_Controller{
   public function checkoutDone(){
     if ($this->session->userdata('uType') == 4) {
       $data['uName'] = $this->mhome->getProducts(array('user_id' => $this->session->userdata('uId')), array('usernameField' => 'username'), 'user_login', TRUE);
-      $this->load->view('include/header2');
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        $this->load->view('include/header2', $brands);
       $this->load->view('checkout-done', $data);
       $this->load->view('include/footer');
     }else{
@@ -1064,63 +1088,83 @@ class Home extends CI_Controller{
   }
 
   public function promotionPage(){
-      $data['promotions'] = $this->mhome->getProducts(NULL, NULL, 'tm_promotion', FALSE);
-    $this->load->view('include/header2');
+      $data['promotions'] = $this->mhome->getProducts(array('status =' => 1, 'deleted' => 0), NULL, 'tm_promotion', FALSE);
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('promotion-page', $data);
     $this->load->view('include/footer');
   }
 
   public function pageAbout(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('page-about');
     $this->load->view('include/footer');
   }
 
   public function pageContact(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('page-contact');
     $this->load->view('include/footer');
   }
 
   public function pageFaq(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('page-faq');
     $this->load->view('include/footer');
   }
 
   public function termCondition(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('term-condition');
     $this->load->view('include/footer');
   }
 
   public function privacyPolicy(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('privacy-policy');
     $this->load->view('include/footer');
   }
 
   public function searchResult(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('search-result');
     $this->load->view('include/footer');
   }
 
   public function partnership(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('partnership');
     $this->load->view('include/footer');
   }
 
   public function pageLogin(){
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('login');
     $this->load->view('include/footer');
   }
 
   public function promotionDetail($id){
       $data['promotion'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_promotion', TRUE);
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('promotion-detail', $data);
     $this->load->view('include/footer');
   }
@@ -1128,7 +1172,9 @@ class Home extends CI_Controller{
   public function bestSeller($brand = NULL, $cat = NULL){
     $data['products'] = $this->mhome->listBestSeller_Product($brand, $cat);
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('best-seller', $data);
     $this->load->view('include/footer');
   }
@@ -1141,7 +1187,9 @@ class Home extends CI_Controller{
 
 //      print_r($data);
 
-          $this->load->view('include/header2');
+          $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+          $this->load->view('include/header2', $brands);
           $this->load->view('history-page', $data);
           $this->load->view('include/footer');
       } else {
@@ -1162,7 +1210,9 @@ class Home extends CI_Controller{
       $data['orderList'] = $this->mhome->getOrderList($idCustomer);
       // print_r($data['orderList']);exit();
 
-      $this->load->view('include/header2');
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        $this->load->view('include/header2', $brands);
       $this->load->view('transaction-page', $data);
       $this->load->view('include/footer');
     } else {
@@ -1177,7 +1227,9 @@ class Home extends CI_Controller{
 
 //      print_r($data['detailOrder'][0]->order_number);
 //
-      $this->load->view('include/header2');
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        $this->load->view('include/header2', $brands);
       $this->load->view('detail-transaction-page', $data);
       $this->load->view('include/footer');
     } else {
@@ -1191,7 +1243,9 @@ class Home extends CI_Controller{
       $id_userlogin = $this->session->userdata('uId');
       $data['profile'] = $this->mhome->detailProfileCustomer($id_userlogin);
 
-      $this->load->view('include/header2');
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        $this->load->view('include/header2', $brands);
       $this->load->view('page-profile', $data);
       $this->load->view('include/footer');
     } else {
@@ -1253,7 +1307,9 @@ class Home extends CI_Controller{
           $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
           // $this->session->set_flashdata('error', validation_errors());
 
-          $this->load->view('include/header2');
+            $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+            $this->load->view('include/header2', $brands);
           $this->load->view('page-profile-settings', $data);
           $this->load->view('include/footer');
         }
@@ -1281,7 +1337,9 @@ class Home extends CI_Controller{
           $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
           // $this->session->set_flashdata('error', validation_errors());
 
-          $this->load->view('include/header2');
+            $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+            $this->load->view('include/header2', $brands);
           $this->load->view('page-profile-settings', $data);
           $this->load->view('include/footer');
         }
@@ -1316,7 +1374,9 @@ class Home extends CI_Controller{
     $data['brands'] = $this->mhome->bed_linenBrands();
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('bed_linen', $data);
     $this->load->view('include/footer');
   }
@@ -1369,7 +1429,9 @@ class Home extends CI_Controller{
       }
     }
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('bedding_acc', $data);
     $this->load->view('include/footer');
   }
@@ -1417,7 +1479,9 @@ class Home extends CI_Controller{
     $data['special_packages'] = $this->mhome->getProducts(array('active' => 1, 'brand_id' => 0, 'cat_id' => 0),
       array('idField' => 'id', 'nameField' => 'name', 'img' => 'image'), 'tm_product', FALSE);
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('special_package', $data);
     $this->load->view('include/footer');
   }
@@ -1431,7 +1495,9 @@ class Home extends CI_Controller{
     $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
       'provinsi', FALSE);
 
-    $this->load->view('include/header2');
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
     $this->load->view('detail_special', $data);
     $this->load->view('include/footer');
   }
