@@ -662,4 +662,14 @@ class Mhome extends CI_Model{
           return FALSE;
       }
   }
+
+  function search($keyword)
+  {
+      $this->db->select('a.id,a.name,a.stars,a.image,b.image_1');
+      $this->db->from('tm_product a');
+      $this->db->join('tr_product_image b','b.id_prod=a.id','left');
+      $this->db->like('name',$keyword);
+      $query  =   $this->db->get();
+      return $query->result_array();
+  }
 }
