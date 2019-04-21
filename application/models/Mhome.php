@@ -71,6 +71,7 @@ class Mhome extends CI_Model{
   public function getPedia()
   {
       $this->db->where('status', 1);
+      $this->db->where('deleted', 0);
       $this->db->order_by('date', 'DESC');
       $this->db->limit(2);
       $query = $this->db->get('tm_agmpedia');
@@ -407,6 +408,8 @@ class Mhome extends CI_Model{
     $this->db->select('a.id, a.name, a.image, a.stars, a.position, c.image_1');
     $this->db->from('tm_product a');
       $this->db->join('tr_product_image c', 'c.id_prod = a.id', 'left');
+      $this->db->where('a.deleted', 0);
+      $this->db->where('a.active', 1);
     if ($brand != NULL) {
       $this->db->where('a.brand_id', $brand);
     }

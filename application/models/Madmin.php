@@ -41,6 +41,7 @@ class Madmin extends CI_Model {
     $this->db->join('tm_category d', 'd.id = a.cat_id', 'inner');
     $this->db->where('a.brand_id !=', 0);
     $this->db->where('a.cat_id !=', 0);
+      $this->db->where('a.deleted =', 0);
     $this->db->group_by('a.id');
     $this->db->order_by('a.id', 'desc');
       if ($filters != NULL) {
