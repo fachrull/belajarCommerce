@@ -375,18 +375,26 @@ class Mhome extends CI_Model{
     }
 
   public function getOrderList($id) {
-      $this->db->where('id_userlogin', $id);
-      $this->db->where('status_order != 1 AND status_order != 3');
+      $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, sum(b.quantity) as item_number');
+      $this->db->from('tm_order a');
+      $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id');
+      $this->db->where('a.id_userlogin', $id);
+      $this->db->where('a.status_order != 1 AND a.status_order != 3');
+      $this->db->group_by('a.id');
       $this->db->order_by('order_date', 'DESC');
-      $result = $this->db->get('tm_order');
+      $result = $this->db->get();
       return $result->result_array();
   }
 
     public function getOrderHistory($id) {
-        $this->db->where('id_userlogin', $id);
-        $this->db->where('status_order = 1 OR status_order = 3');
+        $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, sum(b.quantity) as item_number');
+        $this->db->from('tm_order a');
+        $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id');
+        $this->db->where('a.id_userlogin', $id);
+        $this->db->where('a.status_order = 1 OR a.status_order = 3');
+        $this->db->group_by('a.id');
         $this->db->order_by('order_date', 'DESC');
-        $result = $this->db->get('tm_order');
+        $result = $this->db->get();
         return $result->result_array();
     }
 
