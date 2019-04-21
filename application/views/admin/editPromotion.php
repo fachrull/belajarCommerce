@@ -17,12 +17,13 @@
                             <?php endif; ?>
                             <!-- /ALERT -->
                             <?= form_open_multipart('admin/editpromotion/'.$promotion['id'], array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
-                            <label>
-                                <div class="input-group date">
+                            <label class="input mb-10">
+                                <label><strong>Promotion Name</strong></label>
                                     <input placeholder="Promotion Name" name="name" type="text" value="<?=$promotion['name']?>" class="form-control pull-right">
-                                </div>
+                                </label>
                             </label>
-                            <label>
+                            <label class="mb-10">
+                            <label><strong>Start Period</strong></label>
                             <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -31,7 +32,8 @@
                             </div>
                             </label>
                             <!-- /.input group -->
-                            <label>
+                            <label class="mb-10">
+                            <label><strong>End Period</strong></label>
                             <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd">
                                 <div class="input-group-addon">
                                     <i class="fa fa-calendar"></i>
@@ -40,6 +42,7 @@
                             </div>
                             </label>
                             <div class="box-body pad pt-10 pl-0 pr-0 mb-10">
+                            <label><strong>Description</strong></label>
                                 <textarea id="desc" name="desc" rows="10" cols="80"
                                           placeholder="Description"><?=$promotion['description']?></textarea>
                             </div>
