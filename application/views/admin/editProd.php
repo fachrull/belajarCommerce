@@ -83,6 +83,7 @@
                                         <?php foreach ($products as $product): ?>
                                             <tr id="<?=$product->size_id;?>">
                                                 <td class="size-value hide"><?=$product->size_id;?></td>
+                                                <td class="item-value hide"><?=$product->item_id;?></td>
                                                 <td class="sku-value">0</td>
                                                 <td class="size-name-value">
                                                     <?=$product->size_name;?> (<?=$product->size;?>)

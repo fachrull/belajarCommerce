@@ -102,12 +102,18 @@ $(function(){
            dataType: "json",
            success: function(response){
                var rowId = Math.random().toString(36).substr(2, 5);
+               var item = Math.random() * -1;
+               console.log(item);
                $("#table_sizePrice").find('tbody')
                   .append($('<tr>')
                       .attr('id', size)
                       .append($('<td>')
                           .attr('class', 'size-value hide')
                               .append(size)
+                      )
+                      .append($('<td>')
+                          .attr('class', 'item-value hide')
+                          .append(item)
                       )
                       .append($('<td>')
                           .attr('class', 'sku-value')
@@ -257,6 +263,14 @@ $(function () {
             $("#addProd").append($('<input>')
                 .attr('type', 'hidden')
                 .attr('name', 'size[]')
+                .val($(this).html()))
+        });
+
+        $("#table_sizePrice .item-value").each(function(){
+            // sizes.push($(this).html())
+            $("#addProd").append($('<input>')
+                .attr('type', 'hidden')
+                .attr('name', 'item[]')
                 .val($(this).html()))
         });
 
