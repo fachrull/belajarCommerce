@@ -55,12 +55,12 @@
                             <div class="row ml-0 mr-0">
                               <div class="col-6 col-md-6">
                                 <label class="fs-12 mb-0">Nomor Transaksi</label>
-                                <label class="pt-0 fs-16"><?= $detailOrder[0]->order_number?></label>
+                                <label class="pt-0 fs-16"><?= $detailOrder[0]['order_number']?></label>
                               </div>
 
                               <div class="col-6 col-md-6 pt-10">
                                   <?php
-                                  switch($detailOrder[0]->status_order) {
+                                  switch($detailOrder[0]['status_order']) {
                                       case 1:
                                           echo "<span class=\"badge badge-success float-right\">Pesanan Selesai</span>";
                                           break;
@@ -87,20 +87,20 @@
                               <div class="row ml-0 mr-0">
                                   <div class="col-6 col-md-6">
                                       <label class="fs-12 mb-0">Tanggal Order</label>
-                                      <label class="pt-0 fs-16"><?= $detailOrder[0]->order_date?></label>
+                                      <label class="pt-0 fs-16"><?= $detailOrder[0]['order_date']?></label>
                                   </div>
                                   <div class="col-6 col-md-6">
                                       <label class="fs-12 mb-0">Total Pembayaran</label>
-                                      <label class="pt-0 fs-16">Rp. <?= number_format(floatval($detailOrder[0]->total), 0, ',', '.')?></label>
+                                      <label class="pt-0 fs-16">Rp. <?= number_format(floatval($detailOrder[0]['total']), 0, ',', '.')?></label>
                                   </div>
                               </div>
                             <hr>
 
                             <label class="fs-12 mb-0">Alamat Pengiriman</label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->address?></label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->kecamatan.', '.$detailOrder[0]->kabupaten?></label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->kabupaten.','.$detailOrder[0]->postcode?></label>
-                            <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder[0]->phone?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]['address']?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]['kecamatan'].', '.$detailOrder[0]['kabupaten']?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]['kabupaten'].','.$detailOrder[0]['postcode']?></label>
+                            <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder[0]['phone']?></label>
 
                             <hr>
 
@@ -109,22 +109,35 @@
                             <?php foreach ($detailOrder as $order): ?>
                                 <div class="card card-success rad-0 mb-20">
                                     <div class="card-heading">
-                                        <p class="card-title mb-0 mt-0"><strong><?= $order->name?></strong></p>
+                                        <p class="card-title mb-0 mt-0"><strong><?= $order['name']?></strong></p>
                                     </div>
                                     <div class="testimonial">
-                                        <figure class="float-left ml-15">
-                                            <img class="square" src="<?= base_url('asset/upload/'.$order->image)?>" alt="" />
-                                        </figure>
-                                        <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
-                                            <p>Jumlah: <?= $order->quantity?></p>
-                                            <p>Size: <?= $order->size_name.' ('.$order->size.')'?></p>
-                                            <p>Harga Total: Rp. <?= number_format(floatval($order->subtotal), 0, ',', '.')?></p>
-                                        </div>
+                                        <?php if ($order['type'] == 'special'): ?>
+                                            <figure class="float-left ml-15">
+                                                <img class="square" src="<?= base_url('asset/upload/special-package/'.$order['image'])?>" alt="" />
+                                            </figure>
+                                                <?php foreach ($order['items'] as $item){ ?>
+                                                <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
+                                                    <p>Items:</p>
+                                                    <li>
+                                                        <?= $item['prod']?> - <?=$item['sizeName']?> × <?= $item['quantity']?>
+                                                    </li>
+                                                </div>
+                                                    <?php       } ?>
+                                        <?php else: ?>
+                                            <figure class="float-left ml-15">
+                                                <img class="square" src="<?= base_url('asset/upload/'.$order['image_1'])?>" alt="" />
+                                            </figure>
+                                            <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
+                                                <p>Jumlah: <?= $order['quantity']?></p>
+                                                <p>Size: <?= $order['size_name'].' ('.$order['size'].')'?></p>
+                                                <p>Harga Total: Rp. <?= number_format(floatval($order['subtotal']), 0, ',', '.')?></p>
+                                            </div>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             <?php endforeach;?>
                             <!-- /item -->
-
                             <hr>
                           </div>
 

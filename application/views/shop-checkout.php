@@ -480,7 +480,7 @@
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
-                              <small><?= $option['prod']?> × <?= $option['quantity']?></small>
+                              <small><?= $option['prod']?> - <?=$option['sizeName']?> × <?= $option['quantity']?></small>
                             </li>
                           <?php endforeach; ?>
                         </ul>
