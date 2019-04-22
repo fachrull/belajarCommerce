@@ -146,7 +146,7 @@
 
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-												<a class="btn btn-sm btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+												<a class="btn btn-md btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
 													<i class="fa fa-eye"></i> View Detail
 												</a><!-- add .clean to remove css characteres -->
 											</div>

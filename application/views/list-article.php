@@ -1,5 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
+<style>
+div.side-nav ul>li>a.dropdown-toggle:before{content:"\f107";font-family:FontAwesome;position:absolute;font-size:17px;right:20px;top:4px;color:#999;}
+</style>
+
 <section class="page-header page-header-md">
 			<div class="container">
 
@@ -37,7 +41,7 @@
 							<ul id="rp" class="list-group list-group-bordered list-group-noicon">
 								<?php foreach ($pedias as $pedia): ?>
 									<li class="list-group-item">
-										<a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">
+										<a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">
 											<span class="fs-13 text-muted float-right"></span> <?= $pedia['title'];?> <br>
 										</a>
 									</li>
@@ -51,13 +55,13 @@
 
 							<ul id="archieve" class="list-group list-group-bordered list-group-noicon uppercase">
 								<li class="list-group-item active">
-									<a class="dropdown-toggle" href="#">2019</a>
+									<a class="pt-8 pb-0 dropdown-toggle" href="#">2019</a>
 									<ul>
 										<li class="list-group-item active">
 											<a class="dropdown-toggle" href="#">Jan (4)</a>
-											<ul>
+											<ul class="pt-0">
 												<?php foreach ($pedias as $pedia): ?>
-													<li class="bullet-bar"><a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
+													<li class="bullet-bar"><a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
 												<?php endforeach; ?>
 											</ul>
 										</li>
@@ -70,8 +74,20 @@
 					</div>
 
 					<!-- RIGHT -->
-					<div class="col-md-9 col-sm-9">
+					<div class="pajinate col-md-9 col-sm-9" data-pajinante-items-per-page="3"
+					 data-pajinate-container=".pajinate-container">
 
+					 <div class="pajinate-nav clearfix shop-list-options mb-20">
+
+						<!-- Pagination Default -->
+						<ul class="pagination m-0 float-right">
+							<!-- pages added by pajinate plugin -->
+						</ul>
+						<!-- /Pagination Default -->
+
+					</div>
+
+						<ul class="pajinate-container pl-0">
 						<?php foreach ($pedias as $pedia): ?>
 							<!-- POST ITEM -->
 							<div class="blog-post-item" style="height:220px">
@@ -92,19 +108,16 @@
 								</div>
 
 							</div>
+							
 							<!-- /POST ITEM -->
 						<?php endforeach; ?>
-
+						</ul>
 
 						<!-- PAGINATION -->
-						<div class="text-center">
-							<!-- Pagination Default -->
-							<ul class="pagination m-0">
-							<?php if(count($pedias) < 5) { ?>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-						<?php } ?>
+						<div class="pajinate-nav text-center">
+							<ul class="pagination">
+								<!-- pages added by pajinate plugin -->
 							</ul>
-							<!-- /Pagination Default -->
 						</div>
 						<!-- /PAGINATION -->
 
