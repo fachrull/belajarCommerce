@@ -70,8 +70,20 @@
 					</div>
 
 					<!-- RIGHT -->
-					<div class="col-md-9 col-sm-9">
+					<div class="pajinate col-md-9 col-sm-9" data-pajinante-items-per-page="3"
+					 data-pajinate-container=".pajinate-container">
 
+					 <div class="pajinate-nav clearfix shop-list-options mb-20">
+
+						<!-- Pagination Default -->
+						<ul class="pagination m-0 float-right">
+							<!-- pages added by pajinate plugin -->
+						</ul>
+						<!-- /Pagination Default -->
+
+					</div>
+
+						<ul class="pajinate-container pl-0">
 						<?php foreach ($pedias as $pedia): ?>
 							<!-- POST ITEM -->
 							<div class="blog-post-item" style="height:220px">
@@ -92,19 +104,16 @@
 								</div>
 
 							</div>
+							
 							<!-- /POST ITEM -->
 						<?php endforeach; ?>
-
+						</ul>
 
 						<!-- PAGINATION -->
-						<div class="text-center">
-							<!-- Pagination Default -->
-							<ul class="pagination m-0">
-							<?php if(count($pedias) < 5) { ?>
-								<li class="page-item active"><a class="page-link" href="#">1</a></li>
-						<?php } ?>
+						<div class="pajinate-nav text-center">
+							<ul class="pagination">
+								<!-- pages added by pajinate plugin -->
 							</ul>
-							<!-- /Pagination Default -->
 						</div>
 						<!-- /PAGINATION -->
 

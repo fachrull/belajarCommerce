@@ -68,7 +68,7 @@
 					</div>
 
 					<!-- RIGHT -->
-					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="8"
+					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="12"
 					 data-pajinate-container=".pajinate-container">
 					    <?php if($products == NULL):?>
                             <p align:"center">Product tidak tersedia</p>
@@ -81,17 +81,6 @@
 								<!-- pages added by pajinate plugin -->
 							</ul>
 							<!-- /Pagination Default -->
-
-							<div class="options-left">
-								<select>
-									<option value="pos_asc">A-Z</option>
-									<option value="pos_desc">Z-A</option>
-									<option value="name_asc">Price Low to High</option>
-									<option value="name_desc">Price High to Low</option>
-									<option value="price_asc">Position ASC</option>
-									<option value="price_desc">Position DESC</option>
-								</select>
-							</div>
 
 						</div>
 						<!-- /LIST OPTIONS -->
