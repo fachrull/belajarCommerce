@@ -218,7 +218,7 @@ class Home extends CI_Controller{
 
   public function checkPricebyProdSize($idProd, $idSize){
       $data = $this->mhome->getProducts(array('prod_id'=>$idProd, 'id'=> $idSize),
-        array('priceField'=>'price'), 'tr_product_size', TRUE);
+        NULL, 'tr_product_size', TRUE);
       if($data){
         print_r(json_encode($data));
       }else{
@@ -382,6 +382,7 @@ class Home extends CI_Controller{
   public function addToCart($idDistrict) {
     // store id product to variable id_prod
     $id_prod = $this->input->post('product_id');
+    $sku = $this->input->post('sku');
 
     // quantity order
     $qty = $this->input->post('qty');
@@ -394,7 +395,7 @@ class Home extends CI_Controller{
     $prod_name = rtrim($prod_name, $product_name_rules);
     $prod_name = str_replace('(', '- ', $prod_name);
 
-    $price = $this->mhome->getProducts(array('prod_id' => $id_prod), array('prc' => 'price'), 'tr_product_size', TRUE);
+    $price = $this->mhome->getProducts(array('id' => $sku), array('prc' => 'price'), 'tr_product_size', TRUE);
 
     // checking brand product
     $product = $this->mhome->getProducts(array('id' => $id_prod), NULL, 'tm_product', TRUE);
