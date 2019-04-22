@@ -645,10 +645,11 @@ class Admin extends CI_Controller {
 
 
             if ($this->form_validation->run() === TRUE) {
+                $brand = $this->input->post('brand');
 
                 // data for input tm_product
                 $items = array(
-                    'brand_id'    => $this->input->post('brand'),
+                    'brand_id'    => $brand,
                     'cat_id'      => $this->input->post('cat'),
                     'name'        => $this->input->post('pName'),
                     'stars'       => $this->input->post('star'),
@@ -696,6 +697,27 @@ class Admin extends CI_Controller {
                     $this->madmin->inputData('tr_product_size', $prodSizePrice);
 //                        print_r($prodSizePrice);
                 }
+
+                // change position
+                $position = $this->input->post('position');
+
+                // search id from new position
+                $productByDestPos = $this->madmin->getProducts(array('position' => $position, 'brand_id' => $brand),
+                    array('idField' => 'id'), 'tm_product', TRUE);
+
+                // switch product position
+                if ($productByDestPos != NULL) {
+                    // recent product position
+                    $recentPosition = $this->madmin->getProducts(array('id' => $productId),
+                        array('positionField' => 'position'), 'tm_product', TRUE);
+
+                    if ($recentPosition['position'] != $position) {
+                        $this->madmin->updateData(array('id' => $productByDestPos['id']),
+                            'tm_product', array('position' => $recentPosition['position']));
+                    }
+                }
+
+                $this->madmin->updateData(array('id' => $productId), 'tm_product', array('position' => $position));
 
                 $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
                     array('nameField' => 'name'), 'tm_brands', TRUE);

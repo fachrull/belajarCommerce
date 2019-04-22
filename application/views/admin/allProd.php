@@ -54,6 +54,7 @@
                 <th>Category</th>
                 <th>Product</th>
                 <th>Stars</th>
+                <th>Position</th>
                 <th>Action</th>
               </thead>
               <tbody>
@@ -73,6 +74,7 @@
                         <?php endfor; ?>
                       <?php endif; ?>
                     </td>
+                      <td><?=$product['position']?></td>
                     <td>
                       <a href="<?= site_url('admin/detailProd/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                       <a href="<?= site_url('admin/deleteProd/'.$product['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>

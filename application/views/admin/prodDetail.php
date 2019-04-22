@@ -59,6 +59,10 @@
                         <?php endfor; ?>
                       <?php endif; ?>
                     </div>
+                      <div class="col-xs-12">
+                          <label class="input"> Position</label>
+                          <?=$product['position']?>
+                      </div>
                   </div>
                 </div>
             <div class="col-xs-12">
