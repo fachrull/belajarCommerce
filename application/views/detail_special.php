@@ -180,6 +180,7 @@
 						<div id="shoppingForm" class="row text-center">
 							<form id="cart_form" class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
 								<input type="hidden" id="product_id" name="product_id" value="<?= $specialPckg['id'];?>" />
+                                <input type="hidden" id="sku" name="sku" />
 								<input type="hidden" name="product_name" value="<?= $specialPckg['name'];?>" />
 								<input type="hidden" id="price" name="price" />
 								<input type="hidden" id="size-name" name="size-name" />

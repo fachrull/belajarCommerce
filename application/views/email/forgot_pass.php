@@ -6,7 +6,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Set up a new password for [Product Name]</title>
+  <title>Set up a new password for AGM Web Store</title>
 
 
 </head>
@@ -52,7 +52,7 @@
   </style>
   <span class="preheader"
     style="box-sizing: border-box; display: none !important; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 1px; line-height: 1px; max-height: 0; max-width: 0; mso-hide: all; opacity: 0; overflow: hidden; visibility: hidden;">Use
-    this link to reset your password. The link is only valid for 24 hours.</span>
+    this link to reset your password.</span>
   <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0"
     style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; margin: 0; padding: 0; width: 100%;"
     bgcolor="#F2F4F6">
@@ -86,9 +86,9 @@
                     <img src="<?= base_url('asset/logo-agm/favicon.png');?>" alt="AGM">
                     <h1
                       style="box-sizing: border-box; color: #2F3133; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 19px; font-weight: bold; margin-top: 0;"
-                      align="left">Hi {{name}},</h1>
+                      align="left">Hi,</h1>
                     <p style="box-sizing: border-box; color: #74787E; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 16px; line-height: 1.5em; margin-top: 0;"
-                      align="left">You recently requested to reset your password for your [Product Name] account. Use
+                      align="left">You recently requested to reset your password for your AGM Web Store account. Use
                       the button below to reset it.</p>
 
                     <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0"
@@ -107,7 +107,7 @@
                                   <tr>
                                     <td
                                       style="box-sizing: border-box; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; word-break: break-word;">
-                                      <a href="{{action_url}}" class="button button--green" target="_blank"
+                                      <a href="<?= site_url('auth/changeForgotPass/'.$message); ?>" class="button button--green" target="_blank"
                                         style="-webkit-text-size-adjust: none; background: #22BC66; border-color: #22bc66; border-radius: 3px; border-style: solid; border-width: 10px 18px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); box-sizing: border-box; color: #FFF; display: inline-block; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; text-decoration: none;">Reset
                                         your password</a>
                                     </td>
@@ -134,7 +134,7 @@
                             into your web browser.</p>
                           <p class="sub"
                             style="box-sizing: border-box; color: #74787E; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 12px; line-height: 1.5em; margin-top: 0;"
-                            align="left">{{action_url}}</p>
+                            align="left"><?= site_url('auth/changeForgotPass/'.$message); ?></p>
                         </td>
                       </tr>
                     </table>
