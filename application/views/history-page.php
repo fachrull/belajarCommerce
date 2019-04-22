@@ -38,17 +38,27 @@
             <!-- /CATEGORIES -->
 
             <!-- RIGHT -->
-            <div class="col-12 col-md-9 mb-80 order-md-2 order-lg-1">
+            <div class="col-12 col-md-9 mb-80 order-md-2 order-lg-1 pajinate" data-pajinante-items-per-page="5"
+                     data-pajinate-container=".pajinate-container">
+                     
 
                 <div class="side-custom-content float-left mt-0">
 
                     <div class="row">
                         <div class="col-12 col-md-12">
-                            <h2 class="fs-16 font-regular mb-20 mt-6">
+                            <h2 class="fs-16 font-regular mb-20 mt-6 float-left">
                                 <i class="fa fa-bar-chart-o mr-10"></i> History Transaksi
                             </h2>
+                            <div class="pajinate-nav clearfix shop-list-options mb-20">
+					            <!-- Pagination Default -->
+					            <ul class="pagination m-0 float-right">
+					            	<!-- pages added by pajinate plugin -->
+					            </ul>
+					            <!-- /Pagination Default -->
+				            </div>
                             <?php if ($orderList != NULL): ?>
                                 <!-- item -->
+                                <ul class="pajinate-container pl-0">
                                 <?php foreach ($orderList as $myOrder): ?>
                                     <div class="card card-success hover-shadow rad-0">
                                         <div class="card-heading">
@@ -106,6 +116,7 @@
                                     </div>
 
                                 <?php endforeach; ?>
+                                </ul>
                                 <!-- /item -->
                             <?php else: ?>
                                 <div class="alert alert-light b-0">
