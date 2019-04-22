@@ -94,7 +94,7 @@
 										<div class="thumbnail">
 											<!-- product image(s) -->
 											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
-												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="product name" />
+												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image_1']);?>" alt="product name" />
 											</a>
 											<!-- /product image(s) -->
 
@@ -118,9 +118,9 @@
 
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-												<a class="btn btn-oldblue" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
-													<i class="fa fa-cart-plus"></i> Add to Cart
-												</a><!-- add .clean to remove css characteres -->
+                                                <a class="btn btn-md btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+                                                    <i class="fa fa-eye"></i> View Detail
+                                                </a><!-- add .clean to remove css characteres -->
 											</div>
 											<!-- /buttons -->
 										</div>
