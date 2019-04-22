@@ -28,7 +28,16 @@
                             <div class="form-group">
                                 <label><strong>Client Key</strong></label>
                                 <input type="text" class="form-control" name="clientkey" value="<?= $midtransConfig['client_key'] ?>">
-                            </div>
+							</div>
+							<div class="form-group">
+								<label>Production</label>
+								<br>
+              				  	<label><input type="radio" name="r1" class="minimal" checked></label>
+              				  	<label>Yes</label>
+								<br>
+								<label><input type="radio" name="r1" class="minimal"></label>
+								<label>No</label>
+              				</div>
 							<div class="row mt-10">
 								<div class="col-md-6 text-left">
 									<a href="<?=site_url('/')?>" class="btn btn-oldblue btn-default">Cancel</a>
