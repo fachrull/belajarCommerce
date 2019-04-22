@@ -354,6 +354,7 @@
                                 // });
                                 $("div.toggle.active > label").trigger("click");
                             });
+                            $("#sku").val(response[0].idTr);
                         } else {
                             $('#stockDetail').hide();
                             $('#shoppingForm').hide();
@@ -378,6 +379,7 @@
                         console.log(response);
                         $("#price2").html("Rp. " + formatter.format(response.price));
                         $("#price").val(response.price);
+                        $("#sku").val(response.id);
                     }
                 });
             }
