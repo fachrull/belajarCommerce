@@ -433,11 +433,12 @@ class Mhome extends CI_Model{
   }
 
   public function bed_linenProducts($brand = NULL){
-    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image, a.stars, d.position');
+    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image, a.stars, d.position, e.image_1');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
     $this->db->join('tr_product_bed_linen d', 'd.prod_id = a.id', 'left');
+      $this->db->join('tr_product_image e', 'e.id_prod = a.id', 'left');
     $this->db->order_by('d.position', 'asc');
     if ($brand == NULL) {
       $this->db->where('a.cat_id', 2);
@@ -469,11 +470,12 @@ class Mhome extends CI_Model{
   }
 
   public function beddingAcc($brand = NULL, $category = NULL){
-    $this->db->select('a.position, b.id, b.name, b.image, b.stars');
+    $this->db->select('a.position, b.id, b.name, b.image, b.stars, e.image_1');
     $this->db->from('tr_product_bedding_acc a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->join('tm_brands c', 'c.id = b.brand_id', 'left');
     $this->db->join('tm_category d', 'd.id = b.cat_id', 'left');
+      $this->db->join('tr_product_image e', 'e.id_prod = b.id', 'left');
     $this->db->order_by('a.position', 'asc');
     $where = array(
       'b.cat_id !='   => 1,
@@ -606,9 +608,10 @@ class Mhome extends CI_Model{
   }
 
   public function listBestSeller_Product($brand = NULL, $cat = NULL){
-    $this->db->select('b.id as id, b.name, b.image, b.stars, a.position');
+    $this->db->select('b.id as id, b.name, b.image, b.stars, a.position, c.image_1');
     $this->db->from('tr_product_best_seller a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+      $this->db->join('tr_product_image c','c.id_prod=b.id','left');
     $this->db->order_by('b.position', 'asc');
     if ($brand != NULL && $cat != NULL) {
       $where = array(
@@ -636,9 +639,10 @@ class Mhome extends CI_Model{
   }
 
   public function topthree_bestSeller(){
-    $this->db->select('b.id, a.position, b.name, b.image');
+    $this->db->select('b.id, a.position, b.name, c.image_1 as image');
     $this->db->from('tr_product_best_seller a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+      $this->db->join('tr_product_image c', 'c.id_prod = b.id', 'left');
     $this->db->limit(3);
     $this->db->order_by('a.position', 'asc');
     $query = $this->db->get();
