@@ -1,5 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
+<style>
+div.side-nav ul>li>a.dropdown-toggle:before{content:"\f107";font-family:FontAwesome;position:absolute;font-size:17px;right:20px;top:4px;color:#999;}
+</style>
+
 <section class="page-header page-header-md">
 			<div class="container">
 
@@ -37,7 +41,7 @@
 							<ul id="rp" class="list-group list-group-bordered list-group-noicon">
 								<?php foreach ($pedias as $pedia): ?>
 									<li class="list-group-item">
-										<a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">
+										<a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">
 											<span class="fs-13 text-muted float-right"></span> <?= $pedia['title'];?> <br>
 										</a>
 									</li>
@@ -51,13 +55,13 @@
 
 							<ul id="archieve" class="list-group list-group-bordered list-group-noicon uppercase">
 								<li class="list-group-item active">
-									<a class="dropdown-toggle" href="#">2019</a>
+									<a class="pt-8 pb-0 dropdown-toggle" href="#">2019</a>
 									<ul>
 										<li class="list-group-item active">
 											<a class="dropdown-toggle" href="#">Jan (4)</a>
-											<ul>
+											<ul class="pt-0">
 												<?php foreach ($pedias as $pedia): ?>
-													<li class="bullet-bar"><a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
+													<li class="bullet-bar"><a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
 												<?php endforeach; ?>
 											</ul>
 										</li>
