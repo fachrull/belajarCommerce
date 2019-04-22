@@ -341,14 +341,13 @@ class Mhome extends CI_Model{
 
     $this->db->from('tm_order a');
     $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-    $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
-    $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
+    $this->db->join('tr_product_size b', 'b.id = aa.id_tr_Product', 'left');
+    $this->db->join('tm_product c', 'c.id = b.prod_id', 'inner');
     $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
     $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
     $this->db->join('kabupaten h', 'h.id_kab = f.city', 'left');
     $this->db->join('kecamatan i', 'i.id_kec = f.sub_district', 'left');
-    $this->db->join('tr_product_size j', 'j.id = b.id_product_size', 'left');
-    $this->db->join('tm_size k', 'k.id = j.size_id', 'left');
+    $this->db->join('tm_size k', 'k.id = b.size_id', 'left');
     $where = array('a.id' => $idOrder, 'a.id_userLogin' => $idCustomer);
     $this->db->where($where);
     $query = $this->db->get();

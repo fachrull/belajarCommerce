@@ -943,7 +943,7 @@ class Home extends CI_Controller{
     }
   }
 
-  public function purchase($orderId){
+  public function purchase($orderId, $snapResponse){
     if ($this->session->userdata('uType') == 4) {
       $cart = $this->cart->contents();
       if ($cart != NULL) {
@@ -954,6 +954,12 @@ class Home extends CI_Controller{
           $address_detail['id_address'] = $cart['id_address'];
         }
         $idUserLogin = $this->session->userdata('uId');
+        $statusOrder = 2;
+        if ($snapResponse == 200) {
+            $statusOrder = 4;
+        } else {
+            $statusOrder = 2;
+        }
 
         $rand = rand(1, 999);
         $data_order = array(
@@ -961,7 +967,7 @@ class Home extends CI_Controller{
           'id_userlogin'    => $idUserLogin,
           'total'           => $this->cart->total(),
           'address_detail'  => $address_detail['id_address'],
-          'status_order'    => 2,
+          'status_order'    => $statusOrder,
         );
         print_r($data_order);echo "</br></br>";
         $this->mhome->inputData('tm_order', $data_order);

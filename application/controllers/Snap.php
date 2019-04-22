@@ -6,7 +6,7 @@ class Snap extends CI_Controller {
     {
         parent::__construct();
         // TODO: get server-key
-        $params = array('server_key' => 'server-key', 'production' => false);
+        $params = array('server_key' => 'SB-Mid-server--tJLtZ_iEZ3G_oN_ixz3rtF3', 'production' => false);
         $this->load->library('midtrans');
         $this->midtrans->config($params);
 		$this->load->helper('url');
@@ -121,7 +121,7 @@ class Snap extends CI_Controller {
         $successStatusCode = array('200', '201', '202');
     	$result = json_decode($this->input->post('result_data'));
     	if (in_array($result->status_code, $successStatusCode)) {
-    	    redirect('home/purchase/'.$result->order_id);
+    	    redirect('home/purchase/'.$result->order_id.'/'.$result->status_code);
         }
     	echo 'RESULT <br><pre>';
     	print_r($result);

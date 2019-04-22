@@ -184,7 +184,7 @@ class Mstore extends CI_Model{
     $this->db->from('tm_order as a');
       $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
     $this->db->join('tm_customer_detail as b', 'b.id = a.address_detail', 'left');
-    $this->db->join('tr_product as c', 'c.id = aa.id_tr_Product', 'left');
+    $this->db->join('tr_product as c', 'c.id_product_size = aa.id_tr_Product', 'left');
     $this->db->group_by('a.order_number');
     $where = array('c.id_store' => $idStore);
     $this->db->where($where);
@@ -204,11 +204,11 @@ class Mstore extends CI_Model{
     public function getDetailOrder($idOrder, $idCustomer){
         $this->db->select('a.id, a.order_number, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, aa.id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
       f.first_name, f.last_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
-      k.name as size_name, k.size, l.first_name, l.last_name');
+      k.name as size_name, k.size');
 
         $this->db->from('tm_order a');
         $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-        $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
+        $this->db->join('tr_product b', 'b.id_product_size = aa.id_tr_Product', 'left');
         $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
         $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
         $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
@@ -217,7 +217,6 @@ class Mstore extends CI_Model{
         $this->db->join('kecamatan i', 'i.id_kec = f.sub_district', 'left');
         $this->db->join('tr_product_size j', 'j.id = b.id_product_size', 'left');
         $this->db->join('tm_size k', 'k.id = j.size_id', 'left');
-        $this->db->join('tm_customer l', 'l.id_userlogin = a.id_userlogin');
         $where = array('a.id' => $idOrder, 'a.id_userLogin' => $idCustomer);
         $this->db->where($where);
         $query = $this->db->get();
