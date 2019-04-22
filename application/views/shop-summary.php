@@ -3,7 +3,7 @@
         src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="SB-Mid-client-37nPUlOf7Jos2Y8R"></script>
 
-<section class="page-header page-header-md">
+<section class="page-header page-header-md">    
   <div class="container">
     <h1>Cart Summary</h1>
   </div>

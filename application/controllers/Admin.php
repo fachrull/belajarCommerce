@@ -2862,4 +2862,50 @@ class Admin extends CI_Controller {
 
     }
 
+    public function midtrans() {
+        if ($this->session->userdata('uType') == 1) {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $this->form_validation->set_rules('serverkey', 'Server Key', 'required');
+            $this->form_validation->set_rules('clientkey', 'Client Key', 'required');
+
+            if ($this->form_validation->run() == TRUE) {
+                $id = $this->input->post('id');
+                $serverKey = $this->input->post('serverkey');
+                $clientKey = $this->input->post('clientkey');
+
+                $midtransConfig = array(
+                    'server_key' => $serverKey,
+                    'client_key' => $clientKey
+
+                );
+
+                $priorConfig = $this->madmin->getProducts(array('id' => $id), NULL, 'midtrans_config', TRUE);
+                if ($priorConfig == NULL) {
+                    $this->madmin->inputData('midtrans_config', $midtransConfig);
+                } else {
+                    $this->madmin->updateData(array('id' => $id), 'midtrans_config', $midtransConfig);
+                }
+
+                $this->session->set_flashdata('success', 'midtrans configuration saved');
+
+                redirect('admin/midtrans');
+
+            } else {
+                $data['midtransConfig'] = $this->madmin->getProducts(NULL, NULL, 'midtrans_config', TRUE);
+
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/midtrans_config', $data);
+
+                $this->load->view('include/admin/footer');
+            }
+        } else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+    }
+
 }
