@@ -2156,7 +2156,7 @@ class Admin extends CI_Controller {
                 if (! $this->upload->do_upload('imageSP')) {
                     $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
 
-                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    $this->session->set_flashdata('errorSpecialPackage', $this->upload->display_errors());
 
                     $this->load->view('include/admin/header');
                     $this->load->view('include/admin/left-sidebar');

@@ -8,9 +8,9 @@
           <div class="row">
           <div class="col-md-12 col-sm-6">
             <!-- ALERT -->
-            <?php if($this->session->has_userdata('error')): ?>
+            <?php if($this->session->has_userdata('errorSpecialPackage')): ?>
               <div class="alert alert-mini alert-danger mb-30">
-                <strong>Oh snap!</strong> <?= $this->session->flashdata('error');?>
+                <strong>Oh snap!</strong> <?= $this->session->flashdata('errorSpecialPackage');?>
               </div>
             <?php elseif($this->input->post('items') == NULL): ?>
               <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
