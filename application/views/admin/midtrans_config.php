@@ -31,12 +31,22 @@
 							</div>
 							<div class="form-group">
 								<label>Production</label>
+
+                                <?php if ($midtransConfig['production'] == 1): ?>
 								<br>
-              				  	<label><input type="radio" name="r1" class="minimal" checked></label>
+              				  	<label><input type="radio" name="production" value="1" class="minimal" checked></label>
               				  	<label>Yes</label>
 								<br>
-								<label><input type="radio" name="r1" class="minimal"></label>
+								<label><input type="radio" name="production" value="0" class="minimal"></label>
 								<label>No</label>
+                                <?php else: ?>
+                                    <br>
+                                    <label><input type="radio" name="production" value="1" class="minimal"></label>
+                                    <label>Yes</label>
+                                    <br>
+                                    <label><input type="radio" name="production" value="0" class="minimal" checked></label>
+                                    <label>No</label>
+                                <?php endif; ?>
               				</div>
 							<div class="row mt-10">
 								<div class="col-md-6 text-left">

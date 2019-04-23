@@ -619,6 +619,7 @@ class Home extends CI_Controller{
         }
         $data['address_shipping'] = $this->mhome->customer_detail($id_address[0]['id_cs_detail']);
         $data['carts']  = $this->cart->contents();
+        $data['midtrans'] = $this->mhome->getProducts(NULL, NULL, 'midtrans_config', TRUE);
 
           $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 

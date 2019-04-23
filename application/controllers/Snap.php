@@ -5,12 +5,13 @@ class Snap extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-        // TODO: get server-key
-        $params = array('server_key' => 'SB-Mid-server--tJLtZ_iEZ3G_oN_ixz3rtF3', 'production' => false);
-        $this->load->library('midtrans');
-        $this->midtrans->config($params);
 		$this->load->helper('url');
         $this->load->model('Mhome', 'mhome');
+        // TODO: get server-key
+        $serverKey = $this->mhome->getProducts(NULL, NULL, 'midtrans_config', TRUE);
+        $params = array('server_key' => $serverKey['server_key'], 'production' => false);
+        $this->load->library('midtrans');
+        $this->midtrans->config($params);
     }
 
     public function token()
