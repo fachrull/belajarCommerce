@@ -116,6 +116,10 @@
                                 <label><strong>Star</strong></label>
                                 <input type="number" class="form-control" min="0" max="5" name="star" value="<?=$products[0]->stars?>" placeholder="Product Star">
                             </div>
+                            <div class="form-group">
+                                <label><strong>Position</strong></label>
+                                <input type="number" class="form-control" name="position" value="<?=$products[0]->position?>" placeholder="Product Position">
+                            </div>
 							<label class="input"><b>Upload product image</b>
 							<p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
 								<input type="file" class="mt-5" name="productPict[]" />
