@@ -663,7 +663,7 @@ class Admin extends CI_Controller {
 
                 // delete product spec & size
                 $this->madmin->deleteData(array('prod_id' => $productId), 'tr_product_spec');
-                $this->madmin->deleteData(array('prod_id' => $productId), 'tr_product_size');
+//                $this->madmin->deleteData(array('prod_id' => $productId), 'tr_product_size');
 //                    exit();
 
                 // input for each spec id
@@ -677,24 +677,43 @@ class Admin extends CI_Controller {
                 }
 
                 // input for each size and price
-                $count_SizePrice = count($this->input->post('size[]'));
+                $numItem = count($this->input->post('item[]'));
                 $data_SizePrice = array(
 //                        'sku'=> $this->input->post('sku[]'),
                     'size' => $this->input->post('size[]'),
+                    'id' => $this->input->post('item[]'),
                     'price' => $this->input->post('price[]'),
                     'subprice' => $this->input->post('subprice[]')
                 );
-                for ($i=0; $i < $count_SizePrice; $i++) {
+                for ($i=0; $i < $numItem; $i++) {
                     $subPrice = $data_SizePrice['subprice'][$i] == '-' ? NULL : $data_SizePrice['subprice'][$i];
                     $prodSizePrice = array(
 //                            'sku'=> $data_SizePrice['sku'][$i],
+                        'id'    => $data_SizePrice['id'][$i],
                         'prod_id' => $productId,
                         'size_id' => $data_SizePrice['size'][$i],
                         'price'   => $data_SizePrice['price'][$i],
                         'sub_price' => $subPrice
                     );
-                    // input size and price
-                    $this->madmin->inputData('tr_product_size', $prodSizePrice);
+
+                    //check new item
+                    $item = $this->madmin->getProducts(array('id' => $data_SizePrice['id'][$i]), NULL,
+                        'tr_product_size', TRUE);
+
+                    if ($item != NULL) {
+                        $this->madmin->updateData(array('id' => $data_SizePrice['id'][$i]), 'tr_product_size', $prodSizePrice);
+                    } else {
+                        $prodSizePrice = array(
+//                            'sku'=> $data_SizePrice['sku'][$i],
+                            'prod_id' => $productId,
+                            'size_id' => $data_SizePrice['size'][$i],
+                            'price'   => $data_SizePrice['price'][$i],
+                            'sub_price' => $subPrice
+                        );
+                        $this->madmin->inputData('tr_product_size', $prodSizePrice);
+                    }
+
+
 //                        print_r($prodSizePrice);
                 }
 
