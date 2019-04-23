@@ -335,9 +335,9 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.name, c.image,
+    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.id as sku, c.brand_id, c.name, c.image,
       f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
-      k.name as size_name, k.size');
+      k.name as size_name, k.size, l.image_1');
 
     $this->db->from('tm_order a');
     $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
@@ -348,11 +348,12 @@ class Mhome extends CI_Model{
     $this->db->join('kabupaten h', 'h.id_kab = f.city', 'left');
     $this->db->join('kecamatan i', 'i.id_kec = f.sub_district', 'left');
     $this->db->join('tm_size k', 'k.id = b.size_id', 'left');
+      $this->db->join('tr_product_image l', 'l.id_prod = c.id', 'left');
     $where = array('a.id' => $idOrder, 'a.id_userLogin' => $idCustomer);
     $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
-      return $query->result();
+      return $query->result_array();
     } else {
       return FALSE;
     }
@@ -565,7 +566,7 @@ class Mhome extends CI_Model{
   }
 
   public function detail_specialPackage($idSpecialPckg){
-    $this->db->select('a.quantity, a.priceSpcl, c.name as prod, d.name as sizeName, d.size as sizeDetail');
+    $this->db->select('a.id, a.quantity, a.priceSpcl, c.name as prod, d.name as sizeName, d.size as sizeDetail');
     $this->db->from('tr_special_package a');
     $this->db->join('tr_product_size b', 'b.id = a.size_spclPkg', 'left');
     $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');

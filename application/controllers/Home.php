@@ -436,7 +436,7 @@ class Home extends CI_Controller{
       // search size_name and it detail (special package hasn't specific size so I set it blank)
       $size_name['name_size'] = '';
       $size_name['detail_size'] = '';
-      $detailSP = $this->mhome->detail_SPCart($id_prod);
+      $detailSP = $this->mhome->detail_specialPackage($id_prod);
       $options = array();
       foreach ($detailSP as $SP) {
         array_push($options, $SP);
@@ -1232,8 +1232,17 @@ class Home extends CI_Controller{
       $idCustomer = $this->session->userdata('uId');
       $data['detailOrder'] = $this->mhome->detailOrder($idOrder, $idCustomer);
 
-//      print_r($data['detailOrder'][0]->order_number);
-//
+      if($data['detailOrder'][0]['brand_id'] == 0) {
+          $data['detailOrder'][0]['type'] = 'special';
+          $data['detailOrder'][0]['items'] = $this->mhome->detail_specialPackage($data['detailOrder'][0]['sku']);
+      } else {
+          $data['detailOrder'][0]['type'] = 'retail';
+      }
+
+//      print_r($data['detailOrder']);
+//      echo "<br>";
+//      print_r($this->db->last_query());
+//      exit();
         $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
         $this->load->view('include/header2', $brands);

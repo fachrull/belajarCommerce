@@ -22,13 +22,34 @@ class Snap extends CI_Controller {
 
 		$item_details = array();
 		foreach ($carts as $item) {
-		    $item_detail = array(
-		        'id' => $item['id'],
-                'price' => $item['price'],
-                'quantity' => $item['qty'],
-                'name' => $item['name'] . ' - ' . $item['sizeName']
-            );
-		    array_push($item_details, $item_detail);
+		    // special package item
+            if($item['type'] == "special") {
+                $item_detail = array(
+                    'id' => $item['id'],
+                    'price' => $item['price'],
+                    'quantity' => $item['qty'],
+                    'name' => $item['name']
+                );
+                array_push($item_details, $item_detail);
+
+                foreach ($item['option'] as $option) {
+                    $item_option = array(
+                        'id' => $option['id'],
+                        'price' => 0,
+                        'quantity' => $option['quantity'],
+                        'name' => $option['prod'] . ' - ' . $option['sizeName']
+                    );
+                    array_push($item_details, $item_option);
+                }
+            } else {
+                $item_detail = array(
+                    'id' => $item['id'],
+                    'price' => $item['price'],
+                    'quantity' => $item['qty'],
+                    'name' => $item['name'] . ' - ' . $item['sizeName']
+                );
+                array_push($item_details, $item_detail);
+            }
         }
 
 		// Voucher item
