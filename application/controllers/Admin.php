@@ -2915,10 +2915,12 @@ class Admin extends CI_Controller {
                 $id = $this->input->post('id');
                 $serverKey = $this->input->post('serverkey');
                 $clientKey = $this->input->post('clientkey');
+                $production = $this->input->post('production');
 
                 $midtransConfig = array(
                     'server_key' => $serverKey,
-                    'client_key' => $clientKey
+                    'client_key' => $clientKey,
+                    'production' => $production
 
                 );
 

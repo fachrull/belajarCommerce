@@ -1,7 +1,7 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 <script type="text/javascript"
         src="https://app.sandbox.midtrans.com/snap/snap.js"
-        data-client-key="SB-Mid-client-37nPUlOf7Jos2Y8R"></script>
+        data-client-key="<?=$midtrans['client_key']?>"></script>
 
 <section class="page-header page-header-md">    
   <div class="container">
