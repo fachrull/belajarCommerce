@@ -71,6 +71,9 @@
             <li>
                 <a href="<?= site_url('admin/mail');?>"><i class="fa fa-gears"></i><span>Email Configuration</span></a>
             </li>
+            <li>
+                <a href="<?= site_url('admin/midtrans');?>"><i class="fa fa-gears"></i><span>Midtrans Configuration</span></a>
+            </li>
           </li>
         <?php endif; ?>
         <?php if($this->session->userdata('uType') == 2): ?>
