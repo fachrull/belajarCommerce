@@ -1855,7 +1855,7 @@ class Admin extends CI_Controller {
 
   public function delete_cover_bestSeller($idSlider){
     if ($this->session->userdata('uType') == 1) {
-      $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tn_cover', TRUE);
+      $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $file_path = 'asset/upload/best-seller-cover/'.$file['slide'];
       unlink($file_path);
       print_r($file_path);
