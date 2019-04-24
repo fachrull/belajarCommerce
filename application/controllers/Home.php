@@ -399,6 +399,7 @@ class Home extends CI_Controller{
 
     // checking brand product
     $product = $this->mhome->getProducts(array('id' => $id_prod), NULL, 'tm_product', TRUE);
+    $image = $this->mhome->getProducts(array('id' => $id_prod), NULL, 'tr_product_image', TRUE);
 
 
     if ($product['brand_id'] != 0) {
@@ -413,7 +414,7 @@ class Home extends CI_Controller{
       $type = 'retail';
 
       // image product
-      $img = $product['image'];
+      $img = $image['image_1'];
 
       // search size_name and it detail
       $size_name = $this->mhome->sizeStock($tr_prod_size['id']);

@@ -17,7 +17,8 @@
                     <th>Action</th>
                     </thead>
                     <tbody>
-                    <?php $no = 1;foreach ($transactions as $transaction): ?>
+                    <?php $no = 1;
+                    if ($transactions!= NULL) {foreach ($transactions as $transaction): ?>
                         <tr>
                             <td><?= $no?></td>
                             <td><?= $transaction['order_number']?></td>
@@ -50,7 +51,7 @@
                                 <a href="<?= site_url('stores/detailTransaction/'.$transaction['id'].'/'.$transaction['id_userlogin']);?>"><i class="btn btn-primary fa fa-info"></i></a>
                             </td>
                         </tr>
-                        <?php $no++; endforeach; ?>
+                        <?php $no++; endforeach; } ?>
                     </tbody>
                 </table>
             </div>

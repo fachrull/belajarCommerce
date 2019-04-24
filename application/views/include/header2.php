@@ -114,15 +114,38 @@
 									<a class="dropdown-toggle" href="#">
 										PRODUCT
 									</a>
-									<ul class="dropdown-menu">
-                                        <?php foreach ($brands as $brand) { ?>
-                                            <li class="dropdown">
-                                                <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/'.$brand['id']);?>">
-                                                    <?=$brand['name']?>
-                                                </a>
-                                            </li>
-                                        <?php } ?>
-									</ul>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/1');?>">
+                                                Aireloom
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/2');?>">
+                                                Kingkoil
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
+                                                Serta
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
+                                                Tempur
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
+                                                Florence
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/6');?>">
+                                                Stressless
+                                            </a>
+                                        </li>
+                                    </ul>
 								</li>
 								<li>
 									<!-- HOME -->
