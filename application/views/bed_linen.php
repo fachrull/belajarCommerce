@@ -34,9 +34,9 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-                <?php foreach ($brands as $brandBL): ?>
+                <?php if ($brands != NULL) {foreach ($brands as $brandBL): ?>
                   <li class="list-group-item"><a href="<?= site_url('home/bed_linen/'. $brandBL['id']);?>"><?= $brandBL['brand']?></a></li>
-                <?php endforeach; ?>
+                <?php endforeach; } ?>
 							</ul>
 
 						</div>
