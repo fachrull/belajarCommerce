@@ -963,14 +963,25 @@ class Home extends CI_Controller{
             $statusOrder = 2;
         }
 
-        $rand = rand(1, 999);
-        $data_order = array(
+
+          $data_order = array(
           'order_number'    => $orderId,
           'id_userlogin'    => $idUserLogin,
           'total'           => $this->cart->total(),
           'address_detail'  => $address_detail['id_address'],
-          'status_order'    => $statusOrder,
+          'status_order'    => $statusOrder
         );
+
+          // Voucher item
+          $keys = array_keys($cart);
+          $voucher = $cart['voucher'];
+          if ($voucher != NULL) {
+              $voucherDetail = $this->mhome->getProducts(array('kode_voucher' => $voucher), NULL, 'tm_voucher', TRUE);
+              $discount = floatval($this->cart->total() * $voucherDetail['discount']);
+              $data_order['id_voucher'] = $voucherDetail['id'];
+              $data_order['total'] = $this->cart->total() - $discount;
+          }
+
         print_r($data_order);echo "</br></br>";
         $this->mhome->inputData('tm_order', $data_order);
         $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);

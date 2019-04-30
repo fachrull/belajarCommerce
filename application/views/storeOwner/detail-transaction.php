@@ -116,17 +116,17 @@
                     </div>
                     <table class="table ml-10">
                         <tr>
-                            <th>Daftar Produk</th>
+                            <th>Detail Pesanan</th>
                         </tr>
                     </table>
                     <div class="box-body">
-                        <table id="dataTable" class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped">
                             <thead>
                             <th>No.</th>
                             <th>Product</th>
                             <th>Size</th>
                             <th>Quantity</th>
-                            <th>Sub price</th>
+                            <th>Total</th>
                             </thead>
                             <tbody>
                                 <?php $no = 1; foreach ($detailOrder as $order): ?>
@@ -138,6 +138,32 @@
                                         <td><?= 'Rp '.number_format(floatval($order->subtotal), 0, ',', '.')?></td>
                                     </tr>
                                 <?php $no++; endforeach; ?>
+                                <tr>
+                                    <td colspan="6">&nbsp</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">&nbsp</td>
+                                    <th>Subtotal:</th>
+                                    <td>Rp. <?php $originalPrice = $detailOrder[0]->total / (1 - $detailOrder[0]->discount);
+                                        echo number_format(floatval($originalPrice), 0, ',', '.');?></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">&nbsp</td>
+                                    <th>Diskon:</th>
+                                    <td>
+                                        <?php if($detailOrder[0]->kode_voucher == "") {
+                                            echo "-";
+                                        } else {
+                                            $discount = $originalPrice * $detailOrder[0]->discount;
+                                            echo "Rp. ".number_format(floatval($discount)). " (".$detailOrder[0]->kode_voucher . ")";
+                                        }?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">&nbsp</td>
+                                    <th>Total:</th>
+                                    <td>Rp. <?=number_format(floatval($detailOrder[0]->total), 0, ',', '.');?></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
