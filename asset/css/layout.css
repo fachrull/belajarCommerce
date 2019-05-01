@@ -11015,6 +11015,7 @@ input.form-control-footer {
 /* a.btn-exp {
 	position: absolute;
 } */
+
 .img1 {
 	height: 556px;
 }
@@ -11045,6 +11046,8 @@ input.form-control-footer {
 	height: 500px;
 	max-width: 100%;
 	width: 1000px;
+	filter: grayscale(70%) brightness(85%) sepia(25%);
+	opacity: 0.5;
 }
 
 .promotion-image-2 {
@@ -11052,6 +11055,8 @@ input.form-control-footer {
 	height: 235px;
 	max-width: 100%;
 	width: 1000px;
+	filter: grayscale(70%) brightness(85%) sepia(25%);
+	opacity: 0.5;
 }
 
 .promotion-image-3 {
@@ -11059,6 +11064,9 @@ input.form-control-footer {
 	height: 235px;
 	max-width: 100%;
 	width: 1000px;
+	filter: grayscale(70%) brightness(85%) sepia(25%);
+	opacity: 0.5;
+
 }
 
 .full-width {
@@ -11236,6 +11244,10 @@ div.tabbed>a:hover>div {
 
 .text-oldblue {
 	color: #33518F;
+}
+
+.text-grey {
+	color: #3b3b3b;
 }
 
 .group-center {
