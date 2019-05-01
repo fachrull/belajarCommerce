@@ -11047,6 +11047,12 @@ input.form-control-footer {
 	width: 1000px;
 }
 
+@media only screen and (max-width: 767px) {
+	.promotion-image-1{
+		height: 235px;
+	}
+}
+
 .promotion-image-2 {
 	position: relative;
 	height: 235px;
@@ -11081,7 +11087,6 @@ input::placeholder {
 .pedia-img-2 {
 	position: relative;
 	height: 215px;
-	/* max-width: 100%; */
 	width: 460px;
 	content: '';
 	display: inline-block;

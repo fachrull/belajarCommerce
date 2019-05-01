@@ -39,14 +39,14 @@
 	<!-- wrapper -->
 	<div id="wrapper">
 
-		<div id="header" class="navbar-toggleable-md sticky header-sm bottom clearfix">
+		<div id="header" class="navbar-toggleable-md sticky header-sm clearfix">
 
 			<!-- SEARCH HEADER -->
 			<div class="search-box over-header">
 				<a id="closeSearch" href="index-home-before-login.html" class="fa fa-remove"></a>
 
-				<form action="search-result.html" method="get">
-					<input type="text" class="form-control" placeholder="SEARCH" />
+				<form action="<?php echo site_url('home/search_keyword');?>" method = "post">
+					<input type="text" value="submit" onfocus="this.value=''" name = "keyword" />
 				</form>
 			</div>
 			<!-- /SEARCH HEADER -->
