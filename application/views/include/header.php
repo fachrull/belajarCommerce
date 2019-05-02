@@ -111,7 +111,7 @@
 								<li class="dropdown">
 									<!-- HOME -->
 									<a class="dropdown-toggle" href="#">
-										PRODUCT
+										BRANDS
 									</a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown">

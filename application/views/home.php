@@ -8,7 +8,7 @@
 
 					<!-- SLIDE 1 -->
 					<div class="swiper-slide" style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']);?>);">
-						<div class="overlay dark-5">
+						<div class="overlay dark-2">
 							<!-- dark overlay [1 to 9 opacity] -->
 						</div>
 
@@ -75,25 +75,6 @@
 				</div>
 				</div>
 
-				</div>
-				<div class="row">
-					<div class="col-12 text-center">
-						<button class="brand-button wow fadeInUp" data-wow-delay="0.4s">
-							N E W S L E T T E R
-						</button>
-						<br>
-						<button>
-						<a style="width:auto !important" class="wow fadeInUp" data-toggle="modal" data-target=".bs-example-modal-sm" data-wow-delay="0.4s">
-							<p style="width:auto !important" class="text-center">View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
-						</a>
-						</button>
-						<!-- <a style="width:auto !important" class="wow fadeInUp" data-toggle="modal" data-target=".bs-example-modal-sm" data-wow-delay="0.4s">
-							<p style="width:auto !important" class="text-center">View Detail &nbsp;<i class="fa fa-long-arrow-right" aria-hidden="true"></i></p>
-						</a> -->
-
-
-
-					</div>
 				</div>
 			</div>
 		</section>
