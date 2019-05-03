@@ -107,13 +107,11 @@
 				<div class="row">
 					<div class="col-12 col-md-4 pt-30">
 						<a class="mt-10" href="<?= base_url('home/bestSeller');?>">
-							<div class="coba">
-								<img class="promotion-image-1" src="<?= base_url('asset/upload/best-seller-cover/'.$best_seller['slide']);?>" alt="agm best seller" />
-								<div class="absolute pl-20 pb-20 bottom-center text-left">
-									<h2 class="hidden-md-down text-white">BEST<br>SELLER</h2>
-									<a class="mt-10" href="<?= base_url('home/bestSeller');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i>
-								</div>
-							</div>
+						<img class="promotion-image-1" src="<?= base_url('asset/upload/best-seller-cover/'.$best_seller['slide']);?>" alt="agm best seller" />
+						<div class="absolute pl-20 pb-20 bottom-center text-left">
+							<h2 class="text-grey">BEST<br>SELLER</h2>
+							<a class="text-grey mt-10" href="<?= base_url('home/bestSeller');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+						</div>
 						</a>
 					</div>
 
@@ -124,8 +122,8 @@
 								<div class="relative">
 									<img class="promotion-image-2" src="<?= base_url('asset/upload/special-package/cover/'.$spPackage['slide']);?>" alt="agm gallery" />
 									<div class="absolute pl-20 pb-20 bottom-center text-left">
-										<h2 class="hidden-md-down text-white">SPECIAL<br>PACKAGES</h2>
-										<a href="<?= base_url('home/specialPackage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+										<h2 class="text-grey">SPECIAL<br>PACKAGES</h2>
+										<a class="text-grey" href="<?= base_url('home/specialPackage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 									</div>
 								</a>
 								</div>
@@ -134,8 +132,8 @@
 								<a href="<?= base_url('home/bed_linen');?>">
 								<img class="promotion-image-3" src="<?= base_url('asset/upload/bed-linen-cover/'.$bedLinen['slide']);?>" alt="agm lastest collectin" />
 								<div class="absolute pl-20 pb-20 bottom-center text-left">
-									<h2 class="hidden-md-down text-white">BED<br>LINEN</h2>
-									<a href="<?= base_url('home/bed_linen');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+									<h2 class="text-grey">BED<br>LINEN</h2>
+									<a class="text-grey" href="<?= base_url('home/bed_linen');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 								</div>
 								</a>
 							</div>
@@ -143,8 +141,8 @@
 								<a href="<?= base_url('home/bedding_acc');?>">
 								<img class="promotion-image-3" src="<?= base_url('asset/upload/bedding-acc-cover/'.$beddingAcc['slide']);?>" alt="agm lastest collectin" />
 								<div class="absolute pl-20 pb-20 bottom-center text-left">
-									<h2 class="hidden-md-down text-white">BEDDING<br>ACCESSORIES</h2>
-									<a href="<?= base_url('home/bedding_acc');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+									<h2 class="text-grey">BEDDING<br>ACCESSORIES</h2>
+									<a class="text-grey" href="<?= base_url('home/bedding_acc');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 								</div>
 								</a>
 							</div>
