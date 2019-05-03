@@ -285,7 +285,7 @@ function _slider_full() {
 	}
 
 	if (jQuery("#slider").hasClass('fullheight')) {
-		jQuery("#slider.fullheight").height(_screenHeight + 100);
+		jQuery("#slider.fullheight").height(_screenHeight);
 		jQuery("#slider.fullheight-min").css({
 			"min-height": _screenHeight + "px"
 		});
