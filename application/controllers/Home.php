@@ -460,6 +460,7 @@ class Home extends CI_Controller{
       'detailSize'    => $size_name['detail_size'],
       'sub_district'  => $idDistrict,
       'option'        => $options,
+      'note'          => '',
       // 'option'        => array(
       //                   'id'            =>
       //                   'type'          =>
@@ -758,14 +759,16 @@ class Home extends CI_Controller{
         // load detail province, city, and district from the variable that we fill before
         $addressCart = $this->mhome->detail_district_cart($district_cart[0]);
 
+
         // load customer default address
         $shipping_same_with_default_address = $this->mhome->getProducts(array('sub_district' => $district_cart[0],
           'id_userlogin' => $idUserLogin, 'default_address' => 1), array('idField' => 'id', 'defaultAddress' => 'default_address'),
            'tm_customer_detail', TRUE);
 
         print_r($shipping_same_with_default_address);echo "</br></br>";
+          $note = $this->input->post('note');
 
-        // checking is shipping address has same district with default address or not
+          // checking is shipping address has same district with default address or not
         if ($shipping_same_with_default_address != NULL) {
 
           // beli   stock
@@ -813,6 +816,12 @@ class Home extends CI_Controller{
               );
               $this->cart->update($availablelity_stock);
             }
+            $orderNote = array(
+                'rowid'     => $cart['rowid'],
+                'note'      => $note
+            );
+              $this->cart->update($orderNote);
+
           }
 
           print_r($this->cart->contents());
@@ -880,6 +889,11 @@ class Home extends CI_Controller{
                 );
                 $this->cart->update($availablelity_stock);
               }
+                $orderNote = array(
+                    'rowid'     => $cart['rowid'],
+                    'note'      => $note
+                );
+                $this->cart->update($orderNote);
             }
             print_r($this->cart->contents());
             redirect('home/shop_summary');
@@ -932,6 +946,11 @@ class Home extends CI_Controller{
                 );
                 $this->cart->update($availablelity_stock);
               }
+                $orderNote = array(
+                    'rowid'     => $cart['rowid'],
+                    'note'      => $note
+                );
+                $this->cart->update($orderNote);
             }
             print_r($this->cart->contents());
             redirect('home/shop_summary');
@@ -963,13 +982,13 @@ class Home extends CI_Controller{
             $statusOrder = 2;
         }
 
-
           $data_order = array(
           'order_number'    => $orderId,
           'id_userlogin'    => $idUserLogin,
           'total'           => $this->cart->total(),
           'address_detail'  => $address_detail['id_address'],
-          'status_order'    => $statusOrder
+          'status_order'    => $statusOrder,
+          'note'            => $cart['note']
         );
 
           // Voucher item

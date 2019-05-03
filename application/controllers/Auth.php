@@ -23,7 +23,6 @@ class Auth extends CI_Controller{
 
       $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmail|valid_email');
       $this->form_validation->set_rules('password', 'Password', 'required|callback_checkingPassword');
-
       // this is block for if our form validation running unseccessly
       if ($this->form_validation->run() === FALSE) {
         $this->load->view('include/header2');
