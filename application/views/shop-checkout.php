@@ -476,7 +476,9 @@
                     <td>
                       <span class="clearfix">
                         <span class="float-left"><?= $cart['name']?></span>
-                        <br>
+												<br>
+                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<br>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
@@ -516,7 +518,9 @@
                     <td>
                       <span class="clearfix">
                         <span class="float-left"><?= $cart['name']?></span>
-                        <br>
+												<br>
+                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<br>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
@@ -551,7 +555,7 @@
             <?php endforeach; ?>
           </tbody>
         </table>
-			
+
 				<!-- /PRODUCT -->
 				<!-- TOTAL / PLACE ORDER -->
 				<div class="toggle-transparent toggle-bordered-full clearfix">

@@ -230,6 +230,9 @@ class Home extends CI_Controller{
   public function detailProduct($idProduct){
     $specs = array();
     $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
+    if ($data['product']['main_sp'] == TRUe) {
+      $data['detail_SP'] = $this->mhome->detail_specialPackage($idProduct);
+    }
     $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
     $data['brand'] = $id_brand['brand_id'];
     $data['categories'] = $this->mhome->brand_categories($id_brand['brand_id']);
@@ -257,7 +260,7 @@ class Home extends CI_Controller{
 
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('detail-product', $data);
     $this->load->view('include/footer');
   }
@@ -402,7 +405,7 @@ class Home extends CI_Controller{
     $image = $this->mhome->getProducts(array('id' => $id_prod), NULL, 'tr_product_image', TRUE);
 
 
-    if ($product['brand_id'] != 0) {
+    if ($product['main_sp'] == FALSE) {
       echo "Bukan Special Package";echo "</br></br>";
       echo "Brand = ";print_r($product['brand_id']);echo "</br></br>";
       echo "ID product = ";print_r($id_prod);echo "</br></br>";
@@ -428,15 +431,14 @@ class Home extends CI_Controller{
       $type = 'special';
 
       // image product
-      $img = 'special-package/'.$product['image'];
+      $img = $product['image'];
 
       // store id product size to variable to id_tr_prod_size
       $tr_prod_size = $this->mhome->getProducts(array('prod_id' => $id_prod), array('idField' => 'id'),
         'tr_product_size', TRUE);
 
       // search size_name and it detail (special package hasn't specific size so I set it blank)
-      $size_name['name_size'] = '';
-      $size_name['detail_size'] = '';
+      $size_name = $this->mhome->sizeStock($tr_prod_size['id']);
       $detailSP = $this->mhome->detail_specialPackage($id_prod);
       $options = array();
       foreach ($detailSP as $SP) {
@@ -1171,6 +1173,7 @@ class Home extends CI_Controller{
 
   public function promotionDetail($id){
       $data['promotion'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_promotion', TRUE);
+      $data['is_promotion'] = TRUE;
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
       $this->load->view('include/header2', $brands);
@@ -1494,29 +1497,25 @@ class Home extends CI_Controller{
 	}
 
   public function specialPackage() {
-    $data['special_packages'] = $this->mhome->getProducts(array('active' => 1, 'brand_id' => 0, 'cat_id' => 0),
-      array('idField' => 'id', 'nameField' => 'name', 'img' => 'image'), 'tm_product', FALSE);
+    $data['special_packages'] = $this->mhome->getProducts(array('active' => 1),
+      array('idField' => 'id', 'nameField' => 'name', 'img' => 'image'), 'tm_special_package', FALSE);
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('special_package', $data);
     $this->load->view('include/footer');
   }
 
   public function detailSpecial($idSpecialPckg) {
-    $data['specialPckg'] = $this->mhome->prime_specialPKG($idSpecialPckg);
-    $data['details'] = $this->mhome->detail_specialPackage($idSpecialPckg);
-    $data['bestSellers'] = $this->mhome->topthree_bestSeller();
-    $data['reviews'] = $this->mhome->getProducts(array('prod_id' => $idSpecialPckg, 'display' => 1), array('nameField' => 'name',
-    'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
-    $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
-      'provinsi', FALSE);
+    $data['is_promotion'] = FALSE;
+    $data['special_package'] = $this->mhome->getProducts(array('id' => $idSpecialPckg),
+      array('nameField' => 'name', 'img' => 'image', 'desc' => 'description',
+       'main_prod' => 'main_product'), 'tm_special_package', TRUE);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
-
-      $this->load->view('include/header2', $brands);
-    $this->load->view('detail_special', $data);
+    $this->load->view('include/header2', $brands);
+    $this->load->view('promotion-detail', $data);
     $this->load->view('include/footer');
   }
 
