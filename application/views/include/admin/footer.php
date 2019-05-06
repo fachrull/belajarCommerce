@@ -184,6 +184,13 @@ function removeSize(id) {
     $('#'+id).remove();
 }
 
+function removeSP(id) {
+  var SPtext = $("#table_prodSizeSP tbody").find('tr').attr('id', id).find('td').attr('class', 'prodName-value').html();
+  console.log(SPtext);
+  $("#productSP").append('<option value='+id+'>'+SPtext+'</option>');
+  $('#'+id).remove();
+}
+
 $(function () {
     $('#modal-edit-size').on('show.bs.modal', function (event) {
         const autoNumericOptionsIdr = {
@@ -468,10 +475,46 @@ $(function () {
 	});
 });
 </script>
+<!-- Main Product Special Package -->
+<script>
+  $(document).ready(function(){
+    $('#mainProd').on('change', function(){
+      var idMainProd = $('#mainProd').val();
+      var textMainProd = $('#mainProd option:selected').text();
+      console.log(textMainProd);
+      $("#mainProd").attr('class', 'hide');
+      $("#mainProd_area").append(
+          '<div class="col-xs-11" style="padding-left:0px; padding-right: 0px;">'+
+            '<input class="form-control" type="text" value="'+textMainProd+'" disabled >'+
+          '</div>'+
+          '<div class="col-xs-1">'+
+            '<a href="<?= site_url('admin/addSpecial_Package')?>"'+
+            'onclick="return confirm(`This will delete all your changes, are you sure?`)"'+
+            ' class="btn btn-danger"><i class="float right fa fa-close"></i></a></div>'
+      );
+      if(idMainProd){
+        $.ajax({
+          url: "<?= site_url('admin/addProdSP/')?>"+idMainProd,
+          method: "GET",
+          dataType: "json",
+          success:function(response){
+            $.each(response, function(key, value){
+              $('#productSP').append(
+                '<option id='+value.id+' value ='+value.id+'>'+value.name+'</option>'
+              );
+            });
+          }
+        })
+      }
+    })
+  });
+</script>
+<!-- Special Package -->
 <script>
   $(document).ready(function(){
     $('#productSP').change(function(){
       var product_id = $(this).val();
+      console.log(product_id);
       if (product_id) {
         $.ajax({
           url: "<?= site_url('admin/checkProdSize/')?>"+product_id,
@@ -492,11 +535,11 @@ $(function () {
 
     var prodSP = [];
     var sizeSP = [];
-    var priceSP = [];
     var qtySP = [];
     $(function(){
       $('#submitSP').click(function(){
         var prodSP = $('#productSP').val();
+        var textprodSP = $( "#productSP option:selected" ).text();
         var sizeSP = $('#sizeSP').val();
         var priceSP = $('#price').val();
         var qtySP = $('#qtySP').val();
@@ -510,8 +553,9 @@ $(function () {
               var rowID = Math.random().toString(36).substr(2,5);
               $("#table_prodSizeSP").find('tbody')
                 .append($('<tr>')
-                  .attr('id', sizeSP)
+                  .attr('id', prodSP)
                   .append($('<td>')
+                    .attr('class', 'prodName-value')
                     .append(response.prodName)
                   )
                   .append($('<td>')
@@ -522,18 +566,20 @@ $(function () {
                     .append(qtySP)
                   )
                   .append($('<td>')
-                    .attr('class', 'priceSP-value')
-                    .append(priceSP)
-                  )
-                  .append($('<td>')
-                    .append($(`<button class="btn btn-oldblue btn-sm" data-toggle="modal" data-target="#modal-edit-size" data-id="${sizeSP}" type="button"><i class="fa fa-edit"></i></button>
-                              <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(${sizeSP})"><i class="fa fa-trash"></i></button>`))
+                    .append($(`<!--<button class="btn btn-oldblue btn-sm" data-toggle="modal" data-target="#modal-edit-size" data-id="${sizeSP}" type="button"><i class="fa fa-edit"></i></button>-->
+                              <button class="btn btn-danger btn-sm" type="button" onclick="removeSP(${prodSP})"><i class="fa fa-trash"></i></button>`))
                   )
                   .append($('<td>')
                     .attr('class', 'sizeSP-value hide')
                     .append(sizeSP)
                   )
                 );
+                $('#productSP option').each(function() {
+                  if ( $(this).val() == prodSP ) {
+                    $(this).remove();
+                  }
+                });
+                console.log(textprodSP);
                 $('#productSP').val("");
                 $('#sizeSP').val("");
                 $('#qtySP').val("");
@@ -545,15 +591,6 @@ $(function () {
       });
 
       $('#submitSpcl').click(function(){
-        $("#table_prodSizeSP .priceSP-value").each(function(){
-          priceSpcl = $(this).html().split('.').join("");
-          console.log(priceSpcl);
-          $('#addSpecialPackage').append($('<input>')
-                                  .attr('type', 'hidden')
-                                  .attr('name', 'priceSpcl[]')
-                                  .val(priceSpcl))
-        });
-
         $("#table_prodSizeSP .sizeSP-value").each(function(){
           $("#addSpecialPackage").append($('<input>')
                                   .attr('type', 'hidden')
@@ -569,7 +606,7 @@ $(function () {
         });
 
       });
-    })
+    });
   });
 </script>
 <script type="text/javascript">

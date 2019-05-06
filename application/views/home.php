@@ -43,17 +43,17 @@
 				<div class="col-lg-8 offset-lg-2">
 				<div class="row text-center">
 				<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/1/1');?>">
+						<a href="<?= site_url('home/shop/1');?>">
 							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/2/1');?>">
+						<a href="<?= site_url('home/shop/2');?>">
 							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/4/1');?>">
+						<a href="<?= site_url('home/shop/4');?>">
 							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
@@ -63,12 +63,12 @@
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/3/1');?>">
+						<a href="<?= site_url('home/shop/3');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/6/1');?>">
+						<a href="<?= site_url('home/shop/6');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
 						</a>
 					</div>

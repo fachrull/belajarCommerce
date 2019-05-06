@@ -59,7 +59,7 @@
 							<div class="pajinate-nav clearfix shop-list-options mb-20">
 
 								<ul class="pagination m-0 float-right">
-						
+
 								</ul>
 
 							</div>
@@ -92,11 +92,11 @@
 												</div>
 											</div>
 											<!-- /rating -->
-
+											<p>Starts from</p>
 											<!-- price -->
-											<!-- <div class="shop-item-price">
-												Rp. 1,800,000
-											</div> -->
+											<div class="shop-item-price">
+												Rp. <?= number_format($product['price'], 2, ",", ".");?>
+											</div>
 											<!-- /price -->
 										</div>
 
@@ -121,7 +121,7 @@
 						<!-- Pagination Default -->
 						<div class="pajinate-nav text-center">
 							<ul class="pagination">
-			
+
 							</ul>
 						</div>
 						<!-- /Pagination Default -->
