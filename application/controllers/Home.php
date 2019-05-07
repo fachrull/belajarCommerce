@@ -1191,10 +1191,9 @@ class Home extends CI_Controller{
 
   public function bestSeller($brand = NULL, $cat = NULL){
     $data['products'] = $this->mhome->listBestSeller_Product($brand, $cat);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
-
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('best-seller', $data);
     $this->load->view('include/footer');
   }
@@ -1403,9 +1402,9 @@ class Home extends CI_Controller{
     $data['brands'] = $this->mhome->bed_linenBrands();
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('bed_linen', $data);
     $this->load->view('include/footer');
   }
@@ -1459,8 +1458,9 @@ class Home extends CI_Controller{
     }
 
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+      $data['bestSellers'] = $this->mhome->topthree_bestSeller();
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('bedding_acc', $data);
     $this->load->view('include/footer');
   }

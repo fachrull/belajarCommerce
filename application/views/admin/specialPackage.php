@@ -37,7 +37,10 @@
                           <tr>
                             <td><?= $no.'.';?></td>
                             <td><?= $specialPackage['name']?></td>
-                            <td><?= 'Rp '.$specialPackage['price'];?></td>
+                            <td>
+                              <small><b> Starts from</b></small>
+                              <?= 'Rp '. number_format($specialPackage['price'],0,',','.');?>
+                            </td>
                             <td>
                               <a href="<?= site_url('admin/detailSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                               <?php if ($specialPackage['active'] == 1): ?>

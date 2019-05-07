@@ -416,16 +416,19 @@ class Mhome extends CI_Model{
   public function getShop_product($brand = NULL, $category = NULL){
     $this->db->select('a.id, a.name, a.image, a.stars, a.position, c.image_1');
     $this->db->from('tm_product a');
-      $this->db->join('tr_product_image c', 'c.id_prod = a.id', 'left');
-      $this->db->where('a.deleted', 0);
-      $this->db->where('a.active', 1);
+    $this->db->join('tr_product_image c', 'c.id_prod = a.id', 'left');
+    $this->db->join('tr_product_size d', 'd.prod_id = a.id', 'left');
+    $this->db->where('a.deleted', 0);
+    $this->db->where('a.active', 1);
     if ($brand != NULL) {
       $this->db->where('a.brand_id', $brand);
     }
     if ($category != NULL) {
       $this->db->where('a.cat_id', $category);
     }
+    $this->db->select_min('d.price');
     $this->db->order_by('a.position', 'asc');
+    $this->db->group_by('a.id');
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
@@ -436,12 +439,15 @@ class Mhome extends CI_Model{
 
   public function bed_linenProducts($brand = NULL){
     $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image, a.stars, d.position, e.image_1');
+    $this->db->select_min('f.price');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
     $this->db->join('tr_product_bed_linen d', 'd.prod_id = a.id', 'left');
-      $this->db->join('tr_product_image e', 'e.id_prod = a.id', 'left');
+    $this->db->join('tr_product_image e', 'e.id_prod = a.id', 'left');
+    $this->db->join('tr_product_size f', 'f.prod_id = a.id', 'left');
     $this->db->order_by('d.position', 'asc');
+    $this->db->group_by('a.id');
     if ($brand == NULL) {
       $this->db->where('a.cat_id', 2);
     }else{
@@ -473,11 +479,14 @@ class Mhome extends CI_Model{
 
   public function beddingAcc($brand = NULL, $category = NULL){
     $this->db->select('a.position, b.id, b.name, b.image, b.stars, e.image_1');
+    $this->db->select_min('f.price');
     $this->db->from('tr_product_bedding_acc a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->join('tm_brands c', 'c.id = b.brand_id', 'left');
     $this->db->join('tm_category d', 'd.id = b.cat_id', 'left');
-      $this->db->join('tr_product_image e', 'e.id_prod = b.id', 'left');
+    $this->db->join('tr_product_image e', 'e.id_prod = b.id', 'left');
+    $this->db->join('tr_product_size f', 'f.prod_id = a.prod_id', 'left');
+    $this->db->group_by('f.prod_id');
     $this->db->order_by('a.position', 'asc');
     $where = array(
       'b.cat_id !='   => 1,
@@ -611,9 +620,12 @@ class Mhome extends CI_Model{
 
   public function listBestSeller_Product($brand = NULL, $cat = NULL){
     $this->db->select('b.id as id, b.name, b.image, b.stars, a.position, c.image_1');
+    $this->db->select_min('d.price');
     $this->db->from('tr_product_best_seller a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
-      $this->db->join('tr_product_image c','c.id_prod=b.id','left');
+    $this->db->join('tr_product_image c','c.id_prod=a.prod_id','left');
+    $this->db->join('tr_product_size d', 'd.prod_id=a.prod_id', 'left');
+    $this->db->group_by('a.prod_id');
     $this->db->order_by('b.position', 'asc');
     if ($brand != NULL && $cat != NULL) {
       $where = array(

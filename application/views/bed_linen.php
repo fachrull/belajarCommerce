@@ -108,11 +108,11 @@
 													</div>
 												</div>
 												<!-- /rating -->
-
+												<p>Starts from</p>
 												<!-- price -->
-												<!-- <div class="shop-item-price">
-													Rp. <?= number_format($product['MAX(a.price)'], 2, ",", ".");?>
-												</div> -->
+												<div class="shop-item-price">
+													Rp. <?= number_format($product['price'], 2, ",", ".");?>
+												</div>
 												<!-- /price -->
 											</div>
 
