@@ -11046,7 +11046,7 @@ input.form-control-footer {
 	height: 500px;
 	max-width: 100%;
 	width: 1000px;
-	filter: grayscale(70%) brightness(85%) sepia(25%);
+	filter: grayscale(10%) brightness(100%) sepia(20%);
 	opacity: 0.5;
 }
 
@@ -11061,7 +11061,7 @@ input.form-control-footer {
 	height: 235px;
 	max-width: 100%;
 	width: 1000px;
-	filter: grayscale(70%) brightness(85%) sepia(25%);
+	filter: grayscale(10%) brightness(100%) sepia(20%);
 	opacity: 0.5;
 }
 
@@ -11070,7 +11070,7 @@ input.form-control-footer {
 	height: 235px;
 	max-width: 100%;
 	width: 1000px;
-	filter: grayscale(70%) brightness(85%) sepia(25%);
+	filter: grayscale(10%) brightness(100%) sepia(20%);
 	opacity: 0.5;
 
 }
@@ -11253,6 +11253,7 @@ div.tabbed>a:hover>div {
 
 .text-grey {
 	color: #3b3b3b;
+	text-shadow: 1px 1px 1px darkgray, 0 0 2px gray, 0 0 2px white;
 }
 
 .group-center {
