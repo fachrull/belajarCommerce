@@ -2184,7 +2184,7 @@ class Admin extends CI_Controller {
             $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
             // $this->form_validation->set_rules('promo_date');
             // $this->form_validation->set_rules('price', 'Special Package Price', 'required');
-            $this->form_validation->set_rules('mainProd', 'Main Product of Special Package', 'required');
+            $this->form_validation->set_rules('mainProd', 'Main Product of Special Package', 'required|callback_checkingMainProd');
             $this->form_validation->set_rules('sizeSpcl[]', 'Special Package Products', 'required');
 
             if ($this->form_validation->run() === FALSE) {
@@ -2286,14 +2286,26 @@ class Admin extends CI_Controller {
     }
 
     public function checkingSPackage($nameSP){
-        $specialPackage_name = $this->madmin->getProducts(array('name'=>$nameSP), array('nameField' => 'name'), 'tm_product', TRUE);
+        $specialPackage_name = $this->madmin->getProducts(array('name'=>$nameSP), array('nameField' => 'name'),
+         'tm_special_package', TRUE);
         if (isset($specialPackage_name)) {
-            $this->session->set_flashdata('error', 'Special package name has already been created');
+            $this->session->set_flashdata('errorSpecialPackage', 'Special package name has already been created');
             return FALSE;
         } else {
             return TRUE;
         }
     }
+
+  public function checkingMainProd($main_prod){
+    $already_as_sp = $this->madmin->getProducts(array('id' => $main_prod), array('mainSP' => 'main_sp'),
+      'tm_product', TRUE);
+    if($already_as_sp['main_sp'] == TRUE){
+      $this->session->set_flashdata('errorSpecialPackage', 'Main product has already been created');
+      return FALSE;
+    }else {
+      return TRUE;
+    }
+  }
 
   public function activeSpecialPackage($idSP){
     if ($this->session->userdata('uType') == 1) {

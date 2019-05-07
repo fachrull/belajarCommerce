@@ -576,12 +576,14 @@ class Mhome extends CI_Model{
   }
 
   public function detail_specialPackage($idSpecialPckg){
-    $this->db->select('a.id, a.quantity, a.priceSpcl, c.name as prod, d.name as sizeName, d.size as sizeDetail');
-    $this->db->from('tr_special_package a');
-    $this->db->join('tr_product_size b', 'b.id = a.size_spclPkg', 'left');
-    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
-    $this->db->join('tm_size d', 'd.id = b.size_id', 'left');
-    $this->db->where('a.id_prod_spclPkg', $idSpecialPckg);
+    $this->db->select('d.name as prod, e.name as sizeName, e.size as sizeDetail,
+     b.quantity, ');
+    $this->db->from('tm_special_package a');
+    $this->db->join('tr_special_package b', 'b.id_specialPkg = a.id', 'left');
+    $this->db->join('tr_product_size c', 'c.id = b.id_prod_package', 'left');
+    $this->db->join('tm_product d', 'd.id = c.prod_id', 'left');
+    $this->db->join('tm_size e', 'e.id = c.size_id', 'left');
+    $this->db->where('a.main_product', $idSpecialPckg);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();

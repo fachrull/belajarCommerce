@@ -70,8 +70,9 @@
 							<div class="item">
 								<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
 									width="80" /></div>
-									<a href="<?= site_url('home/detailSpecial/'.$item['id'])?>" class="product_name">
+									<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
 										<span><?=$item['name']?></span>
+										<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
 										<ul>
 											<?php foreach ($item['option'] as $option): ?>
 												<li><small><?= $option['prod']?> - <?=$option['sizeName']?> × <?= $option['quantity']?></small></li>

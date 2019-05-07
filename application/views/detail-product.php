@@ -129,7 +129,7 @@
 
 
 						<div class="tabbed hidden-lg-down text-center">
-                                <?php foreach($specs as $spec):?>
+              	<?php foreach($specs as $spec):?>
 									<a href="1" id="1">
 										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/5-zone-pocket-spring.png.pagespeed.ce.MDUzM1LUYu.png" alt="">
 										<div style="width:100%">
@@ -138,6 +138,24 @@
 									</a>
 								<?php endforeach;?>
 								</div>
+								<?php if ($product['main_sp'] == TRUE): ?>
+									<table class="table table-bordered text-center">
+				                <tbody class="text-center">
+				                <tr style="font-size:16px;">
+				                  <th>Product</th>
+				                  <th>Size</th>
+				                  <th style="width: 10px">Qty</th>
+				                </tr>
+				                <?php foreach ($detail_SP as $detail): ?>
+				                  <tr style="font-size:10px;">
+				                    <td><?= $detail['prod']?></td>
+				                    <td><?= $detail['sizeName'].' ('.$detail['sizeDetail'].')'?></td>
+				                    <td><?= $detail['quantity']?></td>
+				                  </tr>
+				                <?php endforeach; ?>
+				                </tbody>
+				            </table>
+								<?php endif; ?>
 
 					</div>
 					<!-- /IMAGE -->
