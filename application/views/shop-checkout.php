@@ -182,7 +182,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <label for="billing_note">Note</label>
-                                <textarea name="note" id="note" placeholder="St.Patrick" cols="30" rows="5" class="form-control"></textarea>
+                                <textarea name="note" id="note" placeholder="Note" cols="30" rows="5" class="form-control"></textarea>
                             </div>
                         </div>
 
