@@ -163,7 +163,7 @@ class Mhome extends CI_Model{
 
   public function getProduct_MaxMinPrice($idProduct){
     $this->db->select('a.id, MAX(a.price) as max_price, MIN(a.price) as min_price, b.name, b.id, b.brand_id, b.cat_id,
-      b.description, d.image_1 as image, b.stars');
+      b.description, d.image_1 as image, b.stars, b.main_sp');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->join('tr_product_best_seller c', 'c.prod_id = a.prod_id', 'left');
