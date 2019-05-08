@@ -59,6 +59,13 @@
               <th>:</th>
               <td><?= $address_shipping['phone']?></td>
             </tr>
+            <tr>
+                <th>Note </th>
+                <th>:</th>
+                <td><?php
+                    $keys= array_keys($carts);
+                    echo $carts[$keys[0]]['note'];?></td>
+            </tr>
           </tbody>
         </table>
       </div>

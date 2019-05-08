@@ -108,6 +108,13 @@
 
                             <hr>
 
+                              <label class="fs-12 mb-0">Note</label>
+                              <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]['note']?></label>
+
+                              <hr>
+
+
+
                             <!-- item -->
                             <label class="fs-12 mb-10">Daftar Barang</label>
                             <?php foreach ($detailOrder as $order): ?>

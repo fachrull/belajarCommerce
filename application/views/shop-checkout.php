@@ -80,17 +80,17 @@
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 col-sm-6">
-								<label>Province</label>
-								<input type="text" name="prov" value="<?= $addressCart['provinsi']?>" class="form-control" disabled>
-								<input type="hidden" name="provinsi" value="<?= $addressCart['id_prov']?>">
-							</div>
-							<div class="col-md-6 col-sm-6">
-								<label>City</label>
-								<input type="text" name="kab" value="<?= $addressCart['kabupaten']?>" class="form-control" disabled>
-								<input type="hidden" name="kabupaten" value="<?= $addressCart['id_kab']?>">
-							</div>
-						</div>
+                            <div class="col-md-6 col-sm-6">
+                                <label>Province</label>
+                                <input type="text" name="prov" value="<?= $addressCart['provinsi']?>" class="form-control" disabled>
+                                <input type="hidden" name="provinsi" value="<?= $addressCart['id_prov']?>">
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label>City</label>
+                                <input type="text" name="kab" value="<?= $addressCart['kabupaten']?>" class="form-control" disabled>
+                                <input type="hidden" name="kabupaten" value="<?= $addressCart['id_kab']?>">
+                            </div>
+                        </div>
 
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
@@ -104,6 +104,13 @@
 								<input type="hidden" name="postcode" value="<?= $alamat_default['postcode']?>">
 							</div>
 						</div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label for="billing_note">Note</label>
+                                <textarea name="note" id="note" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
 
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
@@ -171,6 +178,13 @@
 								<input id="billing_zipcode" name="postcode" type="text" class="form-control required" />
 							</div>
 						</div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label for="billing_note">Note</label>
+                                <textarea name="note" id="note" placeholder="St.Patrick" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
 
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
