@@ -576,7 +576,7 @@ class Mhome extends CI_Model{
   }
 
   public function detail_specialPackage($idSpecialPckg){
-    $this->db->select('d.name as prod, e.name as sizeName, e.size as sizeDetail,
+    $this->db->select('d.id, d.name as prod, e.name as sizeName, e.size as sizeDetail,
      b.quantity, ');
     $this->db->from('tm_special_package a');
     $this->db->join('tr_special_package b', 'b.id_specialPkg = a.id', 'left');
