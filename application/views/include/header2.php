@@ -84,8 +84,8 @@
 						</li>
 								<?php else:?>
 						<li class="header-button-arrow hidden-lg-down">
-							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60">
-								<i class="fa fa-sign-in fs-20"></i>
+							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60 pl-15 pr-15 hovergray">
+								<span style="color:#1f262D">LOGIN</span>
 							</a>
 						</li>
 								<?php endif;?>
@@ -126,17 +126,17 @@
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
                                                 Serta
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
                                                 Tempur
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
                                                 Florence
                                             </a>
                                         </li>

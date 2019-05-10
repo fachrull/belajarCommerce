@@ -145,14 +145,14 @@ class Home extends CI_Controller{
         $category = NULL;
       }
       $data['products'] = $this->mhome->getShop_product($brand);
-      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'logo'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     } else {
       if($brand === 6){
         $category = NULL;
       }
       $data['products'] = $this->mhome->getShop_product($brand, $category);
-      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'logo'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     }
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();

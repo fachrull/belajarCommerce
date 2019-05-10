@@ -37,46 +37,41 @@
 		<!-- /SLIDER -->
 
 <!-- PRODUCT -->
-<section id="product" class="section-lg">
+<section id="product" class="section-lg pt-120 pb-60">
 			<div class="container">
 				<div class="row text-center">
-				<div class="col-lg-8 offset-lg-2">
-				<div class="row text-center">
-				<div class="col-6 col-md-4 col-lg-4 pb-70">
+				<div class="col-lg-12">
+				<div class="row text-center justify-content-between">
+					<div class="col-6 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/1');?>">
 							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-4 pb-70">
+					<div class="col-6 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/2');?>">
 							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/4');?>">
+					<div class="col-6 col-md-2 col-lg-2 pb-60">
+						<a href="<?= site_url('home/shop/3');?>">
 							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/5/1');?>">
+					<div class="col-6 col-md-2 col-lg-2 pb-60">
+						<a href="<?= site_url('home/shop/4');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/3');?>">
+					<div class="col-12 col-md-2 col-lg-2 pb-60">
+						<a href="<?= site_url('home/shop/5');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
 						</a>
 					</div>
-					<div class="col-6 col-md-4 col-lg-4 pb-70">
-						<a href="<?= site_url('home/shop/6');?>">
-							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Stressless" src="<?= base_url('');?>asset/brands/Stressless.png" />
-						</a>
-					</div>
 				</div>
 				</div>
-
 				</div>
 			</div>
+	</div>
 		</section>
 <!-- /PRODUCT -->
 

@@ -11332,3 +11332,7 @@ div.tabbed>a:hover>div {
 		height: 150px;
 	}
 }
+
+a.hovergray:hover{
+	background-color:#f7f7f7 !important;
+}
