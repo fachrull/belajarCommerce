@@ -53,17 +53,17 @@
 						</a>
 					</div>
 					<div class="col-6 col-md-2 col-lg-2 pb-60">
-						<a href="<?= site_url('home/shop/4');?>">
+						<a href="<?= site_url('home/shop/3');?>">
 							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
 						</a>
 					</div>
 					<div class="col-6 col-md-2 col-lg-2 pb-60">
-						<a href="<?= site_url('home/shop/5/1');?>">
+						<a href="<?= site_url('home/shop/4');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
 						</a>
 					</div>
 					<div class="col-12 col-md-2 col-lg-2 pb-60">
-						<a href="<?= site_url('home/shop/3');?>">
+						<a href="<?= site_url('home/shop/5');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
 						</a>
 					</div>
