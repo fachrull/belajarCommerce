@@ -44,27 +44,31 @@
 				<div class="row text-center justify-content-between">
 					<div class="col-6 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/1');?>">
-							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Aireloom.png" />
+							<img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s" src="<?= base_url('asset/brands/Aireloom.png');?>" onmouseover="this.src='<?= base_url("asset/brands/hoverAireloom.png");?>'"
+								 onmouseout="this.src='<?= base_url("asset/brands/Aireloom.png");?>'"/>
 						</a>
 					</div>
 					<div class="col-6 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/2');?>">
-							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/KingKoil.png" />
+							<img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s" src="<?= base_url('asset/brands/King-koil.png');?>" onmouseover="this.src='<?= base_url("asset/brands/hoverKing-koil.png");?>'"
+								 onmouseout="this.src='<?= base_url("asset/brands/King-koil.png");?>'"/>
 						</a>
 					</div>
 					<div class="col-6 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/4');?>">
-							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('');?>asset/brands/Serta.png" />
+							<img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s" src="<?= base_url('asset/brands/Serta.png');?>" onmouseover="this.src='<?= base_url("asset/brands/hoverSerta.png");?>'"
+								 onmouseout="this.src='<?= base_url("asset/brands/Serta.png");?>'"/>
 						</a>
 					</div>
 					<div class="col-6 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/5/1');?>">
-							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('');?>asset/brands/Tempur.png" />
+							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('asset/brands/Tempur.png');?>" />
 						</a>
 					</div>
 					<div class="col-12 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/3');?>">
-							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('');?>asset/brands/Florence.png" />
+							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('asset/brands/Florence.png');?>" onmouseover="this.src='<?= base_url("asset/brands/hoverFlorence.png");?>'"
+								 onmouseout="this.src='<?= base_url("asset/brands/Florence.png");?>'"/>
 						</a>
 					</div>
 				</div>
