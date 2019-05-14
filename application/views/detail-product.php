@@ -139,7 +139,8 @@
 								<?php endforeach;?>
 								</div>
 								<?php if ($product['main_sp'] == TRUE): ?>
-									<table class="table table-bordered text-cente mt-50">
+									<h3 class="text-center mt-50">Bonus</h3>
+									<table class="table table-bordered text-center">
 				                <tbody class="text-center">
 				                <tr class="fs-16">
 				                  <th>Product</th>

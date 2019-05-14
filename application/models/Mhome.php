@@ -135,8 +135,10 @@ class Mhome extends CI_Model{
     $this->db->select('a.id, a.name');
     $this->db->from('tm_category a');
     $this->db->join('tm_product b', 'b.cat_id = a.id', 'left');
-    $where = array('b.brand_id' => $brand);
-    $this->db->where($where);
+    if($brand != NULL){
+      $where = array('b.brand_id' => $brand);
+      $this->db->where($where);
+    }
     $this->db->group_by('b.cat_id');
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
@@ -217,13 +219,14 @@ class Mhome extends CI_Model{
   // }
 
   public function checkStock_by_District($idProd, $idDistrict){
-    $this->db->select('a.id_store, a.id_product, a.id_product_size, a.quantity, b.price, b.id as idTr, c.id, c.name, c.size');
+    $this->db->select('a.id_store, a.id_product, a.id_product_size, a.postpone,
+     a.stock_akhir, b.price, b.id as idTr, c.id, c.name, c.size');
     $this->db->from('tr_product a');
     $this->db->join('tr_product_size b', 'b.id = a.id_product_size', 'left');
     $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
     $this->db->join('tr_store_owner_cluster d', 'd.id_store = a.id_store', 'left');
     $this->db->group_by('a.id_product_size');
-    $where = array('d.sub_district' => $idDistrict, 'a.id_product' => $idProd, 'a.quantity >' => 3);
+    $where = array('d.sub_district' => $idDistrict, 'a.id_product' => $idProd);
     $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
@@ -335,7 +338,8 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.id as sku, c.brand_id, c.name, c.image,
+    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total,
+      a.order_date, aa.id_tr_product, c.id as sku, c.brand_id, c.name, c.image,
       f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size, l.image_1');
 

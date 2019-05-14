@@ -3,7 +3,7 @@
         src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="<?=$midtrans['client_key']?>"></script>
 
-<section class="page-header page-header-md">    
+<section class="page-header page-header-md">
   <div class="container">
     <h1>Cart Summary</h1>
   </div>
@@ -87,6 +87,9 @@
                       <span class="clearfix">
                         <span class="float-left"><?= $cart['name']?></span>
                         <br>
+                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<br>
+												<span><small>Bonus :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
@@ -127,6 +130,9 @@
                       <span class="clearfix">
                         <span class="float-left"><?= $cart['name']?></span>
                         <br>
+                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<br>
+												<span><small>Bonus :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>

@@ -477,7 +477,9 @@
                       <span class="clearfix">
                         <span class="float-left"><?= $cart['name']?></span>
 												<br>
-                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<br>
+												<span><small>Bonus :</small></span>
 												<br>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
@@ -521,6 +523,7 @@
 												<br>
                         <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
 												<br>
+												<span><small>Bonus :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>

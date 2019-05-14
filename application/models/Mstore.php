@@ -50,42 +50,28 @@ class Mstore extends CI_Model{
   }
 
   public function productAcceptStore($store_id){
-    $this->db->select('b.name as product_name, f.name as brand, g.name as category, d.name as size_name, d.size as size_product, a.quantity,
-     a.id_product, a.id_store, a.id_product_size');
+    $this->db->select('b.name as product_name, f.name as brand, g.name as category,
+     d.name as size_name, d.size as size_product, a.stock_awal, a.stock_akhir,
+     a.inbound, a.outbound, a.postpone, a.id_product, a.id_store, a.id_product_size');
+    $this->db->select_max('a.periode');
+    $this->db->from('tr_product a');
     $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
     $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
     $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
     $this->db->join('tm_brands f', 'b.brand_id = f.id', 'left');
     $this->db->join('tm_category g', 'b.cat_id = g.id', 'left');
-    $this->db->from('tr_product a');
+    $this->db->group_by('a.id_product_size');
+    $this->db->group_by('a.id');
+    $this->db->group_by('a.periode');
     $where = array(
-      'a.id_store'      =>  $store_id,
-      'b.brand_id !='   => 0,
-      'b.cat_id !='     => 0
+      'a.id_store'  =>  $store_id,
+      'a.new'       => 1
     );
     $this->db->where($where);
     $query = $this->db->get();
     if($query->num_rows() != 0){
       return $query->result_array();
     }else{
-      return FALSE;
-    }
-  }
-
-  public function specialPkgAcceptStore($store_id){
-    $this->db->select('a.id_store, a.id_product, a.quantity, b.name');
-    $this->db->from('tr_product a');
-    $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
-    $where = array(
-      'a.id_store'  =>  $store_id,
-      'b.brand_id'  =>  0,
-      'b.cat_id'    =>  0
-    );
-    $this->db->where($where);
-    $query = $this->db->get();
-    if ($query->num_rows() != 0) {
-      return $query->result_array();
-    }else {
       return FALSE;
     }
   }

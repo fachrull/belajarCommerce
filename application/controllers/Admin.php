@@ -1674,12 +1674,12 @@ class Admin extends CI_Controller {
                 $idStore = array('idStore' => $link);
                 $id = $this->madmin->getProducts(array('id' => $link),
                     array('idUserLogin' => 'id_userlogin'), 'tm_store_owner', TRUE);
-                $data['post'] = $this->madmin->getProducts(array('id' => $link),NULL, 'tm_store_owner', TRUE);
+                $data['post'] = $this->madmin->getProducts(array('id' => $link),
+                 NULL, 'tm_store_owner', TRUE);
                 $data['prime'] = $this->madmin->emailStore($link);
                 $data['storeId'] = $idStore;
                 $data['products'] = $this->madmin->joinStoreProd($link);
                 $data['clusters'] = $this->madmin->detailCluster($link);
-                $data['special_packages'] = $this->madmin->store_specialPackage($link);
 
                 $this->load->view('include/admin/header');
                 $this->load->view('include/admin/left-sidebar');

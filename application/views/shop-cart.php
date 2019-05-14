@@ -73,6 +73,7 @@
 									<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
 										<span><?=$item['name']?></span>
 										<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
+										<span><small>Bonus :</small></span>
 										<ul>
 											<?php foreach ($item['option'] as $option): ?>
 												<li><small><?= $option['prod']?> - <?=$option['sizeName']?> × <?= $option['quantity']?></small></li>
