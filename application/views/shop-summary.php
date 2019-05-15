@@ -179,7 +179,7 @@
             </div>
           </div>
             <div class="row">
-                <form id="payment-form" method="post" action="<?=site_url('snap/finish')?>">
+                <form id="payment-form" method="post" action="<?=site_url('home/buy')?>">
                     <input type="hidden" name="result_type" id="result-type" value=""></div>
           <input type="hidden" name="result_data" id="result-data" value=""></div>
         <input type="hidden" name="snap_token" id="snap-token" value="">

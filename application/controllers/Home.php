@@ -966,7 +966,97 @@ class Home extends CI_Controller{
     }
   }
 
-  public function purchase($orderId, $snapResponse){
+  public function buy(){
+      $result = json_decode($this->input->post('result_data'));
+      $snapToken = $this->input->post('snap_token');
+        if ($this->session->userdata('uType') == 4) {
+            $cart = $this->cart->contents();
+            if ($cart != NULL) {
+                print_r($cart);echo "</br></br>";
+                $cartAdress = $this->cart->contents();
+                $address_detail = array();
+                foreach ($cartAdress as $cart) {
+                    $address_detail['id_address'] = $cart['id_address'];
+                }
+                $idUserLogin = $this->session->userdata('uId');
+
+                // set order status
+                $statusOrder = 2;
+                if ($result->status_code == 200) {
+                    $statusOrder = 4;
+                }
+
+                // check payment method
+                $va_number = "";
+                if ($result->payment_type === 'bank_transfer') {
+                    $bank = $result->va_numbers[0]->bank;
+                    $va_number = $result->va_numbers[0]->va_number;
+                } else if ($result->payment_type === 'credit_card') {
+                    $bank = $result->bank;
+                }
+
+                // calculate expiry time
+                $transaction_time = new DateTime($result->transaction_time);
+                $expiry_time = $transaction_time->modify('+12 hour');
+
+                $data_order = array(
+                    'order_number'    => $result->order_id,
+                    'id_userlogin'    => $idUserLogin,
+                    'total'           => $this->cart->total(),
+                    'address_detail'  => $address_detail['id_address'],
+                    'status_order'    => $statusOrder,
+                    'note'            => $cart['note'],
+                    'token'           => $snapToken,
+                    'va_number'       => $va_number,
+                    'bank_name'       => $bank,
+                    'payment_type'    => $result->payment_type,
+                    'token_expiry_date' => $expiry_time->format("Y-m-d H:i:s")
+                );
+
+                // Voucher item
+//                $keys = array_keys($cart);
+                $voucher = $cart['voucher'];
+                if ($voucher != NULL) {
+                    $voucherDetail = $this->mhome->getProducts(array('kode_voucher' => $voucher), NULL, 'tm_voucher', TRUE);
+                    $discount = floatval($this->cart->total() * $voucherDetail['discount']);
+                    $data_order['id_voucher'] = $voucherDetail['id'];
+                    $data_order['total'] = $this->cart->total() - $discount;
+                }
+
+                print_r($data_order);echo "</br></br>";
+                $this->mhome->inputData('tm_order', $data_order);
+                $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);
+
+                $carts = $this->cart->contents();
+                foreach ($carts as $cart) {
+                    $detail_order = array(
+                        'id_tm_order'   =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
+                        'id_tr_product' =>  $cart['id_trProduct'],
+                        'quantity'      =>  $cart['qty'],
+                        'subtotal'      =>  $cart['subtotal']
+                    );
+                    $this->mhome->inputData('tr_order_detail', $detail_order);
+                    print_r($detail_order);echo "</br></br>";
+                }
+
+                $cuttingStocks = $this->cart->contents();
+                foreach ($cuttingStocks as $cut) {
+                    $stock = $this->mhome->getProducts(array('id' => $cut['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
+                    $newStock['quantity'] = $stock['quantity'] - $cut['qty'];
+                    $this->mhome->updateData(array('id' => $cut['id_trProduct']), $newStock, 'tr_product');
+                    print_r($newStock);
+                }
+
+                $this->cart->destroy();
+                redirect('home/checkoutDone');
+                exit();
+            }
+        }else{
+            redirect();
+        }
+    }
+
+  public function purchase($orderId, $snapResponse, $snapToken){
     if ($this->session->userdata('uType') == 4) {
       $cart = $this->cart->contents();
       if ($cart != NULL) {
@@ -990,7 +1080,8 @@ class Home extends CI_Controller{
           'total'           => $this->cart->total(),
           'address_detail'  => $address_detail['id_address'],
           'status_order'    => $statusOrder,
-          'note'            => $cart['note']
+          'note'            => $cart['note'],
+          'snapToken'       => $snapToken
         );
 
           // Voucher item
