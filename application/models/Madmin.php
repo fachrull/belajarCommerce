@@ -618,6 +618,7 @@ class Madmin extends CI_Model {
       $this->db->join('tr_product_size b', 'b.prod_id = a.main_product', 'left');
       $this->db->order_by('a.id', 'desc');
       $this->db->group_by('a.main_product');
+      $this->db->where('a.deleted', 0);
       $query = $this->db->get();
       if ($query->num_rows() != 0) {
         return $query->result_array();

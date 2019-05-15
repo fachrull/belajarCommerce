@@ -2309,19 +2309,38 @@ class Admin extends CI_Controller {
 
   public function activeSpecialPackage($idSP){
     if ($this->session->userdata('uType') == 1) {
-      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active'),
-       'tm_special_package', TRUE);
+      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active',
+       'main' => 'main_product'), 'tm_special_package', TRUE);
       if ($isActive['active'] == 1) {
         echo "this is active";
         $item = array('active' => 0);
         $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
+        $this->madmin->updateData(array('id' => $isActive['main_product']), 'tm_product',
+         array('main_sp' => 0));
       } else {
         echo "this is inactive";
         $item = array('active' => 1);
         $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
+        $this->madmin->updateData(array('id' => $isActive['main_product']), 'tm_product',
+         array('main_sp' => 1));
       }
       redirect('admin/special_package');
     } else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function deleteSpecialPackage($idSP){
+    if ($this->session->userdata('uType') == 1) {
+      $id_mainSP = $this->madmin->getProducts(array('id' => $idSP), array('main' => 'main_product'),
+        'tm_special_package', TRUE);
+
+      $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', array('deleted' => 1));
+      $this->madmin->updateData(array('id' => $id_mainSP['main_product']), 'tm_product', array('main_sp' => 0));
+      redirect('admin/special_package');
+    }else {
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
