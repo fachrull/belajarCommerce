@@ -70,6 +70,15 @@ class Snap extends CI_Controller {
 
             array_push($item_details, $voucher_details);
         }
+        //Check order id
+       // $orderid = 'AGM'.date("dmy").rand(1, 999);
+//        $response = $this->midtrans->status($orderid);
+//        while ($response->status_code=200){
+//            $orderid = 'AGM'.date("dmy").rand(1, 999);
+//            $response = $this->midtrans->status($orderid);
+//
+//
+//        }
 
         // Required
         $transaction_details = array(

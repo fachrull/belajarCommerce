@@ -397,6 +397,7 @@
             success: function(data) {
                 //location = data;
                 console.log('token = '+data);
+                $("#snap-token").val(data);
 
                 var resultType = document.getElementById('result-type');
                 var resultData = document.getElementById('result-data');
