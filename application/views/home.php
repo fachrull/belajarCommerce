@@ -60,11 +60,12 @@
 								 onmouseout="this.src='<?= base_url("asset/brands/Serta.png");?>'"/>
 						</a>
 					</div>
-					<div class="col-6 col-md-2 col-lg-2 pb-60">
-						<a href="<?= site_url('home/shop/4');?>">
-							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('asset/brands/Tempur.png');?>" />
-						</a>
-					</div>
+                    <div class="col-6 col-md-2 col-lg-2 pb-60">
+                        <a href="<?= site_url('home/shop/4');?>">
+                            <img class="product-img wow fadeInUp" alt="Tempur" data-wow-delay="0.4s" alt="Tempur" src="<?= base_url('asset/brands/Tempur.png');?>" onmouseover="this.src='<?= base_url("asset/brands/hoverTempur.png");?>'"
+                                 onmouseout="this.src='<?= base_url("asset/brands/Tempur.png");?>'"/>
+                        </a>
+                    </div>
 					<div class="col-12 col-md-2 col-lg-2 pb-60">
 						<a href="<?= site_url('home/shop/5');?>">
 							<img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence" src="<?= base_url('asset/brands/Florence.png');?>" onmouseover="this.src='<?= base_url("asset/brands/hoverFlorence.png");?>'"
@@ -83,55 +84,60 @@
 
 <!-- PROMOTION -->
 <section id="promotion">
-			<div class="container">
-				<div class="row">
-					<div class="col-12 col-md-4 pt-30">
-						<a class="mt-10" href="<?= base_url('home/bestSeller');?>">
-						<img class="promotion-image-1" src="<?= base_url('asset/upload/best-seller-cover/'.$best_seller['slide']);?>" alt="agm best seller" />
-						<div class="absolute pl-20 pb-20 bottom-center text-left">
-							<h2 class="text-grey">BEST<br>SELLER</h2>
-							<a class="text-grey mt-10" href="<?= base_url('home/bestSeller');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-						</div>
-						</a>
-					</div>
-
-					<div class="col-12 col-md-8">
-						<div class="row">
-							<div class="col-md-12 pt-30">
-								<a href="<?= base_url('home/specialPackage');?>">
-								<div class="relative">
-									<img class="promotion-image-2" src="<?= base_url('asset/upload/special-package/cover/'.$spPackage['slide']);?>" alt="agm gallery" />
-									<div class="absolute pl-20 pb-20 bottom-center text-left">
-										<h2 class="text-grey">SPECIAL<br>PACKAGES</h2>
-										<a class="text-grey" href="<?= base_url('home/specialPackage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-									</div>
-								</a>
-								</div>
-							</div>
-							<div class="col-md-6 pt-30">
-								<a href="<?= base_url('home/bed_linen');?>">
-								<img class="promotion-image-3" src="<?= base_url('asset/upload/bed-linen-cover/'.$bedLinen['slide']);?>" alt="agm lastest collectin" />
-								<div class="absolute pl-20 pb-20 bottom-center text-left">
-									<h2 class="text-grey">BED<br>LINEN</h2>
-									<a class="text-grey" href="<?= base_url('home/bed_linen');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-								</div>
-								</a>
-							</div>
-							<div class="col-md-6 pt-30">
-								<a href="<?= base_url('home/bedding_acc');?>">
-								<img class="promotion-image-3" src="<?= base_url('asset/upload/bedding-acc-cover/'.$beddingAcc['slide']);?>" alt="agm lastest collectin" />
-								<div class="absolute pl-20 pb-20 bottom-center text-left">
-									<h2 class="text-grey">BEDDING<br>ACCESSORIES</h2>
-									<a class="text-grey" href="<?= base_url('home/bedding_acc');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-								</div>
-								</a>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</section>
+    <div class="container">
+        <div class="row justify-content-around">
+            <div class="col-12 col-md-4 mt-30 pr-0 pl-0">
+                <img class="promotion-image-1" src="<?= base_url('asset/upload/best-seller-cover/'.$best_seller['slide']);?>" alt="agm best seller" />
+                <a href="<?= base_url('home/bestSeller');?>">
+                    <div class="promotion-image-overlay promotion-image-1-overlay">
+                    </div>
+                    <div class="absolute pl-20 pb-20 bottom-center text-left">
+                        <h2 class="text-white">BEST<br>SELLER</h2>
+                    </div>
+                </a>
+            </div>
+            <div class="col-12 col-md-7 pr-0 pl-0">
+                <div class="row">
+                    <div class="col-md-12 pr-0 pl-0 mt-30">
+                        <img class="promotion-image-2" src="<?= base_url('asset/upload/special-package/cover/'.$spPackage['slide']);?>" alt="agm gallery" />
+                        <a href="<?= base_url('home/specialPackage');?>">
+                            <div class="promotion-image-overlay promotion-image-1-overlay">
+                            </div>
+                            <div class="absolute pl-20 pb-20 bottom-center text-left">
+                                <h2 class="text-white">SPECIAL<br>PACKAGES</h2>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="row justify-content-around">
+                    <div class="col-md-6 mt-30 pl-0 pr-0">
+                        <img class="promotion-image-3" !important" src="<?= base_url('asset/upload/bed-linen-cover/'.$bedLinen['slide']);?>" alt="agm lastest collectin" />
+                        <a href="<?= base_url('home/bed_linen');?>">
+                            <div class="promotion-image-overlay promotion-image-2-overlay">
+                            </div>
+                            <div class="absolute pl-20 pb-20 bottom-center text-left">
+                                <h2 class="text-white">BED<br>LINEN</h2>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-md-6 mt-30 pl-0 pr-0">
+                        <img class="promotion-image-3" style="float:right !important" src="<?= base_url('asset/upload/bedding-acc-cover/'.$beddingAcc['slide']);?>" alt="agm lastest collectin" />
+                        <a href="<?= base_url('home/bedding_acc');?>">
+                            <div class="promotion-image-overlay promotion-image-3-overlay" style="float:right !important">
+                            </div>
+                            <div class="absolute pl-40 pb-20 bottom-center text-left">
+                                <h2 class="text-white text-on-phone">BEDDING<br>ACCESSORIES</h2>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
 <!-- /PROMOTION -->
+
 
 <hr>
 
