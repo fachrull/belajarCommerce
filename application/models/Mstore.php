@@ -188,7 +188,7 @@ class Mstore extends CI_Model{
     }
   }
     public function getDetailOrder($idOrder, $idCustomer){
-        $this->db->select('a.order_number,a.note, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, aa.id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
+        $this->db->select('a.id, a.order_number,a.note, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, aa.id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
       f.first_name, f.last_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size, l.kode_voucher, l.discount');
 

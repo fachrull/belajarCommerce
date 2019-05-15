@@ -210,12 +210,20 @@ class Stores extends CI_Controller{
           foreach ($detailOrder as $item) {
               $id = $item->id_tr_product;
               $qty = $item->quantity;
-              $qtyStore = $this->mstore->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
-              $newQuanStore = $qtyStore['quantity'] + $qty;
-              $quantity = array('quantity' => $newQuanStore);
-              $this->mstore->updateData(array('id' => $id), $quantity, 'tr_product');
+              $qtyStore = $this->mhome->getProducts(array('id_product_size' => $id), array('postpone' => 'postpone',
+                  'stock_akhir' => 'stock_akhir'), 'tr_product', TRUE);
+              $postpone = $qtyStore['postpone'] - $qty;
+              $stock_akhir = $qtyStore['stock_akhir'] + $qty;
+              $update_stock = array(
+                  'stock_akhir' => $stock_akhir,
+                  'postpone'    => $postpone
+              );
+              print_r($qtyStore);
+              print_r($update_stock);
+//              exit();
+              $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
           }
-          $this->midtrans->cancel($orderId);
+//          $this->midtrans->cancel($orderId);
 
       } else {
           $this->load->view('include/header2');

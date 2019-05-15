@@ -1211,12 +1211,32 @@ class Home extends CI_Controller{
                     print_r($detail_order);echo "</br></br>";
                 }
 
-                $cuttingStocks = $this->cart->contents();
-                foreach ($cuttingStocks as $cut) {
-                    $stock = $this->mhome->getProducts(array('id' => $cut['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
-                    $newStock['quantity'] = $stock['quantity'] - $cut['qty'];
-                    $this->mhome->updateData(array('id' => $cut['id_trProduct']), $newStock, 'tr_product');
-                    print_r($newStock);
+                if ($statusOrder == 4) {
+                    $cuttingStocks = $this->cart->contents();
+                    foreach ($cuttingStocks as $cut) {
+                        $id = $cut['id_trProduct'];
+                        $qty = $cut['qty'];
+                        $qtyStore = $this->mhome->getProducts(array('id_product_size' => $id), array('postpone' => 'postpone',
+                            'outbound' => 'outbound', 'id_store' => 'id_store', 'id_product_size' => 'id_product_size'), 'tr_product', TRUE);
+                        $postpone = $qtyStore['postpone'] - $qty;
+                        $outbound = $qtyStore['outbound'] + $qty;
+                        $update_stock = array(
+                            'outbound' => $outbound,
+                            'postpone'    => $postpone
+                        );
+                        $history_inbound = array(
+                            'id_prod_size'  => $qtyStore['id_product_size'],
+                            'id_store'      => $qtyStore['id_store'],
+                            'quantity'      => $outbound * -1
+                        );
+                        $this->mhome->inputData('tr_stock', $history_inbound);
+                        $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
+
+//                        $stock = $this->mhome->getProducts(array('id' => $cut['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
+//                        $newStock['quantity'] = $stock['quantity'] - $cut['qty'];
+//                        $this->mhome->updateData(array('id' => $cut['id_trProduct']), $newStock, 'tr_product');
+//                        print_r($newStock);
+                    }
                 }
 
                 $this->cart->destroy();
