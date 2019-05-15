@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2019 at 04:05 PM
+-- Generation Time: May 15, 2019 at 06:50 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.2.14
 
@@ -8076,7 +8076,7 @@ CREATE TABLE `tm_product` (
 --
 
 INSERT INTO `tm_product` (`id`, `brand_id`, `cat_id`, `name`, `description`, `image`, `created_at`, `updated_at`, `stars`, `position`, `active`, `main_sp`, `deleted`) VALUES
-(1, 1, 1, 'Imperial Heritage', '<p>description</p>\r\n', 0x73657274612d6d617474726573732d7370696e652d782e6a7067, '2019-04-21 17:57:00', '2019-05-06 01:49:18', 5, 1, 1, 1, 0),
+(1, 1, 1, 'Imperial Heritage', '<p>description</p>\r\n', 0x73657274612d6d617474726573732d7370696e652d782e6a7067, '2019-04-21 17:57:00', '2019-05-15 09:29:34', 5, 1, 1, 1, 0),
 (2, 1, 1, 'Royal Souvereign', 'description', 0x73657274612d6d617474726573732d7370696e652d782e6a7067, '2019-04-21 17:57:00', '2019-04-29 13:07:12', 0, 2, 1, 0, 0),
 (3, 1, 1, 'Coronation', 'description', 0x73657274612d6d617474726573732d7370696e652d782e6a7067, '2019-04-21 17:57:00', '2019-04-29 13:07:23', 0, 3, 1, 0, 0),
 (4, 1, 1, 'Baron', 'description', 0x73657274612d6d617474726573732d7370696e652d782e6a7067, '2019-04-21 17:57:00', '2019-04-29 13:07:27', 0, 4, 1, 0, 0),
@@ -8386,6 +8386,7 @@ CREATE TABLE `tm_special_package` (
   `image` blob NOT NULL,
   `description` text NOT NULL,
   `active` char(1) NOT NULL COMMENT 'active = 1; inactive = 0',
+  `deleted` int(11) NOT NULL DEFAULT '0' COMMENT 'active = 1; inactive = 0',
   `main_product` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -8393,8 +8394,8 @@ CREATE TABLE `tm_special_package` (
 -- Dumping data for table `tm_special_package`
 --
 
-INSERT INTO `tm_special_package` (`id`, `name`, `image`, `description`, `active`, `main_product`) VALUES
-(17, 'Test Special Pacakge', 0x746573745f7370656369616c5f706163616b67652d31312e6a7067, '<p>Test description special package</p>\r\n', '1', 1);
+INSERT INTO `tm_special_package` (`id`, `name`, `image`, `description`, `active`, `deleted`, `main_product`) VALUES
+(17, 'Test Special Pacakge', 0x746573745f7370656369616c5f706163616b67652d31312e6a7067, '<p>Test description special package</p>\r\n', '1', 0, 1);
 
 -- --------------------------------------------------------
 
