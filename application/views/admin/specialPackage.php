@@ -48,6 +48,7 @@
                               <?php else: ?>
                                 <a href="<?= site_url('admin/activeSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
                               <?php endif; ?>
+                              <a href="<?= site_url('admin/deleteSpecialPackage/'.$specialPackage['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                             </td>
                           </tr>
                           <?php $no++;endforeach; ?>

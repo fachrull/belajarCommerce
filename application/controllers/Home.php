@@ -359,7 +359,8 @@ class Home extends CI_Controller{
     if ($carts != NULL) {
       $qty = $this->input->post('qty');
 
-      $no = 0;foreach ($carts as $cart) {
+      $no = 0;
+      foreach ($carts as $cart) {
         $update_cart = array(
           'rowid' =>  $cart['rowid'],
           'qty'   =>  $qty[$no]
@@ -378,6 +379,29 @@ class Home extends CI_Controller{
 
   public function deleteCart(){
       $cart = $this->cart->contents();
+      $releases = $this->cart->contents();
+
+      foreach ($releases as $release) {
+        if ($release['id_address'] != NULL) {
+          $release_stock = array(
+            'id_store'        => $release['id_store'],
+            'id_product'      => $release['id'],
+            'id_product_size' => $release['id_trProduct']
+          );
+
+          $stock = $this->mhome->getProducts($release_stock, array('sakhir' => 'stock_akhir',
+           'ppone' => 'postpone'), 'tr_product', TRUE);
+
+          $release_ppone = $stock['postpone'] - $release['qty'];
+          $release_sakhir = $stock['stock_akhir'] + $release['qty'];
+
+          $update_stock = array(
+            'stock_akhir' => $release_sakhir,
+            'postpone'    => $release_ppone
+          );
+          $this->mhome->updateData($release_stock, $update_stock, 'tr_product');
+        }
+      }
       if ($cart != NULL) {
         $this->cart->destroy();
         redirect('home/shopCart');
@@ -426,6 +450,27 @@ class Home extends CI_Controller{
 
     $may_buy = $current_stock_store - $qty;
 
+    // $isSpecial = $this->mhome->getProducts(array('id' => $id_prod),
+    //  array('main' => 'main_sp'), 'tm_product', TRUE);
+    // if($isSpecial['main_sp'] == 1){
+    //   $type = 'special';
+    //   $search_special = array(
+    //     'active'        => 1,
+    //     'deleted'       => 0,
+    //     'main_product'  => $id_prod
+    //   );
+    //   $id_special = $this->mhome->getProducts($search_special, array('idF' => 'id'), 'tm_special_package', TRUE);
+    //
+    //   $list_bonus = array();
+    //   $bonus = $this->mhome->getProduct(array('id_specialPkg' => $id_special['id']), array('id_bonus' => 'id_prod_package'),
+    //    'tr_special_package', FALSE);
+    //   foreach ($bonus as $bonus) {
+    //     $id_bonus_prod = $this->mhome->
+    //   }
+    // }else{
+    //   $type = '';
+    // }
+
     if ($may_buy > 3) {
       $avbl = TRUE;
       // $old_postpone = array(
@@ -465,7 +510,7 @@ class Home extends CI_Controller{
 
     $data = array(
       'id'            => $id_prod,
-      'type'          => '',
+      'type'          => $type,
       'image'         => $pImage['image_1'],
       'qty'           => $qty,
       'price'         => $product_price,
@@ -822,9 +867,9 @@ class Home extends CI_Controller{
           }
 
         // load view
-          $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-          $this->load->view('include/header2', $brands);
+        $this->load->view('include/header2', $brands);
         $this->load->view('shop-checkout', $data);
         $this->load->view('include/footer');
 
@@ -889,6 +934,19 @@ class Home extends CI_Controller{
                   'available'   => TRUE
                 );
                 $this->cart->update($availablelity_stock);
+
+                $stock = $this->mhome->getProducts(
+                  array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
+                array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                $newPpone = $stock['postpone'] + $cart['qty'];
+                $newSakhir = $stock['stock_akhir'] - $cart['qty'];
+                $newStock = array(
+                  'postpone'    => $newPpone,
+                  'stock_akhir' => $newSakhir
+                );
+                $this->mhome->updateData(array('id_product_size' => $cart['id_trProduct'],
+                 'id_store' => $cart['id_store']), $newStock, 'tr_product');
+                print_r($newStock);
 
               // checking is the stock on store less than quantity that customer order and insert id shipping address
               } else {
@@ -969,6 +1027,19 @@ class Home extends CI_Controller{
                     'available'   =>  TRUE
                   );
                   $this->cart->update($availablelity_stock);
+
+                  $stock = $this->mhome->getProducts(
+                    array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
+                  array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                  $newPpone = $stock['postpone'] + $cart['qty'];
+                  $newSakhir = $stock['stock_akhir'] - $cart['qty'];
+                  $newStock = array(
+                    'postpone'    => $newPpone,
+                    'stock_akhir' => $newSakhir
+                  );
+                  $this->mhome->updateData(array('id_product_size' => $cart['id_trProduct'],
+                   'id_store' => $cart['id_store']), $newStock, 'tr_product');
+                  print_r($newStock);
 
                 // if quntity order more than stock
                 } else {
@@ -1211,21 +1282,7 @@ class Home extends CI_Controller{
           print_r($detail_order);echo "</br></br>";
         }
 
-        $cuttingStocks = $this->cart->contents();
-        foreach ($cuttingStocks as $cut) {
-          $stock = $this->mhome->getProducts(
-            array('id_product_size' => $cut['id_trProduct'], 'id_store' => $cut['id_store']),
-          array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
-          $newPpone = $stock['postpone'] + $cut['qty'];
-          $newSakhir = $stock['stock_akhir'] - $cut['qty'];
-          $newStock = array(
-            'postpone'    => $newPpone,
-            'stock_akhir' => $newSakhir
-          );
-          $this->mhome->updateData(array('id_product_size' => $cut['id_trProduct'],
-           'id_store' => $cut['id_store']), $newStock, 'tr_product');
-          print_r($newStock);
-        }
+        // cutting stock was here :))
 
         $this->cart->destroy();
         redirect('home/checkoutDone');

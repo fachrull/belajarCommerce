@@ -176,8 +176,8 @@
         </table>
         <?php if ($available == TRUE): ?>
           <div class="row">
-            <div class="col-sm-6">
-              <a href="<?= site_url('home/shopCart')?>" class="col-sm-12 btn btn-default">Back to Cart</a>
+            <div class="col-sm-6 text">
+              <a href="<?= site_url('home/deleteCart')?>" class="col-sm-12 btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-6 text-right">
 <!--              <a href="--><?//= site_url('home/purchase')?><!--" class="col-sm-12 btn btn-oldblue">Purchase</a>-->
