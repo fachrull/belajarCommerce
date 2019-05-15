@@ -561,9 +561,9 @@ class Admin extends CI_Controller {
                 $this->load->library('upload',$config);
 
                 $fileNames = array();
-
+                $imageData = array('id_prod' => $prod['id']);
                 for ($i = 0; $i < 3; $i++) {
-                    $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.$i);
+                    $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
                     $config['file_name']  = $file_name;
                     $this->upload->initialize($config);
 
@@ -573,35 +573,36 @@ class Admin extends CI_Controller {
                     $_FILES['image']['error']     = $_FILES['productPict']['error'][$i];
                     $_FILES['image']['size']     = $_FILES['productPict']['size'][$i];
 
-                    if(! $this->upload->do_upload('image')){
-                        $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                            'nameField' => 'name'), 'tm_brands', FALSE);
-                        $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                            'nameField' => 'name'), 'tm_category', FALSE);
-                        $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                            'nameField' => 'name'), 'tm_spec', FALSE);
-                        $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
-                            'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
+                    if ($_FILES['image']['size'] != 0) {
+                        if(! $this->upload->do_upload('image')){
+                            $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                                'nameField' => 'name'), 'tm_brands', FALSE);
+                            $data['cats'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                                'nameField' => 'name'), 'tm_category', FALSE);
+                            $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                                'nameField' => 'name'), 'tm_spec', FALSE);
+                            $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
+                                'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
 
-                        $this->session->set_flashdata('error', $this->upload->display_errors());
+                            $this->session->set_flashdata('error', $this->upload->display_errors());
 
-                        $this->load->view('include/admin/header');
-                        $this->load->view('include/admin/left-sidebar');
-                        $this->load->view('admin/addProd-2', $data);
-                        $this->load->view('include/admin/footer');
-                        break;
-                    }else {
-                        $uploadData = $this->upload->data();
-                       array_push($fileNames, $uploadData['orig_name']);
+                            $this->load->view('include/admin/header');
+                            $this->load->view('include/admin/left-sidebar');
+                            $this->load->view('admin/addProd-2', $data);
+                            $this->load->view('include/admin/footer');
+                            break;
+                        }else {
+                            $uploadData = $this->upload->data();
+                            $imageData['image_'.($i+1)] = $uploadData['orig_name'];
+                            $file_path = './asset/upload/'.$images['image_'.($i+1)];
+                            unlink($file_path);
+                        }
+                    } else {
+                        continue;
                     }
+
                 }
 
-                $imageData = array(
-                    'id_prod' => $idProd['id'],
-                    'image_1' => $fileNames[0],
-                    'image_2' => $fileNames[1],
-                    'image_3' => $fileNames[2]
-                );
                 $this->madmin->inputData('tr_product_image', $imageData);
 
                 redirect('admin/allProd');

@@ -3,7 +3,7 @@
 		<section class="page-header page-header-md">
 			<div class="container">
 
-				<h1><?= strtoupper($brand['name']);?></h1>
+				<img src="<?= base_url('asset/brands/'.$brand['logo']);?>" />
 
 				<!-- breadcrumbs -->
 				<!--<ol class="breadcrumb">-->

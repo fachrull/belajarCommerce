@@ -85,11 +85,15 @@
 
                               <hr>
                               <div class="row ml-0 mr-0">
-                                  <div class="col-6 col-md-6">
+                                  <div class="col-4 col-md-4">
                                       <label class="fs-12 mb-0">Tanggal Order</label>
                                       <label class="pt-0 fs-16"><?= $detailOrder[0]['order_date']?></label>
                                   </div>
-                                  <div class="col-6 col-md-6">
+                                  <div class="col-4 col-md-4">
+                                      <label class="fs-12 mb-0">Voucher</label>
+                                      <label class="pt-0 fs-16"><?=$detailOrder[0]['kode_voucher']?></label>
+                                  </div>
+                                  <div class="col-4 col-md-4">
                                       <label class="fs-12 mb-0">Total Pembayaran</label>
                                       <label class="pt-0 fs-16">Rp. <?= number_format(floatval($detailOrder[0]['total']), 0, ',', '.')?></label>
                                   </div>
@@ -103,6 +107,13 @@
                             <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder[0]['phone']?></label>
 
                             <hr>
+
+                              <label class="fs-12 mb-0">Note</label>
+                              <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]['note']?></label>
+
+                              <hr>
+
+
 
                             <!-- item -->
                             <label class="fs-12 mb-10">Daftar Barang</label>

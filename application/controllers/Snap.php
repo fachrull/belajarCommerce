@@ -70,6 +70,18 @@ class Snap extends CI_Controller {
 
             array_push($item_details, $voucher_details);
         }
+        // Check order id
+//        $orderid = 'AGM'.date("dmy").rand(1, 999);
+//        try {
+//            $response = $this->midtrans->status($orderid);
+//            while ($response->status_code=200){
+//                $orderid = 'AGM'.date("dmy").rand(1, 999);
+//                $response = $this->midtrans->status($orderid);
+//            }
+//        } catch (Exception $exception) {
+//            $inv_number = $orderid;
+//        }
+
 
         // Required
         $transaction_details = array(
@@ -106,8 +118,8 @@ class Snap extends CI_Controller {
         $time = time();
         $custom_expiry = array(
             'start_time' => date("Y-m-d H:i:s O",$time),
-            'unit' => 'day',
-            'duration'  => 1
+            'unit' => 'hour',
+            'duration'  => 12
         );
         
         $transaction_data = array(
@@ -225,5 +237,10 @@ class Snap extends CI_Controller {
             $this->changeTransactionStatus($order_id, 3);
             echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is cancel.";
         }
+    }
+
+    public function status($id) {
+	    $response = $this->midtrans->status($id);
+	    print_r($response);
     }
 }

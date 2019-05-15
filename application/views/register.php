@@ -60,6 +60,10 @@
                                   </label>
                               </div>
                           </div>
+                            <label class="input mb-10">
+                                <i class="ico-append fa fa-birthday-cake"></i>
+                                <input class="form-control datepicker" name="birthday" type="text" placeholder="Date of birth">
+                            </label>
                           <label class="input mb-10">
                               <select class="form-control" name="gender">
                                   <label class="input">

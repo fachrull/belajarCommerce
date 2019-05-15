@@ -11015,6 +11015,7 @@ input.form-control-footer {
 /* a.btn-exp {
 	position: absolute;
 } */
+
 .img1 {
 	height: 556px;
 }
@@ -11045,6 +11046,14 @@ input.form-control-footer {
 	height: 500px;
 	max-width: 100%;
 	width: 1000px;
+	filter: grayscale(10%) brightness(100%) sepia(20%);
+	opacity: 0.5;
+}
+
+@media only screen and (max-width: 767px) {
+	.promotion-image-1{
+		height: 235px;
+	}
 }
 
 .promotion-image-2 {
@@ -11052,6 +11061,8 @@ input.form-control-footer {
 	height: 235px;
 	max-width: 100%;
 	width: 1000px;
+	filter: grayscale(10%) brightness(100%) sepia(20%);
+	opacity: 0.5;
 }
 
 .promotion-image-3 {
@@ -11059,6 +11070,9 @@ input.form-control-footer {
 	height: 235px;
 	max-width: 100%;
 	width: 1000px;
+	filter: grayscale(10%) brightness(100%) sepia(20%);
+	opacity: 0.5;
+
 }
 
 .full-width {
@@ -11081,7 +11095,6 @@ input::placeholder {
 .pedia-img-2 {
 	position: relative;
 	height: 215px;
-	/* max-width: 100%; */
 	width: 460px;
 	content: '';
 	display: inline-block;
@@ -11238,6 +11251,11 @@ div.tabbed>a:hover>div {
 	color: #33518F;
 }
 
+.text-grey {
+	color: #3b3b3b;
+	text-shadow: 1px 1px 1px darkgray, 0 0 2px gray, 0 0 2px white;
+}
+
 .group-center {
 	max-width: 100% !important;
 }
@@ -11314,3 +11332,8 @@ div.tabbed>a:hover>div {
 		height: 150px;
 	}
 }
+
+a.hovergray:hover{
+	background-color:#f7f7f7 !important;
+}
+
