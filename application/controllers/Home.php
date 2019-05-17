@@ -450,26 +450,27 @@ class Home extends CI_Controller{
 
     $may_buy = $current_stock_store - $qty;
 
-    // $isSpecial = $this->mhome->getProducts(array('id' => $id_prod),
-    //  array('main' => 'main_sp'), 'tm_product', TRUE);
-    // if($isSpecial['main_sp'] == 1){
-    //   $type = 'special';
-    //   $search_special = array(
-    //     'active'        => 1,
-    //     'deleted'       => 0,
-    //     'main_product'  => $id_prod
-    //   );
-    //   $id_special = $this->mhome->getProducts($search_special, array('idF' => 'id'), 'tm_special_package', TRUE);
-    //
-    //   $list_bonus = array();
-    //   $bonus = $this->mhome->getProduct(array('id_specialPkg' => $id_special['id']), array('id_bonus' => 'id_prod_package'),
-    //    'tr_special_package', FALSE);
-    //   foreach ($bonus as $bonus) {
-    //     $id_bonus_prod = $this->mhome->
-    //   }
-    // }else{
-    //   $type = '';
-    // }
+    $isSpecial = $this->mhome->getProducts(array('id' => $id_prod),
+     array('main' => 'main_sp'), 'tm_product', TRUE);
+    if($isSpecial['main_sp'] == 1){
+      $type = 'special';
+      $search_special = array(
+        'active'        => 1,
+        'deleted'       => 0,
+        'main_product'  => $id_prod
+      );
+      $id_special = $this->mhome->getProducts($search_special, array('idF' => 'id'), 'tm_special_package', TRUE);
+      echo "id special package: ";print_r($id_special['id']);echo "</br></br>";
+
+      $options = array();
+      $bonus = $this->mhome->detail_SPCart($id_special['id']);
+      foreach ($bonus as $bonus) {
+        array_push($options, $bonus);
+      }
+    }else{
+      $type = '';
+      $options = '';
+    }
 
     if ($may_buy > 3) {
       $avbl = TRUE;
@@ -524,7 +525,7 @@ class Home extends CI_Controller{
       'detailSize'    => $size_name['detail_size'],
       'sub_district'  => $idDistrict,
       'id_store'      => $store['id_store'],
-      'option'        => '',
+      'option'        => $options,
     );
     echo "</br></br>";print_r($data);
     $this->cart->insert($data);
