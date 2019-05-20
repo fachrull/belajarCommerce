@@ -204,9 +204,11 @@ class Snap extends CI_Controller {
             }
         }
         else if ($transaction == 'settlement'){
-            // TODO set payment status in merchant's database to 'Settlement'
-            $this->changeTransactionStatus($order_id, 4);
-            echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+            if ($type != 'credit_card') {
+                // TODO set payment status in merchant's database to 'Settlement'
+                $this->changeTransactionStatus($order_id, 4);
+                echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+            }
         }
         else if($transaction == 'pending'){
             // TODO set payment status in merchant's database to 'Pending'
