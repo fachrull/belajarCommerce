@@ -74,7 +74,7 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="billing_address1">Address</label>
-								<input id="billing_address1" name="add" value="<?= $alamat_default['address']?>" type="text" class="form-control required" disabled/>
+                                <input id="billing_address1" name="add" value="<?= $alamat_default['address']?>" type="text" class="form-control required" disabled/>
 								<input type="hidden" name="address" value="<?= $alamat_default['address']?>">
 							</div>
 						</div>
@@ -150,8 +150,9 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="billing_address1">Address</label>
-								<input id="billing_address1" name="address" type="text" class="form-control required" />
-							</div>
+                                <input id="billing_address1" name="address" type="text" class="form-control required" />
+                                <p style="color:gray;font-size:11px;">(Alamat pengiriman harus sesuai dengan lokasi yang dipilih).</p>
+                            </div>
 						</div>
 
 						<div class="row">
