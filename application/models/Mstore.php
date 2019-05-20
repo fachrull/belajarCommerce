@@ -226,4 +226,17 @@ class Mstore extends CI_Model{
         }
     }
 
+    public function periode_stock($idStore){
+      $this->db->select_max('periode');
+      $this->db->from('tr_product');
+      $this->db->where('id_store', $idStore);
+      $this->db->group_by('id_store');
+      $query = $this->db->get();
+      if($query->num_rows() != 0){
+        return $query->row_array();
+      }else {
+        return FALSE;
+      }
+    }
+
 }
