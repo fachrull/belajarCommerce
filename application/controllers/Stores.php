@@ -36,12 +36,16 @@ class Stores extends CI_Controller{
   public function storeProduct( $idProd = FALSE,$idStore = FALSE){
     if ($this->session->userdata('uType') == 3) {
       if ($idStore === FALSE && $idProd === FALSE) {
-
         $idStore = $this->mstore->getProducts(array('id_userlogin' =>
         $this->session->userdata('uId')), array('idField' => 'id'),
         'tm_store_owner', TRUE);
+
         $data['products'] = $this->mstore->productAcceptStore($idStore['id']);
-        // print_r($this->db->last_query());exit();
+        if ($data['products'] == NULL) {
+          $data['periode'] = '-';
+        }else {
+          $data['periode'] = $this->mstore->periode_stock($idStore['id']);
+        }
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
