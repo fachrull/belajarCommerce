@@ -39,7 +39,7 @@
 	<!-- wrapper -->
 	<div id="wrapper">
 
-		<div id="header" class="navbar-toggleable-md sticky header-sm clearfix">
+		<div id="header" class="navbar-toggleable-md sticky header-sm bottom clearfix">
 
 			<!-- SEARCH HEADER -->
 			<div class="search-box over-header">
