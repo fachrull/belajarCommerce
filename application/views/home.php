@@ -102,8 +102,8 @@
 								<div class="relative">
 									<img class="promotion-image-2" src="<?= base_url('asset/upload/special-package/cover/'.$spPackage['slide']);?>" alt="agm gallery" />
 									<div class="absolute pl-20 pb-20 bottom-center text-left">
-										<h2 class="text-grey">SPECIAL<br>PACKAGES</h2>
-										<a class="text-grey" href="<?= base_url('home/specialPackage');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+										<h2 class="hidden-md-down text-white">SPECIAL<br>PACKAGES</h2>
+										<a href="<?= base_url('home/special_package');?>">View Detail<i class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
 									</div>
 								</a>
 								</div>

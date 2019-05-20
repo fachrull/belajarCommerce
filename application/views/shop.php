@@ -28,11 +28,11 @@
 						<!-- CATEGORIES -->
 						<div class="side-nav mb-60">
 
+							<?php if($category != NULL):?>
 							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
 								<button class="fa fa-bars btn btn-mobile"></button>
 								<h4>CATEGORIES</h4>
 							</div>
-							<?php if($category != NULL):?>
 								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
 								<li class="list-group-noicon">

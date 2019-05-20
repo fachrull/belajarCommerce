@@ -37,9 +37,11 @@ class Stores extends CI_Controller{
     if ($this->session->userdata('uType') == 3) {
       if ($idStore === FALSE && $idProd === FALSE) {
 
-        $idStore = $this->mstore->getProducts(array('id_userlogin' => $this->session->userdata('uId')), array('idField' => 'id'), 'tm_store_owner', TRUE);
+        $idStore = $this->mstore->getProducts(array('id_userlogin' =>
+        $this->session->userdata('uId')), array('idField' => 'id'),
+        'tm_store_owner', TRUE);
         $data['products'] = $this->mstore->productAcceptStore($idStore['id']);
-        $data['special_packages'] = $this->mstore->specialPkgAcceptStore($idStore['id']);
+        // print_r($this->db->last_query());exit();
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -85,14 +87,16 @@ class Stores extends CI_Controller{
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('quantity','Quantity','required');
+      $this->form_validation->set_rules('ibound', 'Inbound', 'required');
 
       if ($this->form_validation->run() === FALSE) {
         $id = array('idStore' => $idStore, 'idProd' => $idProd, 'idProdSize' => $idProdSize);
         $data['id'] = $id;
-        $data['product'] = $this->mstore->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
-        $data['quantity'] = $this->mstore->getProducts(array('id_store' => $idStore, 'id_product' => $idProd, 'id_product_size' => $idProdSize),
-         array('qtyField' => 'quantity'),'tr_product', TRUE);
+        $data['product'] = $this->mstore->getProducts(array('id' => $idProd), NULL,
+         'tm_product', TRUE);
+        $data['quantity'] = $this->mstore->getProducts(array('id_store' => $idStore,
+         'id_product' => $idProd, 'id_product_size' => $idProdSize),
+         array('iBound' => 'inbound'),'tr_product', TRUE);
         // print_r($data);
         // exit();
 
@@ -101,13 +105,27 @@ class Stores extends CI_Controller{
         $this->load->view('storeOwner/addQuantity', $data);
         $this->load->view('include/admin/footer');
       } else {
-        $items = array('quantity' => $this->input->post('quantity'));
+        $stAkhir = $this->mstore->getProducts(array('id_store' => $idStore, 'id_product' => $idProd,
+         'id_product_size' => $idProdSize), array('skAkhir' => 'stock_akhir'), 'tr_product', TRUE);
+        $ibound = $this->input->post('ibound');
+        $update_stAkhir = $ibound + $stAkhir['stock_akhir'];
+        $items = array(
+          'inbound'     => $ibound,
+          'stock_akhir' => $update_stAkhir
+        );
         $condition = array(
           'id_store'        => $idStore,
           'id_product'      => $idProd,
           'id_product_size' => $idProdSize
         );
         $this->mstore->updateData($condition, $items, 'tr_product');
+
+        $history_inbound = array(
+          'id_prod_size'  => $idProdSize,
+          'id_store'      => $idStore,
+          'quantity'      => $ibound
+        );
+        $this->mstore->inputData('tr_stock', $history_inbound);
         redirect('stores/storeProduct');
       }
     } else {
@@ -192,12 +210,20 @@ class Stores extends CI_Controller{
           foreach ($detailOrder as $item) {
               $id = $item->id_tr_product;
               $qty = $item->quantity;
-              $qtyStore = $this->mstore->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
-              $newQuanStore = $qtyStore['quantity'] + $qty;
-              $quantity = array('quantity' => $newQuanStore);
-              $this->mstore->updateData(array('id' => $id), $quantity, 'tr_product');
+              $qtyStore = $this->mhome->getProducts(array('id_product_size' => $id), array('postpone' => 'postpone',
+                  'stock_akhir' => 'stock_akhir'), 'tr_product', TRUE);
+              $postpone = $qtyStore['postpone'] - $qty;
+              $stock_akhir = $qtyStore['stock_akhir'] + $qty;
+              $update_stock = array(
+                  'stock_akhir' => $stock_akhir,
+                  'postpone'    => $postpone
+              );
+              print_r($qtyStore);
+              print_r($update_stock);
+//              exit();
+              $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
           }
-          $this->midtrans->cancel($orderId);
+//          $this->midtrans->cancel($orderId);
 
       } else {
           $this->load->view('include/header2');

@@ -139,8 +139,10 @@ class Home extends CI_Controller{
     if ($brand === NULL && $category === NULL) {
       $data['products'] = $this->mhome->getShop_product();
       $data['brand'] = array('name' => 'All Products');
-      $data['category'] = $this->mhome->brand_categories($brand);
+      $data['category'] = array();//$this->mhome->brand_categories($brand);
+      // print_r($data['category']);exit();
     } elseif ($brand !== NULL && $category === NULL) {
+      // echo "saya tanpa category";exit();
       if($brand === 6){
         $category = NULL;
       }
@@ -148,6 +150,7 @@ class Home extends CI_Controller{
       $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'logo'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     } else {
+      // echo "saya lengkap";exit();
       if($brand === 6){
         $category = NULL;
       }
@@ -158,10 +161,10 @@ class Home extends CI_Controller{
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
     // print_r($data['category']);
     // exit();
-      $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
   }
@@ -208,11 +211,18 @@ class Home extends CI_Controller{
 
   public function checkStockbyDistrict($idProduct, $idDistrict){
     $data = $this->mhome->checkStock_by_District($idProduct, $idDistrict);
-    if($data) {
-        print_r(json_encode($data));
+    $available_item = array();
+    foreach ($data as $data) {
+      $available_stock = $data['stock_akhir']-$data['postpone'];
+      if ($available_stock > 3) {
+        array_push($available_item, $data);
+      }
+    }
+    if($available_item) {
+        print_r(json_encode($available_item));
     } else {
-        $data = array();
-        print_r(json_encode($data));
+        $available_item = array();
+        print_r(json_encode($available_item));
     }
   }
 
@@ -227,42 +237,51 @@ class Home extends CI_Controller{
       }
   }
 
-  public function detailProduct($idProduct){
-    $specs = array();
-    $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
-    if ($data['product']['main_sp'] == TRUe) {
-      $data['detail_SP'] = $this->mhome->detail_specialPackage($idProduct);
-    }
-    $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
-    $data['brand'] = $id_brand['brand_id'];
-    $data['categories'] = $this->mhome->brand_categories($id_brand['brand_id']);
-    // print_r($data['categories']);
-    // exit();
-    $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
-      'provinsi', FALSE);
-    $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
-    $data['sub_districts'] = $this->mhome->getProducts(NULL, NULL, 'kecamatan', FALSE);
-    $data['reviews'] = $this->mhome->getProducts(array('prod_id' => $idProduct, 'display' => 1), array('nameField' => 'name',
-      'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
-    $idSpec = $this->mhome->getProducts(array('prod_id' => $idProduct),
-       array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
-
-    for ($i=0; $i < count($idSpec) ; $i++) {
-        array_push($specs, $this->mhome->getProducts(array('id' => $idSpec[$i]['spec_id']),
-         array('nameField' => 'name'), 'tm_spec', TRUE));
+  public function detailProduct($idProduct = NULL){
+    if($idProduct == NULL){
+      show_404();
+    }else {
+      $specs = array();
+      $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
+      // print_r($data['product']);exit();
+      if (is_null($data['product']['name'])) {
+        show_404();
+        exit();
       }
-    $data['specs'] = $specs;
-    $data['image'] = $this->mhome->getProductImage($idProduct);
-    $data['bestSellers'] = $this->mhome->topthree_bestSeller();
-    // print_r($data['specs']);echo "</br></br>";
-    // print_r($data['prices']);echo "</br></br>";
-    // print_r($data['sizes']);echo "</br></br>";exit();
+      if ($data['product']['main_sp'] == TRUe) {
+        $data['detail_SP'] = $this->mhome->detail_specialPackage($idProduct);
+      }
+      $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
+      $data['brand'] = $id_brand['brand_id'];
+      $data['categories'] = $this->mhome->brand_categories($id_brand['brand_id']);
+      // print_r($data['categories']);
+      // exit();
+      $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
+        'provinsi', FALSE);
+      $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
+      $data['sub_districts'] = $this->mhome->getProducts(NULL, NULL, 'kecamatan', FALSE);
+      $data['reviews'] = $this->mhome->getProducts(array('prod_id' => $idProduct, 'display' => 1), array('nameField' => 'name',
+        'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
+      $idSpec = $this->mhome->getProducts(array('prod_id' => $idProduct),
+         array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+      for ($i=0; $i < count($idSpec) ; $i++) {
+          array_push($specs, $this->mhome->getProducts(array('id' => $idSpec[$i]['spec_id']),
+           array('nameField' => 'name'), 'tm_spec', TRUE));
+        }
+      $data['specs'] = $specs;
+      $data['image'] = $this->mhome->getProductImage($idProduct);
+      $data['bestSellers'] = $this->mhome->topthree_bestSeller();
+      // print_r($data['specs']);echo "</br></br>";
+      // print_r($data['prices']);echo "</br></br>";
+      // print_r($data['sizes']);echo "</br></br>";exit();
 
-    $this->load->view('include/header2', $brands);
-    $this->load->view('detail-product', $data);
-    $this->load->view('include/footer');
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+      $this->load->view('include/header2', $brands);
+      $this->load->view('detail-product', $data);
+      $this->load->view('include/footer');
+    }
   }
 
   public function checkProv($idProvince){
@@ -340,7 +359,8 @@ class Home extends CI_Controller{
     if ($carts != NULL) {
       $qty = $this->input->post('qty');
 
-      $no = 0;foreach ($carts as $cart) {
+      $no = 0;
+      foreach ($carts as $cart) {
         $update_cart = array(
           'rowid' =>  $cart['rowid'],
           'qty'   =>  $qty[$no]
@@ -359,6 +379,29 @@ class Home extends CI_Controller{
 
   public function deleteCart(){
       $cart = $this->cart->contents();
+      $releases = $this->cart->contents();
+
+      foreach ($releases as $release) {
+        if ($release['id_address'] != NULL) {
+          $release_stock = array(
+            'id_store'        => $release['id_store'],
+            'id_product'      => $release['id'],
+            'id_product_size' => $release['id_trProduct']
+          );
+
+          $stock = $this->mhome->getProducts($release_stock, array('sakhir' => 'stock_akhir',
+           'ppone' => 'postpone'), 'tr_product', TRUE);
+
+          $release_ppone = $stock['postpone'] - $release['qty'];
+          $release_sakhir = $stock['stock_akhir'] + $release['qty'];
+
+          $update_stock = array(
+            'stock_akhir' => $release_sakhir,
+            'postpone'    => $release_ppone
+          );
+          $this->mhome->updateData($release_stock, $update_stock, 'tr_product');
+        }
+      }
       if ($cart != NULL) {
         $this->cart->destroy();
         redirect('home/shopCart');
@@ -387,23 +430,106 @@ class Home extends CI_Controller{
     $id_prod = $this->input->post('product_id');
     $sku = $this->input->post('sku');
 
-    // quantity order
+    // id product size
+    $id_prod_size = $this->input->post('size');
+
+    // quantity
     $qty = $this->input->post('qty');
 
-    // product name rules
-    $product_name_rules = '\.\:\-_ a-z0-9\d\D)'; // alpha-numeric, dashes, underscores, colons or periods
-    // product name
-    $prod_name = $this->input->post('product_name');
-    // delete some character
-    $prod_name = rtrim($prod_name, $product_name_rules);
-    $prod_name = str_replace('(', '- ', $prod_name);
+    // select store id
+    $store = $this->mhome->getProducts(array('sub_district' => $idDistrict),
+     array('idStore' => 'id_store'), 'tr_store_owner_cluster', TRUE);
 
-    $price = $this->mhome->getProducts(array('id' => $sku), array('prc' => 'price'), 'tr_product_size', TRUE);
+    // check stock postpone and stock akhir
+    $hasPostpone = $this->mhome->getProducts(array('id_store' => $store['id_store'],
+     'id_product' => $id_prod, 'id_product_size' => $id_prod_size), NULL,
+     'tr_product', TRUE);
 
-    // checking brand product
+    // current stock store that available to buy
+    $current_stock_store = $hasPostpone['stock_akhir'] - $hasPostpone['postpone'];
+
+    $may_buy = $current_stock_store - $qty;
+
+    // $isSpecial = $this->mhome->getProducts(array('id' => $id_prod),
+    //  array('main' => 'main_sp'), 'tm_product', TRUE);
+    // if($isSpecial['main_sp'] == 1){
+    //   $type = 'special';
+    //   $search_special = array(
+    //     'active'        => 1,
+    //     'deleted'       => 0,
+    //     'main_product'  => $id_prod
+    //   );
+    //   $id_special = $this->mhome->getProducts($search_special, array('idF' => 'id'), 'tm_special_package', TRUE);
+    //
+    //   $list_bonus = array();
+    //   $bonus = $this->mhome->getProduct(array('id_specialPkg' => $id_special['id']), array('id_bonus' => 'id_prod_package'),
+    //    'tr_special_package', FALSE);
+    //   foreach ($bonus as $bonus) {
+    //     $id_bonus_prod = $this->mhome->
+    //   }
+    // }else{
+    //   $type = '';
+    // }
+
+    if ($may_buy > 3) {
+      $avbl = TRUE;
+      // $old_postpone = array(
+      //   'new' => 0
+      // );
+      // $this->mhome->updateData(array('id' => $hasPostpone['id']), $old_postpone, 'tr_product');
+      // $stock_akhir = $hasPostpone['stock_akhir'] - $qty;
+      // $postpone = $hasPostpone['postpone'] + $qty;
+      // $update_postpone = array(
+      //   'id_store'         => $store['id_store'],
+      //   'id_product'       => $id_prod,
+      //   'id_product_size'  => $id_prod_size,
+      //   'stock_awal'       => $hasPostpone['stock_awal'],
+      //   'stock_akhir'      => $stock_akhir,
+      //   'inbound'          => $hasPostpone['inbound'],
+      //   'outbound'         => $hasPostpone['outbound'],
+      //   'postpone'         => $postpone
+      // );
+      // $this->mhome->inputData('tr_product', $update_postpone);
+      echo "Barang bisa di beli";
+    }else {
+      $avbl = FALSE;
+      echo "Barang tidak bisa di beli";
+    }
+
+    // checking is product assigned as main special package
     $product = $this->mhome->getProducts(array('id' => $id_prod), NULL, 'tm_product', TRUE);
-    $image = $this->mhome->getProducts(array('id' => $id_prod), NULL, 'tr_product_image', TRUE);
 
+    // image product
+    $pImage = $this->mhome->getProducts(array('id_prod' => $id_prod), NULL, 'tr_product_image', TRUE);
+
+    // checking price product
+    $product_price = $this->input->post('price');
+
+    // search size_name and it detail
+    $size_name = $this->mhome->sizeStock($id_prod_size);
+
+    $data = array(
+      'id'            => $id_prod,
+      'type'          => $type,
+      'image'         => $pImage['image_1'],
+      'qty'           => $qty,
+      'price'         => $product_price,
+      'name'          => $product['name'],
+      'id_trProduct'  => $id_prod_size,
+      'voucher'       => '',
+      'id_address'    => '',
+      'available'     => $avbl,
+      'comment'       => '',
+      'sizeName'      => $size_name['name_size'],
+      'detailSize'    => $size_name['detail_size'],
+      'sub_district'  => $idDistrict,
+      'id_store'      => $store['id_store'],
+      'option'        => '',
+    );
+    echo "</br></br>";print_r($data);
+    $this->cart->insert($data);
+    redirect('home/shopCart');
+    exit();
 
     if ($product['main_sp'] == FALSE) {
       echo "Bukan Special Package";echo "</br></br>";
@@ -676,11 +802,15 @@ class Home extends CI_Controller{
         }
 
         $cart_availablelity = $this->cart->contents();
+
         foreach ($cart_availablelity as $cart) {
-          $quantity_Prod = $this->mhome->getProducts(array('id_product_size' => $cart['id_trProduct']),
-            array('quantityF' => 'quantity'), 'tr_product', TRUE);
-          if ($quantity_Prod['quantity'] > 3) {
-            if ($cart['qty'] < $quantity_Prod['quantity']) {
+          $quantity_Prod = $this->mhome->getProducts(
+            array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
+            array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+
+          $stock_available = $quantity_Prod['stock_akhir'] - $quantity_Prod['postpone'];
+          if ($stock_available > 3) {
+            if ($cart['qty'] < $stock_available) {
               $updateAvbllty = array(
                 'rowid'     => $cart['rowid'],
                 'available' => TRUE,
@@ -731,14 +861,15 @@ class Home extends CI_Controller{
           if($voucher === "") {
               $data['discount'] = 0;
           } else {
-              $result = $this->mhome->getProducts(array('kode_voucher' => $voucher), array('discount', 'discount'), 'tm_voucher', TRUE);
+              $result = $this->mhome->getProducts(array('kode_voucher' => $voucher),
+               array('discount', 'discount'), 'tm_voucher', TRUE);
               $data['discount'] = floatval($this->cart->total() * $result['discount']);
           }
 
         // load view
-          $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-          $this->load->view('include/header2', $brands);
+        $this->load->view('include/header2', $brands);
         $this->load->view('shop-checkout', $data);
         $this->load->view('include/footer');
 
@@ -785,19 +916,37 @@ class Home extends CI_Controller{
             // id tr_product from cart
             $id_trProduct = $cart['id_trProduct'];
             // checking the stock
-            $prod_qty = $this->mhome->getProducts(array('id_product_size' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+            $prod_qty = $this->mhome->getProducts(
+              array('id_product_size' => $id_trProduct, 'id_store' => $cart['id_store']),
+            array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+
+            // stock_akhir - Postpone
+            $prod_available = $prod_qty['stock_akhir'] - $prod_qty['postpone'];
 
             // checking is the stock more than 3 and insert id shipping address
-            if ($prod_qty['quantity'] > 3) {
+            if ($prod_available > 3) {
 
               // checking is the stock on store more than quantity that customer order and insert id shipping address
-              if ($cart['qty'] < $prod_qty['quantity']) {
+              if ($cart['qty'] < $prod_available) {
                 $availablelity_stock = array(
                   'rowid'       => $cart['rowid'],
                   'id_address'  => $shipping_same_with_default_address['id'],
                   'available'   => TRUE
                 );
                 $this->cart->update($availablelity_stock);
+
+                $stock = $this->mhome->getProducts(
+                  array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
+                array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                $newPpone = $stock['postpone'] + $cart['qty'];
+                $newSakhir = $stock['stock_akhir'] - $cart['qty'];
+                $newStock = array(
+                  'postpone'    => $newPpone,
+                  'stock_akhir' => $newSakhir
+                );
+                $this->mhome->updateData(array('id_product_size' => $cart['id_trProduct'],
+                 'id_store' => $cart['id_store']), $newStock, 'tr_product');
+                print_r($newStock);
 
               // checking is the stock on store less than quantity that customer order and insert id shipping address
               } else {
@@ -860,19 +1009,37 @@ class Home extends CI_Controller{
               print_r($id_trProduct);echo "</br></br>";
 
               // checking the stock
-              $prod_qty = $this->mhome->getProducts(array('id_product_size' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $prod_qty = $this->mhome->getProducts(
+                array('id_product_size' => $id_trProduct, 'id_store' => $cart['id_store']),
+              array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+
+              // stock_akhir - Postpone
+              $prod_available = $prod_qty['stock_akhir'] - $prod_qty['postpone'];
 
               // checking is the stock more than 3 and insert id shipping address
-              if ($prod_qty['quantity'] > 3) {
+              if ($prod_available > 3) {
 
                 // if quantity order less than stock
-                if ($cart['qty'] < $prod_qty['quantity']) {
+                if ($cart['qty'] < $prod_available) {
                   $availablelity_stock = array(
                     'rowid'       =>  $cart['rowid'],
                     'id_address'  =>  $has_same_shipped_address['id'],
                     'available'   =>  TRUE
                   );
                   $this->cart->update($availablelity_stock);
+
+                  $stock = $this->mhome->getProducts(
+                    array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
+                  array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                  $newPpone = $stock['postpone'] + $cart['qty'];
+                  $newSakhir = $stock['stock_akhir'] - $cart['qty'];
+                  $newStock = array(
+                    'postpone'    => $newPpone,
+                    'stock_akhir' => $newSakhir
+                  );
+                  $this->mhome->updateData(array('id_product_size' => $cart['id_trProduct'],
+                   'id_store' => $cart['id_store']), $newStock, 'tr_product');
+                  print_r($newStock);
 
                 // if quntity order more than stock
                 } else {
@@ -917,13 +1084,18 @@ class Home extends CI_Controller{
               print_r($id_trProduct);echo "</br></br>";
 
               // checking the stock
-              $prod_qty = $this->mhome->getProducts(array('id_product_size' => $id_trProduct), array('qty' => 'quantity'), 'tr_product', TRUE);
+              $prod_qty = $this->mhome->getProducts(
+                array('id_product_size' => $id_trProduct, 'id_store' => $cart['id_store']),
+              array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+
+              // stock_akhir - postpone
+              $prod_available = $prod_qty['stock_akhir'] - $prod_qty['postpone'];
 
               // checking is the stock more than 3 and insert id shipping address
-              if ($prod_qty['quantity'] > 3) {
+              if ($prod_available > 3) {
 
                 // if quantity stock less than order
-                if ($cart['qty'] < $prod_qty['quantity']) {
+                if ($cart['qty'] < $prod_available) {
                   $availablelity_stock = array(
                     'rowid'       =>  $cart['rowid'],
                     'id_address'  =>  $id_new_shipping_address['id'],
@@ -966,7 +1138,117 @@ class Home extends CI_Controller{
     }
   }
 
-  public function purchase($orderId, $snapResponse){
+  public function buy(){
+      $result = json_decode($this->input->post('result_data'));
+      $snapToken = $this->input->post('snap_token');
+        if ($this->session->userdata('uType') == 4) {
+            $cart = $this->cart->contents();
+            if ($cart != NULL) {
+                print_r($cart);echo "</br></br>";
+                $cartAdress = $this->cart->contents();
+                $address_detail = array();
+                foreach ($cartAdress as $cart) {
+                    $address_detail['id_address'] = $cart['id_address'];
+                }
+                $idUserLogin = $this->session->userdata('uId');
+
+                // set order status
+                $statusOrder = 2;
+                if ($result->status_code == 200) {
+                    $statusOrder = 4;
+                }
+
+                // check payment method
+                $va_number = "";
+                if ($result->payment_type === 'bank_transfer') {
+                    $bank = $result->va_numbers[0]->bank;
+                    $va_number = $result->va_numbers[0]->va_number;
+                } else if ($result->payment_type === 'credit_card') {
+                    $bank = $result->bank;
+                }
+
+                // calculate expiry time
+                $transaction_time = new DateTime($result->transaction_time);
+                $expiry_time = $transaction_time->modify('+12 hour');
+
+                $data_order = array(
+                    'order_number'    => $result->order_id,
+                    'id_userlogin'    => $idUserLogin,
+                    'total'           => $this->cart->total(),
+                    'address_detail'  => $address_detail['id_address'],
+                    'status_order'    => $statusOrder,
+                    'note'            => $cart['note'],
+                    'token'           => $snapToken,
+                    'va_number'       => $va_number,
+                    'bank_name'       => $bank,
+                    'payment_type'    => $result->payment_type,
+                    'token_expiry_date' => $expiry_time->format("Y-m-d H:i:s")
+                );
+
+                // Voucher item
+//                $keys = array_keys($cart);
+                $voucher = $cart['voucher'];
+                if ($voucher != NULL) {
+                    $voucherDetail = $this->mhome->getProducts(array('kode_voucher' => $voucher), NULL, 'tm_voucher', TRUE);
+                    $discount = floatval($this->cart->total() * $voucherDetail['discount']);
+                    $data_order['id_voucher'] = $voucherDetail['id'];
+                    $data_order['total'] = $this->cart->total() - $discount;
+                }
+
+                print_r($data_order);echo "</br></br>";
+                $this->mhome->inputData('tm_order', $data_order);
+                $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);
+
+                $carts = $this->cart->contents();
+                foreach ($carts as $cart) {
+                    $detail_order = array(
+                        'id_tm_order'   =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
+                        'id_tr_product' =>  $cart['id_trProduct'],
+                        'quantity'      =>  $cart['qty'],
+                        'subtotal'      =>  $cart['subtotal']
+                    );
+                    $this->mhome->inputData('tr_order_detail', $detail_order);
+                    print_r($detail_order);echo "</br></br>";
+                }
+
+                if ($statusOrder == 4) {
+                    $cuttingStocks = $this->cart->contents();
+                    foreach ($cuttingStocks as $cut) {
+                        $id = $cut['id_trProduct'];
+                        $qty = $cut['qty'];
+                        $qtyStore = $this->mhome->getProducts(array('id_product_size' => $id), array('postpone' => 'postpone',
+                            'outbound' => 'outbound', 'id_store' => 'id_store', 'id_product_size' => 'id_product_size'), 'tr_product', TRUE);
+                        $postpone = $qtyStore['postpone'] - $qty;
+                        $outbound = $qtyStore['outbound'] + $qty;
+                        $update_stock = array(
+                            'outbound' => $outbound,
+                            'postpone'    => $postpone
+                        );
+                        $history_inbound = array(
+                            'id_prod_size'  => $qtyStore['id_product_size'],
+                            'id_store'      => $qtyStore['id_store'],
+                            'quantity'      => $outbound * -1
+                        );
+                        $this->mhome->inputData('tr_stock', $history_inbound);
+                        $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
+
+//                        $stock = $this->mhome->getProducts(array('id' => $cut['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
+//                        $newStock['quantity'] = $stock['quantity'] - $cut['qty'];
+//                        $this->mhome->updateData(array('id' => $cut['id_trProduct']), $newStock, 'tr_product');
+//                        print_r($newStock);
+                    }
+                }
+
+                $this->cart->destroy();
+                redirect('home/checkoutDone');
+                exit();
+            }
+        }else{
+            redirect();
+        }
+    }
+
+  public function purchase($orderId, $snapResponse, $snapToken){
     if ($this->session->userdata('uType') == 4) {
       $cart = $this->cart->contents();
       if ($cart != NULL) {
@@ -990,7 +1272,8 @@ class Home extends CI_Controller{
           'total'           => $this->cart->total(),
           'address_detail'  => $address_detail['id_address'],
           'status_order'    => $statusOrder,
-          'note'            => $cart['note']
+          'note'            => $cart['note'],
+          'snapToken'       => $snapToken
         );
 
           // Voucher item
@@ -1019,13 +1302,7 @@ class Home extends CI_Controller{
           print_r($detail_order);echo "</br></br>";
         }
 
-        $cuttingStocks = $this->cart->contents();
-        foreach ($cuttingStocks as $cut) {
-          $stock = $this->mhome->getProducts(array('id' => $cut['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
-          $newStock['quantity'] = $stock['quantity'] - $cut['qty'];
-          $this->mhome->updateData(array('id' => $cut['id_trProduct']), $newStock, 'tr_product');
-          print_r($newStock);
-        }
+        // cutting stock was here :))
 
         $this->cart->destroy();
         redirect('home/checkoutDone');
@@ -1526,7 +1803,7 @@ class Home extends CI_Controller{
 		}
 	}
 
-  public function specialPackage() {
+  public function special_package() {
     $data['special_packages'] = $this->mhome->getProducts(array('active' => 1),
       array('idField' => 'id', 'nameField' => 'name', 'img' => 'image'), 'tm_special_package', FALSE);
 
@@ -1537,16 +1814,24 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function detailSpecial($idSpecialPckg) {
-    $data['is_promotion'] = FALSE;
-    $data['special_package'] = $this->mhome->getProducts(array('id' => $idSpecialPckg),
-      array('nameField' => 'name', 'img' => 'image', 'desc' => 'description',
-       'main_prod' => 'main_product'), 'tm_special_package', TRUE);
-    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+  public function detailSpecial($idSpecialPckg = NULL) {
+    if ($idSpecialPckg == NULL) {
+      show_404();
+    }else {
+      $data['is_promotion'] = FALSE;
+      $data['special_package'] = $this->mhome->getProducts(array('id' => $idSpecialPckg),
+        array('nameField' => 'name', 'img' => 'image', 'desc' => 'description',
+         'main_prod' => 'main_product'), 'tm_special_package', TRUE);
+      if (! is_array($data['special_package'])) {
+        show_404();
+        exit();
+      }
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-    $this->load->view('include/header2', $brands);
-    $this->load->view('promotion-detail', $data);
-    $this->load->view('include/footer');
+      $this->load->view('include/header2', $brands);
+      $this->load->view('promotion-detail', $data);
+      $this->load->view('include/footer');
+    }
   }
 
   public function check_voucher($voucher) {

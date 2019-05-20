@@ -134,21 +134,22 @@
 									<a href="1" id="1">
 										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/5-zone-pocket-spring.png.pagespeed.ce.MDUzM1LUYu.png" alt="">
 										<div style="width:100%">
-											<h3 class="text-center"><?= $spec['name'];?></h3>
+											<h4 class="text-center"><?= $spec['name'];?></h4>
 										</div>
 									</a>
 								<?php endforeach;?>
 								</div>
 								<?php if ($product['main_sp'] == TRUE): ?>
+									<h3 class="text-center mt-50">Bonus</h3>
 									<table class="table table-bordered text-center">
 				                <tbody class="text-center">
-				                <tr style="font-size:16px;">
+				                <tr class="fs-16">
 				                  <th>Product</th>
 				                  <th>Size</th>
 				                  <th style="width: 10px">Qty</th>
 				                </tr>
 				                <?php foreach ($detail_SP as $detail): ?>
-				                  <tr style="font-size:10px;">
+				                  <tr class="fs-14">
 				                    <td><?= $detail['prod']?></td>
 				                    <td><?= $detail['sizeName'].' ('.$detail['sizeDetail'].')'?></td>
 				                    <td><?= $detail['quantity']?></td>

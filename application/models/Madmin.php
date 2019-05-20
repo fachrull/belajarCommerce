@@ -209,11 +209,14 @@ class Madmin extends CI_Model {
   }
 
   public function joinStoreProd($store_id){
-    $this->db->select('a.id, b.name as product_name, d.name as size_name, d.size, a.quantity');
+    $this->db->select('a.id, b.name as product_name, d.name as size_name, d.size
+    , a.stock_awal, a.stock_akhir, a.inbound, a.outbound, a.postpone');
+    $this->db->select_max('a.periode');
     $this->db->from('tr_product a');
     $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
     $this->db->join('tr_product_size c', 'c.id = a.id_product_size', 'left');
     $this->db->join('tm_size d', 'd.id = c.size_id', 'left');
+    $this->db->group_by('a.id');
     $this->db->where('a.id_store', $store_id);
     $query = $this->db->get();
     if($query->num_rows() != 0){
@@ -568,25 +571,6 @@ class Madmin extends CI_Model {
     }
   }
 
-    public function store_specialPackage($idStoreOwner){
-      $this->db->select('a.id, a.quantity, b.name, c.price');
-      $this->db->from('tr_product a');
-      $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
-      $this->db->join('tr_product_size c', 'c.prod_id = a.id_product', 'left');
-      $where = array(
-        'a.id_store'  =>  $idStoreOwner,
-        'b.brand_id'  => 0,
-        'b.cat_id'    => 0
-      );
-      $this->db->where($where);
-      $query = $this->db->get();
-      if ($query->num_rows() != 0) {
-        return $query->result_array();
-      }else {
-        return FALSE;
-      }
-    }
-
     public function maxPosition_BedLinen(){
       $this->db->select('MAX(position) as position');
       $this->db->from('tr_product_bed_linen');
@@ -639,6 +623,7 @@ class Madmin extends CI_Model {
       $this->db->join('tr_product_size b', 'b.prod_id = a.main_product', 'left');
       $this->db->order_by('a.id', 'desc');
       $this->db->group_by('a.main_product');
+      $this->db->where('a.deleted', 0);
       $query = $this->db->get();
       if ($query->num_rows() != 0) {
         return $query->result_array();

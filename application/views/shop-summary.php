@@ -3,7 +3,7 @@
         src="https://app.sandbox.midtrans.com/snap/snap.js"
         data-client-key="<?=$midtrans['client_key']?>"></script>
 
-<section class="page-header page-header-md">    
+<section class="page-header page-header-md">
   <div class="container">
     <h1>Cart Summary</h1>
   </div>
@@ -94,6 +94,9 @@
                       <span class="clearfix">
                         <span class="float-left"><?= $cart['name']?></span>
                         <br>
+                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<br>
+												<span><small>Bonus :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
@@ -134,6 +137,9 @@
                       <span class="clearfix">
                         <span class="float-left"><?= $cart['name']?></span>
                         <br>
+                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+												<br>
+												<span><small>Bonus :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
@@ -170,8 +176,8 @@
         </table>
         <?php if ($available == TRUE): ?>
           <div class="row">
-            <div class="col-sm-6">
-              <a href="<?= site_url('home/shopCart')?>" class="col-sm-12 btn btn-default">Back to Cart</a>
+            <div class="col-sm-6 text">
+              <a href="<?= site_url('home/deleteCart')?>" class="col-sm-12 btn btn-danger">Cancel</a>
             </div>
             <div class="col-sm-6 text-right">
 <!--              <a href="--><?//= site_url('home/purchase')?><!--" class="col-sm-12 btn btn-oldblue">Purchase</a>-->
@@ -179,9 +185,10 @@
             </div>
           </div>
             <div class="row">
-                <form id="payment-form" method="post" action="<?=site_url('snap/finish')?>">
+                <form id="payment-form" method="post" action="<?=site_url('home/buy')?>">
                     <input type="hidden" name="result_type" id="result-type" value=""></div>
           <input type="hidden" name="result_data" id="result-data" value=""></div>
+        <input type="hidden" name="snap_token" id="snap-token" value="">
         </form>
             </div>
         <?php else: ?>
