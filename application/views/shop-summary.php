@@ -59,6 +59,13 @@
               <th>:</th>
               <td><?= $address_shipping['phone']?></td>
             </tr>
+            <tr>
+                <th>Note </th>
+                <th>:</th>
+                <td><?php
+                    $keys= array_keys($carts);
+                    echo $carts[$keys[0]]['note'];?></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -178,9 +185,10 @@
             </div>
           </div>
             <div class="row">
-                <form id="payment-form" method="post" action="<?=site_url('snap/finish')?>">
+                <form id="payment-form" method="post" action="<?=site_url('home/buy')?>">
                     <input type="hidden" name="result_type" id="result-type" value=""></div>
           <input type="hidden" name="result_data" id="result-data" value=""></div>
+        <input type="hidden" name="snap_token" id="snap-token" value="">
         </form>
             </div>
         <?php else: ?>

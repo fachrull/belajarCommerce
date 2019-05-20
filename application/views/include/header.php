@@ -45,8 +45,8 @@
 			<div class="search-box over-header">
 				<a id="closeSearch" href="index-home-before-login.html" class="fa fa-remove"></a>
 
-				<form action="search-result.html" method="get">
-					<input type="text" class="form-control" placeholder="SEARCH" />
+				<form action="<?php echo site_url('home/search_keyword');?>" method = "post">
+					<input type="text" value="submit" onfocus="this.value=''" name = "keyword" />
 				</form>
 			</div>
 			<!-- /SEARCH HEADER -->
@@ -82,8 +82,8 @@
 						</li>
 								<?php else:?>
 						<li class="header-button-arrow hidden-lg-down">
-							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60">
-								<i class="fa fa-sign-in fs-20"></i>
+							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60 pl-15 pr-15 hovergray">
+								<span style="color:#1f262D">LOGIN</span>
 							</a>
 						</li>
 								<?php endif;?>
@@ -111,7 +111,7 @@
 								<li class="dropdown">
 									<!-- HOME -->
 									<a class="dropdown-toggle" href="#">
-										PRODUCT
+										BRANDS
 									</a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown">

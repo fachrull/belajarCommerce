@@ -70,6 +70,18 @@ class Snap extends CI_Controller {
 
             array_push($item_details, $voucher_details);
         }
+        // Check order id
+//        $orderid = 'AGM'.date("dmy").rand(1, 999);
+//        try {
+//            $response = $this->midtrans->status($orderid);
+//            while ($response->status_code=200){
+//                $orderid = 'AGM'.date("dmy").rand(1, 999);
+//                $response = $this->midtrans->status($orderid);
+//            }
+//        } catch (Exception $exception) {
+//            $inv_number = $orderid;
+//        }
+
 
         // Required
         $transaction_details = array(
@@ -106,8 +118,8 @@ class Snap extends CI_Controller {
         $time = time();
         $custom_expiry = array(
             'start_time' => date("Y-m-d H:i:s O",$time),
-            'unit' => 'day',
-            'duration'  => 1
+            'unit' => 'hour',
+            'duration'  => 12
         );
         
         $transaction_data = array(
@@ -155,16 +167,45 @@ class Snap extends CI_Controller {
         $status = array('status_order' => $transactionStatus);
         $condition = array('order_number'=> $orderId);
         $this->mhome->updateData($condition, $status, 'tm_order');
+        // TODO: check the active month
         if($transactionStatus == 3) {
             $data['detailOrder'] = $this->mhome->getDetailOrder($orderId);
 
             foreach ($data['detailOrder'] as $item) {
                 $id = $item->id_tr_product;
                 $qty = $item->quantity;
-                $qtyStore = $this->mhome->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
-                $newQuanStore = $qtyStore['quantity'] + $qty;
-                $quantity = array('quantity' => $newQuanStore);
-                $this->mhome->updateData(array('id' => $id), $quantity, 'tr_product');
+                $qtyStore = $this->mhome->getProducts(array('id_product_size' => $id), array('postpone' => 'postpone',
+                    'stock_akhir' => 'stock_akhir'), 'tr_product', TRUE);
+                $postpone = $qtyStore['postpone'] - $qty;
+                $stock_akhir = $qtyStore['stock_akhir'] + $qty;
+                $update_stock = array(
+                    'stock_akhir' => $stock_akhir,
+                    'postpone'    => $postpone
+                );
+                $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
+            }
+        } else if ($transactionStatus == 4) {
+            $data['detailOrder'] = $this->mhome->getDetailOrder($orderId);
+
+            foreach ($data['detailOrder'] as $item) {
+                $id = $item->id_tr_product;
+                $qty = $item->quantity;
+                $qtyStore = $this->mhome->getProducts(array('id_product_size' => $id), array('postpone' => 'postpone',
+                    'outbound' => 'outbound', 'id_store' => 'id_store', 'id_product_size' => 'id_product_size'), 'tr_product', TRUE);
+                $postpone = $qtyStore['postpone'] - $qty;
+                $outbound = $qtyStore['outbound'] + $qty;
+                $update_stock = array(
+                    'outbound' => $outbound,
+                    'postpone'    => $postpone
+                );
+                $history_inbound = array(
+                    'id_prod_size'  => $qtyStore['id_product_size'],
+                    'id_store'      => $qtyStore['id_store'],
+                    'quantity'      => $outbound * -1
+                );
+                $this->mhome->inputData('tr_stock', $history_inbound);
+                $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
+                print_r($qtyStore);
             }
         }
     }
@@ -225,5 +266,10 @@ class Snap extends CI_Controller {
             $this->changeTransactionStatus($order_id, 3);
             echo "Payment using " . $type . " for transaction order_id: " . $order_id . " is cancel.";
         }
+    }
+
+    public function status($id) {
+	    $response = $this->midtrans->status($id);
+	    print_r($response);
     }
 }

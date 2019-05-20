@@ -36,6 +36,10 @@
                                     <td><?= $detailOrder[0]->phone?></td>
                                 </tr>
                                 <tr>
+                                    <th>Note</th>
+                                    <td><?= $detailOrder[0]->note?></td>
+                                </tr>
+                                <tr>
                                     <th>Status Transaksi</th>
                                     <td>
                                         <?php

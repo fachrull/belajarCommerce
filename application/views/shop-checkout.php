@@ -74,23 +74,23 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="billing_address1">Address</label>
-								<input id="billing_address1" name="add" value="<?= $alamat_default['address']?>" type="text" class="form-control required" disabled/>
+                                <input id="billing_address1" name="add" value="<?= $alamat_default['address']?>" type="text" class="form-control required" disabled/>
 								<input type="hidden" name="address" value="<?= $alamat_default['address']?>">
 							</div>
 						</div>
 
 						<div class="row">
-							<div class="col-md-6 col-sm-6">
-								<label>Province</label>
-								<input type="text" name="prov" value="<?= $addressCart['provinsi']?>" class="form-control" disabled>
-								<input type="hidden" name="provinsi" value="<?= $addressCart['id_prov']?>">
-							</div>
-							<div class="col-md-6 col-sm-6">
-								<label>City</label>
-								<input type="text" name="kab" value="<?= $addressCart['kabupaten']?>" class="form-control" disabled>
-								<input type="hidden" name="kabupaten" value="<?= $addressCart['id_kab']?>">
-							</div>
-						</div>
+                            <div class="col-md-6 col-sm-6">
+                                <label>Province</label>
+                                <input type="text" name="prov" value="<?= $addressCart['provinsi']?>" class="form-control" disabled>
+                                <input type="hidden" name="provinsi" value="<?= $addressCart['id_prov']?>">
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label>City</label>
+                                <input type="text" name="kab" value="<?= $addressCart['kabupaten']?>" class="form-control" disabled>
+                                <input type="hidden" name="kabupaten" value="<?= $addressCart['id_kab']?>">
+                            </div>
+                        </div>
 
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
@@ -104,6 +104,13 @@
 								<input type="hidden" name="postcode" value="<?= $alamat_default['postcode']?>">
 							</div>
 						</div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label for="billing_note">Note</label>
+                                <textarea name="note" id="note" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
 
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
@@ -143,8 +150,9 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="billing_address1">Address</label>
-								<input id="billing_address1" name="address" type="text" class="form-control required" />
-							</div>
+                                <input id="billing_address1" name="address" type="text" class="form-control required" />
+                                <p style="color:gray;font-size:11px;">(Alamat pengiriman harus sesuai dengan lokasi yang dipilih).</p>
+                            </div>
 						</div>
 
 						<div class="row">
@@ -171,6 +179,13 @@
 								<input id="billing_zipcode" name="postcode" type="text" class="form-control required" />
 							</div>
 						</div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label for="billing_note">Note</label>
+                                <textarea name="note" id="note" placeholder="Note" cols="30" rows="5" class="form-control"></textarea>
+                            </div>
+                        </div>
 
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
