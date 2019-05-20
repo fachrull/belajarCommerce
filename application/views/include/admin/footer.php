@@ -360,6 +360,18 @@ $(function () {
  // })
 </script>
 <script>
+    $(document).ready(function () {
+        $('#category').on('change', function () {
+            var category = $('#category').val();
+            if (category > 2){
+                $('#spec_area').addClass('hide');
+            }else{
+                $('#spec_area').removeClass('hide');
+            }
+        })
+    })
+</script>
+<script>
     $(document).ready(function(){
      $('#product').on('change', function(){
 		var productId = $('#product').val();

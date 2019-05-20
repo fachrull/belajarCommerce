@@ -462,7 +462,7 @@ class Admin extends CI_Controller {
             // $this->form_validation->set_rules('cat', 'Category', 'required');
             $this->form_validation->set_rules('pName', 'Product Name', 'required');
             $this->form_validation->set_rules('desc', 'Description', 'required');
-            $this->form_validation->set_rules('spec[]', 'Specification', 'required');
+//            $this->form_validation->set_rules('spec[]', 'Specification', 'required');
             $this->form_validation->set_rules('size[]', 'Size', 'required');
             $this->form_validation->set_rules('price[]', 'Price', 'required');
             $this->form_validation->set_rules('sku[]', 'SKU', 'required');
