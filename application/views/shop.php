@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-		<section class="page-header page-header-md pb-0">
+		<section class="page-header page-header-md">
 			<div class="container">
 
-				<img src="<?= base_url('asset/brands/'.$brand['logo']);?>" />
+				<h1><?= strtoupper($brand['name']);?></h1>
 
 				<!-- breadcrumbs -->
 				<!--<ol class="breadcrumb">-->
@@ -26,7 +26,7 @@
 					<div class="col-lg-3 col-md-3 col-sm-3 order-md-1 order-lg-1">
 
 						<!-- CATEGORIES -->
-						<div class="side-nav mb-60 mt-60">
+						<div class="side-nav mb-60">
 
 							<?php if($category != NULL):?>
 							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
@@ -96,17 +96,17 @@
                             <p align:"center">Product tidak tersedia</p>
                         <?php else:?>
 						<!-- LIST OPTIONS -->
-						<div class="pajinate-nav clearfix shop-list-options mb-20 absolute" style="left:unset !important; right:0px !important;">
+						<div class="pajinate-nav clearfix shop-list-options mb-20">
 
 							<!-- Pagination Default -->
-							<ul class="pagination mt-0">
+							<ul class="pagination m-0 float-right">
 								<!-- pages added by pajinate plugin -->
 							</ul>
 							<!-- /Pagination Default -->
 
 						</div>
 						<!-- /LIST OPTIONS -->
-						<ul class="pajinate-container shop-item-list row list-inline mt-60">
+						<ul class="pajinate-container shop-item-list row list-inline m-0">
 							<?php foreach ($products as $product): ?>
 								<!-- ITEM -->
 								<li class="col-lg-4 col-sm-4">

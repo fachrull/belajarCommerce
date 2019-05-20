@@ -95,39 +95,38 @@
 
 					<!-- IMAGE -->
 					<div class="col-lg-6 col-sm-6">
-                        <?php if($image['image_2'] == NULL && $image['image_3'] == NULL){?>
-                            <div class="relative mb-3">
-                                <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$image['image_1']);?>" data-plugin-options='{"type":"image"}'>
-                                    <img class="img-fluid" src="<?= site_url('asset/upload/'.$image['image_1']);?>" alt="This is the product title" />
-                                </a>
-                            </div>
-                        <?php }else {?>
 
 					<div class="owl-carousel buttons-autohide controlls-over text-center mb-0" data-plugin-options='{"singleItem": true, "autoPlay": 8000, "navigation": true, "pagination": false}'>
-                        <?php if ($image['image_1'] != NULL){?>
+                        <?php if($image == NULL) { ?>
+                            <div class="relative mb-3">
+                                <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'>
+                                    <img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
+                                </a>
+                            </div>
+                            <div class="relative mb-3">
+                                <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'>
+                                    <img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
+                                </a>
+                            </div>
+                        <?php } else { ?>
                             <div class="relative mb-3">
                                 <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$image['image_1']);?>" data-plugin-options='{"type":"image"}'>
                                     <img class="img-fluid" src="<?= site_url('asset/upload/'.$image['image_1']);?>" alt="This is the product title" />
                                 </a>
                             </div>
-                        <?php }?>
-
-                        <?php if ($image['image_2'] != NULL){?>
                             <div class="relative mb-3">
                                 <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$image['image_2']);?>" data-plugin-options='{"type":"image"}'>
                                     <img class="img-fluid" src="<?= site_url('asset/upload/'.$image['image_2']);?>" alt="This is the product title" />
                                 </a>
                             </div>
-                        <?php }?>
-                        <?php if ($image['image_3'] != NULL){?>
                             <div class="relative mb-3">
                                 <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$image['image_3']);?>" data-plugin-options='{"type":"image"}'>
                                     <img class="img-fluid" src="<?= site_url('asset/upload/'.$image['image_3']);?>" alt="This is the product title" />
                                 </a>
                             </div>
-                        <?php }?>
+                       <?php } ?>
 					</div>
-                        <?php } ?>
+
 
 						<div class="tabbed hidden-lg-down text-center">
               	<?php foreach($specs as $spec):?>

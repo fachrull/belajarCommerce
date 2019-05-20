@@ -84,8 +84,8 @@
 						</li>
 								<?php else:?>
 						<li class="header-button-arrow hidden-lg-down">
-							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60 pl-15 pr-15 hovergray">
-								<span style="color:#1f262D">LOGIN</span>
+							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60">
+								<i class="fa fa-sign-in fs-20"></i>
 							</a>
 						</li>
 								<?php endif;?>
@@ -112,7 +112,7 @@
 								<li class="dropdown">
 									<!-- HOME -->
 									<a class="dropdown-toggle" href="#">
-										BRANDS
+										PRODUCT
 									</a>
                                     <ul class="dropdown-menu">
                                         <li class="dropdown">
@@ -126,17 +126,17 @@
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
                                                 Serta
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
                                                 Tempur
                                             </a>
                                         </li>
                                         <li class="dropdown">
-                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
                                                 Florence
                                             </a>
                                         </li>

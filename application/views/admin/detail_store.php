@@ -110,13 +110,7 @@
                           <td><?= ($product['outbound'] != NULL? $product['outbound']:'0');?></td>
                           <td><?= ($product['postpone'] != NULL? $product['postpone']:'0');?></td>
                           <td>
-                            <?php if ($product['inbound'] == 0): ?>
-                              <a href="<?= site_url('admin/deleteStoreProd/'.$post['id'].'/'.$product['id'])?>" class="btn btn-danger"
-                                onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
-                            <?php else: ?>
-                              <button disabled
-                                 class="btn btn-danger"><i class="fa fa-trash"></i></button>
-                            <?php endif; ?>
+                            <a href="<?= site_url('admin/deleteStoreProd/'.$post['id'].'/'.$product['id'])?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
                           </td>
                         </tr>
                         <?php $no++; ?>

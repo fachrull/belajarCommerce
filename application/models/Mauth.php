@@ -123,7 +123,7 @@ class Mauth extends CI_Model{
       $id = $userId->user_id;
       $default_address = 1; // 1 = TRUE ; 0 = FALSE
 
-      $dataCustomer_detail = array(
+      $dataCustomer = array(
         'id_userLogin'    => $id,
         'first_name'      => $this->input->post('fname'),
         'last_name'       => $this->input->post('lname'),
@@ -138,18 +138,7 @@ class Mauth extends CI_Model{
         'default_address' => $default_address
       );
 
-      $queryCustomer_detail = $this->db->insert('tm_customer_detail', $dataCustomer_detail);
-
-      $dataCustomer = array(
-          'id_userlogin'    => $id,
-          'first_name'      => $this->input->post('fname'),
-          'last_name'       => $this->input->post('lname'),
-          'gender'          => $this->input->post('gender'),
-          'phone'           => $this->input->post('phone'),
-          'dateofbirth'     => $this->input->post('birthday')
-      );
-
-      $queryCustomer = $this->db->insert('tm_customer', $dataCustomer);
+      $queryCustomer = $this->db->insert('tm_customer_detail', $dataCustomer);
 
       return array(
         'queryULoging'  => $queryULoging,

@@ -1,6 +1,6 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-		<section class="page-header page-header-md pb-0">
+		<section class="page-header page-header-md">
 			<div class="container">
 
 				<h1><?= strtoupper($brand['name']);?></h1>
@@ -26,7 +26,7 @@
 					<div class="col-lg-3 col-md-3 col-sm-3 order-md-1 order-lg-1">
 
 						<!-- BRANDS -->
-						<div class="side-nav mb-60 mt-60">
+						<div class="side-nav mb-60">
 
 							<div class="side-nav-head" data-toggle="collapse" data-target="#brands">
 								<button class="fa fa-bars btn btn-mobile"></button>
@@ -34,9 +34,9 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-                <?php if ($brands != NULL) {foreach ($brands as $brandBL): ?>
+                <?php foreach ($brands as $brandBL): ?>
                   <li class="list-group-item"><a href="<?= site_url('home/bed_linen/'. $brandBL['id']);?>"><?= $brandBL['brand']?></a></li>
-                <?php endforeach; } ?>
+                <?php endforeach; ?>
 							</ul>
 
 						</div>
@@ -68,23 +68,23 @@
 					</div>
 
 					<!-- RIGHT -->
-					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="6"
+					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="12"
 					 data-pajinate-container=".pajinate-container">
 					    <?php if($products == NULL):?>
                             <p align:"center">Product tidak tersedia</p>
                         <?php else:?>
 						<!-- LIST OPTIONS -->
-						<div class="pajinate-nav clearfix shop-list-options mb-20 absolute" style="left:unset !important; right:0px !important;">
+						<div class="pajinate-nav clearfix shop-list-options mb-20">
 
 							<!-- Pagination Default -->
-							<ul class="pagination m-0">
+							<ul class="pagination m-0 float-right">
 								<!-- pages added by pajinate plugin -->
 							</ul>
 							<!-- /Pagination Default -->
 
 						</div>
 						<!-- /LIST OPTIONS -->
-						<ul class="pajinate-container shop-item-list row list-inline mt-60">
+						<ul class="pajinate-container shop-item-list row list-inline m-0">
 							<?php foreach ($products as $product): ?>
 								<!-- ITEM -->
 								<li class="col-lg-4 col-sm-4">

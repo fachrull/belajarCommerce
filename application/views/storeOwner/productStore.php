@@ -9,8 +9,6 @@
       </div>
       <div class="box-body">
           <div class="rows">
-            <p><strong>Periode: </strong><span><?= date("F Y", strtotime($periode['periode']));?></span></p> 
-            <hr>
             <div class="col-xs-12">
               <?php if($products == NULL):?>
                   <p class="text-center">Tidak ada product yang di tambahkan.</p>
