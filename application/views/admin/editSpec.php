@@ -20,6 +20,12 @@
                 <label class="input mb-10">
                   <input class="form-control" name="items" type="text" placeholder="Spec" value="<?= $spec['name']?>">
                 </label>
+                <div class="col-xs-12 text-center mb-20">
+                    <img id="iconSpec" style="width:100px !important; height:100px;" src="#">
+                </div>
+                <label class="input mb-10">
+                    <input type="file" name="specPict" id="file"/>
+                </label>
                 <div class="row">
                   <div class="col-md-6">
                     <a href="<?= site_url('admin/sa_spec')?>" class="btn btn-oldblue btn-default">Back</a>

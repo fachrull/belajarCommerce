@@ -1506,12 +1506,38 @@ class Admin extends CI_Controller {
             $this->load->view('admin/editSpec', $data);
             $this->load->view('include/admin/footer');
           }else {
-              $items = array(
-                  'name'          => $this->input->post('items'),
-                  'status' => 1,
-              );
-              $this->madmin->updateData(array('id' => $idSpec), 'tm_spec', $items);
-              redirect('admin/sa_spec', 'refresh');
+
+              if ($_FILES['specPict']['size'] != 0) {
+                  $config['upload_path'] = './asset/spec/';
+                  $config['allowed_types'] = 'jpg|jpeg|png|svg';
+                  $config['overwrite']        = true;
+
+                  $this->load->library('upload', $config);
+                  if (! $this->upload->do_upload('specPict')) {
+                      $this->session->set_flashdata('error', $this->upload->display_errors());
+                      $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec), NULL, 'tm_spec', TRUE);
+                      $this->load->view('include/admin/header');
+                      $this->load->view('include/admin/left-sidebar');
+                      $this->load->view('admin/editSpec', $data);
+                      $this->load->view('include/admin/footer');
+                  }else{
+                      $pName = $this->upload->data();
+                      $items = array(
+                          'name'          => $this->input->post('items'),
+                          'icon'          => $pName['orig_name'],
+                          'status' => 1,
+                      );
+                      $this->madmin->updateData(array('id' => $idSpec), 'tm_spec', $items);
+                      redirect('admin/sa_spec','refresh');
+                  }
+              } else {
+                  $items = array(
+                      'name'          => $this->input->post('items'),
+                      'status' => 1,
+                  );
+                  $this->madmin->updateData(array('id' => $idSpec), 'tm_spec', $items);
+                  redirect('admin/sa_spec','refresh');
+              }
 
           }
         }else {
@@ -1519,6 +1545,7 @@ class Admin extends CI_Controller {
           $this->load->view('un-authorise');
           $this->load->view('include/footer');
         }
+
       }
 
     public function sa_size(){
