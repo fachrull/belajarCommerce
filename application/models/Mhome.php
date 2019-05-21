@@ -338,10 +338,9 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total,
-      a.order_date, aa.id_tr_product, c.id as sku, c.brand_id, c.name, c.image,
+      $this->db->select('a.id, a.order_number, a.note, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.id as sku, c.brand_id, c.name, c.image,
       f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
-      k.name as size_name, k.size, l.image_1');
+      k.name as size_name, k.size, l.image_1, m.kode_voucher');
 
     $this->db->from('tm_order a');
     $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
@@ -353,6 +352,7 @@ class Mhome extends CI_Model{
     $this->db->join('kecamatan i', 'i.id_kec = f.sub_district', 'left');
     $this->db->join('tm_size k', 'k.id = b.size_id', 'left');
       $this->db->join('tr_product_image l', 'l.id_prod = c.id', 'left');
+      $this->db->join('tm_voucher m', 'm.id = a.id_voucher', 'left');
     $where = array('a.id' => $idOrder, 'a.id_userLogin' => $idCustomer);
     $this->db->where($where);
     $query = $this->db->get();
