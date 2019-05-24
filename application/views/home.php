@@ -10,72 +10,37 @@
     -->
 	<div class="swiper-container" data-effect="slide" data-autoplay="true">
 		<div class="swiper-wrapper">
+            <?php foreach($slides as $pic){
+                ?>
+            <!-- SLIDE 1 -->
+            <a style="display:block" href="#">
+            <div class="swiper-slide" style="display:inline-block;background-image: url(<?= base_url('asset/upload/'.$pic['slide']);?>);">
 
-			<!-- SLIDE 1 -->
-			<div class="swiper-slide" style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']);?>);">
-				<div class="overlay dark-5"><!-- dark overlay [1 to 9 opacity] --></div>
+                <div class="overlay dark-5"><!-- dark overlay [1 to 9 opacity] --></div>
 
-				<div class="display-table">
-					<div class="display-table-cell" style="vertical-align: bottom !important;">
-						<div class="container">
-							<div class="row">
-								<div class="text-center col-md-8 col-xs-12 offset-md-2">
-										<a class="btn btn-lg btn-exp scrollTo b-0" href="#product">EXPLORE
-											<br><i class="fa fa-chevron-down"></i></a>
-								</div>
-							</div>
+                <div class="display-table">
+                    <div class="display-table-cell" style="vertical-align-middle">
+                        <div class="container">
+                            <div class="row">
+                                <div class="text-center col-md-8 col-xs-12 offset-md-2">
+                                    <div class="fixed-bottom pb-35">
+                                        <a class="btn btn-lg btn-exp scrollTo b-0" href="#product">EXPLORE
+                                            <br>
+                                            <i class="fa fa-chevron-down">
+                                            </i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
 
-						</div>
-					</div>
-				</div>
+                        </div>
+                    </div>
+                </div>
 
-			</div>
-			<!-- /SLIDE 1 -->
-
-			<!-- SLIDE 2 -->
-			<div class="swiper-slide" style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']);?>);">
-				<div class="overlay dark-5"><!-- dark overlay [1 to 9 opacity] --></div>
-
-				<div class="display-table">
-					<div class="display-table-cell pb-0" style="vertical-align: bottom !important;">
-						<div class="container">
-
-							<div class="row">
-								<div class="text-center col-md-8 col-xs-12 offset-md-2">
-										<a class="btn btn-lg btn-exp scrollTo b-0" href="#product">EXPLORE
-											<br><i class="fa fa-chevron-down"></i></a>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-
-			</div>
-			<!-- /SLIDE 2 -->
-
-			<!-- SLIDE 3 -->
-			<div class="swiper-slide" style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']);?>);">
-				<div class="overlay dark-5"><!-- dark overlay [1 to 9 opacity] --></div>
-
-				<div class="display-table">
-					<div class="display-table-cell" style="vertical-align: bottom !important;">
-						<div class="container">
-							<div class="row">
-								<div class="text-center col-md-8 col-xs-12 offset-md-2">
-										<a class="btn btn-lg btn-exp scrollTo b-0" href="#product">EXPLORE
-											<br><i class="fa fa-chevron-down"></i></a>
-								</div>
-							</div>
-
-						</div>
-					</div>
-				</div>
-
-			</div>
-			<!-- /SLIDE 3 -->
-
+            </div>
+            </a>
+            <!-- /SLIDE 1 -->
+            <?php } ?>
 		</div>
 
 		<!-- Swiper Arrows -->

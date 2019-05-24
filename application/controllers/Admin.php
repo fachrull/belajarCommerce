@@ -1354,6 +1354,7 @@ class Admin extends CI_Controller {
             $this->load->library('upload', $config);
 
             if (! $this->upload->do_upload('sliderPict')) {
+                $this->session->set_flashdata('error', $this->upload->display_errors());
                 $this->load->view('include/admin/header');
                 $this->load->view('include/admin/left-sidebar');
                 $this->load->view('admin/addSlider');
@@ -1364,7 +1365,8 @@ class Admin extends CI_Controller {
                 $items = array(
                     'slide'       => $pName['orig_name'],
                     'created_at'  => date('Ymd'),
-                    'cover'       =>  $coverIdentifier
+                    'cover'       => $coverIdentifier,
+                    'bannerlink'        => $this->input->post('link')
                 );
                 $this->madmin->inputData('tm_cover', $items);
                 redirect('admin/sa_slider');
