@@ -147,7 +147,8 @@ class Home extends CI_Controller{
         $category = NULL;
       }
       $data['products'] = $this->mhome->getShop_product($brand);
-        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'logo'), 'tm_brands', TRUE);
+      $data['brand'] = $this->mhome->getProducts(array('id' => $brand),
+       array('idField' => 'id','nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     } else {
       // echo "saya lengkap";exit();
@@ -155,7 +156,8 @@ class Home extends CI_Controller{
         $category = NULL;
       }
       $data['products'] = $this->mhome->getShop_product($brand, $category);
-        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'logo'), 'tm_brands', TRUE);
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brand),
+        array('idField' => 'id','nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
       $data['category'] = $this->mhome->brand_categories($brand);
     }
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
@@ -383,13 +385,7 @@ class Home extends CI_Controller{
 
       foreach ($releases as $release) {
         if ($release['id_address'] != NULL) {
-          $release_stock = array(
-            'id_store'        => $release['id_store'],
-            'id_product'      => $release['id'],
-            'id_product_size' => $release['id_trProduct']
-          );
-
-          $stock = $this->mhome->getProducts($release_stock, array('sakhir' => 'stock_akhir',
+          $stock = $this->mhome->getProducts(array('id' => $release['id_trProduct']), array('sakhir' => 'stock_akhir',
            'ppone' => 'postpone'), 'tr_product', TRUE);
 
           $release_ppone = $stock['postpone'] - $release['qty'];
@@ -516,7 +512,8 @@ class Home extends CI_Controller{
       'qty'           => $qty,
       'price'         => $product_price,
       'name'          => $product['name'],
-      'id_trProduct'  => $id_prod_size,
+      'id_trProduct'  => $hasPostpone['id'],
+      'id_prod_size'  => $id_prod_size,
       'voucher'       => '',
       'id_address'    => '',
       'available'     => $avbl,
@@ -678,43 +675,6 @@ class Home extends CI_Controller{
       $this->load->view('include/footer');
   }
 
-  public function checkout(){
-      if ($this->session->userdata('uType') == 4) {
-          $data['cart'] = $this->cart->contents();
-          $userId = $this->session->userdata('uId');
-          $defaultAdd = $this->mhome->getProducts(array('id_userlogin' => $userId, 'default_address' => 1),
-              array('idField' => 'id'), 'tm_customer_detail', true);
-          $rand = rand(1, 999);
-          $order = array (
-              'order_number'  => 'AGM'.date("dmy").$rand,
-              'id_userlogin'  => $userId,
-              'total'         => $this->cart->total(),
-              'address_detail' => $defaultAdd['id'],
-              'status_order'  => 2
-          );
-          $this->mhome->inputData('tm_order', $order);
-          $orderId = $this->mhome->getProducts(array('order_number' => $order['order_number']), array('id' => 'id'),
-              'tm_order',true);
-          foreach ($data['cart'] as $cart) {
-              $save_to_Order = array(
-                  'id_tm_order'  => $orderId['id'],
-                  'id_tr_Product'  => $cart['id_trProduct'],
-                  'quantity'      => $cart['qty'],
-                  'subtotal'      => $cart['subtotal']
-              );
-              $this->mhome->inputData('tr_order_detail', $save_to_Order);
-              $qtyStore = $this->mhome->getProducts(array('id' => $cart['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
-              $newQuanStore = $qtyStore['quantity'] - $cart['qty'];
-              $inputQtyStore = array('quantity' => $newQuanStore);
-              $this->mhome->updateData(array('id' => $cart['id_trProduct']), $inputQtyStore, 'tr_product');
-          }
-          $this->cart->destroy();
-          redirect('home/checkoutDone');
-      } else {
-          redirect('auth/login');
-      }
-  }
-
   public function cancelOrder($id) {
       if($this->session->userdata('uType') ==  4) {
           $statusOrder = array('status_order' => 3);
@@ -805,7 +765,7 @@ class Home extends CI_Controller{
 
         foreach ($cart_availablelity as $cart) {
           $quantity_Prod = $this->mhome->getProducts(
-            array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
+            array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
             array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
 
           $stock_available = $quantity_Prod['stock_akhir'] - $quantity_Prod['postpone'];
@@ -911,12 +871,10 @@ class Home extends CI_Controller{
           // if shipping is same with default address
           // checking availability
           foreach ($carts as $cart) {
-            // id tr_product from cart
-            $id_trProduct = $cart['id_trProduct'];
             // checking the stock
             $prod_qty = $this->mhome->getProducts(
-              array('id_product_size' => $id_trProduct, 'id_store' => $cart['id_store']),
-            array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+              array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+              array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
 
             // stock_akhir - Postpone
             $prod_available = $prod_qty['stock_akhir'] - $prod_qty['postpone'];
@@ -934,16 +892,17 @@ class Home extends CI_Controller{
                 $this->cart->update($availablelity_stock);
 
                 $stock = $this->mhome->getProducts(
-                  array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
-                array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                  array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+                  array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
                 $newPpone = $stock['postpone'] + $cart['qty'];
                 $newSakhir = $stock['stock_akhir'] - $cart['qty'];
                 $newStock = array(
                   'postpone'    => $newPpone,
                   'stock_akhir' => $newSakhir
                 );
-                $this->mhome->updateData(array('id_product_size' => $cart['id_trProduct'],
-                 'id_store' => $cart['id_store']), $newStock, 'tr_product');
+                $this->mhome->updateData(
+                 array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+                 $newStock, 'tr_product');
                 print_r($newStock);
 
               // checking is the stock on store less than quantity that customer order and insert id shipping address
@@ -996,14 +955,10 @@ class Home extends CI_Controller{
             print_r($has_same_shipped_address);echo "</br></br>";
 
             foreach ($carts as $cart) {
-              // id tr_product from cart
-              $id_trProduct = $cart['id_trProduct'];
-              print_r($id_trProduct);echo "</br></br>";
-
               // checking the stock
               $prod_qty = $this->mhome->getProducts(
-                array('id_product_size' => $id_trProduct, 'id_store' => $cart['id_store']),
-              array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+                array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
 
               // stock_akhir - Postpone
               $prod_available = $prod_qty['stock_akhir'] - $prod_qty['postpone'];
@@ -1021,16 +976,17 @@ class Home extends CI_Controller{
                   $this->cart->update($availablelity_stock);
 
                   $stock = $this->mhome->getProducts(
-                    array('id_product_size' => $cart['id_trProduct'], 'id_store' => $cart['id_store']),
-                  array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                    array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+                    array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
                   $newPpone = $stock['postpone'] + $cart['qty'];
                   $newSakhir = $stock['stock_akhir'] - $cart['qty'];
                   $newStock = array(
                     'postpone'    => $newPpone,
                     'stock_akhir' => $newSakhir
                   );
-                  $this->mhome->updateData(array('id_product_size' => $cart['id_trProduct'],
-                   'id_store' => $cart['id_store']), $newStock, 'tr_product');
+                  $this->mhome->updateData(
+                   array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+                   $newStock, 'tr_product');
                   print_r($newStock);
 
                 // if quntity order more than stock
@@ -1066,14 +1022,11 @@ class Home extends CI_Controller{
             print_r($id_new_shipping_address);echo "</br></br>";
 
             foreach ($carts as $cart) {
-              // id tr_product from cart
-              $id_trProduct = $cart['id_trProduct'];
-              print_r($id_trProduct);echo "</br></br>";
 
               // checking the stock
               $prod_qty = $this->mhome->getProducts(
-                array('id_product_size' => $id_trProduct, 'id_store' => $cart['id_store']),
-              array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+                array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+                array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
 
               // stock_akhir - postpone
               $prod_available = $prod_qty['stock_akhir'] - $prod_qty['postpone'];
@@ -1185,7 +1138,7 @@ class Home extends CI_Controller{
                 foreach ($carts as $cart) {
                     $detail_order = array(
                         'id_tm_order'   =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
-                        'id_tr_product' =>  $cart['id_trProduct'],
+                        'id_prod_size'  =>  $cart['id_prod_size'],
                         'quantity'      =>  $cart['qty'],
                         'subtotal'      =>  $cart['subtotal']
                     );
@@ -1198,8 +1151,11 @@ class Home extends CI_Controller{
                     foreach ($cuttingStocks as $cut) {
                         $id = $cut['id_trProduct'];
                         $qty = $cut['qty'];
-                        $qtyStore = $this->mhome->getProducts(array('id_product_size' => $id), array('postpone' => 'postpone',
-                            'outbound' => 'outbound', 'id_store' => 'id_store', 'id_product_size' => 'id_product_size'), 'tr_product', TRUE);
+                        $qtyStore = $this->mhome->getProducts(
+                          array('id_product' => $cart['id'], 'id_product_size' => $cart['id_prod_size'], 'id_store' => $cart['id_store']),
+                          array('postpone' => 'postpone', 'outbound' => 'outbound', 'id_store' => 'id_store', 'id_product_size' => 'id_product_size'),
+                          'tr_product', TRUE);
+
                         $postpone = $qtyStore['postpone'] - $qty;
                         $outbound = $qtyStore['outbound'] + $qty;
                         $update_stock = array(
@@ -1209,15 +1165,13 @@ class Home extends CI_Controller{
                         $history_inbound = array(
                             'id_prod_size'  => $qtyStore['id_product_size'],
                             'id_store'      => $qtyStore['id_store'],
+                            'invoice'       => $idOrder['id'],
                             'quantity'      => $outbound * -1
                         );
                         $this->mhome->inputData('tr_stock', $history_inbound);
-                        $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
-
-//                        $stock = $this->mhome->getProducts(array('id' => $cut['id_trProduct']), array('qty' => 'quantity'), 'tr_product', TRUE);
-//                        $newStock['quantity'] = $stock['quantity'] - $cut['qty'];
-//                        $this->mhome->updateData(array('id' => $cut['id_trProduct']), $newStock, 'tr_product');
-//                        print_r($newStock);
+                        $this->mhome->updateData(
+                          array('id_product' => $cut['id'], 'id_product_size' => $cut['id_prod_size'], 'id_store' => $cut['id_store']),
+                          $update_stock, 'tr_product');
                     }
                 }
 
@@ -1263,10 +1217,10 @@ class Home extends CI_Controller{
         $carts = $this->cart->contents();
         foreach ($carts as $cart) {
           $detail_order = array(
-            'id_tm_order'   =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
-            'id_tr_product' =>  $cart['id_trProduct'],
-            'quantity'      =>  $cart['qty'],
-            'subtotal'      =>  $cart['subtotal']
+            'id_tm_order'     =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
+            'id_tr_prod_size' =>  $cart['id_prod_size'],
+            'quantity'        =>  $cart['qty'],
+            'subtotal'        =>  $cart['subtotal']
           );
           $this->mhome->inputData('tr_order_detail', $detail_order);
           print_r($detail_order);echo "</br></br>";
@@ -1315,10 +1269,10 @@ class Home extends CI_Controller{
           $data['cart'] = $this->cart->contents();
           foreach ($data['cart'] as $cart) {
             $detail_order = array(
-              'id_tm_order'   =>  $idOrder['id'],
-              'id_tr_product' =>  $cart['id_trProduct'],
-              'quantity'      =>  $cart['qty'],
-              'subtotal'      =>  $cart['subtotal']
+              'id_tm_order'     =>  $idOrder['id'],
+              'id_tr_prod_size' =>  $cart['id_prod_size'],
+              'quantity'        =>  $cart['qty'],
+              'subtotal'        =>  $cart['subtotal']
             );
             $this->mhome->inputData('tr_order_detail', $detail_order);
           }
@@ -1347,10 +1301,10 @@ class Home extends CI_Controller{
           $data['cart'] = $this->cart->contents();
           foreach ($data['cart'] as $cart) {
             $detail_order = array(
-              'id_tm_order'   =>  $idOrder['id'],
-              'id_tr_product' =>  $cart['id_trProduct'],
-              'quantity'      =>  $cart['qty'],
-              'subtotal'      =>  $cart['subtotal']
+              'id_tm_order'     =>  $idOrder['id'],
+              'id_tr_prod_size' =>  $cart['id_prod_size'],
+              'quantity'        =>  $cart['qty'],
+              'subtotal'        =>  $cart['subtotal']
             );
             $this->mhome->inputData('tr_order_detail', $detail_order);
           }

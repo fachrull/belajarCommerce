@@ -109,7 +109,7 @@ class Snap extends CI_Controller {
             'unit' => 'day',
             'duration'  => 1
         );
-        
+
         $transaction_data = array(
             'transaction_details'=> $transaction_details,
             'item_details'       => $item_details,
@@ -159,12 +159,49 @@ class Snap extends CI_Controller {
             $data['detailOrder'] = $this->mhome->getDetailOrder($orderId);
 
             foreach ($data['detailOrder'] as $item) {
-                $id = $item->id_tr_product;
+                $id_tr_prod_size = $item->id_tr_product;
+								$id_prod = $item->prod_id;
+								$id_store = $item->id_store;
                 $qty = $item->quantity;
-                $qtyStore = $this->mhome->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
-                $newQuanStore = $qtyStore['quantity'] + $qty;
-                $quantity = array('quantity' => $newQuanStore);
-                $this->mhome->updateData(array('id' => $id), $quantity, 'tr_product');
+                $qtyStore = $this->mhome->getProducts(
+									array('id_store' => $id_store, 'id_product' => $id_prod, 'id_product_size' => $id_tr_prod_size),
+									array('ppone' => 'postpone', 'sakhir' => 'stock_akhir') 'tr_product', TRUE);
+								$postpone = $qtyStore['postpone'] - $qty;
+	              $stock_akhir = $qtyStore['stock_akhir'] + $qty;
+	              $update_stock = array(
+	                  'stock_akhir' => $stock_akhir,
+	                  'postpone'    => $postpone
+	              );
+	              $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
+						}
+        } else if ($transactionStatus == 4) {
+            $data['detailOrder'] = $this->mhome->getDetailOrder($orderId);
+            foreach ($data['detailOrder'] as $item) {
+							$id_tr_prod_size = $item->id_tr_product;
+							$id_prod = $item->prod_id;
+							$id_store = $item->id_store;
+							$qty = $item->quantity;
+                $qtyStore = $this->mhome->getProducts(
+									array('id_store' => $id_store, 'id_product' => $id_prod, 'id_product_size' => $id_tr_prod_size),
+									array('postpone' => 'postpone', 'outbound' => 'outbound', 'id_store' => 'id_store',
+									 'id_product_size' => 'id_product_size'), 'tr_product', TRUE);
+                $postpone = $qtyStore['postpone'] - $qty;
+                $outbound = $qtyStore['outbound'] + $qty;
+                $update_stock = array(
+                    'outbound' => $outbound,
+                    'postpone'    => $postpone
+                );
+                $history_inbound = array(
+                    'id_prod_size'  => $qtyStore['id_product_size'],
+                    'id_store'      => $qtyStore['id_store'],
+										'invoice'				=> $orderId,
+                    'quantity'      => $outbound * -1
+                );
+                $this->mhome->inputData('tr_stock', $history_inbound);
+                $this->mhome->updateData(
+									array('id_store' => $id_store, 'id_product' => $id_prod, 'id_product_size' => $id_tr_prod_size),
+								 $update_stock, 'tr_product');
+                print_r($qtyStore);
             }
         }
     }

@@ -364,10 +364,13 @@ class Mhome extends CI_Model{
   }
 
     public function getDetailOrder($orderId){
-        $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product');
-
+        $this->db->select('a.id, a.order_number, a.status_order, aa.quantity,
+         aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.id_store, d.prod_id');
         $this->db->from('tm_order a');
-        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id', 'left');
+        $this->db->join('tm_customer_detail b', 'b.id = a.address_detail', 'left');
+        $this->db->join('tr_store_owner_cluster c', 'c.sub_district = b.sub_district', 'left');
+        $this->db->join('tr_product_size d', 'd.id = aa.id_tr_product', 'left');
         $where = array('a.order_number' => $orderId);
         $this->db->where($where);
         $query = $this->db->get();
