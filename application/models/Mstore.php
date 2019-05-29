@@ -33,6 +33,28 @@ class Mstore extends CI_Model{
     }
   }
 
+    public function getEmail($id, $condition = NULL, $selection = NULL, $table, $singleRowResult =  FALSE){
+        if ($condition != NULL) {
+            foreach ($condition as $key => $value) {
+                $this->db->where($key, $value);
+            }
+        }
+
+        if ($selection != NULL) {
+            foreach ($selection as $key => $value) {
+                $this->db->select($value);
+            }
+        }
+
+        $query =  $this->db->get($table);
+
+        if ($singleRowResult === TRUE) {
+            return $query->row_array();
+        }else {
+            return $query->result_array();
+        }
+    }
+
   public function updateData($id, $data, $table){
     $this->db->where($id);
     $this->db->set($data);
@@ -224,5 +246,54 @@ class Mstore extends CI_Model{
             return FALSE;
         }
     }
+
+    public function notif_store($order_id){
+      $this->db->select('a.order_number, a.order_date, a.total, b.first_name, b.last_name,
+       b.email as emailcustomer, b.address, b.postcode, b.phone, a.note, c.nama as provinsi,
+        d.nama as kabupaten, e.nama as kecamatan, h.email as emailstore');
+      /*
+       * dari id kecamatan cek di tr_store_owner_cluster id_store-nya
+       * id_store-nya di pakai buat cek id_userLogin di table tm_store_owner
+       * id_userLogin di pakai buat cek email store owner di table user_login
+       * email store owner di gunain buat alamat kirim email-nya
+       * *(mail_to)
+       */
+      $this->db->from('tm_order a');
+      $this->db->join('tm_customer_detail b', 'b.id = a.address_detail', 'left');
+      $this->db->join('provinsi c', 'c.id_prov = b.province', 'left');
+      $this->db->join('kabupaten d', 'd.id_kab = b.city', 'left');
+      $this->db->join('kecamatan e', 'e.id_kec = b.sub_district', 'left');
+      $this->db->join('tr_store_owner_cluster f', 'f.sub_district = e.id_kec','left');
+      $this->db->join('tm_store_owner g', 'g.id = f.id_store', 'left');
+      $this->db->join('user_login h', 'h.user_id = g.id_userlogin', 'left');
+
+
+        $this->db->where('a.order_number', $order_id);
+      $query = $this->db->get();
+      if($query->num_rows()!=0){
+          return $query->row_array();
+      }else{
+          return FALSE;
+      }
+    }
+
+    public function detail_transaction($order_id){
+      $this->db->select('b.id, a.order_number, a.id_voucher, b.quantity, b.subtotal, e.name,
+       f.name as sizeName, f.size as sizeDetail');
+      $this->db->from('tm_order a');
+      $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id', 'left');
+      $this->db->join('tr_product_size d', 'd.id = b.id_tr_product', 'left');
+      $this->db->join('tm_product e','e.id = d.prod_id', 'left');
+      $this->db->join('tm_size f', 'f.id = d.size_id', 'left');
+      $this->db->where('a.order_number', $order_id);
+        $query = $this->db->get();
+        if($query->num_rows()!=0){
+            return $query->result_array();
+        }else{
+            return FALSE;
+        }
+    }
+
+
 
 }

@@ -346,4 +346,48 @@ class Stores extends CI_Controller{
         }
     }
 
+
+    public function invoicestore($invoicenumber){
+//      true code
+//      $inv_numb = json_decode($invoicenumber);
+//      $order_id = $inv_numb->order_id;
+
+//        testing
+        $order_id = $invoicenumber;
+
+      $customer_trans = $this->mstore->notif_store($order_id);
+      $detail_trans = $this->mstore->detail_transaction($order_id);
+      $message = array(
+        'trans_numb'        => $customer_trans['order_number'],
+        'trans_date'        => $customer_trans['order_date'],
+        'cs_name'           => $customer_trans['first_name'].' '.$customer_trans['last_name'],
+        'cs_email'          => $customer_trans['emailcustomer'],
+        'address_shipping'  => $customer_trans['address'].', '.$customer_trans['postcode'].', '.$customer_trans['kecamatan'].', '.$customer_trans['kabupaten'].', '.$customer_trans['provinsi'],
+        'phone'             => $customer_trans['phone'],
+        'note'              => $customer_trans['note'],
+          'total'           => $customer_trans['total'],
+          'detail_trans'    => $detail_trans
+      );
+      // TODO: Check mail template
+        /*
+         * 1. Load view with data $message
+         * 2. put exit() statement to exit the process,
+         * so statement below exit() will not be executed.
+         * 3. Make sure to load all the $message element on the view
+         */
+      $msgJson = json_encode($message);
+        $mailContent = array(
+            'mail_to'       =>  $customer_trans['emailstore'],
+            'mail_subject'  =>  'Pesanan Baru - American Giant Mattress '. $invoicenumber,
+            'message'       =>  $msgJson,
+            'template'      =>  'email/success_transaction'
+        );
+        $this->mstore->inputData('mail_queue', $mailContent);
+      /*
+       * ubah message menjadi json
+       * ikutin forgot password fachrul taroh message (bentuk json) ke dalam variable bentuk array
+       * input variable tersebut ke dalam table mail_queue
+       */
+  }
+
 }

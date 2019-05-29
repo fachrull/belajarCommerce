@@ -8,17 +8,17 @@
         data-effect="slide|fade|coverflow"
         data-autoplay="2500|false"
     -->
-	<div class="swiper-container" data-effect="slide" data-autoplay="true">
+
+    <div class="swiper-container" data-effect="slide" data-autoplay="true">
 		<div class="swiper-wrapper">
             <?php foreach($slides as $pic){
                 ?>
-            <!-- SLIDE 1 -->
-            <a style="display:block" href="#">
-            <div class="swiper-slide" style="display:inline-block;background-image: url(<?= base_url('asset/upload/'.$pic['slide']);?>);">
+            <!-- SLIDES -->
 
-                <div class="overlay dark-5"><!-- dark overlay [1 to 9 opacity] --></div>
-
+            <a class="swiper-slide" href="<?=$pic['bannerlink']?>" style="display:inline-block;background-image: url(<?= base_url('asset/upload/'.$pic['slide']);?>);"></a>
+                <div class="overlay dark-3"><!-- dark overlay [1 to 9 opacity] -->
                 <div class="display-table">
+
                     <div class="display-table-cell" style="vertical-align-middle">
                         <div class="container">
                             <div class="row">
@@ -29,19 +29,19 @@
                                             <i class="fa fa-chevron-down">
                                             </i>
                                         </a>
-                                    </div>
+                                </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                </div>
 
-            </div>
-            </a>
-            <!-- /SLIDE 1 -->
+                </div>
+                </div>
+<!--            </div>-->
+
+                <!-- /SLIDE 1 -->
             <?php } ?>
-		</div>
+		</a>
 
 		<!-- Swiper Arrows -->
 		<div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>

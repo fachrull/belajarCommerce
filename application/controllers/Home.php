@@ -41,7 +41,7 @@ class Home extends CI_Controller{
         $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
-        $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
+        $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','sliderz'=>'bannerlink'), 'tm_cover', FALSE);
         $data['best_seller'] = $this->mhome->getProducts(array('cover' => 2), array('slideField' => 'slide'), 'tm_cover', TRUE);
         $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
         $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
@@ -55,7 +55,7 @@ class Home extends CI_Controller{
         $this->load->view('include/footer');
 
     } elseif ($this->session->userdata('uType') == NULL) {
-      $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
+      $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','sliderz'=>'bannerlink'), 'tm_cover', FALSE);
       $data['best_seller'] = $this->mhome->getProducts(array('cover' => 2), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
       $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
