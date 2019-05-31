@@ -20,14 +20,6 @@
               <label class="input mb-10">
                   <input class="form-control" name="name" type="text" placeholder="Special Package Name">
               </label>
-              <label id="mainProd_area" class="input mb-10">
-                <select class="select-form form-control" id="mainProd" name="mainProd">
-                  <option disabled selected>Select Main Product</option>
-                  <?php foreach ($mainProd as $mainProd): ?>
-                    <option value="<?= $mainProd['id']?>"><?= $mainProd['name']?></option>
-                  <?php endforeach; ?>
-                </select>
-              </label>
               <div class="row mb-3">
                 <div class="col-md-12 cl-xs-12">
                   <button type="button" class="btn btn-oldblue mb-10" data-toggle="modal" data-target="#modal-default">
@@ -42,9 +34,14 @@
                       <th>Product</th>
                       <th>Size</th>
                       <th>Quantity</th>
+                      <th>Price</th>
                       <th>Action</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <th colspan="3">Total</th>
+                    <th id="ttlPrc">0</th>
+                  </tfoot>
                   <tbody>
                   </tbody>
                 </table>
@@ -107,9 +104,9 @@
                       <label for="productSP">Product</label>
                       <select class="select-form form-control" id="productSP" name="product">
                         <option value="">Select Product</option>
-                        <!-- <?php foreach ($products as $product): ?>
+                        <?php foreach ($products as $product): ?>
                           <option value="<?=$product['id']?>"><?= $product['name'];?></option>
-                        <?php endforeach; ?> -->
+                        <?php endforeach; ?>
                       </select>
                     </label>
                     <label class="input mb-10">
@@ -121,6 +118,14 @@
                     <label class="input mb-10">
                       <label for="">Quantity</label>
                       <input class="form-control" type="number" id="qtySP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Retail price</label>
+                      <input type="text" class="form-control" disabled value="-" id="prcSP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Price</label>
+                      <input class="form-control" type="number" id="price" >
                     </label>
                   </form>
                 </div>

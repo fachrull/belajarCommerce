@@ -552,10 +552,9 @@ class Madmin extends CI_Model {
   }
 
   public function prime_specialPKG($idSpecialPckg){
-    $this->db->select('a.id, a.name, a.description, a.image');
-    $this->db->select_min('b.price');
+    $this->db->select('a.id, a.name, a.description, a.image, a.Total');
     $this->db->from('tm_special_package a');
-    $this->db->join('tr_product_size b', 'b.prod_id = a.main_product', 'left');
+    // $this->db->join('tr_product_size b', 'b.prod_id = a.main_product', 'left');
     // $this->db->join('tr_product_image c', 'c.id_prod = a.id', 'left');
     $this->db->where('a.id', $idSpecialPckg);
     $query = $this->db->get();
@@ -683,5 +682,19 @@ class Madmin extends CI_Model {
         } else {
             return FALSE;
         }
+    }
+
+    public function size_mainProd($id_mainProd){
+      $this->db->select('b.id, c.name as sizeName, c.size as sizeDetail, b.price');
+      $this->db->from('tm_product a');
+      $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+      $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
+      $this->db->where('a.id', $id_mainProd);
+      $query = $this->db->get();
+      if ($query->num_rows() != 0) {
+        return $query->result_array();
+      }else {
+        return FALSE;
+      }
     }
 }

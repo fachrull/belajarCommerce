@@ -51,8 +51,7 @@
                         <div class="col-xs-6">
                             <div>
                                 <h4>Price</h4>
-                                <small>Starts from</small>
-                                <p class="fs-15"><strong>Rp <?= number_format($detail_SpclPckg['price'],0,',','.')?></strong></p>
+                                <p class="fs-15"><strong>Rp <?= number_format($detail_SpclPckg['Total'],0,',','.')?></strong></p>
                             </div>
                             <div class="mt-20">
                                 <h4>Description</h4>

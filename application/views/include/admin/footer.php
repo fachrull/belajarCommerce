@@ -475,40 +475,6 @@ $(function () {
 	});
 });
 </script>
-<!-- Main Product Special Package -->
-<script>
-  $(document).ready(function(){
-    $('#mainProd').on('change', function(){
-      var idMainProd = $('#mainProd').val();
-      var textMainProd = $('#mainProd option:selected').text();
-      console.log(textMainProd);
-      $("#mainProd").attr('class', 'hide');
-      $("#mainProd_area").append(
-          '<div class="col-xs-11" style="padding-left:0px; padding-right: 0px;">'+
-            '<input class="form-control" type="text" value="'+textMainProd+'" disabled >'+
-          '</div>'+
-          '<div class="col-xs-1">'+
-            '<a href="<?= site_url('admin/addSpecial_Package')?>"'+
-            'onclick="return confirm(`This will delete all your changes, are you sure?`)"'+
-            ' class="btn btn-danger"><i class="float right fa fa-close"></i></a></div>'
-      );
-      if(idMainProd){
-        $.ajax({
-          url: "<?= site_url('admin/addProdSP/')?>"+idMainProd,
-          method: "GET",
-          dataType: "json",
-          success:function(response){
-            $.each(response, function(key, value){
-              $('#productSP').append(
-                '<option id='+value.id+' value ='+value.id+'>'+value.name+'</option>'
-              );
-            });
-          }
-        })
-      }
-    })
-  });
-</script>
 <!-- Special Package -->
 <script>
   $(document).ready(function(){
@@ -532,6 +498,20 @@ $(function () {
         });
       }
     });
+
+    $('#sizeSP').change(function(){
+      var idSize_prodSP = $(this).val();
+      if (idSize_prodSP) {
+        $.ajax({
+          url: "<?= site_url('admin/priceProd_Size/')?>"+idSize_prodSP,
+          method: "GET",
+          dataType: "json",
+          success: function(response){
+            $("#prcSP").val(response.price)
+          }
+        })
+      }
+    })
 
     var prodSP = [];
     var sizeSP = [];
@@ -566,6 +546,10 @@ $(function () {
                     .append(qtySP)
                   )
                   .append($('<td>')
+                    .attr('class', 'prcSP-value sPrc')
+                    .append(priceSP)
+                  )
+                  .append($('<td>')
                     .append($(`<!--<button class="btn btn-oldblue btn-sm" data-toggle="modal" data-target="#modal-edit-size" data-id="${sizeSP}" type="button"><i class="fa fa-edit"></i></button>-->
                               <button class="btn btn-danger btn-sm" type="button" onclick="removeSP(${prodSP})"><i class="fa fa-trash"></i></button>`))
                   )
@@ -584,11 +568,24 @@ $(function () {
                 $('#sizeSP').val("");
                 $('#qtySP').val("");
                 $('#price').val("");
+                $('#prcSP').val("");
                 $('#modal-default').modal('toggle');
             }
           })
         }
       });
+
+      // var sum = 0;
+      //
+      // $('.sPrc').each(function(){
+      //   var value = $(this).text();
+      //
+      //   if (!isNaN(value) && value.length != 0) {
+      //     sum += parseFload(value);
+      //   }
+      //   console.log(sum);
+      //   $("#ttlPrc").append(sum);
+      // });
 
       $('#submitSpcl').click(function(){
         $("#table_prodSizeSP .sizeSP-value").each(function(){
@@ -605,6 +602,13 @@ $(function () {
                                   .val($(this).html()))
         });
 
+        $("#table_prodSizeSP .prcSP-value").each(function(){
+          $("#addSpecialPackage").append($('<input>')
+                                  .attr('type', 'hidden')
+                                  .attr('name', 'prcSpcl[]')
+                                  .val($(this).html()))
+        });
+        
       });
     });
   });

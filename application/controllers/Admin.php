@@ -2133,7 +2133,7 @@ class Admin extends CI_Controller {
             $this->load->library('upload', $config);
             if (! $this->upload->do_upload('cover_spPackage')) {
               $this->session->set_flashdata('error', $this->upload->display_errors());
-              $data['specialPackages'] = $this->madmin->listSpecialPackage();
+              $data['specialPackages'] = $this->madmin->getProducts(array('active' => 1, 'deleted !=' => 1), NULL, 'tm_special_package', FALSE);
               $data['slides'] = $this->madmin->getProducts(array('cover' => 3), array('idField' => 'id', 'slideField' => 'slide'),
               'tm_cover', TRUE);
 
@@ -2184,11 +2184,11 @@ class Admin extends CI_Controller {
             $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
             // $this->form_validation->set_rules('promo_date');
             // $this->form_validation->set_rules('price', 'Special Package Price', 'required');
-            $this->form_validation->set_rules('mainProd', 'Main Product of Special Package', 'required|callback_checkingMainProd');
+            // $this->form_validation->set_rules('mainProd', 'Main Product of Special Package', 'required|callback_checkingMainProd');
             $this->form_validation->set_rules('sizeSpcl[]', 'Special Package Products', 'required');
 
             if ($this->form_validation->run() === FALSE) {
-              $data['mainProd'] = $this->madmin->getMainProd_SP();
+              $data['products'] = $this->madmin->getMainProd_SP();
 
               $this->load->view('include/admin/header');
               $this->load->view('include/admin/left-sidebar');
@@ -2197,9 +2197,9 @@ class Admin extends CI_Controller {
             }else {
               $name = $this->input->post('name');
               $desc = $this->input->post('desc');
-              $mainProd = $this->input->post('mainProd');
               $prod_PKG = $this->input->post('sizeSpcl[]');
               $prod_qty = $this->input->post('qtySpcl[]');
+              $prod_prc = $this->input->post('prcSpcl[]');
 
               $file_name = strtolower($name.'-'.$mainProd);
 
@@ -2214,12 +2214,16 @@ class Admin extends CI_Controller {
                 redirect('admin/addSpecial_Package');
               }else {
                 $upload_name = $this->upload->data('file_name');
+                $total  = 0;
+                foreach ($prod_prc as $price) {
+                  $total += $price;
+                }
                 $data_main_sp = array(
                   'name'          => $name,
                   'image'         => $upload_name,
                   'description'   => $desc,
                   'active'        => 1,
-                  'main_product'  => $mainProd
+                  'total'         => $total
                 );
                 $this->madmin->inputData('tm_special_package', $data_main_sp);
 
@@ -2230,17 +2234,18 @@ class Admin extends CI_Controller {
                   $data_prod_sp = array(
                     'id_specialPkg' => $idSP['id'],
                     'id_prod_package' => $prod_PKG[$i],
-                    'quantity'        => $prod_qty[$i]
+                    'quantity'        => $prod_qty[$i],
+                    'subtotal'        => $prod_prc[$i]
                   );
 
                   $this->madmin->inputData('tr_special_package', $data_prod_sp);
                 }
 
                 // update product as main product special Package
-                $update_as_main_product = array(
-                  'main_sp' => 1,
-                );
-                $this->madmin->updateData(array('id' => $mainProd), 'tm_product', $update_as_main_product);
+                // $update_as_main_product = array(
+                //   'main_sp' => 1,
+                // );
+                // $this->madmin->updateData(array('id' => $mainProd), 'tm_product', $update_as_main_product);
 
                 redirect('admin/special_package');
               }
@@ -2250,6 +2255,21 @@ class Admin extends CI_Controller {
             $this->load->view('un-authorise');
             $this->load->view('include/footer');
           }
+    }
+
+    public function priceProd_Size($id_mainProd){
+      if ($this->session->userdata('uType') == 1) {
+        $size_mainProd = $this->madmin->getProducts(array('id' => $id_mainProd), array('prc' => 'price'), 'tr_product_size', TRUE);
+        if ($size_mainProd) {
+          print_r(json_encode($size_mainProd));
+        }else {
+          echo "Something went wrong";
+        }
+      }else {
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
+      }
     }
 
     public function addProdSP($idMainProd){

@@ -38,8 +38,7 @@
                             <td><?= $no.'.';?></td>
                             <td><?= $specialPackage['name']?></td>
                             <td>
-                              <small><b> Starts from</b></small>
-                              <?= 'Rp '. number_format($specialPackage['price'],0,',','.');?>
+                              <?= 'Rp '. number_format($specialPackage['Total'],0,',','.');?>
                             </td>
                             <td>
                               <a href="<?= site_url('admin/detailSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
