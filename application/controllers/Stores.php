@@ -347,6 +347,7 @@ class Stores extends CI_Controller{
     }
 
 
+
     public function invoicestore($invoicenumber){
 //      true code
 //      $inv_numb = json_decode($invoicenumber);

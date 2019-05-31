@@ -276,7 +276,7 @@ li {text-indent: -1em;}
                                   </tbody>
                                 </table>
                                 <h1 style="Margin:0;Margin-bottom:10px;color:inherit;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:42px;font-weight:700;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">American Giant Mattress</h1>
-                                                          <h3 style="Margin:0;Margin-bottom:10px;color:inherit;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:28px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">IDR <?= number_format($message['total'], 0,',', '.');?></h3>
+                                                          <h3 style="Margin:0;Margin-bottom:10px;color:inherit;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:28px;font-weight:400;line-height:1.3;margin:0;margin-bottom:10px;padding:0;text-align:left;word-wrap:normal">IDR <?= number_format($message->total, 0,',', '.');?></h3>
                                 <p class="header-divider" style="Margin:10px 0!important;Margin-bottom:10px;background-color:#d8d8d8;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;height:1px;line-height:19px;margin:10px 0!important;margin-bottom:10px;max-height:1px;max-width:200px;padding:0;text-align:left;width:200px"></p>
                                 <h6 class="payment-type" style="Margin:0;Margin-bottom:10px;color:inherit;display:inline-block;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:18px;font-style:italic;font-weight:700;line-height:1.3;margin:0;margin-bottom:10px;margin-right:15px;padding:0;text-align:left;word-wrap:normal">
     Bank Transfer : BCA
@@ -306,7 +306,7 @@ li {text-indent: -1em;}
                                 <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
                                   <tr style="padding:0;text-align:left;vertical-align:top">
                                     <th style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:19px;margin:0;padding:0;text-align:left">
-                                      <p class="date-text text-left" style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:19px;margin:0;padding:0;text-align:left"><?= $message['trans_date'];?></p>
+                                      <p class="date-text text-left" style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:19px;margin:0;padding:0;text-align:left"><?= $message->trans_date;?></p>
                                     </th>
                                   </tr>
                                 </table>
@@ -315,7 +315,7 @@ li {text-indent: -1em;}
                                 <table style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:top;width:100%">
                                   <tr style="padding:0;text-align:left;vertical-align:top">
                                     <th style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:19px;margin:0;padding:0;text-align:left">
-                                      <p class="order-id-text text-right" style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:19px;margin:0;padding:0;text-align:right">ORDER ID: <?= $message['trans_numb'];?></p>
+                                      <p class="order-id-text text-right" style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:14px;font-weight:400;line-height:19px;margin:0;padding:0;text-align:right">ORDER ID: <?= $message->trans_numb;?></p>
                                     </th>
                                   </tr>
                                 </table>
@@ -375,7 +375,7 @@ li {text-indent: -1em;}
                               </br>
                                 <p style="Margin:0;Margin-bottom:10px;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:19px;margin:0;margin-bottom:10px;padding:0;text-align:left">
     Dear Store Owner,<br /><br />
-                                    Diinformasikan bahwa Order Number <b><?= $message['trans_numb'];?></b> dengan detail pembeli sebagai berikut:</p>
+                                    Diinformasikan bahwa Order Number <b><?= $message->trans_numb;?></b> dengan detail pembeli sebagai berikut:</p>
                               </th>
                               <th class="expander" style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:400;line-height:19px;margin:0;padding:0!important;text-align:left;visibility:hidden;width:0"></th>
                             </tr>
@@ -401,19 +401,19 @@ li {text-indent: -1em;}
                                 <table class="order-details" border="0" cellspacing="0" cellpadding="5" style="border-collapse:collapse;border-spacing:0;padding:0;text-align:left;vertical-align:middle;width:100%">
                                   <tr style="padding:0;text-align:left;vertical-align:top">
                                     <th class="form_text1"style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:30px;margin:0;padding:0;padding-bottom:10px;text-align:left"><span><i>Nama</i></span></th>
-                                    <td><?= $message['cs_name'];?></td>
+                                    <td><?= $message->cs_name;?></td>
                                   </tr>
                                   <tr style="padding:0;text-align:left;vertical-align:top">
                                     <th class="form_text1"style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:30px;margin:0;padding:0;padding-bottom:10px;text-align:left"><span><i>Alamat</i></span></th>
-                                    <td><?= $message['address_shipping'];?></td>
+                                    <td><?= $message->address_shipping;?></td>
                                   </tr>
                                   <tr style="padding:0;text-align:left;vertical-align:top">
                                     <th class="form_text1"style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:30px;margin:0;padding:0;padding-bottom:10px;text-align:left"><span><i>Telepon</i></span></th>
-                                    <td><?= $message['phone'];?></td>
+                                    <td><?= $message->phone;?></td>
                                   </tr>
                                   <tr style="padding:0;text-align:left;vertical-align:top">
                                     <th class="form_text1"style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;line-height:30px;margin:0;padding:0;padding-bottom:10px;text-align:left"><span><i>Note</i></span></th>
-                                      <td><?= $message['note'];?></td>
+                                      <td><?= $message->note;?></td>
                                   </tr>
                                 </table>
                               </br>
@@ -468,19 +468,19 @@ li {text-indent: -1em;}
                                       margin:10px 0!important;margin-bottom:10px;max-height:1px;max-width:auto;padding:0;text-align:left;width:auto"></p>
                                     </th>
                                   </tr>
-                                    <?php foreach ($message['detail_trans'] as $detail):?>
+                                    <?php foreach ($message->detail_trans as $detail):?>
                                         <tr style="padding:0;text-align:left;vertical-align:top">
-                                            <th style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left"><?= $detail['name'];?></th>
-                                            <td style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left"><?= $detail['sizeName'];?></td>
-                                            <td style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left"><?= $detail['quantity'];?></td>
-                                            <td style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left">Rp.<?= number_format($detail['subtotal'], 0,',', '.');?></td>
+                                            <th style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left"><?= $detail->name;?></th>
+                                            <td style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left"><?= $detail->sizeName;?></td>
+                                            <td style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left"><?= $detail->quantity;?></td>
+                                            <td style="Margin:0;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;color:#777;font-size:16px;font-weight:700;line-height:19px;margin:0;padding:0;padding-bottom:10px;text-align:left">Rp.<?= number_format($detail->subtotal, 0,',', '.');?></td>
                                         </tr>
                                     <?php endforeach;?>
                                   <tr style="padding:0;text-align:left;vertical-align:top">
                                     <td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;hyphens:auto;line-height:19px;margin:0;padding:10px 0;text-align:left;vertical-align:top;word-wrap:break-word">TOTAL</td>
                                     <td></td>
                                     <td></td>
-                                    <td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;hyphens:auto;line-height:19px;margin:0;padding:10px 0;text-align:left;vertical-align:top;word-wrap:break-word">IDR <?= number_format($message['total'],0,',','.');?></td>
+                                    <td style="-moz-hyphens:auto;-webkit-hyphens:auto;Margin:0;border-collapse:collapse!important;color:#0a0a0a;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;font-size:16px;font-weight:700;hyphens:auto;line-height:19px;margin:0;padding:10px 0;text-align:left;vertical-align:top;word-wrap:break-word">IDR <?= number_format($message->total,0,',','.');?></td>
                                   </tr>
                                 </table>
                               </th>

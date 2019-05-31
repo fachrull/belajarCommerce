@@ -30,7 +30,7 @@ class Mailer extends CI_Controller {
 
                 $mail_to = $email['mail_to'];
                 $subject = $email['mail_subject'];
-                $data['message'] = $email['message'];
+                $data['message'] = json_decode($email['message']);
                 $message = $this->load->view('email/'.$email['template'], $data, TRUE);
 
                 $mail = $this->email
