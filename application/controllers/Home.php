@@ -766,6 +766,12 @@ class Home extends CI_Controller{
 
   public function shopCheckout(){
     if($this->session->userdata('uType') == 4){
+        $totalcart = $this->cart->total();
+
+        if($totalcart > 500000000){
+            $this->session->set_flashdata('error_trans', 'Total transaksi tidak dapat melebihi Rp.500.000.000');
+            redirect('home/shopCart');
+        }
       // Load helper form and library form validation
       $this->load->helper('form');
       $this->load->library('form_validation');

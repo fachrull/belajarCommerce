@@ -50,6 +50,12 @@
 			<!-- LEFT -->
 			<div class="col-lg-9 col-sm-8">
 
+                <?php if($this->session->has_userdata('error_trans')): ?>
+                    <div class="alert alert-danger">
+                        <?= $this->session->userdata('error_trans')?>
+                    </div>
+                <?php endif; ?>
+
 				<!-- CART -->
 				<form class="cartContent clearfix" method="post" action="<?= site_url('home/updateCart')?>">
 
