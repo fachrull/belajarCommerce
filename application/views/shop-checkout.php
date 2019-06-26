@@ -143,8 +143,9 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="billing_address1">Address</label>
-								<input id="billing_address1" name="address" type="text" class="form-control required" />
-							</div>
+                                <p style="color:gray;font-size:11px;">(Alamat pengiriman harus sesuai dengan kecamatan yang dipilih).</p>
+                                <input id="billing_address1" name="address" type="text" class="form-control required" />
+                            </div>
 						</div>
 
 						<div class="row">

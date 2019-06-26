@@ -267,7 +267,7 @@ class Home extends CI_Controller{
 
       for ($i=0; $i < count($idSpec) ; $i++) {
           array_push($specs, $this->mhome->getProducts(array('id' => $idSpec[$i]['spec_id']),
-           array('nameField' => 'name'), 'tm_spec', TRUE));
+           array('nameField' => 'name','iconField' => 'icon'), 'tm_spec', TRUE));
         }
       $data['specs'] = $specs;
       $data['image'] = $this->mhome->getProductImage($idProduct);
