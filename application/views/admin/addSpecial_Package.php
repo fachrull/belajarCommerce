@@ -61,6 +61,10 @@
               <!-- <label class="input mb-10">
                 <input class="form-control" name="price" type="text" placeholder="Special Package Price">
               </label> -->
+              <label class="input mb-10">
+                <b>SKU</b>
+                <input class="form-control" type="text" name="sku" placeholder="SPKGXXXX">
+              </label>
               <div class="box-body pad pt-0 pl-0 pr-0 mb-10">
                 <textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description Special Package"></textarea>
               </div>

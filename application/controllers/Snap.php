@@ -35,10 +35,10 @@ class Snap extends CI_Controller {
 
                 foreach ($item['option'] as $option) {
                     $item_option = array(
-                        'id' => $option['id'],
+                        'id' => $option['id_prod'],
                         'price' => 0,
                         'quantity' => $option['quantity'],
-                        'name' => $option['prod'] . ' - ' . $option['sizeName']
+                        'name' => $option['name']
                     );
                     array_push($item_details, $item_option);
                 }
@@ -165,7 +165,7 @@ class Snap extends CI_Controller {
                 $qty = $item->quantity;
                 $qtyStore = $this->mhome->getProducts(
 									array('id_store' => $id_store, 'id_product' => $id_prod, 'id_product_size' => $id_tr_prod_size),
-									array('ppone' => 'postpone', 'sakhir' => 'stock_akhir') 'tr_product', TRUE);
+									array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
 								$postpone = $qtyStore['postpone'] - $qty;
 	              $stock_akhir = $qtyStore['stock_akhir'] + $qty;
 	              $update_stock = array(

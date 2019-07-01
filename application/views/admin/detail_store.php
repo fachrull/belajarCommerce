@@ -119,6 +119,27 @@
                   </tbody>
                 </table>
                 <hr>
+              <a href="<?= site_url('admin/addStore_SpecialPackage/'.$post['id'])?>">
+                <button class="btn btn-default btn-oldblue pull-right">
+                  <i class="fa fa-plus"></i> Add Special Package
+                </button>
+              </a>
+              <hr class="mt-80" style="width:100%; height:0px;">
+              <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                  <th>No.</th>
+                  <th>Special Package</th>
+                  <th>Stock Awal</th>
+                  <th>Stock Akhir</th>
+                  <th>Inbound</th>
+                  <th>Outbound</th>
+                  <th>Postpone</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
           </div>
         </div>
       </div>

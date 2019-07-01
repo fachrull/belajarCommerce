@@ -81,19 +81,19 @@
                 <?php if ($cart['type'] == 'special'): ?>
                   <tr class="testimonial">
                     <td>
-                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                      <img class="square" src="<?= site_url('asset/upload/special-package/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
+                        <a href="<?= site_url('home/detailSpecial/'. $cart['id'])?>">
+                          <span class="float-left"><?= $cart['name']?></span>
+                        </a>
                         <br>
-                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
-												<br>
-												<span><small>Bonus :</small></span>
+												<span><small>Products :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
-                              <small><?= $option['prod']?> - Size × <?= $option['quantity']?></small>
+                              <small><?= $option['name']?> × <?= $option['quantity']?></small>
                             </li>
                           <?php endforeach; ?>
                         </ul>
@@ -110,7 +110,9 @@
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
+                        <a href="<?= site_url('home/detailProduct/'. $cart['id'])?>">
+                          <span class="float-left"><?= $cart['name']?></span>
+                        </a>
                         <br>
                         <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
                       </span>
@@ -124,19 +126,19 @@
                 <?php if ($cart['type'] == 'special'): ?>
                   <tr class="testimonial">
                     <td>
-                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                      <img class="square" src="<?= site_url('asset/upload/special-package/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
-                        <br>
-                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
+                        <a href="<?= site_url('home/detailSpecial/'. $cart['id'])?>">
+                          <span class="float-left"><?= $cart['name']?></span>
+                        </a>
 												<br>
-												<span><small>Bonus :</small></span>
+												<span><small>Products :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
-                              <small><?= $option['prod']?> - <?=$option['sizeName']?> × <?= $option['quantity']?></small>
+                              <small><?= $option['name']?> × <?= $option['quantity']?></small>
                             </li>
                           <?php endforeach; ?>
                         </ul>
@@ -153,7 +155,9 @@
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
+                        <a href="<?= site_url('home/detailProduct/'.$cart['id'])?>">
+                          <span class="float-left"><?= $cart['name']?></span>
+                        </a>
                         <br>
                         <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
                       </span>

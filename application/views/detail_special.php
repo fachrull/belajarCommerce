@@ -101,7 +101,7 @@
                   </tr>
                 <?php endforeach; ?>
                 </tbody>
-            </table>						
+            </table>
 
 					</div>
 					<!-- /IMAGE -->
@@ -138,7 +138,7 @@
 
 									<div class="toggle-content">
 										<div class="clearfix mb-30">
-											<span id="stockDetail" class="float-right text-oldblue"><i id="stockIcon" class="fa fa-check"></i> In Stock</span>
+											<span id="stockDetailSP" class="float-right text-oldblue"><i id="stockIcon" class="fa fa-check"></i> In Stock</span>
 											<!--
 												<span class="float-right text-danger"><i class="fa fa-remove"></i> Out of Stock</span>
 												-->
@@ -177,10 +177,10 @@
 								</div>
 
 						<!-- FORM -->
-						<div id="shoppingForm" class="row text-center">
+						<div id="shoppingFormSP" class="row text-center">
 							<form id="cart_form" class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
 								<input type="hidden" id="product_id" name="product_id" value="<?= $specialPckg['id'];?>" />
-                                <input type="hidden" id="sku" name="sku" />
+                <input type="hidden" name="sku" value="<?= $specialPckg['sku']?>"/>
 								<input type="hidden" name="product_name" value="<?= $specialPckg['name'];?>" />
 								<input type="hidden" id="price" name="price" />
 								<input type="hidden" id="size-name" name="size-name" />

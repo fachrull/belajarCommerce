@@ -1196,48 +1196,61 @@ class Admin extends CI_Controller {
     }
 
     public function addStore_SpecialPackage($idStoreOwner){
-        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $this->load->helper('form');
-            $this->load->library('form_validation');
-
-            $this->form_validation->set_rules('specialPackage', 'Special Package', 'required|callback_checkingSpecialPackage');
-
-      if ($this->form_validation->run() === FALSE) {
-        $data['id_store'] = $idStoreOwner;
-        $data['special_packages'] = $this->madmin->getProducts(array('brand_id' => 0, 'cat_id' => 0), array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
-
-        $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/addStore_SpecialPackage', $data);
-        $this->load->view('include/admin/footer');
+      if ($idStoreOwner == NULL) {
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
       }else{
-        // id product (special package) from input
-        $id_prod = $this->input->post('specialPackage');
+        $hasStoreOwner = $this->madmin->getProducts(array('id' => $idStoreOwner), array('idF' => 'id'), 'tm_store_owner', TRUE);
+        if (!isset($hasStoreOwner)) {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+        }else{
+          if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+              $this->load->helper('form');
+              $this->load->library('form_validation');
 
-        // id super admin who's input this data
-        $idAdmin = $this->session->userdata('uId');
+              $this->form_validation->set_rules('specialPackage', 'Special Package', 'required|callback_checkingSpecialPackage');
 
-        // search id product (special package) from table tr_product_size
-        $id_prod_size = $this->madmin->getProducts(array('prod_id' => $id_prod), array('idField' => 'id'), 'tr_product_size', TRUE);
+              if ($this->form_validation->run() === FALSE) {
+                $data['id_store'] = $idStoreOwner;
+                $data['special_packages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_special_package', FALSE);
 
-        // this array are set to fill tr_product table (assign special package to store)
-        $dataStore_SpclPckg = array(
-          'id_store'        =>  $idStoreOwner,
-          'id_product'      =>  $id_prod,
-          'id_product_size' => $id_prod_size['id'],
-          'quantity'        =>  0,
-          'new'             =>  0,
-          'id_admin'        =>  $idAdmin
-        );
-        $this->madmin->inputData('tr_product', $dataStore_SpclPckg);
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/addStore_SpecialPackage', $data);
+                $this->load->view('include/admin/footer');
+              }else{
+                // id product (special package) from input
+                $id_prod = $this->input->post('specialPackage');
 
-        redirect('admin/stores/'.$idStoreOwner);
+                // id super admin who's input this data
+                $idAdmin = $this->session->userdata('uId');
+
+                // search id product (special package) from table tr_product_size
+                $id_prod_size = $this->madmin->getProducts(array('prod_id' => $id_prod), array('idField' => 'id'), 'tr_product_size', TRUE);
+
+                // this array are set to fill tr_product table (assign special package to store)
+                $dataStore_SpclPckg = array(
+                  'id_store'        =>  $idStoreOwner,
+                  'id_product'      =>  $id_prod,
+                  'id_product_size' => $id_prod_size['id'],
+                  'quantity'        =>  0,
+                  'new'             =>  0,
+                  'id_admin'        =>  $idAdmin
+                );
+                $this->madmin->inputData('tr_product', $dataStore_SpclPckg);
+
+                redirect('admin/stores/'.$idStoreOwner);
+              }
+            } else {
+              $this->load->view('include/header2');
+              $this->load->view('un-authorise');
+              $this->load->view('include/footer');
+            }
+        }
       }
-    } else {
-      $this->load->view('include/header2');
-      $this->load->view('un-authorise');
-      $this->load->view('include/footer');
-    }
   }
 
   public function deleteStoreProd($idStore ,$idProd_store){
@@ -2197,6 +2210,8 @@ class Admin extends CI_Controller {
             }else {
               $name = $this->input->post('name');
               $desc = $this->input->post('desc');
+              $sku = $this->input->post('sku');
+              $size = 0;
               $prod_PKG = $this->input->post('sizeSpcl[]');
               $prod_qty = $this->input->post('qtySpcl[]');
               $prod_prc = $this->input->post('prcSpcl[]');
@@ -2228,6 +2243,15 @@ class Admin extends CI_Controller {
                 $this->madmin->inputData('tm_special_package', $data_main_sp);
 
                 $idSP = $this->madmin->getProducts($data_main_sp, array('idField' => 'id'), 'tm_special_package', TRUE);
+
+                $data_tr_prod_size = array(
+                  'sku'     => $sku,
+                  'prod_id' => $idSP['id'],
+                  'special' => $idSP['id'],
+                  'size_id' => $size,
+                  'price'   => $total
+                );
+                $this->madmin->inputData('tr_product_size', $data_tr_prod_size);
 
                 $sumProd_SP = count($prod_PKG);
                 for ($i=0; $i < $sumProd_SP; $i++) {
@@ -2824,7 +2848,15 @@ class Admin extends CI_Controller {
   }
 
   public function historyTransaction(){
-      $data['transactions'] = $this->madmin->order_list();
+    $data['transactions'] = $this->madmin->order_list();
+    print_r(count($data['transactions']));echo "</br></br>";
+    foreach ($data['transactions'] as $trans) {
+      print_r($trans);echo "</br></br>";
+    }
+    exit();
+    $id_store = $this->session->userdata('uId');
+    // print_r($id_store);exit();
+
     $this->load->view('include/admin/header');
     $this->load->view('include/admin/left-sidebar');
     $this->load->view('admin/sa_historyTransaction', $data);

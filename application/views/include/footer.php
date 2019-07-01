@@ -132,7 +132,7 @@
     function loadLocationLookup() {
         $('#store-location').load('<?php echo base_url('home/store-lookup'); ?>');
     }
-    
+
 
     // var stores = <?= $stores?>;
     // var lat = document.getElementById('lat');
@@ -385,6 +385,31 @@
             }
         });
     });
+</script>
+<!-- Special Package -->
+<script>
+  $(document).ready(function (){
+    const formatter = new Intl.NumberFormat('id-ID', {
+        minimumFractionDigits: 0
+    });
+
+    $('#stockDetailSP').hide();
+    $('#shoppingFormSP').hide();
+    $('#sub_district').on('change', function(){
+      var subDistrictSP = $('#sub_district').val();
+      var productIdSP = $('#product_idSP').val();
+      $('#pageloader').fadeIn(150, function() {
+        $('#pageloader').hide();
+      });
+      if(subDistrictSP){
+        $("div.toggle.active > label").trigger("click");
+        $("#stockTitle").html("Available in your location");
+        $("#stockLabel").html('<i id="stockIcon" class="fa fa-check text-oldblue"></i> In Stock');
+        $('#stockDetail').show();
+        $('#shoppingFormSP').show();
+      }
+    })
+  });
 </script>
 <script type="text/javascript">
     $('#pay-button').click(function (event) {
