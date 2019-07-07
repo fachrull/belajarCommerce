@@ -11314,3 +11314,16 @@ div.tabbed>a:hover>div {
 		height: 150px;
 	}
 }
+
+.text-block {
+	position: absolute;
+	z-index: 1;
+	background-color: #bb2030;
+	color: #fff;
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	display: block;
+	width: 100%;
+}

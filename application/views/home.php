@@ -99,63 +99,174 @@
 <hr>
 
 <!-- PROMOTION -->
-<section id="promotion">
+<section id="promotion" style="background-color: #e6e7e8">
     <div class="container">
         <div class="row">
+            <div class="col-12 pb-40">
+                <h3 class="text-center" style="letter-spacing: 3px;">SPECIAL PACKAGES AND OFFERS</h3>
+            </div>
+        </div>
+        <div class="row">
+<!--            # 1 Best seller-->
             <div class="col-12 col-md-4 pt-30">
-                <a class="mt-10" href="<?= base_url('home/bestSeller'); ?>">
-                    <img class="promotion-image-1"
-                         src="<?= base_url('asset/upload/best-seller-cover/'.$best_seller['slide']); ?>"
-                         alt="agm best seller"/>
-                    <div class="absolute pl-20 pb-20 bottom-center text-left">
-                        <h2 class="text-grey">BEST<br>SELLER</h2>
-                        <a class="text-grey mt-10" href="<?= base_url('home/bestSeller'); ?>">View Detail<i
-                                    class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+                <div class="shop-item bg-white">
+                    <div class="thumbnail">
+                        <!-- product image(s) -->
+                        <div class="text-block">
+                            <p class="text-center" style="letter-spacing: 3px;"><b>BEST SELLER</b></p>
+                        </div>
+
+                        <a class="shop-item-image" href="#">
+                            <img class="img-fluid" style="position: relative; z-index: auto" src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg');?>" alt="product name" />
+                        </a>
+                        <!-- /product image(s) -->
+
+                        <div class="shop-item-summary p-30">
+                            <div class="row mb-10">
+                                <div class="col-8">
+                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
+                                </div>
+                                <div class="col-4">
+                                    <div class="rating rating-5 fs-13">
+                                        <!-- rating-0 ... rating-5 -->
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",", ".");?></strike></small>
+                            <!-- price -->
+                            <div class="shop-item-price">
+                                Rp <?= number_format(125000000, 2, ",", ".");?>
+                            </div>
+                            <!-- /price -->
+                        </div>
                     </div>
-                </a>
+                </div>
             </div>
 
-            <div class="col-12 col-md-8">
-                <div class="row">
-                    <div class="col-md-12 pt-30">
-                        <a href="<?= base_url('home/specialPackage'); ?>">
-                            <div class="relative">
-                                <img class="promotion-image-2"
-                                     src="<?= base_url('asset/upload/special-package/cover/'.$spPackage['slide']); ?>"
-                                     alt="agm gallery"/>
-                                <div class="absolute pl-20 pb-20 bottom-center text-left">
-                                    <h2 class="text-grey">SPECIAL<br>PACKAGES</h2>
-                                    <a class="text-grey" href="<?= base_url('home/specialPackage'); ?>">View Detail<i
-                                                class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
-                                </div>
+<!--            #2 Bed Linen-->
+            <div class="col-12 col-md-4 pt-30">
+                <div class="shop-item bg-white">
+                    <div class="thumbnail">
+                        <!-- product image(s) -->
+                        <div class="text-block">
+                            <p class="text-center" style="letter-spacing: 3px;"><b>BED LINEN</b></p>
+                        </div>
+                        <a class="shop-item-image" href="#">
+                            <img class="img-fluid" style="position: relative; z-index: auto" src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg');?>" alt="product name" />
                         </a>
+                        <!-- /product image(s) -->
+
+                        <div class="shop-item-summary p-30">
+                            <div class="row mb-10">
+                                <div class="col-8">
+                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
+                                </div>
+                                <div class="col-4">
+                                    <div class="rating rating-5 fs-13">
+                                        <!-- rating-0 ... rating-5 -->
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",", ".");?></strike></small>
+                            <!-- price -->
+                            <div class="shop-item-price">
+                                Rp <?= number_format(125000000, 2, ",", ".");?>
+                            </div>
+                            <!-- /price -->
+                        </div>
                     </div>
                 </div>
-                <div class="col-md-6 pt-30">
-                    <a href="<?= base_url('home/bed_linen'); ?>">
-                        <img class="promotion-image-3"
-                             src="<?= base_url('asset/upload/bed-linen-cover/'.$bedLinen['slide']); ?>"
-                             alt="agm lastest collectin"/>
-                        <div class="absolute pl-20 pb-20 bottom-center text-left">
-                            <h2 class="text-grey">BED<br>LINEN</h2>
-                            <a class="text-grey" href="<?= base_url('home/bed_linen'); ?>">View Detail<i
-                                        class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+            </div>
+
+<!--            #3 Bedding Accessories-->
+            <div class="col-12 col-md-4 pt-30">
+                <div class="shop-item bg-white">
+                    <div class="thumbnail">
+                        <!-- product image(s) -->
+                        <div class="text-block">
+                            <p class="text-center" style="letter-spacing: 3px;"><b>BEDDING ACCESSORIES</b></p>
                         </div>
-                    </a>
-                </div>
-                <div class="col-md-6 pt-30">
-                    <a href="<?= base_url('home/bedding_acc'); ?>">
-                        <img class="promotion-image-3"
-                             src="<?= base_url('asset/upload/bedding-acc-cover/'.$beddingAcc['slide']); ?>"
-                             alt="agm lastest collectin"/>
-                        <div class="absolute pl-20 pb-20 bottom-center text-left">
-                            <h2 class="text-grey">BEDDING<br>ACCESSORIES</h2>
-                            <a class="text-grey" href="<?= base_url('home/bedding_acc'); ?>">View Detail<i
-                                        class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>
+                        <a class="shop-item-image" href="#">
+                            <img class="img-fluid" style="position: relative; z-index: auto" src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg');?>" alt="product name" />
+                        </a>
+                        <!-- /product image(s) -->
+
+                        <div class="shop-item-summary p-30">
+                            <div class="row mb-10">
+                                <div class="col-8">
+                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
+                                </div>
+                                <div class="col-4">
+                                    <div class="rating rating-5 fs-13">
+                                        <!-- rating-0 ... rating-5 -->
+                                    </div>
+                                </div>
+                            </div>
+                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",", ".");?></strike></small>
+                            <!-- price -->
+                            <div class="shop-item-price">
+                                Rp <?= number_format(125000000, 2, ",", ".");?>
+                            </div>
+                            <!-- /price -->
                         </div>
-                    </a>
+                    </div>
                 </div>
             </div>
+
+<!--            <div class="col-12 col-md-4 pt-30">-->
+<!--                <a class="mt-10" href="--><?//= base_url('home/bestSeller'); ?><!--">-->
+<!--                    <img class="promotion-image-1"-->
+<!--                         src="--><?//= base_url('asset/upload/best-seller-cover/'.$best_seller['slide']); ?><!--"-->
+<!--                         alt="agm best seller"/>-->
+<!--                    <div class="absolute pl-20 pb-20 bottom-center text-left">-->
+<!--                        <h2 class="text-grey">BEST<br>SELLER</h2>-->
+<!--                        <a class="text-grey mt-10" href="--><?//= base_url('home/bestSeller'); ?><!--">View Detail<i-->
+<!--                                    class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
+<!--                    </div>-->
+<!--                </a>-->
+<!--            </div>-->
+<!---->
+<!--            <div class="col-12 col-md-8">-->
+<!--                <div class="row">-->
+<!--                    <div class="col-md-12 pt-30">-->
+<!--                        <a href="--><?//= base_url('home/specialPackage'); ?><!--">-->
+<!--                            <div class="relative">-->
+<!--                                <img class="promotion-image-2"-->
+<!--                                     src="--><?//= base_url('asset/upload/special-package/cover/'.$spPackage['slide']); ?><!--"-->
+<!--                                     alt="agm gallery"/>-->
+<!--                                <div class="absolute pl-20 pb-20 bottom-center text-left">-->
+<!--                                    <h2 class="text-grey">SPECIAL<br>PACKAGES</h2>-->
+<!--                                    <a class="text-grey" href="--><?//= base_url('home/specialPackage'); ?><!--">View Detail<i-->
+<!--                                                class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
+<!--                                </div>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="col-md-6 pt-30">-->
+<!--                    <a href="--><?//= base_url('home/bed_linen'); ?><!--">-->
+<!--                        <img class="promotion-image-3"-->
+<!--                             src="--><?//= base_url('asset/upload/bed-linen-cover/'.$bedLinen['slide']); ?><!--"-->
+<!--                             alt="agm lastest collectin"/>-->
+<!--                        <div class="absolute pl-20 pb-20 bottom-center text-left">-->
+<!--                            <h2 class="text-grey">BED<br>LINEN</h2>-->
+<!--                            <a class="text-grey" href="--><?//= base_url('home/bed_linen'); ?><!--">View Detail<i-->
+<!--                                        class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--                <div class="col-md-6 pt-30">-->
+<!--                    <a href="--><?//= base_url('home/bedding_acc'); ?><!--">-->
+<!--                        <img class="promotion-image-3"-->
+<!--                             src="--><?//= base_url('asset/upload/bedding-acc-cover/'.$beddingAcc['slide']); ?><!--"-->
+<!--                             alt="agm lastest collectin"/>-->
+<!--                        <div class="absolute pl-20 pb-20 bottom-center text-left">-->
+<!--                            <h2 class="text-grey">BEDDING<br>ACCESSORIES</h2>-->
+<!--                            <a class="text-grey" href="--><?//= base_url('home/bedding_acc'); ?><!--">View Detail<i-->
+<!--                                        class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
     </div>
