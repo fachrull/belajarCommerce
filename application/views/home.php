@@ -453,45 +453,112 @@
                 </div>
             </div>
         </div>
-    </div>
+        <!-- menu -->
+        <div class="row pt-20">
+            <!--            # 1 Store location-->
+            <div class="col-12 col-md-3 p-0">
+                <div class="shop-item bg-white">
+                    <div class="thumbnail-menu" style="border: 0px">
+                        <a class="shop-item-image" href="#">
+                            <img class="img-fluid"
+                                 src="<?= site_url('asset/icon/Stores.png'); ?>"
+                                 alt="product name"/>
+                        </a>
+
+                        <div class="shop-item-summary p-15">
+                            <div class="row mb-10">
+                                <div class="col-12">
+                                    <p class="text-center fs-20"><b>STORES</b></p>
+                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--            # 2 Support-->
+            <div class="col-12 col-md-3 p-0">
+                <div class="shop-item bg-white">
+                    <div class="thumbnail-menu">
+
+                        <a class="shop-item-image" href="#">
+                            <img class="img-fluid"
+                                 src="<?= site_url('asset/icon/Support.png'); ?>"
+                                 alt="product name"/>
+                        </a>
+
+                        <div class="shop-item-summary p-15">
+                            <div class="row mb-10">
+                                <div class="col-12">
+                                    <p class="text-center fs-20"><b>SUPPORT</b></p>
+                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--            # 3 AGM Pedia-->
+            <div class="col-12 col-md-3 p-0">
+                <div class="shop-item bg-white">
+                    <div class="thumbnail-menu">
+                        <!-- product image(s) -->
+
+                        <a class="shop-item-image" href="#">
+                            <img class="img-fluid"
+                                 src="<?= site_url('asset/icon/AGMPedia.png'); ?>"
+                                 alt="product name"/>
+                        </a>
+                        <!-- /product image(s) -->
+
+                        <div class="shop-item-summary p-15">
+                            <div class="row mb-10">
+                                <div class="col-12">
+                                    <p class="text-center fs-20"><b>AGM PEDIA</b></p>
+                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--            # 4 Partnership-->
+            <div class="col-12 col-md-3 p-0">
+                <div class="shop-item bg-white">
+                    <div class="thumbnail-menu">
+                        <!-- product image(s) -->
+
+                        <a class="shop-item-image" href="#">
+                            <img class="img-fluid"
+                                 src="<?= site_url('asset/icon/Partnership.png'); ?>"
+                                 alt="product name"/>
+                        </a>
+                        <!-- /product image(s) -->
+
+                        <div class="shop-item-summary p-15">
+                            <div class="row mb-10">
+                                <div class="col-12">
+                                    <p class="text-center fs-20"><b>PARTNERSHIP</b></p>
+                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
 <!-- /Product Hightlight -->
 
 <!-- LOCATION -->
-<section id="location" class="mb-30">
-    <div class="container-fluid">
-        <h3 class="text-center mb-30">OUR LOCATION</h3>
-        <div id="store-location"></div>
-    </div>
-</section>
+<!--<section id="location" class="mb-30">-->
+<!--    <div class="container-fluid">-->
+<!--        <h3 class="text-center mb-30">OUR LOCATION</h3>-->
+<!--        <div id="store-location"></div>-->
+<!--    </div>-->
+<!--</section>-->
 <!-- /LOCATION -->
-
-<!-- Large Modal >-->
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-        <div class="modal-content">
-
-            <!-- header modal -->
-            <div class="modal-header">
-                <h4 class="modal-title float-left" id="mySmallModalLabel">Stay In The Know</h4>
-                <button type="button" class="close float-right" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-            </div>
-
-            <!-- body modal -->
-            <div class="modal-body">
-                <h6>Be the first to hear about new inventory and offers.</h6>
-                <div class="input-email pb-0 mb-0" style="width:265px !important;">
-                    <input type="text" class="form-control form-control-footer" placeholder="Your Mail"
-                           aria-label="Your Mail"
-                           aria-describedby="basic-addon2" style="width:265px !important;">
-                </div>
-                <button class="btn-sm float-right mt-10">SUBMIT <i class="fa fa-chevron-right"></i></button>
-            </div>
-
-        </div>
-    </div>
-</div>
-<!-- /Large Modal -->

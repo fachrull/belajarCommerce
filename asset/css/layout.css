@@ -11357,3 +11357,19 @@ div.tabbed>a:hover>div {
 	-o-transition: border .2s ease-in-out;
 	transition: border .2s ease-in-out;
 }
+.thumbnail-menu {
+    display: block;
+    padding: 4px;
+    margin-bottom: 20px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border-left: 2px solid #ddd;
+    border-radius: 4px;
+    -webkit-transition: border .2s ease-in-out;
+    -o-transition: border .2s ease-in-out;
+    transition: border .2s ease-in-out;
+}
+
+.verticalLine {
+    border-left: thick solid #ddd;
+}
