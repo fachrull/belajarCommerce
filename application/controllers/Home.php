@@ -42,13 +42,22 @@ class Home extends CI_Controller{
       }
     } elseif ($this->session->userdata('uType') == 4) {
         $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
-        $data['best_seller'] = $this->mhome->getProducts(array('cover' => 2), array('slideField' => 'slide'), 'tm_cover', TRUE);
         $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
         $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
         $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
         $data['pedias'] = $this->mhome->getPedia();
         $data['stores'] = $this->storesToGeoJson();
         $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+        $best_seller = $this->mhome->listBestSeller_Product();
+
+        // pick 1 random data from bestSeller
+        shuffle($best_seller);
+        $data['bestSeller'] = array_slice($best_seller, 0, 1);
+
+        // pick 4 random data from bestSeller for product hightlight
+        shuffle($best_seller);
+        $data['product_highlight'] = array_slice($best_seller, 0, 4);
+
 
         $this->load->view('include/header', $brands);
         $this->load->view('home', $data);
@@ -56,13 +65,21 @@ class Home extends CI_Controller{
 
     } elseif ($this->session->userdata('uType') == NULL) {
       $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
-      $data['best_seller'] = $this->mhome->getProducts(array('cover' => 2), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
       $data['bedLinen'] = $this->mhome->getProducts(array('cover' => 4), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $data['beddingAcc'] = $this->mhome->getProducts(array('cover' => 5), array('slideField' => 'slide'), 'tm_cover', TRUE);
       $data['pedias'] = $this->mhome->getPedia();
       $data['stores'] = $this->storesToGeoJson();
         $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+        $best_seller = $this->mhome->listBestSeller_Product();
+
+        // pick 1 random data from bestSeller
+        shuffle($best_seller);
+        $data['bestSeller'] = array_slice($best_seller, 0, 1);
+
+        // pick 4 random data from bestSeller for product hightlight
+        shuffle($best_seller);
+        $data['product_highlight'] = array_slice($best_seller, 0, 4);
 
       $this->load->view('include/header', $brands);
       $this->load->view('home', $data);
@@ -1840,6 +1857,14 @@ class Home extends CI_Controller{
       $this->load->view('include/header2');
       $this->load->view('search_result', $data);
       $this->load->view('include/footer');
+  }
+
+  public function best() {
+      $data = $this->mhome->listBestSeller_Product();
+      shuffle($data);
+      $data = array_slice($data, 0, 1);
+
+      print_r($data);
   }
 
 }

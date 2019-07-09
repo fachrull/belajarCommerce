@@ -116,9 +116,9 @@
                             <p class="text-center" style="letter-spacing: 3px;"><b>BEST SELLER</b></p>
                         </div>
 
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$bestSeller[0]["id"])?>">
                             <img class="img-fluid" style="position: relative; z-index: auto"
-                                 src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg'); ?>"
+                                 src="<?= site_url('asset/upload/'.$bestSeller[0]["image_1"]); ?>"
                                  alt="product name"/>
                         </a>
                         <!-- /product image(s) -->
@@ -126,10 +126,10 @@
                         <div class="shop-item-summary p-30">
                             <div class="row mb-10">
                                 <div class="col-8">
-                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
+                                    <h2 class="align-middle"><?=strtoupper($bestSeller[0]["name"])?></h2>
                                 </div>
                                 <div class="col-4">
-                                    <div class="rating rating-5 fs-13">
+                                    <div class="rating rating-<?=$bestSeller[0]["stars"]?> fs-13">
                                         <!-- rating-0 ... rating-5 -->
                                     </div>
                                 </div>
@@ -138,7 +138,7 @@
                                         "."); ?></strike></small>
                             <!-- price -->
                             <div class="shop-item-price">
-                                Rp <?= number_format(125000000, 2, ",", "."); ?>
+                                Rp <?= number_format($bestSeller[0]["price"], 2, ",", "."); ?>
                             </div>
                             <!-- /price -->
                         </div>
@@ -301,7 +301,7 @@
             <div class="absolute justify-content-around pl-20 pb-20 text-left bg-gradient-red">
                 <div class="ml-50 mt-150">
                     <h1 class="text-white mb-0">ONLINE<br>PROMOTION</h1>
-                    <a class="btn btn-outline-white mt-10" href="<?= base_url('home/bestSeller'); ?>">Discover more</a>
+                    <a class="btn btn-outline-white mt-10" href="<?= base_url('home/specialPackage'); ?>">Discover more</a>
                 </div>
             </div>
         </div>
@@ -320,138 +320,45 @@
             </div>
         </div>
         <div class="row">
+
+            <?php
+                foreach ($product_highlight as $p):
+            ?>
+                    <div class="col-12 col-md-3 pt-30">
+                        <div class="shop-item bg-white">
+                            <div class="thumbnail-highlight">
+                                <!-- product image(s) -->
+
+                                <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$p["id"])?>">
+                                    <img class="img-fluid" style="position: relative; z-index: auto"
+                                         src="<?= site_url('asset/upload/'.$p["image_1"]); ?>"
+                                         alt="product name"/>
+                                </a>
+                                <!-- /product image(s) -->
+
+                                <div class="shop-item-summary p-15">
+                                    <div class="row mb-10">
+                                        <div class="col-12">
+                                            <h2 class="align-middle"><?=strtoupper($p["name"])?></h2>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
+                                                "."); ?></strike></small>
+                                    <!-- price -->
+                                    <div class="shop-item-price">
+                                        Rp <?= number_format($p["price"], 2, ",", "."); ?>
+                                    </div>
+                                    <!-- /price -->
+                                    <div class="mt-15 rating rating-<?=$p["stars"]?> fs-14" style="letter-spacing: 1px;">
+                                        <!-- rating-0 ... rating-5 -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            <?php endforeach; ?>
             <!--            # 1 Best seller-->
-            <div class="col-12 col-md-3 pt-30">
-                <div class="shop-item bg-white">
-                    <div class="thumbnail-highlight">
-                        <!-- product image(s) -->
 
-                        <a class="shop-item-image" href="#">
-                            <img class="img-fluid" style="position: relative; z-index: auto"
-                                 src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg'); ?>"
-                                 alt="product name"/>
-                        </a>
-                        <!-- /product image(s) -->
-
-                        <div class="shop-item-summary p-15">
-                            <div class="row mb-10">
-                                <div class="col-12">
-                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
-                                </div>
-                            </div>
-                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                        "."); ?></strike></small>
-                            <!-- price -->
-                            <div class="shop-item-price">
-                                Rp <?= number_format(125000000, 2, ",", "."); ?>
-                            </div>
-                            <!-- /price -->
-                            <div class="mt-15 rating rating-5 fs-14" style="letter-spacing: 1px;">
-                                <!-- rating-0 ... rating-5 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-3 pt-30">
-                <div class="shop-item bg-white">
-                    <div class="thumbnail-highlight">
-                        <!-- product image(s) -->
-
-                        <a class="shop-item-image" href="#">
-                            <img class="img-fluid" style="position: relative; z-index: auto"
-                                 src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg'); ?>"
-                                 alt="product name"/>
-                        </a>
-                        <!-- /product image(s) -->
-
-                        <div class="shop-item-summary p-15">
-                            <div class="row mb-10">
-                                <div class="col-12">
-                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
-                                </div>
-                            </div>
-                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                        "."); ?></strike></small>
-                            <!-- price -->
-                            <div class="shop-item-price">
-                                Rp <?= number_format(125000000, 2, ",", "."); ?>
-                            </div>
-                            <!-- /price -->
-                            <div class="mt-15 rating rating-5 fs-14" style="letter-spacing: 1px;">
-                                <!-- rating-0 ... rating-5 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-3 pt-30">
-                <div class="shop-item bg-white">
-                    <div class="thumbnail-highlight">
-                        <!-- product image(s) -->
-
-                        <a class="shop-item-image" href="#">
-                            <img class="img-fluid" style="position: relative; z-index: auto"
-                                 src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg'); ?>"
-                                 alt="product name"/>
-                        </a>
-                        <!-- /product image(s) -->
-
-                        <div class="shop-item-summary p-15">
-                            <div class="row mb-10">
-                                <div class="col-12">
-                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
-                                </div>
-                            </div>
-                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                        "."); ?></strike></small>
-                            <!-- price -->
-                            <div class="shop-item-price">
-                                Rp <?= number_format(125000000, 2, ",", "."); ?>
-                            </div>
-                            <!-- /price -->
-                            <div class="mt-15 rating rating-5 fs-14" style="letter-spacing: 1px;">
-                                <!-- rating-0 ... rating-5 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 col-md-3 pt-30">
-                <div class="shop-item bg-white">
-                    <div class="thumbnail-highlight">
-                        <!-- product image(s) -->
-
-                        <a class="shop-item-image" href="#">
-                            <img class="img-fluid" style="position: relative; z-index: auto"
-                                 src="<?= site_url('asset/upload/serta-mattress-grand_althea.jpg'); ?>"
-                                 alt="product name"/>
-                        </a>
-                        <!-- /product image(s) -->
-
-                        <div class="shop-item-summary p-15">
-                            <div class="row mb-10">
-                                <div class="col-12">
-                                    <h2 class="align-middle">IMPERIAL HERITAGE</h2>
-                                </div>
-                            </div>
-                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                        "."); ?></strike></small>
-                            <!-- price -->
-                            <div class="shop-item-price">
-                                Rp <?= number_format(125000000, 2, ",", "."); ?>
-                            </div>
-                            <!-- /price -->
-                            <div class="mt-15 rating rating-5 fs-14" style="letter-spacing: 1px;">
-                                <!-- rating-0 ... rating-5 -->
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
         <!-- menu -->
         <div class="row pt-20">
