@@ -465,6 +465,22 @@ class Mhome extends CI_Model{
     }
   }
 
+    public function get_list_bed_linen(){
+        $this->db->select('a.id, b.name, b.stars, d.image_1');
+        $this->db->select_min('c.price');
+        $this->db->from('tr_product_bed_linen a');
+        $this->db->join('tm_product b', 'b.id = a.prod_id', 'inner');
+        $this->db->join('tr_product_size c', 'b.id = c.prod_id', 'inner');
+        $this->db->join('tr_product_image d', 'b.id = d.id_prod', 'inner');
+        $this->db->group_by('a.id');
+        $query = $this->db->get();
+        if ($query->num_rows() != 0) {
+            return $query->result_array();
+        } else {
+            return FALSE;
+        }
+    }
+
   public function bed_linenBrands(){
     $this->db->select('b.id, b.name as brand');
     $this->db->from('tm_product a');
