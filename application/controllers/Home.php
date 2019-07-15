@@ -1875,12 +1875,10 @@ class Home extends CI_Controller{
       $this->load->view('include/footer');
   }
 
-  public function best() {
-      $data = $this->mhome->get_list_bed_linen();
-//      shuffle($data);
-//      $data = array_slice($data, 0, 1);
-
-      print_r($data);
+  public function store_location() {
+      $this->load->view('include/header2');
+      $this->load->view('location');
+      $this->load->view('include/footer');
   }
 
 }

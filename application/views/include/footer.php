@@ -123,6 +123,7 @@
 <script src="<?= base_url('asset/javascript/demo.shop.js'); ?>"></script>
 <script>
     $(window).on('load', e => {
+        console.log("load store")
         if ($('#store-location').length) {
             // load map location lookup
             loadLocationLookup();
