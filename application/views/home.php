@@ -366,7 +366,7 @@
             <div class="col-12 col-md-3 p-0">
                 <div class="shop-item bg-white">
                     <div class="thumbnail-menu" style="border: 0px">
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url('home/store-location')?>">
                             <img class="img-fluid"
                                  src="<?= site_url('asset/icon/Stores.png'); ?>"
                                  alt="product name"/>
@@ -462,10 +462,10 @@
 <!-- /Product Hightlight -->
 
 <!-- LOCATION -->
-<section id="location" class="mb-30">
-    <div class="container-fluid">
-        <h3 class="text-center mb-30">OUR LOCATION</h3>
-        <div id="store-location"></div>
-    </div>
-</section>
+<!--<section id="location" class="mb-30">-->
+<!--    <div class="container-fluid">-->
+<!--        <h3 class="text-center mb-30">OUR LOCATION</h3>-->
+<!--        <div id="store-location"></div>-->
+<!--    </div>-->
+<!--</section>-->
 <!-- /LOCATION -->
