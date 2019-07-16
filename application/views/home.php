@@ -336,11 +336,11 @@
         <!-- menu -->
         <div class="row pt-20">
             <!--            # 1 Store location-->
-            <div class="col-12 col-md-3 p-0">
+            <div class="col-3 col-md-3 p-0">
                 <div class="shop-item bg-white">
-                    <div class="thumbnail-menu" style="border: 0px">
+                    <div class="thumbnail-menu p-0" style="border: 0px; border-radius: 0px !important;">
                         <a class="shop-item-image" href="<?=base_url('home/store-location')?>">
-                            <img class="img-fluid" alt="stores"
+                            <img class="img-help" alt="stores"
                                  src="<?= site_url('asset/icon/Stores.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/icon/Stores-hover.png"); ?>'"
                                  onmouseout="this.src='<?= base_url("asset/icon/Stores.png"); ?>'"/>
@@ -349,8 +349,8 @@
                         <div class="shop-item-summary p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
-                                    <p class="text-center fs-20"><b>STORES</b></p>
-                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-20 text-help"><b>STORES</b></p>
+                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
                                 </div>
                             </div>
                         </div>
@@ -359,12 +359,12 @@
             </div>
 
             <!--            # 2 Support-->
-            <div class="col-12 col-md-3 p-0">
+            <div class="col-3 col-md-3 p-0">
                 <div class="shop-item bg-white">
-                    <div class="thumbnail-menu">
+                    <div class="thumbnail-menu p-0" style="border-radius: 0;">
 
                         <a class="shop-item-image" href="<?=base_url('home/pageContact')?>">
-                            <img class="img-fluid" alt="support"
+                            <img class="img-help" alt="support"
                                  src="<?= site_url('asset/icon/Support.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/icon/Support-hover.png"); ?>'"
                                  onmouseout="this.src='<?= base_url("asset/icon/Support.png"); ?>'"/>
@@ -373,8 +373,8 @@
                         <div class="shop-item-summary p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
-                                    <p class="text-center fs-20"><b>SUPPORT</b></p>
-                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-20 text-help"><b>SUPPORT</b></p>
+                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
                                 </div>
                             </div>
                         </div>
@@ -383,13 +383,13 @@
             </div>
 
             <!--            # 3 AGM Pedia-->
-            <div class="col-12 col-md-3 p-0">
+            <div class="col-3 col-md-3 p-0">
                 <div class="shop-item bg-white">
-                    <div class="thumbnail-menu">
+                    <div class="thumbnail-menu p-0" style="border-radius: 0;">
                         <!-- product image(s) -->
 
                         <a class="shop-item-image" href="<?=base_url('home/listArticle')?>">
-                            <img class="img-fluid" alt="agmpedia"
+                            <img class="img-help" alt="agmpedia"
                                  src="<?= site_url('asset/icon/AGMPedia.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/icon/AGMPedia-hover.png"); ?>'"
                                  onmouseout="this.src='<?= base_url("asset/icon/AGMPedia.png"); ?>'"/>
@@ -399,8 +399,8 @@
                         <div class="shop-item-summary p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
-                                    <p class="text-center fs-20"><b>AGM PEDIA</b></p>
-                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-20 text-help"><b>AGM PEDIA</b></p>
+                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
                                 </div>
                             </div>
                         </div>
@@ -409,13 +409,13 @@
             </div>
 
             <!--            # 4 Partnership-->
-            <div class="col-12 col-md-3 p-0">
+            <div class="col-3 col-md-3 p-0">
                 <div class="shop-item bg-white">
-                    <div class="thumbnail-menu">
+                    <div class="thumbnail-menu p-0" style="border-radius: 0;">
                         <!-- product image(s) -->
 
                         <a class="shop-item-image" href="<?=base_url('home/partnership')?>">
-                            <img class="img-fluid" alt="partnership"
+                            <img class="img-help" alt="partnership"
                                  src="<?= site_url('asset/icon/Partnership.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/icon/Partnership-hover.png"); ?>'"
                                  onmouseout="this.src='<?= base_url("asset/icon/Partnership.png"); ?>'"/>
@@ -425,8 +425,8 @@
                         <div class="shop-item-summary p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
-                                    <p class="text-center fs-20"><b>PARTNERSHIP</b></p>
-                                    <p class="text-center fs-20">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-20 text-help"><b>PARTNERSHIP</b></p>
+                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
                                 </div>
                             </div>
                         </div>

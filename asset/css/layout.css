@@ -11377,3 +11377,24 @@ div.tabbed>a:hover>div {
 .rating {
 	color: #13223a !important;
 }
+
+.img-help{
+	width : 180px !important;
+	height: 180px !important;
+	display: block !important;
+	margin-left: auto !important;
+	margin-right: auto !important;
+}
+
+@media only screen and (max-width: 767px) {
+	.img-help{
+		height: auto !important;
+		width: 80px !important;
+	}
+	.text-help{
+		font-size: 10px !important;
+	}
+	.shop-item-summary{
+		padding:0 !important;
+	}
+}
