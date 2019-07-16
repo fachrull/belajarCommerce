@@ -197,6 +197,30 @@ class Home extends CI_Controller{
     $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
+    // do sort here
+      $sort = $this->input->get('sort', TRUE);
+      if ($sort != NULL) {
+          switch ($sort) {
+              case "price":
+                  usort($data['products'], function ($item1, $item2) {
+                      return $item1['price'] <=> $item2['price'];
+                  });
+                  break;
+
+              case "-price":
+                  usort($data['products'], function ($item1, $item2) {
+                      return $item2['price'] <=> $item1['price'];
+                  });
+                  break;
+
+              case "popularity":
+                  usort($data['products'], function ($item1, $item2) {
+                      return $item1['stars'] <=> $item2['stars'];
+                  });
+                  break;
+          }
+      }
+
     $this->load->view('include/header2', $brands);
     $this->load->view('shop', $data);
     $this->load->view('include/footer');
@@ -1879,6 +1903,14 @@ class Home extends CI_Controller{
       $this->load->view('include/header2');
       $this->load->view('location');
       $this->load->view('include/footer');
+  }
+
+  public function sort_test() {
+      $data = $this->mhome->getShop_product(1);
+      usort($data, function ($item1, $item2) {
+          return $item1['price'] <=> $item2['price'];
+      });
+      print_r(current_url());
   }
 
 }
