@@ -83,11 +83,11 @@
 							</div>
 						</li>
 								<?php else:?>
-						<li class="header-button-arrow hidden-lg-down">
-							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60">
-                                <span style="color:#1f262D">LOGIN</span>
-							</a>
-						</li>
+                            <li class="header-button-arrow hidden-lg-down">
+                                <a href="<?= site_url('auth/login');?>" class="h-60 line-height-60 pl-15 pr-15 hovergray">
+                                    <span style="color:#1f262D">LOGIN</span>
+                                </a>
+                            </li>
 								<?php endif;?>
 						<li class="search">
 							<a href=" javascript:;">
