@@ -1,9 +1,9 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
-		<section class="page-header page-header-md">
+		<section class="page-header page-header-md pb-10">
 			<div class="container">
 
-				<h1><?= strtoupper($brand['name']);?></h1>
+                <img src="<?= base_url('asset/brands/'.$brand['logo']);?>" />
 
 				<!-- breadcrumbs -->
 				<!--<ol class="breadcrumb">-->
@@ -23,7 +23,7 @@
 
 
 					<!-- LEFT -->
-					<div class="col-lg-3 col-md-3 col-sm-3 order-md-1 order-lg-1">
+					<div class="col-lg-3 col-md-3 col-sm-3 order-md-1 order-lg-1 mt-60">
 
 						<!-- CATEGORIES -->
 						<div class="side-nav mb-60">
@@ -45,7 +45,7 @@
 						<!-- /CATEGORIES -->
 
 						<!-- BRANDS -->
-						<div class="side-nav mb-60">
+                        <div class="side-nav mb-60 mt-60">
 
 							<div class="side-nav-head" data-toggle="collapse" data-target="#brands">
 								<button class="fa fa-bars btn btn-mobile"></button>
@@ -55,10 +55,9 @@
 							<ul id="brands" class="list-group list-unstyled">
 								<li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
 								<li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Serta</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Tempur</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Florence</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/6');?>">Stressless</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Serta</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Tempur</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Florence</a></li>
 							</ul>
 
 						</div>
@@ -96,17 +95,17 @@
                             <p align:"center">Product tidak tersedia</p>
                         <?php else:?>
 						<!-- LIST OPTIONS -->
-						<div class="pajinate-nav clearfix shop-list-options mb-20">
+                            <div class="pajinate-nav clearfix shop-list-options mb-20 absolute" style="left:unset !important; right:0px !important;">
 
 							<!-- Pagination Default -->
-							<ul class="pagination m-0 float-right">
+                                <ul class="pagination mt-0">
 								<!-- pages added by pajinate plugin -->
 							</ul>
 							<!-- /Pagination Default -->
 
 						</div>
 						<!-- /LIST OPTIONS -->
-						<ul class="pajinate-container shop-item-list row list-inline m-0">
+                            <ul class="pajinate-container shop-item-list row list-inline mt-60">
 							<?php foreach ($products as $product): ?>
 								<!-- ITEM -->
 								<li class="col-lg-4 col-sm-4">

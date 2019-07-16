@@ -65,7 +65,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-2 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/4'); ?>">
+                        <a href="<?= site_url('home/shop/3'); ?>">
                             <img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s"
                                  src="<?= base_url('asset/brands/Serta.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverSerta.png"); ?>'"
@@ -73,7 +73,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-md-2 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/5/1'); ?>">
+                        <a href="<?= site_url('home/shop/4'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur"
                                  src="<?= base_url('asset/brands/Tempur.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverTempur.png"); ?>'"
@@ -81,7 +81,7 @@
                         </a>
                     </div>
                     <div class="col-12 col-md-2 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/3'); ?>">
+                        <a href="<?= site_url('home/shop/5'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence"
                                  src="<?= base_url('asset/brands/Florence.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverFlorence.png"); ?>'"
@@ -149,7 +149,7 @@
                                     Rp <?= number_format($bestSeller[0]["price"], 2, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
-                            <? } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -196,7 +196,7 @@
                                     Rp <?= number_format($bedLinen[0]["price"], 2, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
-                            <? } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -243,7 +243,7 @@
                                     Rp <?= number_format($beddingAcc[0]["price"], 2, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
-                            <? } ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
@@ -286,49 +286,49 @@
         <div class="row">
 
             <?php
-                foreach ($product_highlight as $p):
-            ?>
-                    <div class="col-12 col-md-3 pt-30">
-                        <div class="shop-item bg-white">
-                            <div class="thumbnail-highlight">
-                                <!-- product image(s) -->
+            foreach ($product_highlight as $p):
+                ?>
+                <div class="col-12 col-md-3 pt-30">
+                    <div class="shop-item bg-white">
+                        <div class="thumbnail-highlight">
+                            <!-- product image(s) -->
 
-                                <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$p["id"])?>">
-                                    <img class="img-fluid" style="position: relative; z-index: auto"
-                                         src="<?= site_url('asset/upload/'.$p["image_1"]); ?>"
-                                         alt="product name"/>
-                                </a>
-                                <!-- /product image(s) -->
+                            <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$p["id"])?>">
+                                <img class="img-fluid" style="position: relative; z-index: auto"
+                                     src="<?= site_url('asset/upload/'.$p["image_1"]); ?>"
+                                     alt="product name"/>
+                            </a>
+                            <!-- /product image(s) -->
 
-                                <div class="shop-item-summary p-15">
-                                    <div class="row mb-10">
-                                        <div class="col-12">
-                                            <h2 class="align-middle"><?=strtoupper($p["name"])?></h2>
-                                        </div>
+                            <div class="shop-item-summary p-15">
+                                <div class="row mb-10">
+                                    <div class="col-12">
+                                        <h2 class="align-middle"><?=strtoupper($p["name"])?></h2>
                                     </div>
-                                    <?php if ($p["sub_price"] != 0) { ?>
-                                        <small class="text-muted">Was Rp <strike><?= number_format($p["price"], 2, ",",
-                                                    "."); ?></strike></small>
-                                        <!-- price -->
-                                        <div class="shop-item-price">
-                                            Rp <?= number_format($p["sub_price"], 2, ",", "."); ?>
-                                        </div>
-                                        <!-- /price -->
-                                    <?php } else { ?>
-                                        <small class="text-muted">&nbsp;</small>
-                                        <!-- price -->
-                                        <div class="shop-item-price">
-                                            Rp <?= number_format($p["price"], 2, ",", "."); ?>
-                                        </div>
-                                        <!-- /price -->
-                                    <? } ?>
-                                    <div class="mt-15 rating rating-<?=$p["stars"]?> fs-14" style="letter-spacing: 1px;">
-                                        <!-- rating-0 ... rating-5 -->
+                                </div>
+                                <?php if ($p["sub_price"] != 0) { ?>
+                                    <small class="text-muted">Was Rp <strike><?= number_format($p["price"], 2, ",",
+                                                "."); ?></strike></small>
+                                    <!-- price -->
+                                    <div class="shop-item-price">
+                                        Rp <?= number_format($p["sub_price"], 2, ",", "."); ?>
                                     </div>
+                                    <!-- /price -->
+                                <?php } else { ?>
+                                    <small class="text-muted">&nbsp;</small>
+                                    <!-- price -->
+                                    <div class="shop-item-price">
+                                        Rp <?= number_format($p["price"], 2, ",", "."); ?>
+                                    </div>
+                                    <!-- /price -->
+                                <?php } ?>
+                                <div class="mt-15 rating rating-<?=$p["stars"]?> fs-14" style="letter-spacing: 1px;">
+                                    <!-- rating-0 ... rating-5 -->
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
             <?php endforeach; ?>
             <!--            # 1 Best seller-->
 
@@ -362,7 +362,7 @@
                 <div class="shop-item bg-white">
                     <div class="thumbnail-menu">
 
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url('home/pageContact')?>">
                             <img class="img-fluid"
                                  src="<?= site_url('asset/icon/Support.png'); ?>"
                                  alt="product name"/>
@@ -386,7 +386,7 @@
                     <div class="thumbnail-menu">
                         <!-- product image(s) -->
 
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url('home/listArticle')?>">
                             <img class="img-fluid"
                                  src="<?= site_url('asset/icon/AGMPedia.png'); ?>"
                                  alt="product name"/>
@@ -411,7 +411,7 @@
                     <div class="thumbnail-menu">
                         <!-- product image(s) -->
 
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url('home/partnership')?>">
                             <img class="img-fluid"
                                  src="<?= site_url('asset/icon/Partnership.png'); ?>"
                                  alt="product name"/>
