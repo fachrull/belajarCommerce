@@ -11318,7 +11318,7 @@ div.tabbed>a:hover>div {
 .text-block {
 	position: absolute;
 	z-index: 1;
-	background-color: #bb2030;
+	background-color: #13223a;
 	color: #fff;
 	padding-left: 20px;
 	padding-right: 20px;
@@ -11329,7 +11329,7 @@ div.tabbed>a:hover>div {
 }
 
 .bg-gradient-red {
-	background: linear-gradient(90deg, rgba(187,32,48,1) 22%, rgba(187,32,48,0) 49%);
+	background: linear-gradient(90deg, rgb(19, 34, 58) 22%, rgba(187,32,48,0) 49%);
 }
 
 .btn-outline-white {
@@ -11372,4 +11372,8 @@ div.tabbed>a:hover>div {
 
 .verticalLine {
     border-left: thick solid #ddd;
+}
+
+.rating {
+	color: #13223a !important;
 }
