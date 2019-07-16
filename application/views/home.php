@@ -340,9 +340,10 @@
                 <div class="shop-item bg-white">
                     <div class="thumbnail-menu" style="border: 0px">
                         <a class="shop-item-image" href="<?=base_url('home/store-location')?>">
-                            <img class="img-fluid"
+                            <img class="img-fluid" alt="stores"
                                  src="<?= site_url('asset/icon/Stores.png'); ?>"
-                                 alt="product name"/>
+                                 onmouseover="this.src='<?= base_url("asset/icon/Stores-hover.png"); ?>'"
+                                 onmouseout="this.src='<?= base_url("asset/icon/Stores.png"); ?>'"/>
                         </a>
 
                         <div class="shop-item-summary p-15">
@@ -363,9 +364,10 @@
                     <div class="thumbnail-menu">
 
                         <a class="shop-item-image" href="<?=base_url('home/pageContact')?>">
-                            <img class="img-fluid"
+                            <img class="img-fluid" alt="support"
                                  src="<?= site_url('asset/icon/Support.png'); ?>"
-                                 alt="product name"/>
+                                 onmouseover="this.src='<?= base_url("asset/icon/Support-hover.png"); ?>'"
+                                 onmouseout="this.src='<?= base_url("asset/icon/Support.png"); ?>'"/>
                         </a>
 
                         <div class="shop-item-summary p-15">
@@ -387,9 +389,10 @@
                         <!-- product image(s) -->
 
                         <a class="shop-item-image" href="<?=base_url('home/listArticle')?>">
-                            <img class="img-fluid"
+                            <img class="img-fluid" alt="agmpedia"
                                  src="<?= site_url('asset/icon/AGMPedia.png'); ?>"
-                                 alt="product name"/>
+                                 onmouseover="this.src='<?= base_url("asset/icon/AGMPedia-hover.png"); ?>'"
+                                 onmouseout="this.src='<?= base_url("asset/icon/AGMPedia.png"); ?>'"/>
                         </a>
                         <!-- /product image(s) -->
 
@@ -412,9 +415,10 @@
                         <!-- product image(s) -->
 
                         <a class="shop-item-image" href="<?=base_url('home/partnership')?>">
-                            <img class="img-fluid"
+                            <img class="img-fluid" alt="partnership"
                                  src="<?= site_url('asset/icon/Partnership.png'); ?>"
-                                 alt="product name"/>
+                                 onmouseover="this.src='<?= base_url("asset/icon/Partnership-hover.png"); ?>'"
+                                 onmouseout="this.src='<?= base_url("asset/icon/Partnership.png"); ?>'"/>
                         </a>
                         <!-- /product image(s) -->
 
