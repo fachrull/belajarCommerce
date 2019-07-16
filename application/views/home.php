@@ -134,13 +134,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                        "."); ?></strike></small>
-                            <!-- price -->
-                            <div class="shop-item-price">
-                                Rp <?= number_format($bestSeller[0]["price"], 2, ",", "."); ?>
-                            </div>
-                            <!-- /price -->
+                            <?php if ($bestSeller[0]["sub_price"] != 0) { ?>
+                                <small class="text-muted">Was Rp <strike><?= number_format($bestSeller[0]["price"], 2, ",",
+                                            "."); ?></strike></small>
+                                <!-- price -->
+                                <div class="shop-item-price">
+                                    Rp <?= number_format($bestSeller[0]["sub_price"], 2, ",", "."); ?>
+                                </div>
+                                <!-- /price -->
+                            <?php } else { ?>
+                                <small class="text-muted">&nbsp;</small>
+                                <!-- price -->
+                                <div class="shop-item-price">
+                                    Rp <?= number_format($bestSeller[0]["price"], 2, ",", "."); ?>
+                                </div>
+                                <!-- /price -->
+                            <? } ?>
                         </div>
                     </div>
                 </div>
@@ -172,13 +181,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                        "."); ?></strike></small>
-                            <!-- price -->
-                            <div class="shop-item-price">
-                                Rp <?= number_format($bedLinen[0]["price"], 2, ",", "."); ?>
-                            </div>
-                            <!-- /price -->
+                            <?php if ($bedLinen[0]["sub_price"] != 0) { ?>
+                                <small class="text-muted">Was Rp <strike><?= number_format($bedLinen[0]["price"], 2, ",",
+                                            "."); ?></strike></small>
+                                <!-- price -->
+                                <div class="shop-item-price">
+                                    Rp <?= number_format($bedLinen[0]["sub_price"], 2, ",", "."); ?>
+                                </div>
+                                <!-- /price -->
+                            <?php } else { ?>
+                                <small class="text-muted">&nbsp;</small>
+                                <!-- price -->
+                                <div class="shop-item-price">
+                                    Rp <?= number_format($bedLinen[0]["price"], 2, ",", "."); ?>
+                                </div>
+                                <!-- /price -->
+                            <? } ?>
                         </div>
                     </div>
                 </div>
@@ -210,80 +228,26 @@
                                     </div>
                                 </div>
                             </div>
-                            <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                        "."); ?></strike></small>
-                            <!-- price -->
-                            <div class="shop-item-price">
-                                Rp <?= number_format($beddingAcc[0]["price"], 2, ",", "."); ?>
-                            </div>
-                            <!-- /price -->
+                            <?php if ($beddingAcc[0]["sub_price"] != 0) { ?>
+                                <small class="text-muted">Was Rp <strike><?= number_format($beddingAcc[0]["price"], 2, ",",
+                                            "."); ?></strike></small>
+                                <!-- price -->
+                                <div class="shop-item-price">
+                                    Rp <?= number_format($beddingAcc[0]["sub_price"], 2, ",", "."); ?>
+                                </div>
+                                <!-- /price -->
+                            <?php } else { ?>
+                                <small class="text-muted">&nbsp;</small>
+                                <!-- price -->
+                                <div class="shop-item-price">
+                                    Rp <?= number_format($beddingAcc[0]["price"], 2, ",", "."); ?>
+                                </div>
+                                <!-- /price -->
+                            <? } ?>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <!--            <div class="col-12 col-md-4 pt-30">-->
-            <!--                <a class="mt-10" href="--><? //= base_url('home/bestSeller'); ?><!--">-->
-            <!--                    <img class="promotion-image-1"-->
-            <!--                         src="-->
-            <? //= base_url('asset/upload/best-seller-cover/'.$best_seller['slide']); ?><!--"-->
-            <!--                         alt="agm best seller"/>-->
-            <!--                    <div class="absolute pl-20 pb-20 bottom-center text-left">-->
-            <!--                        <h2 class="text-grey">BEST<br>SELLER</h2>-->
-            <!--                        <a class="text-grey mt-10" href="-->
-            <? //= base_url('home/bestSeller'); ?><!--">View Detail<i-->
-            <!--                                    class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
-            <!--                    </div>-->
-            <!--                </a>-->
-            <!--            </div>-->
-            <!---->
-            <!--            <div class="col-12 col-md-8">-->
-            <!--                <div class="row">-->
-            <!--                    <div class="col-md-12 pt-30">-->
-            <!--                        <a href="--><? //= base_url('home/specialPackage'); ?><!--">-->
-            <!--                            <div class="relative">-->
-            <!--                                <img class="promotion-image-2"-->
-            <!--                                     src="-->
-            <? //= base_url('asset/upload/special-package/cover/'.$spPackage['slide']); ?><!--"-->
-            <!--                                     alt="agm gallery"/>-->
-            <!--                                <div class="absolute pl-20 pb-20 bottom-center text-left">-->
-            <!--                                    <h2 class="text-grey">SPECIAL<br>PACKAGES</h2>-->
-            <!--                                    <a class="text-grey" href="-->
-            <? //= base_url('home/specialPackage'); ?><!--">View Detail<i-->
-            <!--                                                class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
-            <!--                                </div>-->
-            <!--                        </a>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div class="col-md-6 pt-30">-->
-            <!--                    <a href="--><? //= base_url('home/bed_linen'); ?><!--">-->
-            <!--                        <img class="promotion-image-3"-->
-            <!--                             src="-->
-            <? //= base_url('asset/upload/bed-linen-cover/'.$bedLinen['slide']); ?><!--"-->
-            <!--                             alt="agm lastest collectin"/>-->
-            <!--                        <div class="absolute pl-20 pb-20 bottom-center text-left">-->
-            <!--                            <h2 class="text-grey">BED<br>LINEN</h2>-->
-            <!--                            <a class="text-grey" href="-->
-            <? //= base_url('home/bed_linen'); ?><!--">View Detail<i-->
-            <!--                                        class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
-            <!--                        </div>-->
-            <!--                    </a>-->
-            <!--                </div>-->
-            <!--                <div class="col-md-6 pt-30">-->
-            <!--                    <a href="--><? //= base_url('home/bedding_acc'); ?><!--">-->
-            <!--                        <img class="promotion-image-3"-->
-            <!--                             src="-->
-            <? //= base_url('asset/upload/bedding-acc-cover/'.$beddingAcc['slide']); ?><!--"-->
-            <!--                             alt="agm lastest collectin"/>-->
-            <!--                        <div class="absolute pl-20 pb-20 bottom-center text-left">-->
-            <!--                            <h2 class="text-grey">BEDDING<br>ACCESSORIES</h2>-->
-            <!--                            <a class="text-grey" href="-->
-            <? //= base_url('home/bedding_acc'); ?><!--">View Detail<i-->
-            <!--                                        class="fa fa-long-arrow-right pl-5" aria-hidden="true"></i></a>-->
-            <!--                        </div>-->
-            <!--                    </a>-->
-            <!--                </div>-->
-            <!--            </div>-->
         </div>
     </div>
     </div>
@@ -342,13 +306,22 @@
                                             <h2 class="align-middle"><?=strtoupper($p["name"])?></h2>
                                         </div>
                                     </div>
-                                    <small class="text-muted">Was Rp <strike><?= number_format(225000000, 2, ",",
-                                                "."); ?></strike></small>
-                                    <!-- price -->
-                                    <div class="shop-item-price">
-                                        Rp <?= number_format($p["price"], 2, ",", "."); ?>
-                                    </div>
-                                    <!-- /price -->
+                                    <?php if ($p["sub_price"] != 0) { ?>
+                                        <small class="text-muted">Was Rp <strike><?= number_format($p["price"], 2, ",",
+                                                    "."); ?></strike></small>
+                                        <!-- price -->
+                                        <div class="shop-item-price">
+                                            Rp <?= number_format($p["sub_price"], 2, ",", "."); ?>
+                                        </div>
+                                        <!-- /price -->
+                                    <?php } else { ?>
+                                        <small class="text-muted">&nbsp;</small>
+                                        <!-- price -->
+                                        <div class="shop-item-price">
+                                            Rp <?= number_format($p["price"], 2, ",", "."); ?>
+                                        </div>
+                                        <!-- /price -->
+                                    <? } ?>
                                     <div class="mt-15 rating rating-<?=$p["stars"]?> fs-14" style="letter-spacing: 1px;">
                                         <!-- rating-0 ... rating-5 -->
                                     </div>
