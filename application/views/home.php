@@ -3,36 +3,45 @@
 <!-- SLIDER -->
 <section id="slider" class="fullheight mobile-fullheight">
 
-    <div class="swiper-container" data-effect="slide" data-autoplay="false">
+    <div class="swiper-container" data-effect="slide" data-autoplay="true">
         <div class="swiper-wrapper">
+            <?php foreach ($slides as $pic) {
+                ?>
+                <!-- SLIDES -->
 
-            <!-- SLIDE 1 -->
-            <div class="swiper-slide"
-                 style="background-image: url(<?= base_url('asset/upload/'.$slides[0]['slide']); ?>);">
-                <div class="overlay dark-2">
-                    <!-- dark overlay [1 to 9 opacity] -->
-                </div>
+                <a class="swiper-slide" href="<?= $pic['bannerlink'] ?>"
+                   style="display:inline-block;background-image: url(<?= base_url('asset/upload/'.$pic['slide']); ?>);"></a>
+                <div class="overlay dark-3"><!-- dark overlay [1 to 9 opacity] -->
+                    <div class="display-table">
 
-                <div class="display-table">
-                    <div class="display-table-cell vertical-align-middle">
-                        <div class="container">
-                            <div class="row">
-                                <div class="text-center col-md-8 col-xs-12 offset-md-2">
-                                    <div class="fixed-bottom pb-10">
-                                        <a class="btn btn-lg btn-exp scrollTo b-0" href="#product">EXPLORE
-                                            <br><i class="fa fa-chevron-down"></i></a>
+                        <div class="display-table-cell" style="vertical-align-middle">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="text-center col-md-8 col-xs-12 offset-md-2">
+                                        <div class="fixed-bottom pb-35">
+                                            <a class="btn btn-lg btn-exp scrollTo b-0" href="#product">EXPLORE
+                                                <br>
+                                                <i class="fa fa-chevron-down">
+                                                </i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-
                         </div>
+
                     </div>
                 </div>
-            </div>
-            <!-- /SLIDE 1 -->
+                </a>
+                <!--            </div>-->
 
+                <!-- /SLIDE 1 -->
+            <?php } ?>
+
+            <!-- Swiper Arrows -->
+            <div class="swiper-button-next"><i class="fa fa-angle-right"></i></div>
+            <div class="swiper-button-prev"><i class="fa fa-angle-left"></i></div>
         </div>
-    </div>
 
 </section>
 <!-- /SLIDER -->

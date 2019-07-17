@@ -115,6 +115,8 @@
 
 <!-- STYLESWITCHER - REMOVE -->
 <!-- <script async type="text/javascript" src="demo_files/styleswitcher/styleswitcher.js"></script> -->
+<script src="<?= base_url('asset/plugins/slider.swiper/dist/js/swiper.min.js'); ?>"></script>
+<script src="<?= base_url('asset/javascript/demo.swiper_slider.js'); ?>"></script>
 
 <!-- AutoNumber -->
 <script type="text/javascript" src="https://unpkg.com/autonumeric"></script>

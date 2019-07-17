@@ -41,7 +41,7 @@ class Home extends CI_Controller{
         $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
-        $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
+        $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','link'=>'bannerlink'), 'tm_cover', FALSE);
         $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
         $data['pedias'] = $this->mhome->getPedia();
         $data['stores'] = $this->storesToGeoJson();
@@ -72,7 +72,7 @@ class Home extends CI_Controller{
         $this->load->view('include/footer');
 
     } elseif ($this->session->userdata('uType') == NULL) {
-      $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide'), 'tm_cover', FALSE);
+        $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','link'=>'bannerlink'), 'tm_cover', FALSE);
       $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
       $data['pedias'] = $this->mhome->getPedia();
       $data['stores'] = $this->storesToGeoJson();
