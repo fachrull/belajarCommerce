@@ -427,6 +427,26 @@ $(document).ready(function () {
 });
 </script>
 
+<script>
+    $(document).ready(function () {
+        $('#sort').change(function () {
+            var sort = $(this).val();
+            var baseUrl = "<?=current_url()?>";
+            switch (sort) {
+                case "price_asc":
+                    window.location = baseUrl + "?sort=price";
+                    break;
+                case "price_desc":
+                    window.location = baseUrl + "?sort=-price";
+                    break;
+                case "popularity":
+                    window.location = baseUrl + "?sort=popularity";
+                    break;
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

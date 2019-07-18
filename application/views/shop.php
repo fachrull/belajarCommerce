@@ -104,6 +104,14 @@
 							<!-- /Pagination Default -->
 
 						</div>
+                            <div class="options-left mb-20 absolute">
+                                <select id="sort">
+                                    <option selected disabled>Sort</option>
+                                    <option value="popularity">Popularity</option>
+                                    <option value="price_asc">Price Low to High</option>
+                                    <option value="price_desc">Price High to Low</option>
+                                </select>
+                            </div>
 						<!-- /LIST OPTIONS -->
                             <ul class="pajinate-container shop-item-list row list-inline mt-60">
 							<?php foreach ($products as $product): ?>
