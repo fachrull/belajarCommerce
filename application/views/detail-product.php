@@ -141,25 +141,6 @@
 									</a>
 								<?php endforeach;?>
 								</div>
-								<?php if ($product['main_sp'] == TRUE): ?>
-									<h3 class="text-center mt-50">Bonus</h3>
-									<table class="table table-bordered text-center">
-				                <tbody class="text-center">
-				                <tr class="fs-16">
-				                  <th>Product</th>
-				                  <th>Size</th>
-				                  <th style="width: 10px">Qty</th>
-				                </tr>
-				                <?php foreach ($detail_SP as $detail): ?>
-				                  <tr class="fs-14">
-				                    <td><?= $detail['prod']?></td>
-				                    <td><?= $detail['sizeName'].' ('.$detail['sizeDetail'].')'?></td>
-				                    <td><?= $detail['quantity']?></td>
-				                  </tr>
-				                <?php endforeach; ?>
-				                </tbody>
-				            </table>
-								<?php endif; ?>
 
 					</div>
 					<!-- /IMAGE -->

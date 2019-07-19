@@ -21,7 +21,7 @@
                   <input class="form-control" name="items" type="text" placeholder="Spec" value="<?= $spec['name']?>">
                 </label>
                 <div class="col-xs-12 text-center mb-20">
-                    <img id="iconSpec" style="width:100px !important; height:100px;" src="#">
+                    <img id="iconSpec" style="width:100px !important; height:100px;" src="<?= base_url('asset/spec/'. $spec['icon']);?>">
                 </div>
                 <label class="input mb-10">
                     <input type="file" name="specPict" id="file"/>

@@ -305,9 +305,6 @@ class Home extends CI_Controller{
         show_404();
         exit();
       }
-      if ($data['product']['main_sp'] == TRUe) {
-        $data['detail_SP'] = $this->mhome->detail_specialPackage($idProduct);
-      }
       $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
       $data['brand'] = $id_brand['brand_id'];
       $data['categories'] = $this->mhome->brand_categories($id_brand['brand_id']);
