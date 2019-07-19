@@ -118,7 +118,7 @@
         <div class="row">
             <!--            # 1 Best seller-->
             <div class="col-12 col-md-4 pt-30">
-                <div class="shop-item bg-white">
+                <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.2s">
                     <div class="thumbnail">
                         <!-- product image(s) -->
                         <div class="text-block">
@@ -166,7 +166,7 @@
 
             <!--            #2 Bed Linen-->
             <div class="col-12 col-md-4 pt-30">
-                <div class="shop-item bg-white">
+                <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.3s">
                     <div class="thumbnail">
                         <!-- product image(s) -->
                         <div class="text-block">
@@ -213,7 +213,7 @@
 
             <!--            #3 Bedding Accessories-->
             <div class="col-12 col-md-4 pt-30">
-                <div class="shop-item bg-white">
+                <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.4s">
                     <div class="thumbnail">
                         <!-- product image(s) -->
                         <div class="text-block">
@@ -274,7 +274,7 @@
             <div class="absolute justify-content-around pl-20 pb-20 text-left bg-gradient-red">
                 <div class="ml-50 mt-150">
                     <h1 class="text-white mb-0">ONLINE<br>PROMOTION</h1>
-                    <a class="btn btn-outline-white mt-10" href="<?= base_url('home/specialPackage'); ?>">Discover more</a>
+                    <a class="btn btn-outline-white mt-10" href="<?= base_url('home/special_package'); ?>">Discover more</a>
                 </div>
             </div>
         </div>
@@ -298,7 +298,7 @@
             foreach ($product_highlight as $p):
                 ?>
                 <div class="col-12 col-md-3 pt-30">
-                    <div class="shop-item bg-white">
+                    <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.2s">
                         <div class="thumbnail-highlight">
                             <!-- product image(s) -->
 
@@ -346,7 +346,7 @@
         <div class="row pt-20">
             <!--            # 1 Store location-->
             <div class="col-3 col-md-3 p-0">
-                <div class="shop-item bg-white">
+                <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.2s">
                     <div class="thumbnail-menu p-0" style="border: 0px; border-radius: 0px !important;">
                         <a class="shop-item-image" href="<?=base_url('home/store-location')?>">
                             <img class="img-help" alt="stores"
@@ -369,7 +369,7 @@
 
             <!--            # 2 Support-->
             <div class="col-3 col-md-3 p-0">
-                <div class="shop-item bg-white">
+                <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.2s">
                     <div class="thumbnail-menu p-0" style="border-radius: 0;">
 
                         <a class="shop-item-image" href="<?=base_url('home/pageContact')?>">
@@ -393,7 +393,7 @@
 
             <!--            # 3 AGM Pedia-->
             <div class="col-3 col-md-3 p-0">
-                <div class="shop-item bg-white">
+                <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.4s">
                     <div class="thumbnail-menu p-0" style="border-radius: 0;">
                         <!-- product image(s) -->
 
@@ -419,7 +419,7 @@
 
             <!--            # 4 Partnership-->
             <div class="col-3 col-md-3 p-0">
-                <div class="shop-item bg-white">
+                <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.4s">
                     <div class="thumbnail-menu p-0" style="border-radius: 0;">
                         <!-- product image(s) -->
 

@@ -136,10 +136,12 @@
 				<hr />
 
 				<p>
-					<span class="block"><strong><i class="fa fa-map-marker"></i> Address:</strong> Street Name, City Name, Country</span>
-					<span class="block"><strong><i class="fa fa-phone"></i> Phone:</strong> <a href="tel:1800-555-1234">1800-555-1234</a></span>
+					<span class="block"><strong><i class="fa fa-whatsapp"></i> Whatsapp:</strong> <a href="https://wa.me/15551234567">15551234567</a></span>
 					<span class="block"><strong><i class="fa fa-envelope"></i> Email:</strong> <a href="mailto:mail@yourdomain.com">mail@yourdomain.com</a></span>
 				</p>
+                <p>
+                    <span class="block"><strong>Operation Hours:</strong> Monday - Friday, 9 AM - 6 PM</span>
+                </p>
 
 				<hr />
 
