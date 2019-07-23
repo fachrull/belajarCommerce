@@ -16,48 +16,58 @@
               <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
             <?php endif;?>
             <!-- /ALERT -->
-            <?= form_open_multipart('admin/edit_special/'.$detail_SP['id'], array('class' => 'm-0 sky-form', 'id' => 'addSpecialPackage')); ?>
+            <?= form_open_multipart('admin/edit_special/'.$detail_SP['id'], array('class' => 'm-0 sky-form', 'id' => 'editSpecialPackage')); ?>
             <input type="hidden" name="idSP" value="<?= $detail_SP['id']?>">
               <label class="input mb-10">
                   <input class="form-control" name="name" type="text" value="<?= $detail_SP['name']?>">
               </label>
+              <label class="input mb-10">
+                <input class="form-control" type="text" name="sku" value="<?= $detail_SP['sku']?>">
+              </label>
               <div class="row mb-3">
                 <div class="col-md-12 cl-xs-12">
-                  <button type="button" class="btn btn-oldblue" data-toggle="modal" data-target="#modal-default">
+                  <button type="button" class="btn btn-oldblue" id="btn-addProd-editSP" data-toggle="modal" data-target="#modal-addProd-editSP">
                     <i class="fa fa-plus"></i> Add Product
                   </button>
                 </div>
               </div>
               <label class="input mb-3">
-                <table class="table table-bordered table-striped" id="table_prodSizeSP">
+                <table class="table table-bordered table-striped" id="table-editSP">
                   <thead>
                     <tr>
                       <th>Product</th>
                       <th>Size</th>
                       <th>Quantity</th>
-                      <th>Price</th>
+                      <th>Price (Rp)</th>
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
                     <?php foreach ($prod_SP as $prod_SP): ?>
-                      <tr id="<?= $prod_SP['prodSize_id']?>">
-                        <td><?= $prod_SP['prod']?></td>
-                        <td><?= $prod_SP['sizeName'].' ('.$prod_SP['sizeDetail'].')'?></td>
+                      <tr id="<?= $prod_SP['prod_id']?>">
+                        <td class="bonusSP-value hide"><?= $prod_SP['prod_id']?></td>
+                        <td class="idtrSP-value hide"><?= $prod_SP['id']?></td>
+                        <td class="deleteBonus-value hide">0</td>
+                        <td class="prodSizeSP-value hide"><?= $prod_SP['id_prod_package']?></td>
+                        <td class="prodNameSP-value"><?= $prod_SP['prod']?></td>
+                        <td class="sizeSP-value"><?= $prod_SP['sizeName'].' ('.$prod_SP['sizeDetail'].')'?></td>
                         <td class="qtySP-value"><?= $prod_SP['quantity']?></td>
-                        <td class="priceSP-value"><?= number_format($prod_SP['priceSpcl'], 0,',','.')?></td>
+                        <td class="priceSP-value"><?= number_format($prod_SP['subtotal'], 0,',','.')?></td>
                         <td>
-                          <button class="btn btn-oldblue btn-sm" data-toggle="modal" data-id="<?= $prod_SP['prodSize_id']?>" data-target="#modal-edit-size" type="button">
+                          <button data-toggle="modal" data-target="#modal-edit-sp" data-id="<?= $prod_SP['prod_id']?>" class="btn btn-oldblue btn-sm" type="button">
                             <i class="fa fa-edit"></i>
                           </button>
-                          <button class="btn btn-danger btn-sm" type="button" onclick="removeSize(<?= $prod_SP['prodSize_id']?>)">
+                          <button class="btn btn-danger btn-sm" type="button" onclick="removeEditSP(<?= $prod_SP['prod_id']?>)">
                             <i class="fa fa-trash"></i>
                           </button>
                         </td>
-                        <td class="sizeSP-value hide"><?= $prod_SP['prodSize_id']?></td>
                       </tr>
                     <?php endforeach; ?>
                   </tbody>
+                  <!-- <tfoot>
+                    <th colspan="3">Total</th>
+                    <th id="totalEditSP">0</th>
+                  </tfoot> -->
                 </table>
               </label>
               <div class="box-body pad pt-0 pl-0 pr-0 mb-10">
@@ -87,7 +97,7 @@
                   <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
               </div>
                 <div class="col-md-6 text-right">
-                    <button type="submit" id="submitSpcl" class="btn btn-oldblue btn-default"><i class="fa fa-edit"></i> Special Package</button>
+                    <button type="submit" id="submit-editSP" class="btn btn-oldblue btn-default"><i class="fa fa-edit"></i> Special Package</button>
                 </div>
             </div>
           </form>
@@ -99,7 +109,7 @@
     </section>
 
     <!-- Modal -->
-    <div class="modal fade" id="modal-default">
+    <div class="modal fade" id="modal-addProd-editSP" style="display: none;">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
@@ -107,33 +117,37 @@
               <span aria-hidden="true">&times;</span></button>
             <h4 class="modal-title">Add Product</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="modal-body-editSP">
             <div class="row mb-20">
               <div class="col-xs-12 mb-20">
                 <div class="product-detail">
                   <form class="m-0 sky-form" action="" method="post">
-                    <label for="input mb-10">
+                    <label class="input mb-10">
                       <label for="productSP">Product</label>
-                      <select class="select-form form-control" id="productSP" name="product">
-                        <option value="">Select Product</option>
-                        <?php foreach ($products as $product): ?>
-                          <option value="<?=$product['id']?>"><?= $product['name'];?></option>
+                      <select class="select-form form-control" id="productSP-editSP" name="product">
+                        <option value="" disabled selected>Select product</option>
+                        <?php foreach ($addBonus as $addBonus): ?>
+                          <option value="<?= $addBonus['id_product']?>"><?= $addBonus['name']?></option>
                         <?php endforeach; ?>
                       </select>
                     </label>
                     <label class="input mb-10">
                       <label for="sizeSP">Size</label>
-                      <select class="select-form form-control" id="sizeSP" name="size">
-                        <option value="">Select Size</option>
+                      <select class="select-form form-control" id="sizeSP-editSP" name="size">
+                        <option value="" disabled selected>Select Size</option>
                       </select>
                     </label>
                     <label class="input mb-10">
                       <label for="">Quantity</label>
-                      <input class="form-control" type="number" id="qtySP">
+                      <input class="form-control" type="number" id="qtySP-editSP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Retail price</label>
+                      <input type="text" class="form-control" disabled id="prcSP-editSP">
                     </label>
                     <label class="input mb-10">
                       <label for="price">Price</label>
-                      <input class="form-control" type="text" id="price" name="" value="">
+                      <input class="form-control" type="text" id="price-editSP" name="" value="">
                     </label>
                   </form>
                 </div>
@@ -142,12 +156,64 @@
           </div>
           <div class="modal-footer">
             <button type="button" id="closeModal" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-            <button type="button" id="submitSP" class="btn btn-primary">Save changes</button>
+            <button type="button" id="addProd-editSP" class="btn btn-primary">Save changes</button>
           </div>
         </div>
         <!-- /.modal-content -->
       </div>
       <!-- /.modal-dialog -->
+    </div>
+
+    <!-- Modal edit -->
+    <div class="modal fade" id="modal-edit-sp" style="display: none;">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title">Edit Special Package</h4>
+          </div>
+          <div class="modal-body">
+            <div class="row mb-20">
+              <div class="col-xs-12 mb-20">
+                <div class="product-detail">
+                  <form class="m-0 sky-form" action="" method="post">
+                    <input type="hidden" name="prodIdSP" id="edit-prodIdSP">
+                    <input type="hidden" name="prodSizeSP" id="edit-prodSizeSP">
+                    <label class="input mb-10">
+                      <label>Product</label>
+                      <input class="form-control" type="text" value="" disabled id="edit-prodNameSP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Size</label>
+                      <select class="form-control" name="edit-prodSizeSP" id="edit-bnsSizeSP">
+                        <option selected disabled>Size</option>
+                      </select>
+                    </label>
+                    <label class="input mb-10">
+                      <label>Quantity</label>
+                      <input class="form-control" type="number" id="edit-quantitySP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Retail price</label>
+                      <input type="text" class="form-control" disabled id="edit-prcRetailSP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Price</label>
+                      <input type="text" id="edit-priceSP" class="form-control">
+                    </label>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeEditSP" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+            <button type="button" id="submitEditSP" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- /.modal -->
 </div>

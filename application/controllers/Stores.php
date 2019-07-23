@@ -240,8 +240,9 @@ class Stores extends CI_Controller{
   public function transaction(){
     if ($this->session->userdata('uType') == 3) {
       $idStore = $this->session->userdata('uId');
-      $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore), array('idField' => 'id'), 'tm_store_owner', TRUE);
-      $data['transactions'] = $this->mstore->order_list($idStOwner['id']);
+      $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore),
+       array('idField' => 'id'), 'tm_store_owner', TRUE);
+      $data['transactions'] = $this->mstore->testOrderList($idStOwner['id']);
 
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');
@@ -274,11 +275,44 @@ class Stores extends CI_Controller{
     }
 
   public function detailTransaction($idOrder, $idCustomer){
-        $this->load->view('include/admin/header');
-        $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('storeOwner/detail-transaction', $data);
-        $this->load->view('include/admin/footer');
+      $data['detailOrder'] = $this->mstore->testgetDetailOrder($idOrder, $idCustomer);
+      $listOrder = $this->mstore->getProducts(array('id_tm_order' => $idOrder), array('sbttl' => 'subtotal', 'qty' => 'quantity',
+        'spcl' => 'special', 'idtrProdSize' => 'id_tr_prod_size', 'idProd' => 'id_product'), 'tr_order_detail', FALSE);
+      $order_list = array();
+      foreach ($listOrder as $list) {
+        if ($list['special'] == TRUE) {
+          $mainSP = $this->mstore->getProducts(array('id' => $list['id_product']), array('name' => 'name', 'img' => 'image'), 'tm_special_package', TRUE);
+          $detailSP = $this->mstore->listOrderSP($list['id_product']);
+          $detail_prod = array(
+            'special'   =>  $list['special'],
+            'name'      =>  $mainSP['name'],
+            'size_name' =>  '',
+            'size'      =>  '',
+            'quantity'  =>  $list['quantity'],
+            'subtotal'  =>  $list['subtotal'],
+            'option'    =>  $detailSP
+          );
+          array_push($order_list, $detail_prod);
+        }else{
+          $prod = $this->mstore->listOrderRetail($list['id_product'], $list['id_tr_prod_size']);
+          $detail_prod = array(
+            'special'   =>  $list['special'],
+            'name'      =>  $prod['name'],
+            'size_name' =>  $prod['sizeName'],
+            'size'      =>  $prod['sizeDetail'],
+            'quantity'  =>  $list['quantity'],
+            'subtotal'  =>  $list['subtotal'],
+            'option'    => '',
+          );
+          array_push($order_list, $detail_prod);
+        }
+      }
+      $data['order_list'] = $order_list;
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('storeOwner/detail-transaction', $data);
+      $this->load->view('include/admin/footer');
   }
 
     public function profile()

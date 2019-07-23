@@ -20,10 +20,14 @@
                     </div>
                     <div class="row mt-20">
                         <div class="col-xs-6">
-                            <div class="box-header pb-0">
-                                <h3 class="box-title">Package</h3>
-                            </div>
-                            <div class="box-body">
+                          <div class="box-body pb-0">
+                            <h4>SKU</h4>
+                            <p class="fs-15"><?= $detail_SpclPckg['sku'];?></p>
+                          </div>
+                          <div class="box-header pb-0">
+                              <h3 class="box-title">Package</h3>
+                          </div>
+                          <div class="box-body">
                                 <table class="table table-bordered text-center">
                                     <tbody class="text-center">
                                     <tr>

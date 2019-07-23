@@ -21,8 +21,8 @@ class Snap extends CI_Controller {
 
         $discount = 0;
 
-		$item_details = array();
-		foreach ($carts as $item) {
+				$item_details = array();
+				foreach ($carts as $item) {
 		    // special package item
             if($item['type'] == "special") {
                 $item_detail = array(
@@ -38,7 +38,7 @@ class Snap extends CI_Controller {
                         'id' => $option['id_prod'],
                         'price' => 0,
                         'quantity' => $option['quantity'],
-                        'name' => $option['name']
+                        'name' => $option['name'].' - '.$option['nameSize']
                     );
                     array_push($item_details, $item_option);
                 }

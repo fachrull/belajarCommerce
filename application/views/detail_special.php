@@ -97,7 +97,7 @@
                     <td><?= $detail['prod']?></td>
                     <td><?= $detail['sizeName'].' ('.$detail['sizeDetail'].')'?></td>
                     <td><?= $detail['quantity']?></td>
-                    <td>Rp. <?= number_format(floatval($detail['priceSpcl']),0,',','.')?></td>
+                    <td>Rp. <?= number_format(floatval(0),0,',','.')?></td>
                   </tr>
                 <?php endforeach; ?>
                 </tbody>

@@ -746,4 +746,17 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+
+  public function detailProdSize($id_prod_size){
+    $this->db->select('b.name, b.size');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_size b', 'b.id = a.size_id', 'left');
+    $this->db->where('a.id', $id_prod_size);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else{
+      return FALSE;
+    }
+  }
 }

@@ -75,7 +75,7 @@
 										<small>Products :
 											<ul>
 												<?php foreach ($item['option'] as $option): ?>
-													<li><?= $option['name']?> × <?= $option['quantity']?></li>
+													<li><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></li>
 												<?php endforeach; ?>
 											</ul>
 										</small>

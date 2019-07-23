@@ -22,7 +22,7 @@
               </label>
               <div class="row mb-3">
                 <div class="col-md-12 cl-xs-12">
-                  <button type="button" class="btn btn-oldblue mb-10" data-toggle="modal" data-target="#modal-default">
+                  <button type="button" class="btn btn-oldblue mb-10" id="btn-addProd-editSP" data-toggle="modal" data-target="#modal-default">
                     <i class="fa fa-plus"></i> Add Product
                   </button>
                 </div>
@@ -34,7 +34,7 @@
                       <th>Product</th>
                       <th>Size</th>
                       <th>Quantity</th>
-                      <th>Price</th>
+                      <th>Price (Rp)</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -125,11 +125,11 @@
                     </label>
                     <label class="input mb-10">
                       <label>Retail price</label>
-                      <input type="text" class="form-control" disabled value="-" id="prcSP">
+                      <input type="text" class="form-control" disabled id="prcSP">
                     </label>
                     <label class="input mb-10">
                       <label>Price</label>
-                      <input class="form-control" type="number" id="price" >
+                      <input class="form-control" type="text" id="price" name="price" >
                     </label>
                   </form>
                 </div>

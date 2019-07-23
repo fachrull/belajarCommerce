@@ -82,7 +82,7 @@
                                         <thead>
                                         <th>SKU</th>
                                         <th>Size</th>
-                                        <th>Price</th>
+                                        <th>Price (Rp)</th>
                                         <th>Sub price</th>
                                         <th>Action</th>
                                         </thead>

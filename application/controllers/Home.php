@@ -482,6 +482,7 @@ class Home extends CI_Controller{
 
         // id tr_product_size
         $prod_size_id = $prod['id_prod_package'];
+        $detailSize = $this->mhome->detailProdSize($prod_size_id);
 
         // product that user request to buy
         $qty_prods = $prod['quantity'] * $qty;
@@ -519,6 +520,8 @@ class Home extends CI_Controller{
           'id_prod'       => $hasPostpone['id_product'],
           'id_prod_size'  => $prod_size_id,
           'name'          => $prod_name_sp,
+          'nameSize'      => $detailSize['name'],
+          'detailSize'    => $detailSize['detail'],
           'quantity'      => $qty_prods
         );
         array_push($options, $special_prod);
@@ -1198,6 +1201,7 @@ class Home extends CI_Controller{
                     // input special package to order detail
                     $detail_order = array(
                       'id_tm_order'     =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
+                      'id_tr_Prod'      =>  '',
                       'id_tr_prod_size' =>  $cart['id_prod_size'],
                       'id_product'      =>  $cart['id'],
                       'special'         =>  TRUE,
@@ -1211,6 +1215,7 @@ class Home extends CI_Controller{
                     foreach ($cart['option'] as $option) {
                       $detail_order = array(
                         'id_tm_order'     =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
+                        'id_tr_Prod'      =>  $option['id_trProduct'],
                         'id_tr_prod_size' =>  $option['id_prod_size'],
                         'id_product'      =>  $option['id_prod'],
                         'special'         =>  FALSE,
@@ -1224,6 +1229,7 @@ class Home extends CI_Controller{
                   }else{
                     $detail_order = array(
                       'id_tm_order'     =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
+                      'id_tr_Prod'      =>  $cart['id_trProduct'],
                       'id_tr_prod_size' =>  $cart['id_prod_size'],
                       'id_product'      =>  $cart['id'],
                       'special'         =>  FALSE,

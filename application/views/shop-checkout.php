@@ -494,7 +494,7 @@
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
-                              <small><?= $option['name']?> × <?= $option['quantity']?></small>
+                              <small><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></small>
                             </li>
                           <?php endforeach; ?>
                         </ul>
@@ -539,7 +539,7 @@
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
-                              <small><?= $option['name']?> × <?= $option['quantity']?></small>
+                              <small><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></small>
                             </li>
                           <?php endforeach; ?>
                         </ul>
