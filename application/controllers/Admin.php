@@ -806,6 +806,7 @@ class Admin extends CI_Controller {
                     'nameField' => 'name'), 'tm_spec', FALSE);
                 $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
                     'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
+                $data['images'] = $this->madmin->getProducts(array('id_prod' => $productId), NULL, 'tr_product_image', TRUE);
 
                 $idSpec = $this->madmin->getProducts(array('prod_id' => $productId),
                     array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
@@ -3109,6 +3110,35 @@ class Admin extends CI_Controller {
             $this->load->view('un-authorise');
             $this->load->view('include/footer');
         }
+    }
+
+    public function delete_prod_image($img, $id) {
+        if ($this->session->userdata('uType') == 1) {
+            $image_data = $this->madmin->getProducts(array('id_prod' => $id), array('img' => $img),
+                'tr_product_image', TRUE);
+            if (isset($img)) {
+                $this->madmin->updateData(array('id_prod' => $id), 'tr_product_image', array($img => NULL));
+//                unlink('./asset/upload/special-package/'.$image_data['image']);
+                redirect('admin/editProd/'.$id);
+            }
+        }else {
+            $this->load->view('include/header2');
+            $this->load->view('un-authorise');
+            $this->load->view('include/footer');
+        }
+
+        $this->madmin->updateData(array('id_prod' => $id), 'tr_product_image', array($img => 'NULL'));
+//        switch ($img) {
+//            case "image_1":
+//                $this->madmin->updateData(array('id_prod' => $id), 'tr_product_image', array($img => 'NULL'));
+//                break;
+//            case "image_2":
+//                $this->madmin->updateData(array('id_prod' => $id), 'tr_product_image', array($img => 'NULL'));
+//                break;
+//            case "image_3":
+//                $this->madmin->updateData(array('id_prod' => $id), 'tr_product_image', array($img => 'NULL'));
+//                break;
+//        }
     }
 
 }
