@@ -31,6 +31,7 @@
                         <input name="pName" type="text" value="<?=$category['name'];?>" disabled>
                       </label>
                     </div>
+                      <?php if ($specs != NULL): ?>
                     <div class="col-xs-12">
                       <label class="input"> <p>Specification</p>
                         <ul class="mb-10">
@@ -40,6 +41,7 @@
                         </ul>
                       </label>
                     </div>
+                      <?php endif; ?>
                     <div class="col-xs-12">
                     <label class="input"> <p>Size</p>
                       <ul>

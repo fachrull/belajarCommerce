@@ -127,20 +127,22 @@
 					</div>
 
 
-						<div class="tabbed hidden-lg-down text-center">
-              	<?php foreach($specs as $spec):?>
-									<a href="1" id="1">
+                        <?php if ($specs != null): ?>
+                            <div class="tabbed hidden-lg-down text-center">
+                                <?php foreach ($specs as $spec): ?>
+                                    <a href="1" id="1">
                                         <?php $icon = "3_Zone_Ortho_Spring.png";
-                                        if($spec['icon']!= NULL){
+                                        if ($spec['icon'] != null) {
                                             $icon = $spec['icon'];
-                                        }?>
-										<img class="thumbnail-specs" src="<?= base_url('asset/spec/'. $icon);?>" alt="">
-										<div style="width:100%">
-											<h4 class="text-center"><?= $spec['name'];?></h4>
-										</div>
-									</a>
-								<?php endforeach;?>
-								</div>
+                                        } ?>
+                                        <img class="thumbnail-specs" src="<?= base_url('asset/spec/'.$icon); ?>" alt="">
+                                        <div style="width:100%">
+                                            <h4 class="text-center"><?= $spec['name']; ?></h4>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
 
 					</div>
 					<!-- /IMAGE -->
