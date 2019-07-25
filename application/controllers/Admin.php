@@ -462,7 +462,6 @@ class Admin extends CI_Controller {
             // $this->form_validation->set_rules('cat', 'Category', 'required');
             $this->form_validation->set_rules('pName', 'Product Name', 'required');
             $this->form_validation->set_rules('desc', 'Description', 'required');
-            $this->form_validation->set_rules('spec[]', 'Specification', 'required');
             $this->form_validation->set_rules('size[]', 'Size', 'required');
             $this->form_validation->set_rules('price[]', 'Price', 'required');
             $this->form_validation->set_rules('sku[]', 'SKU', 'required');
@@ -523,13 +522,15 @@ class Admin extends CI_Controller {
                     array('idField' => 'id'), 'tm_product', TRUE);
 
                 // input for each spec id
-                $data = array('spec' => $this->input->post('spec[]'));
-                foreach($data['spec'] as $spec){
-                    $prodSpec = array(
-                        'prod_id' => $prod['id'],
-                        'spec_id' => $spec
-                    );
-                    $this->madmin->inputData('tr_product_spec', $prodSpec);
+                if ($cat_id == 1) {
+                    $data = array('spec' => $this->input->post('spec[]'));
+                    foreach($data['spec'] as $spec){
+                        $prodSpec = array(
+                            'prod_id' => $prod['id'],
+                            'spec_id' => $spec
+                        );
+                        $this->madmin->inputData('tr_product_spec', $prodSpec);
+                    }
                 }
 
                 // input for each size and price

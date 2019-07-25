@@ -627,5 +627,18 @@ $(function () {
     }
   }
 </script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#cat').change(function(){
+            var cat_id = $(this).val();
+            console.log(cat_id);
+            if (cat_id === "1") {
+                $('#spec-input').show();
+            } else {
+                $('#spec-input').hide();
+            }
+        });
+    })
+</script>
 </body>
 </html>
