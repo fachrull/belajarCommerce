@@ -35,7 +35,7 @@
 								<div class="col col-md-12 col-xs-12">
 									<div class="form-group">
 										<label><strong>Select Category</strong></label>
-										<select class="form-control"name="cat">
+										<select class="form-control"name="cat" id="cat">
 											<?php foreach ($cats as $cat): ?>
 											<option value="<?= $cat['id'];?>" <?php if($cat['id'] === $products[0]->cat_id) echo "selected"?>>
 												<?= $cat['name'];?>
@@ -49,7 +49,7 @@
                   				<label><strong>Product Name</strong></label>
                   				<input type="text" class="form-control" name="pName" value="<?=$products[0]->prod_name?>" placeholder="Product Name">
                 			</div>
-							<div class="row mb-3 mt-10">
+							<div class="row mb-3 mt-10" id="spec-input" <?php if ($productSpecs == NULL) { echo 'style="display: none;"';}?>>
 								<div class="col-md-12 col-xs-12 select2-input-field">
 								<div class="form-group">
 										<label><strong>Select a Spec</strong></label>
