@@ -237,7 +237,7 @@ class Mhome extends CI_Model{
   }
 
   public function specialPacakge_detail($id_SP){
-    $this->db->select('b.id, a.price, b.name, b.image');
+    $this->db->select('b.id, b.Total as price, b.name, b.image');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_special_package b', 'b.id = a.special');
     $this->db->where('a.id', $id_SP);
