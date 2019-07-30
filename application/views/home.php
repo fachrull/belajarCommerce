@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="row text-center justify-content-between">
-                    <div class="col-6 col-md-2 col-lg-2 pb-40">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
                         <a href="<?= site_url('home/shop/1'); ?>">
                             <img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s"
                                  src="<?= base_url('asset/brands/Aireloom.png'); ?>"
@@ -65,7 +65,7 @@
                                  onmouseout="this.src='<?= base_url("asset/brands/Aireloom.png"); ?>'"/>
                         </a>
                     </div>
-                    <div class="col-6 col-sm-6 col-md-2 col-lg-2 pb-40">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
                         <a href="<?= site_url('home/shop/2'); ?>">
                             <img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s"
                                  src="<?= base_url('asset/brands/King-koil.png'); ?>"
@@ -73,7 +73,7 @@
                                  onmouseout="this.src='<?= base_url("asset/brands/King-koil.png"); ?>'"/>
                         </a>
                     </div>
-                    <div class="col-6 col-sm-6 col-md-2 col-lg-2 pb-40">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
                         <a href="<?= site_url('home/shop/3'); ?>">
                             <img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s"
                                  src="<?= base_url('asset/brands/Serta.png'); ?>"
@@ -81,7 +81,7 @@
                                  onmouseout="this.src='<?= base_url("asset/brands/Serta.png"); ?>'"/>
                         </a>
                     </div>
-                    <div class="col-6 col-sm-6 col-md-2 col-lg-2 pb-40">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
                         <a href="<?= site_url('home/shop/4'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur"
                                  src="<?= base_url('asset/brands/Tempur.png'); ?>"
@@ -89,7 +89,7 @@
                                  onmouseout="this.src='<?= base_url("asset/brands/Tempur.png"); ?>'"/>
                         </a>
                     </div>
-                    <div class="col-6 col-sm-6 col-md-2 col-lg-2 pb-40">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
                         <a href="<?= site_url('home/shop/5'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence"
                                  src="<?= base_url('asset/brands/Florence.png'); ?>"
@@ -97,7 +97,7 @@
                                  onmouseout="this.src='<?= base_url("asset/brands/Florence.png"); ?>'"/>
                         </a>
                     </div>
-                    <div class="col-6 col-sm-6 col-md-2 col-lg-2 pb-40">
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
                         <a href="<?= site_url('home/shop/5'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence"
                                  src="<?= base_url('asset/brands/Florence.png'); ?>"
@@ -127,7 +127,7 @@
             <!--            # 1 Best seller-->
             <div class="col-12 col-md-4 pt-30">
                 <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.2s">
-                    <div class="thumbnail">
+                    <div class="thumbnail p-0">
                         <!-- product image(s) -->
                         <div class="text-block">
                             <p class="text-center" style="letter-spacing: 3px;"><b>BEST SELLER</b></p>
@@ -142,10 +142,10 @@
 
                         <div class="shop-item-summary p-30">
                             <div class="row mb-10">
-                                <div class="col-8">
+                                <div class="col-8 col-md-12 col-lg-8">
                                     <h2 class="align-middle"><?=strtoupper($bestSeller[0]["name"])?></h2>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4 col-md-12 col-lg-4">
                                     <div class="rating rating-<?=$bestSeller[0]["stars"]?> fs-13">
                                         <!-- rating-0 ... rating-5 -->
                                     </div>
@@ -175,7 +175,7 @@
             <!--            #2 Bed Linen-->
             <div class="col-12 col-md-4 pt-30">
                 <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="thumbnail">
+                    <div class="thumbnail p-0">
                         <!-- product image(s) -->
                         <div class="text-block">
                             <p class="text-center" style="letter-spacing: 3px;"><b>BED LINEN</b></p>
@@ -189,10 +189,10 @@
 
                         <div class="shop-item-summary p-30">
                             <div class="row mb-10">
-                                <div class="col-8">
+                                <div class="col-8 col-md-12 col-lg-8">
                                     <h2 class="align-middle"><?=strtoupper($bedLinen[0]["name"])?></h2>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4 col-md-12 col-lg-4">
                                     <div class="rating rating-<?=$bedLinen[0]["stars"]?> fs-13">
                                         <!-- rating-0 ... rating-5 -->
                                     </div>
@@ -222,7 +222,7 @@
             <!--            #3 Bedding Accessories-->
             <div class="col-12 col-md-4 pt-30">
                 <div class="shop-item bg-white wow fadeInUp" data-wow-delay="0.4s">
-                    <div class="thumbnail">
+                    <div class="thumbnail p-0">
                         <!-- product image(s) -->
                         <div class="text-block">
                             <p class="text-center" style="letter-spacing: 3px;"><b>BEDDING ACCESSORIES</b></p>
@@ -236,10 +236,10 @@
 
                         <div class="shop-item-summary p-30">
                             <div class="row mb-10">
-                                <div class="col-8">
+                                <div class="col-8 col-md-12 col-lg-8">
                                     <h2 class="align-middle"><?=strtoupper($beddingAcc[0]["name"])?></h2>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-4 col-md-12 col-lg-4">
                                     <div class="rating rating-<?=$beddingAcc[0]["stars"]?> fs-13">
                                         <!-- rating-0 ... rating-5 -->
                                     </div>
@@ -363,7 +363,7 @@
                                  onmouseout="this.src='<?= base_url("asset/icon/Stores.png"); ?>'"/>
                         </a>
 
-                        <div class="shop-item-summary p-15">
+                        <div class="p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>STORES</b></p>
@@ -387,7 +387,7 @@
                                  onmouseout="this.src='<?= base_url("asset/icon/Support.png"); ?>'"/>
                         </a>
 
-                        <div class="shop-item-summary p-15">
+                        <div class="p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>SUPPORT</b></p>
@@ -413,7 +413,7 @@
                         </a>
                         <!-- /product image(s) -->
 
-                        <div class="shop-item-summary p-15">
+                        <div class="p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>AGM PEDIA</b></p>
@@ -439,7 +439,7 @@
                         </a>
                         <!-- /product image(s) -->
 
-                        <div class="shop-item-summary p-15">
+                        <div class="p-15">
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>PARTNERSHIP</b></p>

@@ -11386,7 +11386,7 @@ div.tabbed>a:hover>div {
 	margin-right: auto !important;
 }
 
-@media only screen and (max-width: 767px) {
+@media only screen and (max-width: 768px) {
 	.img-help{
 		height: auto !important;
 		width: 80px !important;
@@ -11394,7 +11394,25 @@ div.tabbed>a:hover>div {
 	.text-help{
 		font-size: 10px !important;
 	}
-	.shop-item-summary{
-		padding:0 !important;
+	div.shop-item-price {
+		font-size: 13px !important;
 	}
+	.text-muted {
+		font-size: 10px;
+	}
+	/*.shop-item-summary{*/
+	/*	padding:0 !important;*/
+	/*}*/
+}
+
+@media only screen and (max-width: 576px) {
+	div.shop-item-price {
+		font-size: 20px !important;
+	}
+	.text-muted {
+		font-size: initial !important;
+	}
+	/*.shop-item-summary{*/
+	/*	padding:0 !important;*/
+	/*}*/
 }
