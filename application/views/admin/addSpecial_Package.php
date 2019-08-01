@@ -20,17 +20,9 @@
               <label class="input mb-10">
                   <input class="form-control" name="name" type="text" placeholder="Special Package Name">
               </label>
-              <label id="mainProd_area" class="input mb-10">
-                <select class="select-form form-control" id="mainProd" name="mainProd">
-                  <option disabled selected>Select Main Product</option>
-                  <?php foreach ($mainProd as $mainProd): ?>
-                    <option value="<?= $mainProd['id']?>"><?= $mainProd['name']?></option>
-                  <?php endforeach; ?>
-                </select>
-              </label>
               <div class="row mb-3">
                 <div class="col-md-12 cl-xs-12">
-                  <button type="button" class="btn btn-oldblue mb-10" data-toggle="modal" data-target="#modal-default">
+                  <button type="button" class="btn btn-oldblue mb-10" id="btn-addProd-editSP" data-toggle="modal" data-target="#modal-default">
                     <i class="fa fa-plus"></i> Add Product
                   </button>
                 </div>
@@ -42,9 +34,14 @@
                       <th>Product</th>
                       <th>Size</th>
                       <th>Quantity</th>
+                      <th>Price (Rp)</th>
                       <th>Action</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <th colspan="3">Total</th>
+                    <th id="ttlPrc">0</th>
+                  </tfoot>
                   <tbody>
                   </tbody>
                 </table>
@@ -64,6 +61,10 @@
               <!-- <label class="input mb-10">
                 <input class="form-control" name="price" type="text" placeholder="Special Package Price">
               </label> -->
+              <label class="input mb-10">
+                <b>SKU</b>
+                <input class="form-control" type="text" name="sku" placeholder="SPKGXXXX">
+              </label>
               <div class="box-body pad pt-0 pl-0 pr-0 mb-10">
                 <textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description Special Package"></textarea>
               </div>
@@ -107,9 +108,9 @@
                       <label for="productSP">Product</label>
                       <select class="select-form form-control" id="productSP" name="product">
                         <option value="">Select Product</option>
-                        <!-- <?php foreach ($products as $product): ?>
+                        <?php foreach ($products as $product): ?>
                           <option value="<?=$product['id']?>"><?= $product['name'];?></option>
-                        <?php endforeach; ?> -->
+                        <?php endforeach; ?>
                       </select>
                     </label>
                     <label class="input mb-10">
@@ -121,6 +122,14 @@
                     <label class="input mb-10">
                       <label for="">Quantity</label>
                       <input class="form-control" type="number" id="qtySP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Retail price</label>
+                      <input type="text" class="form-control" disabled id="prcSP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Price</label>
+                      <input class="form-control" type="text" id="price" name="price" >
                     </label>
                   </form>
                 </div>

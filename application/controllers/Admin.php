@@ -1200,48 +1200,61 @@ class Admin extends CI_Controller {
     }
 
     public function addStore_SpecialPackage($idStoreOwner){
-        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $this->load->helper('form');
-            $this->load->library('form_validation');
-
-            $this->form_validation->set_rules('specialPackage', 'Special Package', 'required|callback_checkingSpecialPackage');
-
-      if ($this->form_validation->run() === FALSE) {
-        $data['id_store'] = $idStoreOwner;
-        $data['special_packages'] = $this->madmin->getProducts(array('brand_id' => 0, 'cat_id' => 0), array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
-
-        $this->load->view('include/admin/header');
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/addStore_SpecialPackage', $data);
-        $this->load->view('include/admin/footer');
+      if ($idStoreOwner == NULL) {
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
       }else{
-        // id product (special package) from input
-        $id_prod = $this->input->post('specialPackage');
+        $hasStoreOwner = $this->madmin->getProducts(array('id' => $idStoreOwner), array('idF' => 'id'), 'tm_store_owner', TRUE);
+        if (!isset($hasStoreOwner)) {
+          $this->load->view('include/header2');
+          $this->load->view('un-authorise');
+          $this->load->view('include/footer');
+        }else{
+          if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+              $this->load->helper('form');
+              $this->load->library('form_validation');
 
-        // id super admin who's input this data
-        $idAdmin = $this->session->userdata('uId');
+              $this->form_validation->set_rules('specialPackage', 'Special Package', 'required|callback_checkingSpecialPackage');
 
-        // search id product (special package) from table tr_product_size
-        $id_prod_size = $this->madmin->getProducts(array('prod_id' => $id_prod), array('idField' => 'id'), 'tr_product_size', TRUE);
+              if ($this->form_validation->run() === FALSE) {
+                $data['id_store'] = $idStoreOwner;
+                $data['special_packages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_special_package', FALSE);
 
-        // this array are set to fill tr_product table (assign special package to store)
-        $dataStore_SpclPckg = array(
-          'id_store'        =>  $idStoreOwner,
-          'id_product'      =>  $id_prod,
-          'id_product_size' => $id_prod_size['id'],
-          'quantity'        =>  0,
-          'new'             =>  0,
-          'id_admin'        =>  $idAdmin
-        );
-        $this->madmin->inputData('tr_product', $dataStore_SpclPckg);
+                $this->load->view('include/admin/header');
+                $this->load->view('include/admin/left-sidebar');
+                $this->load->view('admin/addStore_SpecialPackage', $data);
+                $this->load->view('include/admin/footer');
+              }else{
+                // id product (special package) from input
+                $id_prod = $this->input->post('specialPackage');
 
-        redirect('admin/stores/'.$idStoreOwner);
+                // id super admin who's input this data
+                $idAdmin = $this->session->userdata('uId');
+
+                // search id product (special package) from table tr_product_size
+                $id_prod_size = $this->madmin->getProducts(array('prod_id' => $id_prod), array('idField' => 'id'), 'tr_product_size', TRUE);
+
+                // this array are set to fill tr_product table (assign special package to store)
+                $dataStore_SpclPckg = array(
+                  'id_store'        =>  $idStoreOwner,
+                  'id_product'      =>  $id_prod,
+                  'id_product_size' => $id_prod_size['id'],
+                  'quantity'        =>  0,
+                  'new'             =>  0,
+                  'id_admin'        =>  $idAdmin
+                );
+                $this->madmin->inputData('tr_product', $dataStore_SpclPckg);
+
+                redirect('admin/stores/'.$idStoreOwner);
+              }
+            } else {
+              $this->load->view('include/header2');
+              $this->load->view('un-authorise');
+              $this->load->view('include/footer');
+            }
+        }
       }
-    } else {
-      $this->load->view('include/header2');
-      $this->load->view('un-authorise');
-      $this->load->view('include/footer');
-    }
   }
 
   public function deleteStoreProd($idStore ,$idProd_store){
@@ -2166,7 +2179,7 @@ class Admin extends CI_Controller {
             $this->load->library('upload', $config);
             if (! $this->upload->do_upload('cover_spPackage')) {
               $this->session->set_flashdata('error', $this->upload->display_errors());
-              $data['specialPackages'] = $this->madmin->listSpecialPackage();
+              $data['specialPackages'] = $this->madmin->getProducts(array('deleted !=' => 1), NULL, 'tm_special_package', FALSE);
               $data['slides'] = $this->madmin->getProducts(array('cover' => 3), array('idField' => 'id', 'slideField' => 'slide'),
               'tm_cover', TRUE);
 
@@ -2217,11 +2230,11 @@ class Admin extends CI_Controller {
             $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
             // $this->form_validation->set_rules('promo_date');
             // $this->form_validation->set_rules('price', 'Special Package Price', 'required');
-            $this->form_validation->set_rules('mainProd', 'Main Product of Special Package', 'required|callback_checkingMainProd');
+            // $this->form_validation->set_rules('mainProd', 'Main Product of Special Package', 'required|callback_checkingMainProd');
             $this->form_validation->set_rules('sizeSpcl[]', 'Special Package Products', 'required');
 
             if ($this->form_validation->run() === FALSE) {
-              $data['mainProd'] = $this->madmin->getMainProd_SP();
+              $data['products'] = $this->madmin->getMainProd_SP();
 
               $this->load->view('include/admin/header');
               $this->load->view('include/admin/left-sidebar');
@@ -2230,11 +2243,13 @@ class Admin extends CI_Controller {
             }else {
               $name = $this->input->post('name');
               $desc = $this->input->post('desc');
-              $mainProd = $this->input->post('mainProd');
+              $sku = $this->input->post('sku');
+              $size = 0;
               $prod_PKG = $this->input->post('sizeSpcl[]');
               $prod_qty = $this->input->post('qtySpcl[]');
+              $prod_prc = $this->input->post('prcSpcl[]');
 
-              $file_name = strtolower($name.'-'.$mainProd);
+              $file_name = strtolower('special_package-'.$name);
 
               $config['upload_path'] = './asset/upload/special-package';
               $config['allowed_types'] = 'jpg|jpeg|png|svg';
@@ -2247,33 +2262,47 @@ class Admin extends CI_Controller {
                 redirect('admin/addSpecial_Package');
               }else {
                 $upload_name = $this->upload->data('file_name');
+                $total  = 0;
+                foreach ($prod_prc as $price) {
+                  $total += $price;
+                }
                 $data_main_sp = array(
                   'name'          => $name,
                   'image'         => $upload_name,
                   'description'   => $desc,
                   'active'        => 1,
-                  'main_product'  => $mainProd
+                  'total'         => $total
                 );
                 $this->madmin->inputData('tm_special_package', $data_main_sp);
 
                 $idSP = $this->madmin->getProducts($data_main_sp, array('idField' => 'id'), 'tm_special_package', TRUE);
+
+                $data_tr_prod_size = array(
+                  'sku'     => $sku,
+                  'prod_id' => $idSP['id'],
+                  'special' => $idSP['id'],
+                  'size_id' => $size,
+                  'price'   => $total
+                );
+                $this->madmin->inputData('tr_product_size', $data_tr_prod_size);
 
                 $sumProd_SP = count($prod_PKG);
                 for ($i=0; $i < $sumProd_SP; $i++) {
                   $data_prod_sp = array(
                     'id_specialPkg' => $idSP['id'],
                     'id_prod_package' => $prod_PKG[$i],
-                    'quantity'        => $prod_qty[$i]
+                    'quantity'        => $prod_qty[$i],
+                    'subtotal'        => $prod_prc[$i]
                   );
 
                   $this->madmin->inputData('tr_special_package', $data_prod_sp);
                 }
 
                 // update product as main product special Package
-                $update_as_main_product = array(
-                  'main_sp' => 1,
-                );
-                $this->madmin->updateData(array('id' => $mainProd), 'tm_product', $update_as_main_product);
+                // $update_as_main_product = array(
+                //   'main_sp' => 1,
+                // );
+                // $this->madmin->updateData(array('id' => $mainProd), 'tm_product', $update_as_main_product);
 
                 redirect('admin/special_package');
               }
@@ -2283,6 +2312,29 @@ class Admin extends CI_Controller {
             $this->load->view('un-authorise');
             $this->load->view('include/footer');
           }
+    }
+
+    public function priceProd_Size($id_mainProd){
+      if ($this->session->userdata('uType') == 1) {
+        $size_mainProd = $this->madmin->getProducts(array('id' => $id_mainProd),
+         array('prc' => 'price', 'sbprc' => 'sub_price'), 'tr_product_size', TRUE);
+        $price_mainProd = array();
+        if ($size_mainProd['sub_price'] != NULL) {
+          $price_mainProd['price'] = "Rp ".number_format(floatval($size_mainProd['sub_price']), 0, ',', '.');
+        }else{
+          $price_mainProd['price'] = "Rp ".number_format(floatval($size_mainProd['price']), 0, ',', '.');
+        }
+
+        if ($price_mainProd) {
+          print_r(json_encode($price_mainProd));
+        }else {
+          echo "Something went wrong";
+        }
+      }else {
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
+      }
     }
 
     public function addProdSP($idMainProd){
@@ -2342,8 +2394,7 @@ class Admin extends CI_Controller {
 
   public function activeSpecialPackage($idSP){
     if ($this->session->userdata('uType') == 1) {
-      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active',
-       'main' => 'main_product'), 'tm_special_package', TRUE);
+      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active'), 'tm_special_package', TRUE);
       if ($isActive['active'] == 1) {
         echo "this is active";
         $item = array('active' => 0);
@@ -2367,11 +2418,10 @@ class Admin extends CI_Controller {
 
   public function deleteSpecialPackage($idSP){
     if ($this->session->userdata('uType') == 1) {
-      $id_mainSP = $this->madmin->getProducts(array('id' => $idSP), array('main' => 'main_product'),
+      $id_mainSP = $this->madmin->getProducts(array('id' => $idSP), array('deleted' => 'deleted'),
         'tm_special_package', TRUE);
 
       $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', array('deleted' => 1));
-      $this->madmin->updateData(array('id' => $id_mainSP['main_product']), 'tm_product', array('main_sp' => 0));
       redirect('admin/special_package');
     }else {
       $this->load->view('include/header2');
@@ -2728,76 +2778,19 @@ class Admin extends CI_Controller {
 
   public function detailSpecialPackage($idSpecialPckg){
     if ($this->session->userdata('uType') == 1) {
-      $data['detail_SpclPckg'] = $this->madmin->prime_specialPKG($idSpecialPckg);
-      $data['prod_SpclPckg'] = $this->madmin->detail_specialPackage($idSpecialPckg);
-
-            $this->load->view('include/admin/header');
-            $this->load->view('include/admin/left-sidebar');
-            $this->load->view('admin/detailSpecialPackage', $data);
-            $this->load->view('include/admin/footer');
-        }else{
-            $this->load->view('include/header2');
-            $this->load->view('un-authorise');
-            $this->load->view('include/footer');
-        }
-    }
-
-  public function edit_special($idSpecialPkg){
-    if ($this->session->userdata('uType') == 1) {
-      $this->load->helper('form');
-      $this->load->library('form_validation');
-
-      $this->form_validation->set_rules('name', 'Special Package Name', 'required|callback_checkingSPName');
-      $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
-
-      if ($this->form_validation->run() === FALSE) {
-        $data['detail_SP'] = $this->madmin->prime_specialPKG($idSpecialPkg);
-        $data['prod_SP'] = $this->madmin->detail_specialPackage($idSpecialPkg);
-        $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
+      $hasSP = $this->madmin->getProducts(array('id' => $idSpecialPckg), array('idF' => 'id', 'deletedF' => 'deleted'), 'tm_special_package', TRUE);
+      if ($hasSP['id'] != NULL && $hasSP['deleted'] != TRUE) {
+        $data['detail_SpclPckg'] = $this->madmin->prime_specialPKG($idSpecialPckg);
+        $data['prod_SpclPckg'] = $this->madmin->detail_specialPackage($idSpecialPckg);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
-        $this->load->view('admin/edit_special', $data);
+        $this->load->view('admin/detailSpecialPackage', $data);
         $this->load->view('include/admin/footer');
       }else {
-        $imageSP = $this->input->post('imageSP');
-        if ($imageSP != NULL) {
-          echo "Ada upload gambar";
-        }else {
-          $SPkg_name = $this->input->post('name');
-          $SPkg_desc = $this->input->post('desc');
-          $SPkg_id   = $this->input->post('idSP');
-
-          $edit_SP = array(
-            'name'        =>  $SPkg_name,
-            'description' =>  $SPkg_desc
-          );
-          print_r($edit_SP);echo "</br></br>";
-
-          $SPkg_sizes  = $this->input->post('sizeSpcl[]');
-          $SPkg_qty    = $this->input->post('qtySpcl[]');
-          $SPkg_prices = $this->input->post('priceSpcl[]');
-          $countProd = count($SPkg_sizes);
-
-          for ($i=0; $i < $countProd; $i++) {
-            $detailSP = array(
-              'id_prod_spclPkg' => $SPkg_id,
-              'size_spclPkg'    => $SPkg_sizes[$i],
-              'quantity'        => $SPkg_qty[$i],
-              'priceSpcl'       => $SPkg_prices[$i]
-            );
-
-            $has_detailSP = $this->madmin->getProducts($detailSP, NULL, 'tr_special_package', TRUE);
-            if (isset($has_detailSP)) {
-              echo "Data sudah ada";echo "</br></br>";
-              print_r($detailSP);echo "</br></br>";
-              print_r($has_detailSP);echo "</br></br><hr>";
-            }else {
-              echo "Data baru";echo "</br></br>";
-              print_r($detailSP);echo "</br></br><hr>";
-            }
-          }
-        }
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
       }
     }else{
       $this->load->view('include/header2');
@@ -2806,27 +2799,193 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function checkingSPName($name){
+  public function edit_special($idSpecialPkg){
     if ($this->session->userdata('uType') == 1) {
-      $idSP = $this->input->post('idSP');
-      $SP_name = $this->madmin->getProducts(array('id !=' => $idSP, 'name' => $name), array('nameField' => 'name'),
-        'tm_product', TRUE);
-      if (isset($SP_name)) {
-        $this->session->set_flashdata('error',
-        'Special package name has already been created or special package name sam as product name');
-        return FALSE;
-      }else {
-        return TRUE;
+      $hasSP = $this->madmin->getProducts(array('id' => $idSpecialPkg), array('idF' => 'id', 'deletedF' => 'deleted'), 'tm_special_package', TRUE);
+      if ($hasSP['id'] != NULL && $hasSP['deleted'] != TRUE) {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+
+        $this->form_validation->set_rules('name', 'Special Package Name', 'required');
+        $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
+
+        if ($this->form_validation->run() === FALSE) {
+          $data['detail_SP'] = $this->madmin->prime_specialPKG($idSpecialPkg);
+          $data['prod_SP'] = $this->madmin->detail_specialPackage($idSpecialPkg);
+          $currentBonus = $this->madmin->current_bonus($idSpecialPkg);
+          $data['addBonus'] = $this->madmin->add_bonus($currentBonus);
+
+
+          $this->load->view('include/admin/header');
+          $this->load->view('include/admin/left-sidebar');
+          $this->load->view('admin/edit_special', $data);
+          $this->load->view('include/admin/footer');
+        }else {
+          $imageSP = $this->input->post('imageSP');
+          $name_SP = $this->input->post('name');
+          $sku_SP = $this->input->post('sku');
+          $desc_SP = $this->input->post('desc');
+
+          $idProdBonus_SP = $this->input->post('bonusSP[]');
+          $idtrSP = $this->input->post('idtrSP[]');
+          $idProdSize_SP = $this->input->post('prodSizeSP[]');
+          $qty_SP = $this->input->post('qtySP[]');
+          $price_SP = $this->input->post('priceSP[]');
+          $delete_SP = $this->input->post('deleteBonus[]');
+          // 4 yang  baru di apus
+
+          echo "id tr special package: ";print_r($idtrSP);echo "</br></br>";
+          echo "id product size: ";print_r($idProdSize_SP);echo "</br></br>";
+          echo "delete bonus: ";print_r($delete_SP);echo "</br></br>";
+          echo "price bonus: ";print_r($price_SP);echo "</br></br>";
+          // exit();
+          $length_idtrSP = count($idtrSP);
+          $length_priceSP = count($price_SP);
+          $total = 0;
+          for ($i=0; $i < $length_idtrSP; $i++) {
+            $alreadyAssgn_SP = $this->madmin->getProducts(array('id' => $idtrSP[$i]), NULL, 'tr_special_package', TRUE);
+            if (! isset($alreadyAssgn_SP)) {
+              $addNewBonus = array(
+                'id_specialPkg'   => $idSpecialPkg,
+                'id_prod_package' => $idProdSize_SP[$i],
+                'quantity'        => $qty_SP[$i],
+                'subtotal'        => $price_SP[$i]
+              );
+              $this->madmin->inputData('tr_special_package', $addNewBonus);
+            }else{
+              if ($delete_SP[$i] == 1) {
+                $this->madmin->deleteData(array('id' => $idtrSP[$i]), 'tr_special_package');
+              }else{
+                $updateBonus = array(
+                  'id_specialPkg'   => $idSpecialPkg,
+                  'id_prod_package' => $idProdSize_SP[$i],
+                  'quantity'        => $qty_SP[$i],
+                  'subtotal'        => $price_SP[$i]
+                );
+                $this->madmin->updateData(array('id' => $idtrSP[$i]), 'tr_special_package', $updateBonus);
+              }
+            }
+          }
+
+          for ($i=0; $i < $length_priceSP; $i++) {
+            if ( $delete_SP[$i] != 1) {
+              $total += $price_SP[$i];
+            }
+          }
+          $this->madmin->updateData(array('id' => $idSpecialPkg), 'tm_special_package', array('total' => $total));
+
+          $hasImg_SP = $this->madmin->getProducts(array('id' => $idSpecialPkg), array('img' => 'image'), 'tm_special_package', TRUE);
+          if ($hasImg_SP['image'] != NULL) {
+            $update_SP = array(
+              'name'        => $name_SP,
+              'description' => $desc_SP
+              // 'active'
+              // 'deleted'
+              // 'Total'
+            );
+            $this->madmin->updateData(array('id' => $idSpecialPkg), 'tm_special_package', $update_SP);
+            $this->madmin->updateData(array('special' => $idSpecialPkg), 'tr_product_size', array('sku' => $sku_SP));
+            redirect('admin/detailSpecialPackage/'.$idSpecialPkg);
+          }else {
+            $file_name = strtolower('special_package-'.$name_SP);
+
+            $config['upload_path'] = './asset/upload/special-package';
+            $config['allowed_types'] = 'jpg|jpeg|png|svg';
+            $config['file_name']  = $file_name;
+
+            $this->load->library('upload', $config);
+
+            if (! $this->upload->do_upload('imageSP')) {
+              $this->session->set_flashdata('error', $this->upload->display_errors());
+              redirect('admin/edit_special/'.$idSpecialPkg);
+            }else{
+              $upload_name = $this->upload->data('file_name');
+              $update_SP = array(
+                'name'        => $name_SP,
+                'image'       => $upload_name,
+                'description' => $desc_SP
+                // 'active'
+                // 'deleted'
+                // 'Total'
+              );
+              $this->madmin->updateData(array('id' => $idSpecialPkg), 'tm_special_package', $update_SP);
+              $this->madmin->updateData(array('special' => $idSpecialPkg), 'tr_product_size', array('sku' => $sku_SP));
+              redirect('admin/detailSpecialPackage/'.$idSpecialPkg);
+            }
+          }
+          exit();
+          if ($imageSP != NULL) {
+            echo "Ada upload gambar";
+          }else {
+            $SPkg_name = $this->input->post('name');
+            $SPkg_desc = $this->input->post('desc');
+            $SPkg_id   = $this->input->post('idSP');
+
+            $edit_SP = array(
+              'name'        =>  $SPkg_name,
+              'description' =>  $SPkg_desc
+            );
+            print_r($edit_SP);echo "</br></br>";
+
+            $SPkg_sizes  = $this->input->post('sizeSpcl[]');
+            $SPkg_qty    = $this->input->post('qtySpcl[]');
+            $SPkg_prices = $this->input->post('priceSpcl[]');
+            $countProd = count($SPkg_sizes);
+
+            for ($i=0; $i < $countProd; $i++) {
+              $detailSP = array(
+                'id_prod_spclPkg' => $SPkg_id,
+                'size_spclPkg'    => $SPkg_sizes[$i],
+                'quantity'        => $SPkg_qty[$i],
+                'priceSpcl'       => $SPkg_prices[$i]
+              );
+
+              $has_detailSP = $this->madmin->getProducts($detailSP, NULL, 'tr_special_package', TRUE);
+              if (isset($has_detailSP)) {
+                echo "Data sudah ada";echo "</br></br>";
+                print_r($detailSP);echo "</br></br>";
+                print_r($has_detailSP);echo "</br></br><hr>";
+              }else {
+                echo "Data baru";echo "</br></br>";
+                print_r($detailSP);echo "</br></br><hr>";
+              }
+            }
+          }
+        }
+      }else{
+        $this->load->view('include/header2');
+        $this->load->view('un-authorise');
+        $this->load->view('include/footer');
       }
+    }else{
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
     }
   }
 
+  // public function checkingSPName($name){
+  //   if ($this->session->userdata('uType') == 1) {
+  //     $idSP = $this->input->post('idSP');
+  //     $SP_name = $this->madmin->getProducts(array('id !=' => $idSP, 'name' => $name), array('nameField' => 'name'),
+  //       'tm_product', TRUE);
+  //     if (isset($SP_name)) {
+  //       $this->session->set_flashdata('error',
+  //       'Special package name has already been created or special package name sam as product name');
+  //       return FALSE;
+  //     }else {
+  //       return TRUE;
+  //     }
+  //   }
+  // }
+
   public function deleteSP_img($idSpecialPkg){
     if ($this->session->userdata('uType') == 1) {
-      $img = $this->madmin->getProducts(array('id_prod' => $idSpecialPkg), array('img' => 'image_1'),
-        'tr_product_image', TRUE);
+      $img = $this->madmin->getProducts(array('id' => $idSpecialPkg), array('img' => 'image'),
+        'tm_special_package', TRUE);
       if (isset($img)) {
-        $this->madmin->updateData(array('id_prod' => $idSpecialPkg), 'tr_product_image', array('image_1' => NULL));
+        $this->madmin->updateData(array('id' => $idSpecialPkg), 'tm_special_package', array('image' => NULL));
+        unlink('./asset/upload/special-package/'.$img['image']);
         redirect('admin/edit_special/'.$idSpecialPkg);
       }
     }else {
@@ -2837,7 +2996,9 @@ class Admin extends CI_Controller {
   }
 
   public function historyTransaction(){
-      $data['transactions'] = $this->madmin->order_list();
+    $data['transactions'] = $this->madmin->order_list();
+    $id_store = $this->session->userdata('uId');
+
     $this->load->view('include/admin/header');
     $this->load->view('include/admin/left-sidebar');
     $this->load->view('admin/sa_historyTransaction', $data);

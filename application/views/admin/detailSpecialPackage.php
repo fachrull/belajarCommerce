@@ -20,10 +20,14 @@
                     </div>
                     <div class="row mt-20">
                         <div class="col-xs-6">
-                            <div class="box-header pb-0">
-                                <h3 class="box-title">Package</h3>
-                            </div>
-                            <div class="box-body">
+                          <div class="box-body pb-0">
+                            <h4>SKU</h4>
+                            <p class="fs-15"><?= $detail_SpclPckg['sku'];?></p>
+                          </div>
+                          <div class="box-header pb-0">
+                              <h3 class="box-title">Package</h3>
+                          </div>
+                          <div class="box-body">
                                 <table class="table table-bordered text-center">
                                     <tbody class="text-center">
                                     <tr>
@@ -51,8 +55,7 @@
                         <div class="col-xs-6">
                             <div>
                                 <h4>Price</h4>
-                                <small>Starts from</small>
-                                <p class="fs-15"><strong>Rp <?= number_format($detail_SpclPckg['price'],0,',','.')?></strong></p>
+                                <p class="fs-15"><strong>Rp <?= number_format($detail_SpclPckg['Total'],0,',','.')?></strong></p>
                             </div>
                             <div class="mt-20">
                                 <h4>Description</h4>

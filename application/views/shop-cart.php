@@ -74,17 +74,17 @@
 						<!-- cart item -->
 						<?php if ($item['type'] == 'special'): ?>
 							<div class="item">
-								<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
+								<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/special-package/'.$item['image']);?>" alt="<?= $item['name'];?>"
 									width="80" /></div>
-									<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
-										<span><?=$item['name']?></span>
-										<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
-										<span><small>Bonus :</small></span>
-										<ul>
-											<?php foreach ($item['option'] as $option): ?>
-												<li><small><?= $option['prod']?> - <?=$option['sizeName']?> × <?= $option['quantity']?></small></li>
-											<?php endforeach; ?>
-										</ul>
+									<a href="<?= site_url('home/detailSpecial/'.$item['id'])?>" class="product_name">
+										<span><?=$item['name']?></span></br>
+										<small>Products :
+											<ul>
+												<?php foreach ($item['option'] as $option): ?>
+													<li><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></li>
+												<?php endforeach; ?>
+											</ul>
+										</small>
 									</a>
 									<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
 									<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>

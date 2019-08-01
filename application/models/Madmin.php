@@ -537,7 +537,7 @@ class Madmin extends CI_Model {
   }
 
   public function detail_specialPackage($idSpecialPckg){
-    $this->db->select('a.quantity, d.name as prod, c.name as sizeName, c.size as sizeDetail, d.image');
+    $this->db->select('a.id, a.id_prod_package, b.prod_id, a.quantity, a.subtotal, d.name as prod, c.name as sizeName, c.size as sizeDetail, d.image');
     $this->db->from('tr_special_package a');
     $this->db->join('tr_product_size b', 'b.id = a.id_prod_package', 'left');
     $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
@@ -551,12 +551,39 @@ class Madmin extends CI_Model {
     }
   }
 
+  public function current_bonus($condition){
+    $this->db->select('b.prod_id');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_prod_package', 'left');
+    $this->db->where('a.id_specialPkg', $condition);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function add_bonus($where){
+    $this->db->select('a.id_product, b.name');
+    $this->db->from('tr_product a');
+    $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
+    $this->db->group_by('a.id_product');
+    foreach ($where as $key => $value) {
+      $this->db->where('a.id_product !=', $value['prod_id']);
+    }
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
   public function prime_specialPKG($idSpecialPckg){
-    $this->db->select('a.id, a.name, a.description, a.image');
-    $this->db->select_min('b.price');
+    $this->db->select('a.id, a.name, a.description, a.image, a.total, b.sku');
     $this->db->from('tm_special_package a');
-    $this->db->join('tr_product_size b', 'b.prod_id = a.main_product', 'left');
-    // $this->db->join('tr_product_image c', 'c.id_prod = a.id', 'left');
+    $this->db->join('tr_product_size b', 'b.special = a.id', 'left');
     $this->db->where('a.id', $idSpecialPckg);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
@@ -566,16 +593,16 @@ class Madmin extends CI_Model {
     }
   }
 
-    public function maxPosition_BedLinen(){
-      $this->db->select('MAX(position) as position');
-      $this->db->from('tr_product_bed_linen');
-      $query = $this->db->get();
-      if ($query->num_rows() != 0) {
-        return $query->row_array();
-      }else {
-        return FALSE;
-      }
+  public function maxPosition_BedLinen(){
+    $this->db->select('MAX(position) as position');
+    $this->db->from('tr_product_bed_linen');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
     }
+  }
 
     public function maxPosition_BeddingAcc(){
       $this->db->select('MAX(position) as position');
@@ -629,30 +656,29 @@ class Madmin extends CI_Model {
 
 
     public function order_list(){
-        $this->db->select('a.id, a.order_number, a.order_date, a.total, a.status_order, d.company_name');
-        $this->db->from('tm_order as a');
-        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-        $this->db->join('tm_customer_detail as b', 'b.id = a.address_detail', 'left');
-        $this->db->join('tr_product as c', 'c.id = aa.id_tr_Product', 'left');
-        $this->db->join('tm_store_owner as d', 'd.id = c.id_store', 'left');
-        $this->db->group_by('a.order_number');
+        $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, d.company_name, c.id as id_trProd');
+        $this->db->from('tm_order a');
+        $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id', 'left');
+        $this->db->join('tr_product c', 'c.id = b.id_tr_Prod', 'left');
+        $this->db->join('tm_store_owner d', 'd.id = c.id_store', 'left');
+        $this->db->group_by('a.id');
+        $this->db->order_by('a.id', 'desc');
         $query = $this->db->get();
-
-        if($query->num_rows() != 0){
-            return $query->result_array();
-        }else{
-            return FALSE;
+        if ($query->num_rows() != 0) {
+          return $query->result_array();
+        }else {
+          return FALSE;
         }
     }
 
     public function getDetailOrder($idOrder){
-        $this->db->select('a.id, a.order_number, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, aa.id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
+        $this->db->select('a.id, a.order_number, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, b.id as id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
       f.first_name, f.last_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
       k.name as size_name, k.size, l.first_name, l.last_name');
 
         $this->db->from('tm_order a');
         $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-        $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
+        $this->db->join('tr_product b', 'b.id_product = aa.id_product and b.id_product_size = aa.id_tr_prod_size', 'left');
         $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
         $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
         $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
@@ -683,5 +709,19 @@ class Madmin extends CI_Model {
         } else {
             return FALSE;
         }
+    }
+
+    public function size_mainProd($id_mainProd){
+      $this->db->select('b.id, c.name as sizeName, c.size as sizeDetail, b.price');
+      $this->db->from('tm_product a');
+      $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+      $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
+      $this->db->where('a.id', $id_mainProd);
+      $query = $this->db->get();
+      if ($query->num_rows() != 0) {
+        return $query->result_array();
+      }else {
+        return FALSE;
+      }
     }
 }

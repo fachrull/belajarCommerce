@@ -165,12 +165,28 @@ class Mstore extends CI_Model{
     }
   }
 
+  public function testOrderList($idStore){
+    $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, a.id_userlogin, c.first_name, c.last_name');
+    $this->db->from('tm_order a');
+    $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id', 'left');
+    $this->db->join('tm_customer_detail c', 'c.id = a.address_detail', 'left');
+    $this->db->join('tr_product d', 'd.id = b.id_tr_Prod', 'left');
+    $this->db->group_by('a.order_number');
+    $this->db->where('d.id_store', $idStore);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else{
+      return FALSE;
+    }
+  }
+
   public function order_list($idStore, $history = FALSE){
     $this->db->select('a.id, a.order_number, a.order_date, a.total, a.status_order, a.id_userlogin, b.first_name, b.last_name');
-    $this->db->from('tm_order as a');
-      $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+    $this->db->from('tm_order a');
+    $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
     $this->db->join('tm_customer_detail as b', 'b.id = a.address_detail', 'left');
-    $this->db->join('tr_product as c', 'c.id_product_size = aa.id_tr_Product', 'left');
+    $this->db->join('tr_product as c', 'c.id_product_size = aa.id_tr_Prod', 'left');
     $this->db->group_by('a.order_number');
     $where = array('c.id_store' => $idStore);
     $this->db->where($where);
@@ -187,6 +203,75 @@ class Mstore extends CI_Model{
       return FALSE;
     }
   }
+
+  public function testgetDetailOrder($idOrder, $idCustomer){
+    $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, b.first_name, b.last_name, b.phone, b.address,
+      b.postcode, c.nama as provinsi, d.nama as kabupaten, e.nama as kecamatan');
+    $this->db->from('tm_order a');
+    $this->db->join('tm_customer_detail b', 'b.id = a.address_detail', 'left');
+    $this->db->join('provinsi c', 'c.id_prov = b.province', 'left');
+    $this->db->join('kabupaten d', 'd.id_kab = b.city', 'left');
+    $this->db->join('kecamatan e', 'e.id_kec = b.sub_district', 'left');
+
+    $where = array(
+      'a.id'            => $idOrder,
+      'a.id_userlogin'  => $idCustomer
+    );
+    $this->db->where($where);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else{
+      return FALSE;
+    }
+  }
+
+  public function listOrderRetail($idProd, $idProdSize){
+    $this->db->select('a.name, a.image, c.name as sizeName, c.size as sizeDetail');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
+    $where = array(
+      'a.id'  => $idProd,
+      'b.id'  => $idProdSize
+    );
+    $this->db->where($where);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function listOrderSP($idSP){
+    $this->db->select('d.name, d.image, c.name as sizeName, c.size as sizeDetail, a.quantity');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_prod_package', 'left');
+    $this->db->join('tm_product d', 'd.id = b.prod_id', 'left');
+    $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
+    $this->db->where('a.id_specialPkg', $idSP);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  // public function listDetailOrder($idOrder){
+  //   $this->db->select('a.subtotal, a.quantity, a.special, ');
+  //   $this->db->from('tr_order_detail a');
+  //   $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
+  //   $this->db->where('a.id_tm_order', $idOrder);
+  //   $query = $this->db->get();
+  //   if ($query->num_rows() != 0) {
+  //     return $query->result_array();
+  //   }else {
+  //     return FALSE;
+  //   }
+  // }
+
     public function getDetailOrder($idOrder, $idCustomer){
         $this->db->select('a.id, a.order_number, aa.quantity, a.id_userlogin, a.total, a.order_date, a.status_order, aa.id_tr_product, aa.subtotal, c.name, c.image, d.class, d.status,
       f.first_name, f.last_name, f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
@@ -194,7 +279,7 @@ class Mstore extends CI_Model{
 
         $this->db->from('tm_order a');
         $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-        $this->db->join('tr_product b', 'b.id_product_size = aa.id_tr_Product', 'left');
+        $this->db->join('tr_product b', 'b.id_product_size = aa.id_tr_prod_size', 'left');
         $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
         $this->db->join('tm_status_order d', 'd.id = a.status_order', 'left');
         $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');

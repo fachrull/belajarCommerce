@@ -104,7 +104,12 @@
 								<input type="hidden" name="postcode" value="<?= $alamat_default['postcode']?>">
 							</div>
 						</div>
-
+						<div class="row">
+							<div class="col-lg-12">
+              	<label for="billing_note">Note</label>
+                <textarea name="note" id="note" cols="30" rows="5" class="form-control"></textarea>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<label for="billing_phone">Email</label>
@@ -172,7 +177,12 @@
 								<input id="billing_zipcode" name="postcode" type="text" class="form-control required" />
 							</div>
 						</div>
-
+						<div class="row">
+							<div class="col-lg-12">
+              	<label for="billing_note">Note</label>
+                <textarea name="note" id="note" cols="30" rows="5" class="form-control"></textarea>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<label for="billing_phone">Email *</label>
@@ -472,20 +482,20 @@
                 <?php if ($cart['type'] == 'special'): ?>
                   <tr class="testimonial">
                     <td>
-                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                      <img class="square" src="<?= site_url('asset/upload/special-package/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
+                        <a href="<?= site_url('home/detailSpecial/'.$cart['id'])?>">
+													<span class="float-left"><?= $cart['name']?></span>
+												</a>
 												<br>
-												<small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
-												<br>
-												<span><small>Bonus :</small></span>
+												<span><small>Products :</small></span>
 												<br>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
-                              <small><?= $option['prod']?> - <?=$option['sizeName']?> × <?= $option['quantity']?></small>
+                              <small><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></small>
                             </li>
                           <?php endforeach; ?>
                         </ul>
@@ -493,7 +503,7 @@
                     </td>
                     <td><span><?= $cart['qty']?></span></td>
                     <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
-                    <td><font color="green"><?= $cart['comment']?></font></td>
+                    <td><font color="green"><b><?= $cart['comment']?></b></font></td>
                   </tr>
                 <?php else: ?>
                   <tr class="testimonial">
@@ -502,7 +512,9 @@
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
+                        <a href="<?= site_url('home/detailProduct/'. $cart['id'])?>">
+													<span class="float-left"><?= $cart['name']?></span>
+												</a>
                         <br>
                         <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
                       </span>
@@ -516,19 +528,19 @@
                 <?php if ($cart['type'] == 'special'): ?>
                   <tr class="testimonial">
                     <td>
-                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                      <img class="square" src="<?= site_url('asset/upload/special-package/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
+												<a href="<?= site_url('home/detailSpecial/'. $cart['id'])?>">
+                          <span class="float-left"><?= $cart['name']?></span>
+                        </a>
 												<br>
-                        <small class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</small>
-												<br>
-												<span><small>Bonus :</small></span>
+												<span><small>Products :</small></span>
                         <ul>
                           <?php foreach ($cart['option'] as $option): ?>
                             <li>
-                              <small><?= $option['prod']?> × <?= $option['quantity']?></small>
+                              <small><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></small>
                             </li>
                           <?php endforeach; ?>
                         </ul>
@@ -536,7 +548,7 @@
                     </td>
                     <td><span><?= $cart['qty']?></span></td>
                     <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
-                    <td><font color="green"><?= $cart['comment']?></font></td>
+                    <td><font color="red"><?= $cart['comment']?></font></td>
                   </tr>
                 <?php else: ?>
                   <tr class="testimonial" style="background: #ffcccc;">
@@ -545,7 +557,9 @@
                     </td>
                     <td>
                       <span class="clearfix">
-                        <span class="float-left"><?= $cart['name']?></span>
+                        <a href="<?= site_url('home/detailProduct/'.$cart['id'])?>">
+													<span class="float-left"><?= $cart['name']?></span>
+												</a>
                         <br>
                         <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
                       </span>
