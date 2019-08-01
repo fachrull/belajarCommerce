@@ -55,12 +55,12 @@
                             <div class="row ml-0 mr-0">
                               <div class="col-6 col-md-6">
                                 <label class="fs-12 mb-0">Nomor Transaksi</label>
-                                <label class="pt-0 fs-16"><?= $detailOrder[0]->order_number?></label>
+                                <label class="pt-0 fs-16"><?= $detailOrder['order_number']?></label>
                               </div>
 
                               <div class="col-6 col-md-6 pt-10">
                                   <?php
-                                  switch($detailOrder[0]->status_order) {
+                                  switch($detailOrder['status_order']) {
                                       case 1:
                                           echo "<span class=\"badge badge-success float-right\">Pesanan Selesai</span>";
                                           break;
@@ -87,44 +87,65 @@
                               <div class="row ml-0 mr-0">
                                   <div class="col-6 col-md-6">
                                       <label class="fs-12 mb-0">Tanggal Order</label>
-                                      <label class="pt-0 fs-16"><?= $detailOrder[0]->order_date?></label>
+                                      <label class="pt-0 fs-16"><?= $detailOrder['order_date']?></label>
                                   </div>
                                   <div class="col-6 col-md-6">
                                       <label class="fs-12 mb-0">Total Pembayaran</label>
-                                      <label class="pt-0 fs-16">Rp. <?= number_format(floatval($detailOrder[0]->total), 0, ',', '.')?></label>
+                                      <label class="pt-0 fs-16">Rp. <?= number_format(floatval($detailOrder['total']), 0, ',', '.')?></label>
                                   </div>
                               </div>
                             <hr>
 
                             <label class="fs-12 mb-0">Alamat Pengiriman</label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->address?></label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->kecamatan.', '.$detailOrder[0]->kabupaten?></label>
-                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder[0]->kabupaten.','.$detailOrder[0]->postcode?></label>
-                            <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder[0]->phone?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder['address']?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder['kecamatan'].', '.$detailOrder['kabupaten']?></label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder['provinsi'].','.$detailOrder['postcode']?></label>
+                            <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder['phone']?></label>
 
                             <hr>
 
                             <!-- item -->
                             <label class="fs-12 mb-10">Daftar Barang</label>
-                            <?php foreach ($detailOrder as $order): ?>
+                            <?php foreach ($listOrder as $order): ?>
+                              <?php if ($order['special'] == TRUE): ?>
                                 <div class="card card-success rad-0 mb-20">
-                                    <div class="card-heading">
-                                        <p class="card-title mb-0 mt-0"><strong><?= $order->name?></strong></p>
+                                  <div class="card-heading">
+                                    <a href="<?= site_url('home/detailSpecial/'.$order['id_product']);?>">
+                                      <p class="card-title mb-0 mt-0"><strong><?= $order['name']?></strong></p>
+                                    </a>
+                                  </div>
+                                  <div class="testimonial">
+                                    <figure class="float-left ml-15">
+                                        <img class="square" src="<?= base_url('asset/upload/special-package/'.$order['image'])?>" alt="" />
+                                    </figure>
+                                    <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
+                                      <p>Jumlah: <?= $order['qty'];?></p>
+                                      <p>Size: <b>Special Package</b></p>
+                                      <p>Harga Total: <?= number_format(floatval($order['subtotal']),0,',','.')?></p>
                                     </div>
-                                    <div class="testimonial">
-                                        <figure class="float-left ml-15">
-                                            <img class="square" src="<?= base_url('asset/upload/'.$order->image)?>" alt="" />
-                                        </figure>
-                                        <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
-                                            <p>Jumlah: <?= $order->quantity?></p>
-                                            <p>Size: <?= $order->size_name.' ('.$order->size.')'?></p>
-                                            <p>Harga Total: Rp. <?= number_format(floatval($order->subtotal), 0, ',', '.')?></p>
-                                        </div>
-                                    </div>
+                                  </div>
                                 </div>
+                              <?php else: ?>
+                                <div class="card card-success rad-0 mb-20">
+                                  <div class="card-heading">
+                                    <a href="<?= site_url('home/detailProduct/'.$order['id_product']);?>">
+                                      <p class="card-title mb-0 mt-0"><strong><?= $order['name']?></strong></p>
+                                    </a>
+                                  </div>
+                                  <div class="testimonial">
+                                    <figure class="float-left ml-15">
+                                        <img class="square" src="<?= base_url('asset/upload/'.$order['image'])?>" alt="" />
+                                    </figure>
+                                    <div class="testimonial-content fs-14 line-height-20 ml-20 align-middle font-weight-light">
+                                      <p>Jumlah: <?= $order['qty']?></p>
+                                      <p>Size: <?= $order['sizeName'].' ( '.$order['sizeDetail'].' )';?></p>
+                                      <p>Harga Total: Rp <?= ($order['subtotal'] != 0 ? number_format(floatval($order['subtotal']),0,',','.'): $order['subtotal']);?></p>
+                                    </div>
+                                  </div>
+                                </div>
+                              <?php endif; ?>
                             <?php endforeach;?>
                             <!-- /item -->
-
                             <hr>
                           </div>
 

@@ -20,9 +20,7 @@
               <div class="product-detail">
                 <form class="m-0 sky-form" action="<?= site_url('admin/edit_best_seller/'.$best_seller['id'])?>" method="post">
                   <label class="input mb-10">
-                    <input name="stars" type="number" min="0" max="5" placeholder="Stars" value="<?= $best_seller['stars']?>">
-                  </label>
-                  <label class="input mb-10">
+                    <label for="">Position</label>
                     <input type="number" name="position" value="<?= $best_seller['position']?>" min="1" max="<?= $maxPosition['max']?>" placeholder="Position">
                   </label>
                   <div class="row">

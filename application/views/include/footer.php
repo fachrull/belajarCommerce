@@ -115,6 +115,8 @@
 
 <!-- STYLESWITCHER - REMOVE -->
 <!-- <script async type="text/javascript" src="demo_files/styleswitcher/styleswitcher.js"></script> -->
+<script src="<?= base_url('asset/plugins/slider.swiper/dist/js/swiper.min.js'); ?>"></script>
+<script src="<?= base_url('asset/javascript/demo.swiper_slider.js'); ?>"></script>
 
 <!-- AutoNumber -->
 <script type="text/javascript" src="https://unpkg.com/autonumeric"></script>
@@ -123,6 +125,7 @@
 <script src="<?= base_url('asset/javascript/demo.shop.js'); ?>"></script>
 <script>
     $(window).on('load', e => {
+        console.log("load store")
         if ($('#store-location').length) {
             // load map location lookup
             loadLocationLookup();
@@ -132,122 +135,6 @@
     function loadLocationLookup() {
         $('#store-location').load('<?php echo base_url('home/store-lookup'); ?>');
     }
-    
-
-    // var stores = <?= $stores?>;
-    // var lat = document.getElementById('lat');
-    // var lng = document.getElementById('lng');
-    // var km = 30;
-    // var map;
-    // var markers = [];
-    // var infoWindow; // markers information
-    // var locationSelect;
-    // var mapOption = {
-    //     center: {lat: -2.0372851958986224, lng: 117.06773251302911},
-    //     zoom: 5,
-    //     mapTypeId: 'roadmap'
-    // }
-
-    // for (var i = 0; i < stores.length; i++) {
-    //     console.log(stores[i]);
-    // }
-
-    // function initMap() {
-    //     var indonesia = {lat: -2.0372851958986224, lng: 117.06773251302911};
-    //     map = new google.maps.Map(document.getElementById('maps'), mapOption);
-    //     infoWindow = new google.maps.InfoWindow({map: map});
-
-    //     map.data.addGeoJson(stores);
-    //     map.data.setStyle(function (feature) {
-    //         return {
-    //             icon: '<?= base_url('asset/logo-agm/favicon.png');?>',
-    //             title: feature.getProperty('company_name')
-    //         }
-    //     })
-
-    //     map.data.addListener('click', function (e) {
-    //         console.log($(this))
-    //         var company_nameField = e.feature.getProperty('company_name');
-    //         var addressField = e.feature.getProperty('address');
-    //         var logo = "<?= base_url('asset/logo-agm/favicon.png');?>";
-    //         infoWindow.setContent("<div style='width: 150px;'><img src='"
-    //             + logo +
-    //             "'/><h4>"
-    //             + company_nameField +
-    //             "</h4><p>"
-    //             + addressField +
-    //             "</p></div>");
-    //         infoWindow.setPosition(e.feature.getGeometry().get());
-    //         infoWindow.setOptions({pixelOffest: new google.maps.Size(0, -30)});
-    //         infoWindow.open(map);
-    //         console.log(e.feature.getGeometry().get());
-    //     })
-
-    //     $.each(stores.features, function (index, store) {
-    //         item = '<a href="#" class="list-group-item" data-toggle="outlet-item" data-target=' + store.id + '>' +
-    //             '<h4 class="list-group-item-heading">' + store.properties.company_name + '</h4>' +
-    //             '<p class="list-group-item-heading">' +
-    //             '<strong>Address : </strong>' + store.properties.address +
-    //             '</p>' +
-    //             '<p class="list-group-item-heading">' +
-    //             '<strong>Phone : </strong>' + store.properties.phone +
-    //             '</p>'
-    //         '</a>';
-    //         $('#store').append(item);
-    //     });
-
-    //     $('a[data-toggle="outlet-item"]').click(function (e) {
-    //         e.preventDefault()
-    //         var target = $(this).data('target');
-    //         var result = $.grep(stores.features, function (e) {
-    //             return e.id == target;
-    //         });
-    //         $('div[title="' + result[0].properties.company_name + '"]').click()
-    //     })
-
-    //     if (navigator.geolocation) {
-    //         navigator.geolocation.getCurrentPosition(function (position) {
-    //             var pos = {
-    //                 lat: position.coords.latitude,
-    //                 lng: position.coords.longitude,
-    //             };
-    //             lat.value = position.coords.latitude;
-    //             lng.value = position.coords.longitude;
-    //             // info.nodeValue = position.coords.longitude;
-
-    //             var marker = new google.maps.Marker({
-    //                 position: new google.maps.LatLng(pos),
-    //                 map: map,
-    //                 animation: google.maps.Animation.BOUNCE,
-    //             })
-    //             map.setCenter(pos);
-    //             map.setZoom(12);
-
-    //             // showLocation(mapOption, map, pos, km);
-    //         }, function () {
-    //             handleLocationError(true, map.getCenter());
-    //         });
-    //     } else {
-    //         handleLocationError(false, map.getCenter());
-    //     }
-    // }
-
-    // function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    //     infoWindow.setPosition(pos);
-    //     infoWindow.setContent(browserHasGeolocation ?
-    //         'Error: Browser hasn\'t have location.' :
-    //         'Error: Browser doesn\'t support.');
-    // }
-
-    // function infoMarker(marker, info_marker) {
-    //     var infoWindow = new google.maps.InfoWindow({
-    //         content: info_marker
-    //     });
-
-    //     marker.addListener('click', function () {
-    //         infoWindow.open(marker.get('map'), marker);
-    //     });
-    // }
 
 </script>
 <script>
@@ -339,7 +226,8 @@
                             $('#shoppingForm').show();
                             $("#size").attr('disabled', false);
                             $("#size").empty();
-                            var price = `Rp. <span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span>`
+                            var price = `<span class='line-through fw-500 fs-15 mr-15'>Rp.<span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span></span>
+                            Rp.<span class='totalprice' value="${response[0].price}">${formatter.format(response[0].price)}</span>`
                             $("#price2").html(price);
                             //$('#price2').append("<span class='totalprice' value=" + response[0].price + "><?//=number_format(floatval(), 0, ',', '.')?>//" + "</span>");
 
@@ -353,6 +241,7 @@
                                 // });
                                 $("div.toggle.active > label").trigger("click");
                             });
+                            $("#sku").val(response[0].idTr);
                         } else {
                             $('#stockDetail').hide();
                             $('#shoppingForm').hide();
@@ -377,11 +266,37 @@
                         console.log(response);
                         $("#price2").html("Rp. " + formatter.format(response.price));
                         $("#price").val(response.price);
+                        $("#sku").val(response.id);
                     }
                 });
             }
         });
     });
+</script>
+<!-- Special Package -->
+<script>
+  $(document).ready(function (){
+    const formatter = new Intl.NumberFormat('id-ID', {
+        minimumFractionDigits: 0
+    });
+
+    $('#stockDetailSP').hide();
+    $('#shoppingFormSP').hide();
+    $('#sub_district').on('change', function(){
+      var subDistrictSP = $('#sub_district').val();
+      var productIdSP = $('#product_idSP').val();
+      $('#pageloader').fadeIn(150, function() {
+        $('#pageloader').hide();
+      });
+      if(subDistrictSP){
+        $("div.toggle.active > label").trigger("click");
+        $("#stockTitle").html("Available in your location");
+        $("#stockLabel").html('<i id="stockIcon" class="fa fa-check text-oldblue"></i> In Stock');
+        $('#stockDetail').show();
+        $('#shoppingFormSP').show();
+      }
+    })
+  });
 </script>
 <script type="text/javascript">
     $('#pay-button').click(function (event) {
@@ -467,6 +382,96 @@
         });;
     });
 </script>
+
+<script>
+    var label = $('#voucher-label');
+    label.hide();
+    $('#btn-voucher').click(function (event) {
+        event.preventDefault();
+        $(this).attr("disabled", "disabled");
+        var voucher = $('#cart-code').val();
+
+        if(voucher === "") {
+            label.html('<i class="fa fa-times text-danger"></i> Please input voucher code');
+            label.attr("class","text-danger");
+            label.show();
+            $(this).removeAttr("disabled");
+        } else {
+            $.ajax({
+                url: '<?=site_url("home/check_voucher/")?>' + voucher,
+                cache: false,
+                dataType: 'json',
+                success: function(data) {
+                    //location = data;
+                    console.log('data = '+data);
+
+                    if(data.status === 0) {
+                        label.html('<i class="fa fa-times text-danger"></i> Voucher invalid');
+                        label.attr("class","text-danger");
+                        label.show();
+                        $('#btn-voucher').removeAttr("disabled");
+                    } else {
+                        label.html("");
+                        label.hide();
+                        $('#voucher-input').submit();
+                        // $('#voucher-input').remove();
+                        // label.after(`
+                        //             <div id="voucher-detail" class="row">
+                        //             <div class="col-6">
+                        //                 <p>${voucher}</p>
+                        //             </div>
+                        //             <div class="col-6">
+                        //                 <a href="#" class="float-right" id="remove-voucher" >remove</a>
+                        //             </div>
+                        //             </div>`);
+                    }
+                }
+            });
+        }
+    });
+    $('#remove-voucher').click(function (event) {
+        $('#voucher-detail').empty();
+        label.after(` <form id="voucher-input" action="#" method="post" class="m-0">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code" required="required">
+                                        <button class="btn btn-oldblue btn-block" id="btn-voucher" type="button">APPLY</button>
+                                    </div>
+                                </div>
+                        </form> `);
+    });
+</script>
+
+<script>
+$(document).ready(function () {
+    var url = window.location.href.replace(window.location.search,'');
+    $('ul li a[href="'+ url +'"]').parent().addClass('active');
+    $('ul li a').filter(function() {
+        return this.href == url;
+    }).parent().addClass('active');
+});
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#sort').change(function () {
+            var sort = $(this).val();
+            var baseUrl = "<?=current_url()?>";
+            switch (sort) {
+                case "price_asc":
+                    window.location = baseUrl + "?sort=price";
+                    break;
+                case "price_desc":
+                    window.location = baseUrl + "?sort=-price";
+                    break;
+                case "popularity":
+                    window.location = baseUrl + "?sort=popularity";
+                    break;
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

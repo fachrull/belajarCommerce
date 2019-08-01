@@ -16,15 +16,17 @@
                             <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
                             <!-- /ALERT -->
                             <form class="m-0 sky-form" action="<?= site_url('admin/changePassword');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
-                                <p class="register-box-msg">Change Password</p>
+                                <label><strong>Current Password</strong></label>
                                 <label class="input mb-10">
-                                    <input name="current" type="password" placeholder="Current Password">
+                                    <input class="form-control" name="current" type="password" placeholder="Current Password">
                                 </label>
+                                <label><strong>New Password</strong></label>
                                 <label class="input mb-10">
-                                    <input name="new" type="password" placeholder="New Password">
+                                    <input class="form-control" name="new" type="password" placeholder="New Password">
                                 </label>
+                                <label><strong>Confirm Password</strong></label>
                                 <label class="input mb-10">
-                                    <input name="confirm" type="password" placeholder="Confirm Password">
+                                    <input class="form-control" name="confirm" type="password" placeholder="Confirm Password">
                                 </label>
                                 <div class="row">
                                     <div class="col-md-12 text-right">

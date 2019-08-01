@@ -50,6 +50,12 @@
 			<!-- LEFT -->
 			<div class="col-lg-9 col-sm-8">
 
+                <?php if($this->session->has_userdata('error_trans')): ?>
+                    <div class="alert alert-danger">
+                        <?= $this->session->userdata('error_trans')?>
+                    </div>
+                <?php endif; ?>
+
 				<!-- CART -->
 				<form class="cartContent clearfix" method="post" action="<?= site_url('home/updateCart')?>">
 
@@ -60,33 +66,50 @@
 							<span class="cart_img"></span>
 							<span class="product_name fs-13 bold">PRODUCT NAME</span>
 							<span class="remove_item fs-13 bold"></span>
-							<span class="total_price fs-13 bold">TOTAL</span>
-							<span class="qty fs-13 bold">QUANTITY</span>
+							<span class="total_price fs-13 bold" style="padding-top:4px">TOTAL</span>
+							<span class="qty fs-13 bold" style="margin-right:13px">QUANTITY</span>
 						</div>
 						<!-- /cart header -->
-						<?php
-							foreach ($cart as $item) {
-
-						?>
+						<?php foreach ($cart as $item) :?>
 						<!-- cart item -->
-						<div class="item">
-							<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
-								 width="80" /></div>
-							<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
-								<span><?=$item['name']?></span>
-								<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
-							</a>
-							<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
-							<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
-							<div class="qty"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
-								<?=number_format($item['price'],0,',','.')?></div>
-							<div class="clearfix"></div>
-						</div>
+						<?php if ($item['type'] == 'special'): ?>
+							<div class="item">
+								<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/special-package/'.$item['image']);?>" alt="<?= $item['name'];?>"
+									width="80" /></div>
+									<a href="<?= site_url('home/detailSpecial/'.$item['id'])?>" class="product_name">
+										<span><?=$item['name']?></span></br>
+										<small>Products :
+											<ul>
+												<?php foreach ($item['option'] as $option): ?>
+													<li><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></li>
+												<?php endforeach; ?>
+											</ul>
+										</small>
+									</a>
+									<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
+									<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
+									<div class="qty" style="width:200px !important;"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
+										<?=number_format($item['price'],0,',','.')?></div>
+										<div class="clearfix"></div>
+									</div>
+						<?php else: ?>
+							<div class="item">
+								<div class="cart_img float-left fw-100 p-10 text-left"><img src="<?= site_url('asset/upload/'.$item['image']);?>" alt="<?= $item['name'];?>"
+									width="80" /></div>
+									<a href="<?= site_url('home/detailProduct/'.$item['id'])?>" class="product_name">
+										<span><?=$item['name']?></span>
+										<small>Size: <?= $item['sizeName']?> (<?= $item['detailSize']?>)</small>
+									</a>
+									<a href="<?= site_url('home/removeCart_item/'.$item['rowid']);?>" class="remove_item"><i class="fa fa-times"></i></a>
+									<div class="total_price">Rp. <span><?= number_format($item['subtotal'],0,',','.')?></span></div>
+									<div class="qty" style="width:200px !important;"><input type="number" value="<?=$item['qty']?>" name="qty[]" maxlength="3" max="999" min="1" /> &times; Rp.
+										<?=number_format($item['price'],0,',','.')?></div>
+										<div class="clearfix"></div>
+									</div>
+						<?php endif; ?>
 						<!-- /cart item -->
 
-						<?php
-							}
-						?>
+					<?php endforeach;?>
 
 						<!-- update cart -->
 						<button class="btn btn-oldblue mt-20 mr-10 float-right"><i class="glyphicon glyphicon-ok"></i> UPDATE CART</button>
@@ -109,19 +132,39 @@
 				<!-- TOGGLE -->
 				<div class="toggle-transparent toggle-bordered-full clearfix">
 
-<!--					<div class="toggle mt-0">-->
-<!--						<label>Voucher</label>-->
-<!---->
-<!--						<div class="toggle-content">-->
-<!--							<p class="mb-20">Enter your discount coupon code.</p>-->
-<!---->
-<!--							<form action="--><?//= site_url('home/addVoucher')?><!--" method="post" class="m-0">-->
-<!--								<input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code"-->
-<!--								 required="required">-->
-<!--								<button class="btn btn-oldblue btn-block" type="submit">APPLY</button>-->
-<!--							</form>-->
-<!--						</div>-->
-<!--					</div>-->
+					<div class="toggle mt-0">
+						<label>Voucher</label>
+
+						<div class="toggle-content">
+							<p class="mb-20">Enter your discount voucher code.</p>
+                            <span id="voucher-label"></span>
+                            <?php
+                            if($cart) {
+                                $keys = array_keys($cart);
+                                $voucher = $cart[$keys[0]]["voucher"];
+                            }
+                            if ($voucher === "") {
+                            ?>
+							<form id="voucher-input" action="<?= site_url('home/addVoucher')?>" method="post" class="m-0">
+								<div class="row">
+                                    <div class="col-12">
+                                        <input type="text" id="cart-code" name="voucher" class="form-control text-center mb-10" placeholder="Voucher Code" required="required">
+                                        <button id="btn-voucher" class="btn btn-oldblue btn-block" type="button">APPLY</button>
+                                    </div>
+                                </div>
+							</form>
+                            <?php } else { ?>
+                            <div id="voucher-detail" class="row">
+                                <div class="col-6">
+                                    <p><?=$voucher?></p>
+                                </div>
+                                <div class="col-6">
+                                    <a href="<?= site_url('home/removeVoucher')?>" class="float-right" id="remove-voucher" >remove</a>
+                                </div>
+                            </div>
+                            <?php } ?>
+						</div>
+					</div>
 
 					<!-- <div class="toggle">
 								<label>Shipping tax calculator</label>
@@ -165,10 +208,10 @@
 								<span class="float-right">Rp. <?=number_format($this->cart->total(),0,',','.')?></span>
 								<strong class="float-left">Subtotal:</strong>
 							</span>
-<!--							<span class="clearfix">-->
-<!--								<span class="float-right">Rp. 0</span>-->
-<!--								<span class="float-left">Discount:</span>-->
-<!--							</span>-->
+							<span class="clearfix">
+								<span class="float-right">Rp. <?=number_format($discount,0,',','.')?></span>
+								<span class="float-left">Discount:</span>
+							</span>
 							<!-- <span class="clearfix">
 								<span class="float-right">Rp. 0</span>
 								<span class="float-left">Shipping:</span>
@@ -177,14 +220,19 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. <?=number_format($this->cart->total(),0,',','.')?></span>
+								<span class="float-right fs-20">Rp. <?=number_format(($this->cart->total() - $discount),0,',','.')?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 
 							<hr />
 
-							<a href="<?= site_url('home/shopCheckout');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
-								Check Out</a>
+							<?php if ($add == 1): ?>
+								<a href="<?= site_url('home/shop_summary');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
+									Check Out</a>
+							<?php else: ?>
+								<a href="<?= site_url('home/shopCheckout');?>" class="btn btn-oldblue btn-lg btn-block"><i class="fa fa-mail-forward"></i>
+									Check Out</a>
+							<?php endif; ?>
 						</div>
 					</div>
 				</div>

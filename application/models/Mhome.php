@@ -70,7 +70,12 @@ class Mhome extends CI_Model{
 
   public function getPedia()
   {
-    return $this->db->get('tm_agmpedia');
+      $this->db->where('status', 1);
+      $this->db->where('deleted', 0);
+      $this->db->order_by('date', 'DESC');
+      $this->db->limit(2);
+      $query = $this->db->get('tm_agmpedia');
+      return $query->result_array();
   }
 
   public function pediaInput($data)
@@ -130,8 +135,10 @@ class Mhome extends CI_Model{
     $this->db->select('a.id, a.name');
     $this->db->from('tm_category a');
     $this->db->join('tm_product b', 'b.cat_id = a.id', 'left');
-    $where = array('b.brand_id' => $brand);
-    $this->db->where($where);
+    if($brand != NULL){
+      $where = array('b.brand_id' => $brand);
+      $this->db->where($where);
+    }
     $this->db->group_by('b.cat_id');
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
@@ -158,10 +165,11 @@ class Mhome extends CI_Model{
 
   public function getProduct_MaxMinPrice($idProduct){
     $this->db->select('a.id, MAX(a.price) as max_price, MIN(a.price) as min_price, b.name, b.id, b.brand_id, b.cat_id,
-      b.description, b.image, c.stars');
+      b.description, b.image, d.stars');
     $this->db->from('tr_product_size a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->join('tr_product_best_seller c', 'c.prod_id = a.prod_id', 'left');
+    $this->db->join('tm_product d', 'd.id = a.prod_id', 'left');
     $this->db->where('b.id', $idProduct);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
@@ -211,13 +219,14 @@ class Mhome extends CI_Model{
   // }
 
   public function checkStock_by_District($idProd, $idDistrict){
-    $this->db->select('a.id_store, a.id_product, a.id_product_size, a.quantity, b.price, c.id, c.name, c.size');
+    $this->db->select('a.id_store, a.id_product, a.id_product_size, a.postpone,
+     a.stock_akhir, b.price, b.id as idTr, c.id, c.name, c.size');
     $this->db->from('tr_product a');
     $this->db->join('tr_product_size b', 'b.id = a.id_product_size', 'left');
     $this->db->join('tm_size c', 'c.id = b.size_id', 'left');
     $this->db->join('tr_store_owner_cluster d', 'd.id_store = a.id_store', 'left');
     $this->db->group_by('a.id_product_size');
-    $where = array('d.sub_district' => $idDistrict, 'a.id_product' => $idProd, 'a.quantity >' => 3);
+    $where = array('d.sub_district' => $idDistrict, 'a.id_product' => $idProd);
     $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
@@ -225,7 +234,32 @@ class Mhome extends CI_Model{
     } else {
       return FALSE;
     }
+  }
 
+  public function specialPacakge_detail($id_SP){
+    $this->db->select('b.id, b.total as price, b.name, b.image');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_special_package b', 'b.id = a.special');
+    $this->db->where('a.id', $id_SP);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function detail_productSP($id_tr_prod_size){
+    $this->db->select('b.name');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id');
+    $this->db->where('a.id', $id_tr_prod_size);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
   }
 
   public function detailProfileCustomer($idUserLogin){
@@ -285,10 +319,26 @@ class Mhome extends CI_Model{
       $this->db->where('c.id', $id_stock_tr);
       $query = $this->db->get();
       if($query->num_rows()!=0){
-          return $query->result_array();
+          return $query->row_array();
       }else{
           return FALSE;
       }
+  }
+
+  public function detailproduct_order($id_prod, $brand){
+    $this->db->select('a.image, b.price');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $where = array(
+      'a.id' => $id_prod
+    );
+    $this->db->where($where);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
   }
 
   public function listOrderCustomer($idUserLogin, $criteria = NULL){
@@ -313,35 +363,50 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product, c.name, c.image,
-      f.phone, f.address, f.postcode, g.nama as provinsi, h.nama as kabupaten, i.nama as kecamatan,
-      k.name as size_name, k.size');
-
+    $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, b.kode_voucher,
+      c.address, c.phone, c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
     $this->db->from('tm_order a');
-    $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
-    $this->db->join('tr_product b', 'b.id = aa.id_tr_Product', 'left');
-    $this->db->join('tm_product c', 'c.id = b.id_product', 'inner');
-    $this->db->join('tm_customer_detail f', 'f.id = a.address_detail', 'left');
-    $this->db->join('provinsi g', 'g.id_prov = f.province', 'left');
-    $this->db->join('kabupaten h', 'h.id_kab = f.city', 'left');
-    $this->db->join('kecamatan i', 'i.id_kec = f.sub_district', 'left');
-    $this->db->join('tr_product_size j', 'j.id = b.id_product_size', 'left');
-    $this->db->join('tm_size k', 'k.id = j.size_id', 'left');
-    $where = array('a.id' => $idOrder, 'a.id_userLogin' => $idCustomer);
+    $this->db->join('tm_voucher b', 'b.id = a.id_voucher', 'left');
+    $this->db->join('tm_customer_detail c', 'c.id = a.address_detail', 'left');
+    $this->db->join('provinsi d', 'd.id_prov = c.province', 'left');
+    $this->db->join('kabupaten e', 'e.id_kab = c.city', 'left');
+    $this->db->join('kecamatan f', 'f.id_kec = c.sub_district', 'left');
+    $where = array(
+      'a.id'            => $idOrder,
+      'a.id_userLogin'  => $idCustomer
+    );
     $this->db->where($where);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
-      return $query->result();
-    } else {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function orderList($idOrder){
+    $this->db->select('a.id_product, a.quantity, a.subtotal, a.special, b.name, b.image as image_retail, , ');
+    $this->db->from('tr_order_detail a');
+    $this->db->join('tm_product b', 'b.id = a.id_product', 'left');
+    $this->db->join('tr_product_size c', 'c.id = a.id_tr_prod_size', 'left');
+    $this->db->join('tm_special_package d', 'd.id = a.id_product', 'left');
+    $this->db->where('a.id_tm_order', $idOrder);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
       return FALSE;
     }
   }
 
     public function getDetailOrder($orderId){
-        $this->db->select('a.id, a.order_number, a.status_order, aa.quantity, aa.subtotal, a.total, a.order_date, aa.id_tr_product');
-
+        $this->db->select('a.id, a.order_number, a.status_order, aa.quantity,
+         aa.subtotal, a.total, a.order_date, aa.id_tr_prod_size, c.id_store, d.prod_id');
         $this->db->from('tm_order a');
-        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id');
+        $this->db->join('tr_order_detail aa', 'aa.id_tm_order = a.id', 'left');
+        $this->db->join('tm_customer_detail b', 'b.id = a.address_detail', 'left');
+        $this->db->join('tr_store_owner_cluster c', 'c.sub_district = b.sub_district', 'left');
+        $this->db->join('tr_product_size d', 'd.id = aa.id_tr_prod_size', 'left');
         $where = array('a.order_number' => $orderId);
         $this->db->where($where);
         $query = $this->db->get();
@@ -353,18 +418,26 @@ class Mhome extends CI_Model{
     }
 
   public function getOrderList($id) {
-      $this->db->where('id_userlogin', $id);
-      $this->db->where('status_order != 1 AND status_order != 3');
+      $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, sum(b.quantity) as item_number');
+      $this->db->from('tm_order a');
+      $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id');
+      $this->db->where('a.id_userlogin', $id);
+      $this->db->where('a.status_order != 1 AND a.status_order != 3');
+      $this->db->group_by('a.id');
       $this->db->order_by('order_date', 'DESC');
-      $result = $this->db->get('tm_order');
+      $result = $this->db->get();
       return $result->result_array();
   }
 
     public function getOrderHistory($id) {
-        $this->db->where('id_userlogin', $id);
-        $this->db->where('status_order = 1 OR status_order = 3');
+        $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, sum(b.quantity) as item_number');
+        $this->db->from('tm_order a');
+        $this->db->join('tr_order_detail b', 'b.id_tm_order = a.id');
+        $this->db->where('a.id_userlogin', $id);
+        $this->db->where('(a.status_order = 1 OR a.status_order = 3)');
+        $this->db->group_by('a.id');
         $this->db->order_by('order_date', 'DESC');
-        $result = $this->db->get('tm_order');
+        $result = $this->db->get();
         return $result->result_array();
     }
 
@@ -383,16 +456,21 @@ class Mhome extends CI_Model{
   }
 
   public function getShop_product($brand = NULL, $category = NULL){
-    $this->db->select('a.id, a.name, a.image, b.stars, b.position');
+    $this->db->select('a.id, a.name, a.image, a.stars, a.position, c.image_1');
     $this->db->from('tm_product a');
-    $this->db->join('tr_product_best_seller b', 'b.prod_id = a.id', 'left');
+    $this->db->join('tr_product_image c', 'c.id_prod = a.id', 'left');
+    $this->db->join('tr_product_size d', 'd.prod_id = a.id', 'left');
+    $this->db->where('a.deleted', 0);
+    $this->db->where('a.active', 1);
     if ($brand != NULL) {
       $this->db->where('a.brand_id', $brand);
     }
     if ($category != NULL) {
       $this->db->where('a.cat_id', $category);
     }
-    $this->db->order_by('b.position', 'asc');
+    $this->db->select_min('d.price');
+    $this->db->order_by('a.position', 'asc');
+    $this->db->group_by('a.id');
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
@@ -402,12 +480,16 @@ class Mhome extends CI_Model{
   }
 
   public function bed_linenProducts($brand = NULL){
-    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image, d.stars, d.position');
+    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image, a.stars, d.position, e.image_1');
+    $this->db->select_min('f.price');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
     $this->db->join('tr_product_bed_linen d', 'd.prod_id = a.id', 'left');
+    $this->db->join('tr_product_image e', 'e.id_prod = a.id', 'left');
+    $this->db->join('tr_product_size f', 'f.prod_id = a.id', 'left');
     $this->db->order_by('d.position', 'asc');
+    $this->db->group_by('a.id');
     if ($brand == NULL) {
       $this->db->where('a.cat_id', 2);
     }else{
@@ -421,6 +503,22 @@ class Mhome extends CI_Model{
       return FALSE;
     }
   }
+
+    public function get_list_bed_linen(){
+        $this->db->select('a.id, b.name, b.stars, c.sub_price, d.image_1');
+        $this->db->select_min('c.price');
+        $this->db->from('tr_product_bed_linen a');
+        $this->db->join('tm_product b', 'b.id = a.prod_id', 'inner');
+        $this->db->join('tr_product_size c', 'b.id = c.prod_id', 'inner');
+        $this->db->join('tr_product_image d', 'b.id = d.id_prod', 'inner');
+        $this->db->group_by('a.id');
+        $query = $this->db->get();
+        if ($query->num_rows() != 0) {
+            return $query->result_array();
+        } else {
+            return FALSE;
+        }
+    }
 
   public function bed_linenBrands(){
     $this->db->select('b.id, b.name as brand');
@@ -438,19 +536,27 @@ class Mhome extends CI_Model{
   }
 
   public function beddingAcc($brand = NULL, $category = NULL){
-    $this->db->select('a.id, a.name, a.image, d.stars, d.position');
-    $this->db->from('tm_product a');
-    $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
-    $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
-    $this->db->join('tr_product_bedding_acc d', 'd.prod_id = a.id', 'left');
-    $this->db->order_by('d.position', 'asc');
-    $where = "a.cat_id != 1 AND a.cat_id != 2";
+    $this->db->select('a.position, b.id, b.name, b.image, b.stars, f.sub_price, e.image_1');
+    $this->db->select_min('f.price');
+    $this->db->from('tr_product_bedding_acc a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->join('tm_brands c', 'c.id = b.brand_id', 'left');
+    $this->db->join('tm_category d', 'd.id = b.cat_id', 'left');
+    $this->db->join('tr_product_image e', 'e.id_prod = b.id', 'left');
+    $this->db->join('tr_product_size f', 'f.prod_id = a.prod_id', 'left');
+    $this->db->group_by('f.prod_id');
+    $this->db->order_by('a.position', 'asc');
+    $where = array(
+      'b.cat_id !='   => 1,
+      'b.cat_id !='   => 2,
+      'b.brand_id !=' => 0
+    );
     $this->db->where($where);
     if ($brand != NULL) {
-      $this->db->where('a.brand_id', $brand);
+      $this->db->where('b.brand_id', $brand);
     }
     if ($category != NULL) {
-      $this->db->where('a.cat_id', $category);
+      $this->db->where('b.cat_id', $category);
     }
     // foreach ($where as $key => $value) {
     // }
@@ -467,7 +573,7 @@ class Mhome extends CI_Model{
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
-    $this->db->where("a.cat_id != 1 AND a.cat_id != 2");
+    $this->db->where("a.cat_id != 1 AND a.cat_id != 2 AND a.cat_id != 0");
     if ($brand != NULL) {
       $this->db->where('a.brand_id', $brand);
     }
@@ -488,7 +594,7 @@ class Mhome extends CI_Model{
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.brand_id', 'left');
-    $this->db->where("a.cat_id != 1 AND a.cat_id != 2");
+    $this->db->where("a.cat_id != 1 AND a.cat_id != 2 AND a.brand_id != 0");
     $this->db->group_by('a.brand_id');
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
@@ -528,16 +634,144 @@ class Mhome extends CI_Model{
   }
 
   public function detail_specialPackage($idSpecialPckg){
-    $this->db->select('c.name as prod, d.name as sizeName, d.size as sizeDetail, a.quantity, a.priceSpcl');
-    $this->db->from('tr_special_package a');
-    $this->db->join('tr_product_size b', 'b.id = a.id_tr_prod_size', 'left');
-    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
-    $this->db->join('tm_size d', 'd.id = b.size_id', 'left');
-    $this->db->where('a.id_special_package', $idSpecialPckg);
+    $this->db->select('d.id, d.name as prod, e.name as sizeName, e.size as sizeDetail,
+     b.quantity, b.subtotal as priceSpcl');
+    $this->db->from('tm_special_package a');
+    $this->db->join('tr_special_package b', 'b.id_specialPkg = a.id', 'left');
+    $this->db->join('tr_product_size c', 'c.id = b.id_prod_package', 'left');
+    $this->db->join('tm_product d', 'd.id = c.prod_id', 'left');
+    $this->db->join('tm_size e', 'e.id = c.size_id', 'left');
+    $this->db->where('a.id', $idSpecialPckg);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
     }else {
+      return FALSE;
+    }
+  }
+
+  public function detail_SPCart($idSpecialPckg){
+    $this->db->select('c.id, c.name as prod, d.name as sizeName, d.size as sizeDetail, a.quantity');
+    $this->db->from('tr_special_package a');
+    $this->db->join('tr_product_size b', 'b.id = a.id_prod_package', 'left');
+    $this->db->join('tm_product c', 'c.id = b.prod_id', 'left');
+    $this->db->join('tm_size d', 'd.id = b.size_id', 'left');
+    $this->db->where('a.id_specialPkg', $idSpecialPckg);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function prime_specialPKG($prod_id){
+    $this->db->select('a.id, a.name, a.image, a.description, b.price');
+    $this->db->from('tm_product a');
+    $this->db->join('tr_product_size b', 'b.prod_id = a.id', 'left');
+    $this->db->where('a.id', $prod_id);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function listBestSeller_Product($brand = NULL, $cat = NULL){
+    $this->db->select('b.id as id, b.name, b.image, b.stars, a.position, d.sub_price, c.image_1');
+    $this->db->select_min('d.price');
+    $this->db->from('tr_product_best_seller a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+    $this->db->join('tr_product_image c','c.id_prod=a.prod_id','left');
+    $this->db->join('tr_product_size d', 'd.prod_id=a.prod_id', 'left');
+    $this->db->group_by('a.prod_id');
+    $this->db->order_by('b.position', 'asc');
+    if ($brand != NULL && $cat != NULL) {
+      $where = array(
+        'b.brand_id'  =>  $brand,
+        'b.cat_id'    =>  $cat
+      );
+      $this->db->where($where);
+    }elseif ($brand != NULL && $cat == NULL) {
+      $where = array(
+        'b.brand_id'  =>  $brand,
+      );
+      $this->db->where($where);
+    }elseif ($brand == NULL && $cat != NULL) {
+      $where = array(
+        'b.cat_id'    =>  $cat
+      );
+      $this->db->where($where);
+    }
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function topthree_bestSeller(){
+    $this->db->select('b.id, a.position, b.name, c.image_1 as image');
+    $this->db->from('tr_product_best_seller a');
+    $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
+      $this->db->join('tr_product_image c', 'c.id_prod = b.id', 'left');
+    $this->db->limit(3);
+    $this->db->order_by('a.position', 'asc');
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->result_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function getProductImage($idProduct) {
+      $this->db->select('a.image_1, a.image_2, a.image_3');
+      $this->db->from('tr_product_image a');
+      $this->db->join('tm_product b', 'a.id_prod = b.id', 'inner');
+      $this->db->where('b.id', $idProduct);
+      $query = $this->db->get();
+      if ($query->num_rows() != 0) {
+          return $query->row_array();
+      } else {
+          return FALSE;
+      }
+  }
+
+  function search($keyword)
+  {
+      $this->db->select('a.id,a.name,a.stars,a.image,b.image_1');
+      $this->db->from('tm_product a');
+      $this->db->join('tr_product_image b','b.id_prod=a.id','left');
+      $this->db->like('name',$keyword);
+      $query  =   $this->db->get();
+      return $query->result_array();
+  }
+
+  public function detailSpecial($idSpecialPckg){
+    $this->db->select('a.id, a.name, a.description, a.image, a.total as price, b.id as sku');
+    $this->db->from('tm_special_package a');
+    $this->db->join('tr_product_size b', 'b.special = a.id');
+    $this->db->where('a.id', $idSpecialPckg);
+    $query = $this->db->get();
+    if($query->num_rows() != 0){
+      return $query->row_array();
+    }else {
+      return FALSE;
+    }
+  }
+
+  public function detailProdSize($id_prod_size){
+    $this->db->select('b.name, b.size');
+    $this->db->from('tr_product_size a');
+    $this->db->join('tm_size b', 'b.id = a.size_id', 'left');
+    $this->db->where('a.id', $id_prod_size);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else{
       return FALSE;
     }
   }

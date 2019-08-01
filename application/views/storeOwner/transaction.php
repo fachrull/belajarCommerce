@@ -17,7 +17,8 @@
             <th>Action</th>
           </thead>
           <tbody>
-                <?php $no = 1;foreach ($transactions as $transaction): ?>
+                <?php $no = 1;
+                if($transactions != NULL) {foreach ($transactions as $transaction): ?>
                   <tr>
                     <td><?= $no?></td>
                     <td><?= $transaction['order_number']?></td>
@@ -37,10 +38,10 @@
                                 echo "<p class=\"label label-danger btn-sm\">Pesanan Dibatalkan</p>";
                                 break;
                             case 4:
-                                echo "<p class=\"label label-secondary btn-sm\">Pesanan diproses</p>";
+                                echo "<p class=\"label label-primary btn-sm\">Pesanan diproses</p>";
                                 break;
                             case 5:
-                                echo "<p class=\"label label-secondary btn-sm\">Pesanan Dikirim</p>";
+                                echo "<p class=\"label label-primary btn-sm\">Pesanan Dikirim</p>";
                                 break;
                             default:
                                 break;
@@ -50,7 +51,7 @@
                       <a href="<?= site_url('stores/detailTransaction/'.$transaction['id'].'/'.$transaction['id_userlogin']);?>"><i class="btn btn-primary fa fa-info"></i></a>
                     </td>
                   </tr>
-                <?php $no++; endforeach; ?>
+                <?php $no++; endforeach;} ?>
           </tbody>
         </table>
       </div>

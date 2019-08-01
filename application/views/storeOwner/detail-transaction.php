@@ -15,31 +15,31 @@
                             <table class="table">
                                 <tr>
                                     <th>Nomor Transaksi</th>
-                                    <td><?=$detailOrder[0]->order_number;?></td>
+                                    <td><?=$detailOrder['order_number'];?></td>
                                 </tr>
                                 <tr>
                                     <th>Tanggal Transaksi</th>
-                                    <td><?=$detailOrder[0]->order_date;?></td>
+                                    <td><?=$detailOrder['order_date'];?></td>
                                 </tr>
                                 <tr>
                                     <th>Customer</th>
-                                    <td class="word-wrap"><?=$detailOrder[0]->first_name." ".$detailOrder[0]->last_name?></td>
+                                    <td class="word-wrap"><?=$detailOrder['first_name']." ".$detailOrder['last_name']?></td>
                                 </tr>
                                 <tr>
                                     <th>Alamat Pengiriman</th>
                                     <td class="word-wrap">
-                                        <?=$detailOrder[0]->address.", ".$detailOrder[0]->kecamatan.', '.$detailOrder[0]->kabupaten.','.$detailOrder[0]->postcode?>
+                                        <?=$detailOrder['address'].", ".$detailOrder['kecamatan'].', '.$detailOrder['kabupaten'].', '.$detailOrder['provinsi'].', '.$detailOrder['postcode']?>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>Telepon</th>
-                                    <td><?= $detailOrder[0]->phone?></td>
+                                    <td><?= $detailOrder['phone']?></td>
                                 </tr>
                                 <tr>
                                     <th>Status Transaksi</th>
                                     <td>
                                         <?php
-                                        switch($detailOrder[0]->status_order) {
+                                        switch($detailOrder['status_order']) {
                                             case 1:
                                                 echo "<p class=\"label label-success\">Pesanan Selesai</p>";
                                                 break;
@@ -55,6 +55,9 @@
                                                 break;
                                             case 4:
                                                 echo "<p class=\"label label-primary btn-sm\">Pesanan diproses</p>";
+                                                echo " | <button type=\"button\" class=\"btn btn-sm btn-primary\" data-toggle=\"modal\" data-target=\"#modal-default\">
+                                            Ubah Status
+                                        </button>";
                                                 break;
                                             case 5:
                                                 echo "<p class=\"label label-primary btn-sm\">Pesanan Dikirim</p>";
@@ -77,10 +80,18 @@
                                                       method="post">
                                                     <div class="modal-body">
                                                         <select name="status" class="form-control">
-                                                            <option value="3">Pesanan Dibatalkan</option>
-                                                            <option value="4">Pesanan Diproses</option>
-                                                            <option value="5">Pesanan Dikirim</option>
-                                                            <option value="1">Pesanan Selesai</option>
+                                                            <option selected disabled>Pilih status</option>
+                                                            <?php
+                                                            switch($detailOrder[0]->status_order) {
+                                                                case 2:
+                                                                    echo "<option value=\"3\">Pesanan Dibatalkan</option>";
+                                                                    break;
+                                                                case 4:
+                                                                    echo "<option value=\"1\">Pesanan Selesai</option>";
+                                                                    break;
+                                                                default:
+                                                                    break;
+                                                            } ?>
                                                         </select>
                                                     </div>
                                                     <div class="modal-footer">
@@ -118,14 +129,24 @@
                             <th>Sub price</th>
                             </thead>
                             <tbody>
-                                <?php $no = 1; foreach ($detailOrder as $order): ?>
-                                    <tr>
+                                <?php $no = 1; foreach ($order_list as $order): ?>
+                                    <?php if ($order['special'] == TRUE): ?>
+                                      <tr>
                                         <td><?= $no?></td>
-                                        <td><?= $order->name?></td>
-                                        <td><?= $order->size_name.' ('.$order->size.')'?></td>
-                                        <td><?= $order->quantity?></td>
-                                        <td><?= 'Rp '.number_format(floatval($order->subtotal), 0, ',', '.')?></td>
-                                    </tr>
+                                        <td><?= $order['name']?></td>
+                                        <td>-</td>
+                                        <td><?= $order['quantity']?></td>
+                                        <td><?='Rp. '.number_format(floatval($order['subtotal']), 0, ',', '.')?></td>
+                                      </tr>
+                                    <?php else: ?>
+                                      <tr>
+                                          <td><?= $no?></td>
+                                          <td><?= $order['name']?></td>
+                                          <td><?= $order['size_name'].' ('.$order['size'].')'?></td>
+                                          <td><?= $order['quantity']?></td>
+                                          <td><?= 'Rp '.number_format(floatval($order['subtotal']), 0, ',', '.')?></td>
+                                      </tr>
+                                    <?php endif; ?>
                                 <?php $no++; endforeach; ?>
                             </tbody>
                         </table>

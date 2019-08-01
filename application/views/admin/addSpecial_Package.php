@@ -8,9 +8,9 @@
           <div class="row">
           <div class="col-md-12 col-sm-6">
             <!-- ALERT -->
-            <?php if($this->session->has_userdata('error')): ?>
+            <?php if($this->session->has_userdata('errorSpecialPackage')): ?>
               <div class="alert alert-mini alert-danger mb-30">
-                <strong>Oh snap!</strong> <?= $this->session->flashdata('error');?>
+                <strong>Oh snap!</strong> <?= $this->session->flashdata('errorSpecialPackage');?>
               </div>
             <?php elseif($this->input->post('items') == NULL): ?>
               <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
@@ -22,7 +22,7 @@
               </label>
               <div class="row mb-3">
                 <div class="col-md-12 cl-xs-12">
-                  <button type="button" class="btn btn-oldblue" data-toggle="modal" data-target="#modal-default">
+                  <button type="button" class="btn btn-oldblue mb-10" id="btn-addProd-editSP" data-toggle="modal" data-target="#modal-default">
                     <i class="fa fa-plus"></i> Add Product
                   </button>
                 </div>
@@ -34,10 +34,14 @@
                       <th>Product</th>
                       <th>Size</th>
                       <th>Quantity</th>
-                      <th>Price</th>
+                      <th>Price (Rp)</th>
                       <th>Action</th>
                     </tr>
                   </thead>
+                  <tfoot>
+                    <th colspan="3">Total</th>
+                    <th id="ttlPrc">0</th>
+                  </tfoot>
                   <tbody>
                   </tbody>
                 </table>
@@ -57,6 +61,10 @@
               <!-- <label class="input mb-10">
                 <input class="form-control" name="price" type="text" placeholder="Special Package Price">
               </label> -->
+              <label class="input mb-10">
+                <b>SKU</b>
+                <input class="form-control" type="text" name="sku" placeholder="SPKGXXXX">
+              </label>
               <div class="box-body pad pt-0 pl-0 pr-0 mb-10">
                 <textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description Special Package"></textarea>
               </div>
@@ -71,6 +79,7 @@
               </div>
                 <div class="col-md-6 text-right">
                     <button id="submitSpcl" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Special Package</button>
+                    <!-- <a id="submitSpcl" type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i> Special Package</a> -->
                 </div>
             </div>
           </form>
@@ -95,7 +104,7 @@
               <div class="col-xs-12 mb-20">
                 <div class="product-detail">
                   <form class="m-0 sky-form" action="" method="post">
-                    <label for="input mb-10">
+                    <label for="input mb-10" style="width:100%">
                       <label for="productSP">Product</label>
                       <select class="select-form form-control" id="productSP" name="product">
                         <option value="">Select Product</option>
@@ -107,7 +116,7 @@
                     <label class="input mb-10">
                       <label for="sizeSP">Size</label>
                       <select class="select-form form-control" id="sizeSP" name="size">
-                        <option value="">Select Size</option>
+                        <option value="" disabled selected>Select Size</option>
                       </select>
                     </label>
                     <label class="input mb-10">
@@ -115,8 +124,12 @@
                       <input class="form-control" type="number" id="qtySP">
                     </label>
                     <label class="input mb-10">
-                      <label for="price">Price</label>
-                      <input class="form-control" type="text" id="price" name="" value="">
+                      <label>Retail price</label>
+                      <input type="text" class="form-control" disabled id="prcSP">
+                    </label>
+                    <label class="input mb-10">
+                      <label>Price</label>
+                      <input class="form-control" type="text" id="price" name="price" >
                     </label>
                   </form>
                 </div>

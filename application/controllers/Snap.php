@@ -5,53 +5,77 @@ class Snap extends CI_Controller {
 	public function __construct()
     {
         parent::__construct();
-        $params = array('server_key' => 'SB-Mid-server--tJLtZ_iEZ3G_oN_ixz3rtF3', 'production' => false);
-        $this->load->library('midtrans');
-        $this->midtrans->config($params);
 		$this->load->helper('url');
         $this->load->model('Mhome', 'mhome');
+        // TODO: get server-key
+        $serverKey = $this->mhome->getProducts(NULL, NULL, 'midtrans_config', TRUE);
+        $params = array('server_key' => $serverKey['server_key'], 'production' => false);
+        $this->load->library('midtrans');
+        $this->midtrans->config($params);
     }
 
     public function token()
     {
         $carts = $this->cart->contents();
         $address = $this->mhome->customer_detail($carts[key($carts)]['id_address']);
-		// Required
-		$transaction_details = array(
-		  'order_id' => 'AGM'.date("dmy").rand(1, 999),
-		  'gross_amount' => $this->cart->total() // no decimal allowed for creditcard
-		);
 
-		$item_details = array();
-		foreach ($carts as $item) {
-		    $item_detail = array(
-		        'id' => $item['id'],
-                'price' => $item['price'],
-                'quantity' => $item['qty'],
-                'brand' => $item['name'],
-                'name' => $item['sizeName']
-            );
-		    array_push($item_details, $item_detail);
+        $discount = 0;
+
+				$item_details = array();
+				foreach ($carts as $item) {
+		    // special package item
+            if($item['type'] == "special") {
+                $item_detail = array(
+                    'id' => $item['id'],
+                    'price' => $item['price'],
+                    'quantity' => $item['qty'],
+                    'name' => $item['name']
+                );
+                array_push($item_details, $item_detail);
+
+                foreach ($item['option'] as $option) {
+                    $item_option = array(
+                        'id' => $option['id_prod'],
+                        'price' => 0,
+                        'quantity' => $option['quantity'],
+                        'name' => $option['name'].' - '.$option['nameSize']
+                    );
+                    array_push($item_details, $item_option);
+                }
+            } else {
+                $item_detail = array(
+                    'id' => $item['id'],
+                    'price' => $item['price'],
+                    'quantity' => $item['qty'],
+                    'name' => $item['name'] . ' - ' . $item['sizeName']
+                );
+                array_push($item_details, $item_detail);
+            }
         }
 
-		// Optional
-		$item1_details = array(
-		  'id' => 'a1',
-		  'price' => 18000,
-		  'quantity' => 3,
-		  'name' => "Apple"
-		);
+		// Voucher item
+        $keys = array_keys($carts);
+        $voucher = $carts[$keys[0]]["voucher"];
 
-		// Optional
-		$item2_details = array(
-		  'id' => 'a2',
-		  'price' => 20000,
-		  'quantity' => 2,
-		  'name' => "Orange"
-		);
+        if ($voucher != "") {
+            $result = $this->mhome->getProducts(array('kode_voucher' => $voucher), array('discount', 'discount'), 'tm_voucher', TRUE);
+            $discount = floatval($this->cart->total() * $result['discount']);
 
-		// Optional
-//		$item_details = array ($item1_details, $item2_details);
+            $voucher_details = array(
+                'id' => $voucher,
+                'price' => (-1 * $discount),
+                'quantity' => 1,
+                'name' => "Voucher: " . $voucher
+            );
+
+            array_push($item_details, $voucher_details);
+        }
+
+        // Required
+        $transaction_details = array(
+            'order_id' => 'AGM'.date("dmy").rand(1, 999),
+            'gross_amount' => ($this->cart->total() - $discount) // no decimal allowed for creditcard
+        );
 
 		// Optional
 		$billing_address = array(
@@ -85,7 +109,7 @@ class Snap extends CI_Controller {
             'unit' => 'day',
             'duration'  => 1
         );
-        
+
         $transaction_data = array(
             'transaction_details'=> $transaction_details,
             'item_details'       => $item_details,
@@ -119,7 +143,7 @@ class Snap extends CI_Controller {
         $successStatusCode = array('200', '201', '202');
     	$result = json_decode($this->input->post('result_data'));
     	if (in_array($result->status_code, $successStatusCode)) {
-    	    redirect('home/purchase/'.$result->order_id);
+    	    redirect('home/purchase/'.$result->order_id.'/'.$result->status_code);
         }
     	echo 'RESULT <br><pre>';
     	print_r($result);
@@ -135,12 +159,49 @@ class Snap extends CI_Controller {
             $data['detailOrder'] = $this->mhome->getDetailOrder($orderId);
 
             foreach ($data['detailOrder'] as $item) {
-                $id = $item->id_tr_product;
+                $id_tr_prod_size = $item->id_tr_product;
+								$id_prod = $item->prod_id;
+								$id_store = $item->id_store;
                 $qty = $item->quantity;
-                $qtyStore = $this->mhome->getProducts(array('id' => $id), array('qty' => 'quantity'), 'tr_product', TRUE);
-                $newQuanStore = $qtyStore['quantity'] + $qty;
-                $quantity = array('quantity' => $newQuanStore);
-                $this->mhome->updateData(array('id' => $id), $quantity, 'tr_product');
+                $qtyStore = $this->mhome->getProducts(
+									array('id_store' => $id_store, 'id_product' => $id_prod, 'id_product_size' => $id_tr_prod_size),
+									array('ppone' => 'postpone', 'sakhir' => 'stock_akhir'), 'tr_product', TRUE);
+								$postpone = $qtyStore['postpone'] - $qty;
+	              $stock_akhir = $qtyStore['stock_akhir'] + $qty;
+	              $update_stock = array(
+	                  'stock_akhir' => $stock_akhir,
+	                  'postpone'    => $postpone
+	              );
+	              $this->mhome->updateData(array('id_product_size' => $id), $update_stock, 'tr_product');
+						}
+        } else if ($transactionStatus == 4) {
+            $data['detailOrder'] = $this->mhome->getDetailOrder($orderId);
+            foreach ($data['detailOrder'] as $item) {
+							$id_tr_prod_size = $item->id_tr_product;
+							$id_prod = $item->prod_id;
+							$id_store = $item->id_store;
+							$qty = $item->quantity;
+                $qtyStore = $this->mhome->getProducts(
+									array('id_store' => $id_store, 'id_product' => $id_prod, 'id_product_size' => $id_tr_prod_size),
+									array('postpone' => 'postpone', 'outbound' => 'outbound', 'id_store' => 'id_store',
+									 'id_product_size' => 'id_product_size'), 'tr_product', TRUE);
+                $postpone = $qtyStore['postpone'] - $qty;
+                $outbound = $qtyStore['outbound'] + $qty;
+                $update_stock = array(
+                    'outbound' => $outbound,
+                    'postpone'    => $postpone
+                );
+                $history_inbound = array(
+                    'id_prod_size'  => $qtyStore['id_product_size'],
+                    'id_store'      => $qtyStore['id_store'],
+										'invoice'				=> $orderId,
+                    'quantity'      => $outbound * -1
+                );
+                $this->mhome->inputData('tr_stock', $history_inbound);
+                $this->mhome->updateData(
+									array('id_store' => $id_store, 'id_product' => $id_prod, 'id_product_size' => $id_tr_prod_size),
+								 $update_stock, 'tr_product');
+                print_r($qtyStore);
             }
         }
     }
@@ -180,9 +241,11 @@ class Snap extends CI_Controller {
             }
         }
         else if ($transaction == 'settlement'){
-            // TODO set payment status in merchant's database to 'Settlement'
-            $this->changeTransactionStatus($order_id, 4);
-            echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+            if ($type != 'credit_card') {
+                // TODO set payment status in merchant's database to 'Settlement'
+                $this->changeTransactionStatus($order_id, 4);
+                echo "Transaction order_id: " . $order_id ." successfully transfered using " . $type;
+            }
         }
         else if($transaction == 'pending'){
             // TODO set payment status in merchant's database to 'Pending'

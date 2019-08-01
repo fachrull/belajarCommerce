@@ -37,9 +37,12 @@ class Stores extends CI_Controller{
     if ($this->session->userdata('uType') == 3) {
       if ($idStore === FALSE && $idProd === FALSE) {
 
-        $idStore = $this->mstore->getProducts(array('id_userlogin' => $this->session->userdata('uId')), array('idField' => 'id'), 'tm_store_owner', TRUE);
+        $idStore = $this->mstore->getProducts(array('id_userlogin' =>
+        $this->session->userdata('uId')), array('idField' => 'id'),
+        'tm_store_owner', TRUE);
         $data['products'] = $this->mstore->productAcceptStore($idStore['id']);
-        
+        // print_r($this->db->last_query());exit();
+
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('storeOwner/productStore', $data);
@@ -84,14 +87,16 @@ class Stores extends CI_Controller{
       $this->load->helper('form');
       $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('quantity','Quantity','required');
+      $this->form_validation->set_rules('ibound', 'Inbound', 'required');
 
       if ($this->form_validation->run() === FALSE) {
         $id = array('idStore' => $idStore, 'idProd' => $idProd, 'idProdSize' => $idProdSize);
         $data['id'] = $id;
-        $data['product'] = $this->mstore->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
-        $data['quantity'] = $this->mstore->getProducts(array('id_store' => $idStore, 'id_product' => $idProd, 'id_product_size' => $idProdSize),
-         array('qtyField' => 'quantity'),'tr_product', TRUE);
+        $data['product'] = $this->mstore->getProducts(array('id' => $idProd), NULL,
+         'tm_product', TRUE);
+        $data['quantity'] = $this->mstore->getProducts(array('id_store' => $idStore,
+         'id_product' => $idProd, 'id_product_size' => $idProdSize),
+         array('iBound' => 'inbound'),'tr_product', TRUE);
         // print_r($data);
         // exit();
 
@@ -100,13 +105,27 @@ class Stores extends CI_Controller{
         $this->load->view('storeOwner/addQuantity', $data);
         $this->load->view('include/admin/footer');
       } else {
-        $items = array('quantity' => $this->input->post('quantity'));
+        $stAkhir = $this->mstore->getProducts(array('id_store' => $idStore, 'id_product' => $idProd,
+         'id_product_size' => $idProdSize), array('skAkhir' => 'stock_akhir'), 'tr_product', TRUE);
+        $ibound = $this->input->post('ibound');
+        $update_stAkhir = $ibound + $stAkhir['stock_akhir'];
+        $items = array(
+          'inbound'     => $ibound,
+          'stock_akhir' => $update_stAkhir
+        );
         $condition = array(
           'id_store'        => $idStore,
           'id_product'      => $idProd,
           'id_product_size' => $idProdSize
         );
         $this->mstore->updateData($condition, $items, 'tr_product');
+
+        $history_inbound = array(
+          'id_prod_size'  => $idProdSize,
+          'id_store'      => $idStore,
+          'quantity'      => $ibound
+        );
+        $this->mstore->inputData('tr_stock', $history_inbound);
         redirect('stores/storeProduct');
       }
     } else {
@@ -114,7 +133,57 @@ class Stores extends CI_Controller{
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
     }
+  }
 
+  public function addQuantity_SpecialPkg($idStore, $idProd){
+    if ($this->session->userdata('uType') == 3) {
+      $this->load->helper('form');
+      $this->load->library('form_validation');
+
+      $this->form_validation->set_rules('quantity', 'Quantity', 'required');
+
+      if ($this->form_validation->run() === FALSE) {
+        $data['core'] = array('idStore' => $idStore, 'idProd' => $idProd);
+        $data['qty'] = $this->mstore->qtySpecial_Pkg($idStore, $idProd);
+
+        $this->load->view('include/admin/header');
+        $this->load->view('include/admin/left-sidebar');
+        $this->load->view('storeOwner/addQty_SpecialPkg', $data);
+        $this->load->view('include/admin/footer');
+      }else {
+        $condition = array(
+          'id_store'    =>  $idStore,
+          'id_product'  =>  $idProd,
+        );
+
+        $addQuantity = array(
+          'quantity'    =>  $this->input->post('quantity')
+        );
+
+        $this->mstore->updateData($condition, $addQuantity, 'tr_product');
+        redirect('stores/storeProduct');
+      }
+    }else{
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
+  }
+
+  public function detailSpecialPackage($prod_id){
+    if ($this->session->userdata('uType') == 3) {
+      $data['detail_SpclPckg'] = $this->mstore->detailSpecialPackage($prod_id);
+      $data['prod_SpclPckg'] = $this->mstore->prodSpecial_Pkg($prod_id);
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('storeOwner/detail_specialPkg', $data);
+      $this->load->view('include/admin/footer');
+    }else {
+      $this->load->view('include/header2');
+      $this->load->view('un-authorise');
+      $this->load->view('include/footer');
+    }
   }
 
   public function updateTransactionStatus($idOrder, $idCustomer) {
@@ -171,8 +240,9 @@ class Stores extends CI_Controller{
   public function transaction(){
     if ($this->session->userdata('uType') == 3) {
       $idStore = $this->session->userdata('uId');
-      $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore), array('idField' => 'id'), 'tm_store_owner', TRUE);
-      $data['transactions'] = $this->mstore->order_list($idStOwner['id']);
+      $idStOwner = $this->mstore->getProducts(array('id_userlogin' => $idStore),
+       array('idField' => 'id'), 'tm_store_owner', TRUE);
+      $data['transactions'] = $this->mstore->testOrderList($idStOwner['id']);
 
       $this->load->view('include/admin/header');
       $this->load->view('include/admin/left-sidebar');
@@ -205,11 +275,44 @@ class Stores extends CI_Controller{
     }
 
   public function detailTransaction($idOrder, $idCustomer){
-        $this->load->view('include/admin/header');
-        $data['detailOrder'] = $this->mstore->getDetailOrder($idOrder, $idCustomer);
-        $this->load->view('include/admin/left-sidebar');
-        $this->load->view('storeOwner/detail-transaction', $data);
-        $this->load->view('include/admin/footer');
+      $data['detailOrder'] = $this->mstore->testgetDetailOrder($idOrder, $idCustomer);
+      $listOrder = $this->mstore->getProducts(array('id_tm_order' => $idOrder), array('sbttl' => 'subtotal', 'qty' => 'quantity',
+        'spcl' => 'special', 'idtrProdSize' => 'id_tr_prod_size', 'idProd' => 'id_product'), 'tr_order_detail', FALSE);
+      $order_list = array();
+      foreach ($listOrder as $list) {
+        if ($list['special'] == TRUE) {
+          $mainSP = $this->mstore->getProducts(array('id' => $list['id_product']), array('name' => 'name', 'img' => 'image'), 'tm_special_package', TRUE);
+          $detailSP = $this->mstore->listOrderSP($list['id_product']);
+          $detail_prod = array(
+            'special'   =>  $list['special'],
+            'name'      =>  $mainSP['name'],
+            'size_name' =>  '',
+            'size'      =>  '',
+            'quantity'  =>  $list['quantity'],
+            'subtotal'  =>  $list['subtotal'],
+            'option'    =>  $detailSP
+          );
+          array_push($order_list, $detail_prod);
+        }else{
+          $prod = $this->mstore->listOrderRetail($list['id_product'], $list['id_tr_prod_size']);
+          $detail_prod = array(
+            'special'   =>  $list['special'],
+            'name'      =>  $prod['name'],
+            'size_name' =>  $prod['sizeName'],
+            'size'      =>  $prod['sizeDetail'],
+            'quantity'  =>  $list['quantity'],
+            'subtotal'  =>  $list['subtotal'],
+            'option'    => '',
+          );
+          array_push($order_list, $detail_prod);
+        }
+      }
+      $data['order_list'] = $order_list;
+
+      $this->load->view('include/admin/header');
+      $this->load->view('include/admin/left-sidebar');
+      $this->load->view('storeOwner/detail-transaction', $data);
+      $this->load->view('include/admin/footer');
   }
 
     public function profile()

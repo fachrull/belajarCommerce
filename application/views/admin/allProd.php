@@ -53,8 +53,8 @@
                 <th>Brand</th>
                 <th>Category</th>
                 <th>Product</th>
-                <th>Price</th>
-                <th>Sub Price</th>
+                <th>Stars</th>
+                <th>Position</th>
                 <th>Action</th>
               </thead>
               <tbody>
@@ -65,8 +65,16 @@
                       <td><?=$product['brand_name'];?></td>
                       <td><?=$product['cat_name'];?></td>
                     <td><?= $product['product'];?></td>
-                    <td><?= 'Rp '. number_format(floatval($product['price']), 0, ",", ".")?></td>
-                    <td>-</td>
+                    <td>
+                      <?php if ($product['stars'] == 0): ?>
+                        <p><?= $product['stars']?></p>
+                      <?php else: ?>
+                        <?php ;for($i = 0; $i < $product['stars']; $i++): ?>
+                          <span class="glyphicon glyphicon-star"></span>
+                        <?php endfor; ?>
+                      <?php endif; ?>
+                    </td>
+                      <td><?=$product['position']?></td>
                     <td>
                       <a href="<?= site_url('admin/detailProd/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                       <a href="<?= site_url('admin/deleteProd/'.$product['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>

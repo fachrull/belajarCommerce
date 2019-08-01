@@ -15,7 +15,8 @@
             </h2>
           <div class="row">
             <div class="col-xs-6 mb-20">
-            <img src="<?= base_url('asset/upload/'.$product['image']);?>" alt="<?= $product['name'];?>">
+                <?php $img = $image['image_1'] != NULL ? $image['image_1'] : $product['image']; ?>
+            <img src="<?= base_url('asset/upload/'.$img);?>" alt="<?= $img;?>">
             </div>
             <div class="product-detail">
                 <div class="col-xs-12 col-md-6 mb-20">
@@ -30,6 +31,7 @@
                         <input name="pName" type="text" value="<?=$category['name'];?>" disabled>
                       </label>
                     </div>
+                      <?php if ($specs != NULL): ?>
                     <div class="col-xs-12">
                       <label class="input"> <p>Specification</p>
                         <ul class="mb-10">
@@ -39,6 +41,7 @@
                         </ul>
                       </label>
                     </div>
+                      <?php endif; ?>
                     <div class="col-xs-12">
                     <label class="input"> <p>Size</p>
                       <ul>
@@ -48,6 +51,20 @@
                         <?php endfor; ?>
                       </ul>
                     </div>
+                    <div class="col-xs-12">
+                      <label class="input"> Stars</label>
+                      <?php if ($product['stars'] == 0): ?>
+                        <p><?= $product['stars']?></p>
+                      <?php else: ?>
+                        <?php ;for($i = 0; $i < $product['stars']; $i++): ?>
+                          <span class="glyphicon glyphicon-star"></span>
+                        <?php endfor; ?>
+                      <?php endif; ?>
+                    </div>
+                      <div class="col-xs-12">
+                          <label class="input"> Position</label>
+                          <?=$product['position']?>
+                      </div>
                   </div>
                 </div>
             <div class="col-xs-12">

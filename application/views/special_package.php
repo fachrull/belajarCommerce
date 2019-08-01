@@ -2,7 +2,7 @@
 <section class="page-header page-header-md">
 	<div class="container">
 
-		<h1>SPECIAL PACKAGE</h1>
+		<h1>ONLINE PROMOTION</h1>
 
 		<!-- breadcrumbs -->
 		<!-- <ol class="breadcrumb">

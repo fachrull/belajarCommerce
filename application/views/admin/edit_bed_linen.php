@@ -17,12 +17,13 @@
           </div>
           <div class="row mb-20">
             <div class="col-xs-12 mb-20">
+              <div class="bordered text-center">
+                <text style="color:red"><?= validation_errors();?></text>
+              </div>
               <div class="product-detail">
                 <form class="m-0 sky-form" action="<?= site_url('admin/edit_bed_linen/'.$product_bedlinen['id'])?>" method="post">
                   <label class="input mb-10">
-                    <input name="stars" type="number" min="0" max="5" placeholder="Stars" value="<?= $product_bedlinen['stars']?>">
-                  </label>
-                  <label class="input mb-10">
+                    <label for="">Position</label>
                     <input type="number" name="position" value="<?= $product_bedlinen['position']?>" min="1" max="<?= $maxPosition['max']?>" placeholder="Position">
                   </label>
                   <div class="row">

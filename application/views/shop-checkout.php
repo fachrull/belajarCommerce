@@ -47,10 +47,10 @@
 		<?php endif; ?>
 		<form class="row clearfix" method="post" action="<?= site_url('home/shopCheckout');?>">
 
-			<div class="col-lg-6 col-sm-6">
+			<div class="col-lg-5 col-sm-5">
 
 				<?php if ($alamat_default['sub_district'] == $addressCart['id_kec']): ?>
-					<div class="heading-title">
+					<div class="heading-title" style="margin-bottom:0;">
 						<h4>Shipping Address</h4>
 						<!-- <h4>Billing &amp; Shipping to</h4> -->
 					</div>
@@ -104,7 +104,12 @@
 								<input type="hidden" name="postcode" value="<?= $alamat_default['postcode']?>">
 							</div>
 						</div>
-
+						<div class="row">
+							<div class="col-lg-12">
+              	<label for="billing_note">Note</label>
+                <textarea name="note" id="note" cols="30" rows="5" class="form-control"></textarea>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<label for="billing_phone">Email</label>
@@ -121,7 +126,7 @@
 				</div>
 
 				<?php else: ?>
-					<div class="heading-title">
+					<div class="heading-title mb-0 pl-15">
 						<h4>Shipping Address</h4>
 						<!-- <h4>Billing &amp; Shipping to</h4> -->
 					</div>
@@ -143,8 +148,9 @@
 						<div class="row">
 							<div class="col-lg-12">
 								<label for="billing_address1">Address</label>
-								<input id="billing_address1" name="address" type="text" class="form-control required" />
-							</div>
+                                <p style="color:gray;font-size:11px;">(Alamat pengiriman harus sesuai dengan kecamatan yang dipilih).</p>
+                                <input id="billing_address1" name="address" type="text" class="form-control required" />
+                            </div>
 						</div>
 
 						<div class="row">
@@ -171,7 +177,12 @@
 								<input id="billing_zipcode" name="postcode" type="text" class="form-control required" />
 							</div>
 						</div>
-
+						<div class="row">
+							<div class="col-lg-12">
+              	<label for="billing_note">Note</label>
+                <textarea name="note" id="note" cols="30" rows="5" class="form-control"></textarea>
+							</div>
+						</div>
 						<div class="row">
 							<div class="col-md-6 col-sm-6">
 								<label for="billing_phone">Email *</label>
@@ -191,8 +202,8 @@
 
 
 
-			<div class="col-lg-6 col-sm-6">
-				<div class="heading-title mb-10">
+			<div class="col-lg-7 col-sm-7">
+				<div class="heading-title mb-0">
 					<h4>Summary</h4>
 				</div>
 
@@ -319,7 +330,7 @@
 				</fieldset> -->
 				<!-- /CREDIT CARD PAYMENT -->
 				<!-- PRODUCT -->
-				<div class="toggle-transparent toggle-bordered-full clearfix">
+				<!-- <div class="toggle-transparent toggle-bordered-full clearfix">
 					<div class="toggle active">
 						<div class="toggle-content">
 						<div class="row">
@@ -336,11 +347,98 @@
 						<div class="row">
 							<?php foreach ($carts as $cart): ?>
 								<?php if ($cart['available'] == TRUE): ?>
+										<?php if ($cart['type'] == 'special'): ?>
+											<div class="col-2 p-0">
+												<div class="testimonial">
+													<figure class="text-center">
+														<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
+				                  </figure>
+												</div>
+											</div>
+											<div class="col-4 pl-0">
+												<span class="clearfix">
+													<span class="float-left"><?= $cart['name']?></span>
+													<br>
+													<ul>
+														<?php foreach ($cart['option'] as $option): ?>
+															<li>
+																<small><?= $option['prod']?> × <?= $option['quantity']?></small>
+															</li>
+														<?php endforeach; ?>
+													</ul>
+												</span>
+											</div>
+											<div class="col-2 text-center">
+												<span><?= $cart['qty']?></span>
+											</div>
+											<div class="col-4">
+												<span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span>
+											</div>
+											<div class="col-12" style="margin-left:1px;">
+											<font color="green">Status: <span><?= $cart['comment']?></span></font>
+											</div>
+										<?php else: ?>
+											<div class="col-2 p-0">
+												<div class="testimonial">
+													<figure class="text-center">
+														<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
+				                  </figure>
+												</div>
+											</div>
+											<div class="col-4 pl-0">
+												<span class="clearfix">
+													<span class="float-left"><?= $cart['name']?></span>
+													<br>
+													<span class="float-left"><?= $cart['sizeName'].' ('.$cart['detailSize'].')'?></span>
+												</span>
+											</div>
+											<div class="col-2 text-center">
+												<span><?= $cart['qty']?></span>
+											</div>
+											<div class="col-4">
+												<span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span>
+											</div>
+											<div class="col-12" style="margin-left:1px;">
+											<font color="green">Status: <span><?= $cart['comment']?></span></font>
+											</div>
+										<?php endif; ?>
+								<?php else: ?>
+									<?php if ($cart['type'] == 'special'): ?>
 										<div class="col-2 p-0">
 											<div class="testimonial">
 												<figure class="text-center">
 													<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
-			                  </figure>
+												</figure>
+											</div>
+										</div>
+										<div class="col-4 pl-0">
+											<span class="clearfix">
+												<span class="float-left"><?= $cart['name']?></span>
+												<br>
+												<ul>
+													<?php foreach ($cart['option'] as $option): ?>
+														<li>
+															<small><?= $option['name']?> × <?= $option['quantity']?></small>
+														</li>
+													<?php endforeach; ?>
+												</ul>
+											</span>
+										</div>
+										<div class="col-2 text-center">
+											<span><?= $cart['qty']?></span>
+										</div>
+										<div class="col-4">
+											<span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span>
+										</div>
+										<div class="col-12" style="margin-left:1px;">
+										<font color="green">Status: <span><?= $cart['comment']?></span></font>
+										</div>
+									<?php else: ?>
+										<div class="col-2 p-0">
+											<div class="testimonial">
+												<figure class="text-center">
+													<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
+												</figure>
 											</div>
 										</div>
 										<div class="col-4 pl-0">
@@ -359,36 +457,123 @@
 										<div class="col-12" style="margin-left:1px;">
 										<font color="green">Status: <span><?= $cart['comment']?></span></font>
 										</div>
-								<?php else: ?>
-										<div class="col-2 p-0" style="background: #ffcccc;">
-											<div class="testimonial">
-												<figure class="text-center">
-													<img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" alt="">
-			                  </figure>
-											</div>
-										</div>
-										<div class="col-4 pl-0" style="background: #ffcccc;">
-											<span class="clearfix">
-												<span class="float-left"><?= $cart['name']?></span>
-												<br>
-												<span class="float-left"><?= $cart['sizeName'].' ('.$cart['detailSize'].')'?></span>
-											</span>
-										</div>
-										<div class="col-2 text-center" style="background: #ffcccc;">
-											<span><?= $cart['qty']?></span>
-										</div>
-										<div class="col-4" style="background: #ffcccc;">
-											<span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span>
-										</div>
-										<div class="col-12" style="margin-left:1px; background: #ffcccc;">
-											<font color="red">Status: <span><?= $cart['comment']?></span></font>
-										</div>
+									<?php endif; ?>
 								<?php endif; ?>
 							<?php endforeach; ?>
 						</div>
 					</div>
-				</div>
-			</div>
+				</div> -->
+		<table class="table toggle-transparent toggle-bordered-full clearfix" style="background-color: rgba(0, 0, 0, 0.03);">
+          <thead>
+            <tr class="toggle active">
+              <div class="toggle-content">
+                <th style="border-top:0; border-bottom:0;"></th>
+                <th style="border-top:0; border-bottom:0;">Product</th>
+                <th style="border-top:0; border-bottom:0;">Qty</th>
+                <th style="border-top:0; border-bottom:0;">Price</th>
+				<th style="border-top:0; border-bottom:0;">Status</th>
+				<hr>
+			  </div>
+            </tr>
+          </thead>
+          <tbody>
+            <?php foreach ($carts as $cart): ?>
+              <?php if ($cart['available'] == TRUE): ?>
+                <?php if ($cart['type'] == 'special'): ?>
+                  <tr class="testimonial">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/special-package/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+                        <a href="<?= site_url('home/detailSpecial/'.$cart['id'])?>">
+													<span class="float-left"><?= $cart['name']?></span>
+												</a>
+												<br>
+												<span><small>Products :</small></span>
+												<br>
+                        <ul>
+                          <?php foreach ($cart['option'] as $option): ?>
+                            <li>
+                              <small><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></small>
+                            </li>
+                          <?php endforeach; ?>
+                        </ul>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
+                    <td><font color="green"><b><?= $cart['comment']?></b></font></td>
+                  </tr>
+                <?php else: ?>
+                  <tr class="testimonial">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+                        <a href="<?= site_url('home/detailProduct/'. $cart['id'])?>">
+													<span class="float-left"><?= $cart['name']?></span>
+												</a>
+                        <br>
+                        <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span></td>
+                    <td><font color="green"><b><?= $cart['comment']?></b></font></td>
+                  </tr>
+                <?php endif; ?>
+              <?php else: ?>
+                <?php if ($cart['type'] == 'special'): ?>
+                  <tr class="testimonial">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/special-package/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+												<a href="<?= site_url('home/detailSpecial/'. $cart['id'])?>">
+                          <span class="float-left"><?= $cart['name']?></span>
+                        </a>
+												<br>
+												<span><small>Products :</small></span>
+                        <ul>
+                          <?php foreach ($cart['option'] as $option): ?>
+                            <li>
+                              <small><?= $option['name'].' - '.$option['nameSize']?> × <?= $option['quantity']?></small>
+                            </li>
+                          <?php endforeach; ?>
+                        </ul>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'], 0,',','.')?></span></td>
+                    <td><font color="red"><?= $cart['comment']?></font></td>
+                  </tr>
+                <?php else: ?>
+                  <tr class="testimonial" style="background: #ffcccc;">
+                    <td>
+                      <img class="square" src="<?= site_url('asset/upload/'.$cart['image']);?>" height="60" alt="<?= $cart['name']?>">
+                    </td>
+                    <td>
+                      <span class="clearfix">
+                        <a href="<?= site_url('home/detailProduct/'.$cart['id'])?>">
+													<span class="float-left"><?= $cart['name']?></span>
+												</a>
+                        <br>
+                        <span class="float-left"><?= $cart['sizeName']?> (<?= $cart['detailSize']?>)</span>
+                      </span>
+                    </td>
+                    <td><span><?= $cart['qty']?></span></td>
+                    <td><span class="float-left">Rp <?= number_format($cart['subtotal'],0,',','.')?></span></td>
+                    <td><font color="red"><b><?= $cart['comment']?></b></font></td>
+                  </tr>
+                <?php endif; ?>
+              <?php endif; ?>
+            <?php endforeach; ?>
+          </tbody>
+        </table>
+
 				<!-- /PRODUCT -->
 				<!-- TOTAL / PLACE ORDER -->
 				<div class="toggle-transparent toggle-bordered-full clearfix">
@@ -400,7 +585,7 @@
 								<strong class="float-left">Subtotal:</strong>
 							</span>
 							<span class="clearfix">
-								<span class="float-right">Rp. 0</span>
+								<span class="float-right">Rp. <?=number_format($discount,0,',','.')?></span>
 								<span class="float-left">Discount:</span>
 							</span>
 							<!-- <span class="clearfix">
@@ -411,7 +596,7 @@
 							<hr />
 
 							<span class="clearfix">
-								<span class="float-right fs-20">Rp. <?= number_format($this->cart->total(),0,',','.');?></span>
+								<span class="float-right fs-20">Rp. <?=number_format(($this->cart->total() - $discount),0,',','.')?></span>
 								<strong class="float-left">TOTAL:</strong>
 							</span>
 

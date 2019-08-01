@@ -11,9 +11,11 @@
         <div class="box">
           <div class="box-body">
             <div class="row">
-              <div class="col-md-4">
-                <a href="<?= site_url('admin/addVoucher');?>" class="mb-10 btn btn-oldblue"><i class="fa fa-plus"></i> Add Voucher</a>
-              </div>
+              <?php if ($this->session->userdata('uType') == 1): ?>
+                <div class="col-md-4">
+                  <a href="<?= site_url('admin/addVoucher');?>" class="mb-10 btn btn-oldblue"><i class="fa fa-plus"></i> Add Voucher</a>
+                </div>
+              <?php endif; ?>
             </div>
             <hr class="col-xs-12 mt-10">
             <table id="dataTable" class="table table-bordered table-striped">

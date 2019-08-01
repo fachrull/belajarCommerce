@@ -35,7 +35,7 @@
 								<div class="col col-md-12 col-xs-12">
 									<div class="form-group">
 										<label><strong>Select Category</strong></label>
-										<select class="form-control"name="cat">
+										<select class="form-control"name="cat" id="cat">
 											<?php foreach ($cats as $cat): ?>
 											<option value="<?= $cat['id'];?>" <?php if($cat['id'] === $products[0]->cat_id) echo "selected"?>>
 												<?= $cat['name'];?>
@@ -49,7 +49,7 @@
                   				<label><strong>Product Name</strong></label>
                   				<input type="text" class="form-control" name="pName" value="<?=$products[0]->prod_name?>" placeholder="Product Name">
                 			</div>
-							<div class="row mb-3 mt-10">
+							<div class="row mb-3 mt-10" id="spec-input" <?php if ($productSpecs == NULL) { echo 'style="display: none;"';}?>>
 								<div class="col-md-12 col-xs-12 select2-input-field">
 								<div class="form-group">
 										<label><strong>Select a Spec</strong></label>
@@ -83,6 +83,7 @@
                                         <?php foreach ($products as $product): ?>
                                             <tr id="<?=$product->size_id;?>">
                                                 <td class="size-value hide"><?=$product->size_id;?></td>
+                                                <td class="item-value hide"><?=$product->item_id;?></td>
                                                 <td class="sku-value">0</td>
                                                 <td class="size-name-value">
                                                     <?=$product->size_name;?> (<?=$product->size;?>)
@@ -112,12 +113,69 @@
 								<label><strong>Add Description</strong></label>
 								<textarea id="editor1" name="desc" rows="10" cols="80" placeholder="Description"><?=$products[0]->description?></textarea>
 							</div>
-							<label class="input"><b>Upload product image</b>
-							<p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
-								<input type="file" class="mt-5" name="productPict[]" />
-                                <input type="file" class="mt-5" name="productPict[]" />
-                                <input type="file" class="mt-5" name="productPict[]" />
-							</label>
+                            <div class="form-group">
+                                <label><strong>Star</strong></label>
+                                <input type="number" class="form-control" min="0" max="5" name="star" value="<?=$products[0]->stars?>" placeholder="Product Star">
+                            </div>
+                            <div class="form-group">
+                                <label><strong>Position</strong></label>
+                                <input type="number" class="form-control" name="position" value="<?=$products[0]->position?>" placeholder="Product Position">
+                            </div>
+
+                            <label class="input mb-10"><b>Upload product image</b>
+                                <p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
+                                <div class="col-xs-4 mb-20 img-wrap" style="position:relative">
+                                    <?php if ($images['image_1'] != NULL): ?>
+                                    <img style="display: block; height:300px; weight:auto; margin-left:auto; margin-right: auto;"
+                                         class="img-thumbnail"
+                                         src="<?= site_url('asset/upload/'.$images['image_1'])?>"
+                                    >
+                                    <input type="file" class="mt-5 mb-5" name="productPict[]" />
+                                    <a href="<?= site_url('admin/delete_prod_image/image_1/'.$products[0]->id) ?>"
+                                       class="btn btn-danger btn-sm float-left"
+                                       onclick="return confirm('Are you sure?')">
+                                        Delete
+                                    </a>
+                                    <?php else: ?>
+                                        <input type="file" class="mt-5 mb-5" name="productPict[]" />
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="col-xs-4 mb-20 img-wrap" style="position:relative">
+                                    <?php if ($images['image_2'] != NULL): ?>
+                                        <img style="display: block; height:300px; weight:auto; margin-left:auto; margin-right: auto;"
+                                             class="img-thumbnail"
+                                             src="<?= site_url('asset/upload/'.$images['image_2'])?>"
+                                        >
+                                        <input type="file" class="mt-5 mb-5" name="productPict[]" />
+                                        <a href="<?= site_url('admin/delete_prod_image/image_2/'.$products[0]->id) ?>"
+                                           class="btn btn-danger btn-sm float-left"
+                                           onclick="return confirm('Are you sure?')">
+                                            Delete
+                                        </a>
+                                    <?php else: ?>
+                                        <input type="file" class="mt-5 mb-5" name="productPict[]" />
+                                    <?php endif; ?>
+                                </div>
+
+                                <div class="col-xs-4 mb-20 img-wrap">
+                                    <?php if ($images['image_3'] != NULL): ?>
+                                        <img style="display: block; height:300px; weight:auto; margin-left:auto; margin-right: auto;"
+                                             class="img-thumbnail"
+                                             src="<?= site_url('asset/upload/'.$images['image_3'])?>"
+                                        >
+                                        <input type="file" class="mt-5 mb-5" name="productPict[]" />
+                                        <a href="<?= site_url('admin/delete_prod_image/image_3/'.$products[0]->id) ?>"
+                                           class="btn btn-danger btn-sm float-left"
+                                           onclick="return confirm('Are you sure?')">
+                                            Delete
+                                        </a>
+                                    <?php else: ?>
+                                        <input type="file" class="mt-5 mb-5" name="productPict[]" />
+                                    <?php endif; ?>
+                                </div>
+                            </label>
+
 							<div class="row mt-10">
 								<div class="col-md-6 text-left">
 									<a href="<?=site_url('admin/allProd')?>" class="btn btn-oldblue btn-default">Cancel</a>

@@ -43,7 +43,7 @@ div.shop-item-summary h2{font-size:15px;color:#666;margin:0 0 4px 0;}
 div.shop-item-rating-line{display:block;position:relative;}
 div.shop-item-rating-line:before{left:0 !important;right:50%;margin-right:50px;content:'';position:absolute;top:10px;padding:1px;height:0;border-top:1px solid #ddd;border-bottom:1px solid #ddd;}
 div.shop-item-rating-line:after{right:0 !important;left:50%;margin-left:50px;content:'';position:absolute;top:10px;padding:1px;height:0;border-top:1px solid #ddd;border-bottom:1px solid #ddd;}
-div.shop-item-price{font-size:20px;margin-top:6px;font-weight:bold;}
+div.shop-item-price{font-size:20px;margin-top:6px;font-weight:bold;color:#bb2030}
 div.shop-item-price>span{color:#999;font-size:15px;display:inline-block;padding:0 10px;font-weight:400;}
 div.shop-item-buttons{margin-top:6px;}
 div.shop-item-buttons a.btn-default:hover{color:#333;}

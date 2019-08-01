@@ -44,40 +44,31 @@
 
 
 						<!-- BANNER ROTATOR -->
-                        <div class="owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute mt-120">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 1</p>
-								</a>
+						<div class="owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+							<?php foreach ($bestSellers as $bestSeller): ?>
+								<div class="banner-rotator">
+									<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
+										<div class="absolute" style="top:45%;">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+											</a>
+										</div>
+										<div class="absolute position-bottom">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+												<p>
+													<?= $bestSeller['name']?><br>
+													View Detail
+												</p>
+											</a>
+										</div>
 								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
-								</div>
-							</div>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute mt-120">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 2</p>
-								</a>
-								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
-								</div>
-							</div>
+							<?php endforeach; ?>
 						</div>
 						<!-- /BANNER ROTATOR -->
 
 					</div>
 
 					<!-- RIGHT -->
-					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="8"
+					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="12"
 					 data-pajinate-container=".pajinate-container">
 					    <?php if($products == NULL):?>
                             <p align:"center">Product tidak tersedia</p>
@@ -91,17 +82,6 @@
 							</ul>
 							<!-- /Pagination Default -->
 
-							<div class="options-left">
-								<select>
-									<option value="pos_asc">A-Z</option>
-									<option value="pos_desc">Z-A</option>
-									<option value="name_asc">Price Low to High</option>
-									<option value="name_desc">Price High to Low</option>
-									<option value="price_asc">Position ASC</option>
-									<option value="price_desc">Position DESC</option>
-								</select>
-							</div>
-
 						</div>
 						<!-- /LIST OPTIONS -->
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
@@ -114,7 +94,7 @@
 										<div class="thumbnail">
 											<!-- product image(s) -->
 											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
-												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="product name" />
+												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image_1']);?>" alt="product name" />
 											</a>
 											<!-- /product image(s) -->
 
@@ -128,19 +108,19 @@
 													</div>
 												</div>
 												<!-- /rating -->
-
+												<p>Starts from</p>
 												<!-- price -->
-												<!-- <div class="shop-item-price">
-													Rp. <?= number_format($product['MAX(a.price)'], 2, ",", ".");?>
-												</div> -->
+												<div class="shop-item-price">
+													Rp. <?= number_format($product['price'], 2, ",", ".");?>
+												</div>
 												<!-- /price -->
 											</div>
 
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-												<a class="btn btn-oldblue" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
-													<i class="fa fa-cart-plus"></i> Add to Cart
-												</a><!-- add .clean to remove css characteres -->
+                                                <a class="btn btn-md btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+                                                    <i class="fa fa-eye"></i> View Detail
+                                                </a><!-- add .clean to remove css characteres -->
 											</div>
 											<!-- /buttons -->
 										</div>

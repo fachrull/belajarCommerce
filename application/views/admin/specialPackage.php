@@ -32,11 +32,14 @@
                       <th>Action</th>
                     </thead>
                     <tbody>
+                      <?php if ($specialPackages != NULL): ?>
                         <?php $no= 1;foreach ($specialPackages as $specialPackage): ?>
                           <tr>
                             <td><?= $no.'.';?></td>
                             <td><?= $specialPackage['name']?></td>
-                            <td><?= 'Rp '.$specialPackage['price'];?></td>
+                            <td>
+                              <?= 'Rp '. number_format($specialPackage['total'],0,',','.');?>
+                            </td>
                             <td>
                               <a href="<?= site_url('admin/detailSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                               <?php if ($specialPackage['active'] == 1): ?>
@@ -44,9 +47,11 @@
                               <?php else: ?>
                                 <a href="<?= site_url('admin/activeSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
                               <?php endif; ?>
+                              <a href="<?= site_url('admin/deleteSpecialPackage/'.$specialPackage['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                             </td>
                           </tr>
-                        <?php $no++;endforeach; ?>
+                          <?php $no++;endforeach; ?>
+                      <?php endif; ?>
                     </tbody>
                   </table>
                   <div class="row pb-10">

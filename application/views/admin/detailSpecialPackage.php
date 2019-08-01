@@ -20,10 +20,14 @@
                     </div>
                     <div class="row mt-20">
                         <div class="col-xs-6">
-                            <div class="box-header pb-0">
-                                <h3 class="box-title">Package</h3>
-                            </div>
-                            <div class="box-body">
+                          <div class="box-body pb-0">
+                            <h4>SKU</h4>
+                            <p class="fs-15"><?= $detail_SpclPckg['sku'];?></p>
+                          </div>
+                          <div class="box-header pb-0">
+                              <h3 class="box-title">Package</h3>
+                          </div>
+                          <div class="box-body">
                                 <table class="table table-bordered text-center">
                                     <tbody class="text-center">
                                     <tr>
@@ -31,7 +35,6 @@
                                         <th>Product</th>
                                         <th>Size</th>
                                         <th>Quantity</th>
-                                        <th>Price</th>
                                         <th>Image</th>
                                     </tr>
                                     <?php $no = 1; foreach ($prod_SpclPckg as $prod_SpclPckg): ?>
@@ -40,7 +43,6 @@
                                           <td><?= $prod_SpclPckg['prod']?></td>
                                           <td><?= $prod_SpclPckg['sizeName'].' ('.$prod_SpclPckg['sizeDetail'].')'?></td>
                                           <td><?= $prod_SpclPckg['quantity']?></td>
-                                          <td>Rp. <?= number_format($prod_SpclPckg['priceSpcl'],0,',','.')?></td>
                                           <td>
                                           <img style="height:50px;width:auto !important;" src="<?= base_url('asset/upload/'.$prod_SpclPckg['image'])?>" alt="<?= $prod_SpclPckg['prod']?>">
                                           </td>
@@ -53,7 +55,7 @@
                         <div class="col-xs-6">
                             <div>
                                 <h4>Price</h4>
-                                <p class="fs-15"><strong>Rp <?= number_format($detail_SpclPckg['price'],0,',','.')?></strong></p>
+                                <p class="fs-15"><strong>Rp <?= number_format($detail_SpclPckg['Total'],0,',','.')?></strong></p>
                             </div>
                             <div class="mt-20">
                                 <h4>Description</h4>
@@ -62,7 +64,7 @@
                         </div>
                     </div>
                     <div class="mt-20">
-                        <button type="submit" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</button>
+                        <a href="<?= site_url('admin/edit_special/'.$detail_SpclPckg['id']);?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</a>
                         <a href="<?= site_url('admin/special_package');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
                     </div>
                 </div>

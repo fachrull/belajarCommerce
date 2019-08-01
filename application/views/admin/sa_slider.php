@@ -47,10 +47,19 @@
               <!-- /ALERT -->
               <form class="m-0 sky-form" action="<?= site_url('admin/addSlider');?>" enctype="multipart/form-data" method="post" accept-charset="utf-8">
                 <p class="register-box-msg">Add a new cover</p>
-                <label class="input mb-10">
-                  <input type="file" name="sliderPict" />
+                  <div class="form-group">
+                      <label class="input"><b>Upload banner image</b>
+                          <p class="help-block text-danger fs-12">Min. Size 2 MB and Resolution 700 x 670 pixels</p>
+                          <input type="file" class="mt-5" name="sliderPict" />
+                      </label>
                 </label>
-                <div class="row">
+                  </div>
+                  <div class="form-group">
+                  <label><strong>Banner Link</strong></label>
+                  <input type="text" class="form-control" name="link" placeholder="Enter a link">
+                  </div>
+
+                  <div class="row">
                   <div class="col-md-12 text-right">
                     <button type="submit" class="btn btn-oldblue btn-default"><i class="fa fa-plus"></i>ADD</button>
                   </div>

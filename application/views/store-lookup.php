@@ -90,6 +90,7 @@
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDF2j6e5Glf3NYC_7dF0YRKB2fvI0KPxiw&libraries=places&callback=initMap"" type="text/javascript"></script>
 <script type="text/javascript">
 	let infoWindow, infowindowContent, myMarker;
+    var markers = [];
 
 	function initMap() {
 		infoWindow = new google.maps.InfoWindow();
@@ -236,7 +237,7 @@
 		listContainer.append('<p>Availbale Store:</p>');
 
 		const bounds = new google.maps.LatLngBounds()
-		const markers = [];
+        deleteMarkers();
 		
 		// loop through given array
 		for (var i = 0; i < arr.length; i++) {
@@ -365,4 +366,12 @@
 		            'Error! Browser doesn\'t support find current location.';
         showAlert(errorMessage);
 	}
+
+    function deleteMarkers() {
+        //Loop through all the markers and remove
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+        markers = [];
+    }
 </script>

@@ -89,20 +89,28 @@
                     <th>No.</th>
                     <th>Product</th>
                     <th id="sizeProduct">Size</th>
-                    <th>Quantity</th>
+                    <th>Stock Awal</th>
+                    <th>Stock Akhir</th>
+                    <th>Inbound</th>
+                    <th>Outbound</th>
+                    <th>Postpone</th>
                     <th>Action</th>
                   </thead>
                   <tbody>
-                    <?php if(is_array($products)): ?>
+                    <?php if($products != NULL): ?>
                       <?php $no=1; ?>
                       <?php foreach($products as $product): ?>
                         <tr>
                           <td><?= $no;?></td>
                           <td><?= $product['product_name'];?></td>
                           <td><?=$product['size_name'];?> (<?= $product['size']; ?>)</td>
-                          <td><?= ($product['quantity'] != NULL? $product['quantity']:'-');?></td>
+                          <td><?= ($product['stock_awal'] != NULL? $product['stock_awal']:'0');?></td>
+                          <td><?= ($product['stock_akhir'] != NULL? $product['stock_akhir']:'0');?></td>
+                          <td><?= ($product['inbound'] != NULL? $product['inbound']:'0');?></td>
+                          <td><?= ($product['outbound'] != NULL? $product['outbound']:'0');?></td>
+                          <td><?= ($product['postpone'] != NULL? $product['postpone']:'0');?></td>
                           <td>
-                            <a href="" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
+                            <a href="<?= site_url('admin/deleteStoreProd/'.$post['id'].'/'.$product['id'])?>" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
                           </td>
                         </tr>
                         <?php $no++; ?>
@@ -111,32 +119,27 @@
                   </tbody>
                 </table>
                 <hr>
-                <a href="<?= site_url('admin/addStore_SpecialPackage/'.$post['id'])?>"><button class="btn btn-default btn-oldblue pull-right"><i class="fa fa-plus"></i> Add Special Package</button></a>
-                <hr class="mt-80" style="width:100%; height:0px;">
-                <table id="tableStoreSpecialPackage" class="table table-bordered table-striped">
-                  <thead>
-                    <th>No.</th>
-                    <th>Special Package</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                  </thead>
-                  <tbody>
-                    <?php if (is_array($special_packages)): ?>
-                      <?php $no=1; foreach ($special_packages as $specialPackage): ?>
-                        <tr>
-                          <td><?= $no?></td>
-                          <td><?= $specialPackage['name']?></td>
-                          <td><?= $specialPackage['quantity']?></td>
-                          <td><?= 'Rp. '.number_format($specialPackage['price'],0,',','.')?></td>
-                          <td>
-                            <a href="#" class="btn btn-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></a>
-                          </td>
-                        </tr>
-                      <?php $no++; endforeach; ?>
-                    <?php endif; ?>
-                  </tbody>
-                </table>
+              <a href="<?= site_url('admin/addStore_SpecialPackage/'.$post['id'])?>">
+                <button class="btn btn-default btn-oldblue pull-right">
+                  <i class="fa fa-plus"></i> Add Special Package
+                </button>
+              </a>
+              <hr class="mt-80" style="width:100%; height:0px;">
+              <table id="dataTable" class="table table-bordered table-striped">
+                <thead>
+                  <th>No.</th>
+                  <th>Special Package</th>
+                  <th>Stock Awal</th>
+                  <th>Stock Akhir</th>
+                  <th>Inbound</th>
+                  <th>Outbound</th>
+                  <th>Postpone</th>
+                  <th>Action</th>
+                </thead>
+                <tbody>
+
+                </tbody>
+              </table>
           </div>
         </div>
       </div>

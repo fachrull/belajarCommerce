@@ -48,8 +48,8 @@
 			<div class="search-box over-header">
 				<a id="closeSearch" href="index-home-before-login.html" class="fa fa-remove"></a>
 
-				<form action="search-result.html" method="get">
-					<input type="text" class="form-control" placeholder="SEARCH" />
+				<form action="<?php echo site_url('home/search_keyword');?>" method = "post">
+					<input type="text" value="submit" onfocus="this.value=''" name = "keyword" />
 				</form>
 			</div>
 			<!-- /SEARCH HEADER -->
@@ -83,11 +83,11 @@
 							</div>
 						</li>
 								<?php else:?>
-						<li class="header-button-arrow hidden-lg-down">
-							<a href="<?= site_url('auth/login');?>" class="h-60 line-height-60">
-								<i class="fa fa-sign-in fs-20"></i>
-							</a>
-						</li>
+                            <li class="header-button-arrow hidden-lg-down">
+                                <a href="<?= site_url('auth/login');?>" class="h-60 line-height-60 pl-15 pr-15 hovergray">
+                                    <span style="color:#1f262D">LOGIN</span>
+                                </a>
+                            </li>
 								<?php endif;?>
 						<li class="search">
 							<a href=" javascript:;">
@@ -112,40 +112,35 @@
 								<li class="dropdown">
 									<!-- HOME -->
 									<a class="dropdown-toggle" href="#">
-										PRODUCT
+										BRANDS
 									</a>
-									<ul class="dropdown-menu">
-										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/1');?>">
-												Aireloom
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/2');?>">
-												Kingkoil
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
-												Serta
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
-												Tempur
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
-												Florence
-											</a>
-										</li>
-										<li class="dropdown">
-											<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/6');?>">
-												Stressless
-											</a>
-										</li>
-									</ul>
+                                    <ul class="dropdown-menu">
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/1');?>">
+                                                Aireloom
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/2');?>">
+                                                Kingkoil
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
+                                                Serta
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
+                                                Tempur
+                                            </a>
+                                        </li>
+                                        <li class="dropdown">
+                                            <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
+                                                Florence
+                                            </a>
+                                        </li>
+                                    </ul>
 								</li>
 								<li>
 									<!-- HOME -->
@@ -161,7 +156,7 @@
 								</li>
 								<li>
 									<!-- HOME -->
-									<a href="<?= site_url('#location');?>">
+									<a href="<?= site_url('home/store-location');?>">
 										LOCATION
 									</a>
 								</li>

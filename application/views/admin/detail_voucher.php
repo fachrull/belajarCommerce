@@ -44,15 +44,6 @@
                         <input name="pName" type="text" value="<?= $voucher['discount']* 100?> %" disabled>
                       </label>
                     </div>
-                    <div class="col-xs-12">
-                      <label class="input"> <h4>Bonus</h4>
-                        <ul class="mb-10">
-                            <?php foreach ($detail_voucher as $detail_voucher): ?>
-                              <li><?= $detail_voucher['name']?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                      </label>
-                    </div>
                   </div>
                 </div>
             <div class="col-xs-12">
@@ -62,7 +53,7 @@
             </div>
               </div>
             </div>
-            <button type="submit" class="btn btn-oldblue btn-default" style="float:right;">Edit Voucher</button>
+            <a href="<?=site_url('admin/editVoucher/'.$voucher['id'])?>" type="submit" class="btn btn-oldblue btn-default" style="float:right;">Edit Voucher</a>
             <a href="<?= site_url('admin/allVoucher')?>"><button class="btn btn-oldblue btn-default">Back</button></a>
           </div>
         </div>

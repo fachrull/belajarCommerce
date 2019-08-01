@@ -28,11 +28,14 @@
                 <td><?=$no;?></td>
                 <td><?= $cat['name'];?></td>
                 <td><a href="<?= site_url('admin/deleteCat/'.$cat['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
+                <td>
                 <?php if ($cat['status'] == 1): ?>
-                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a></td>
+                  <a href="<?= site_url('admin/activeCat/'.$cat['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
                 <?php else: ?>
-                  <td><a href="<?= site_url('admin/activeCat/'.$cat['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a></td>
+                  <a href="<?= site_url('admin/activeCat/'.$cat['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
                 <?php endif; ?>
+                  <a href="<?= site_url('admin/infoCat/'.$cat['id'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                </td>
               </tr>
               <?php $no++; ?>
             <?php endforeach; ?>

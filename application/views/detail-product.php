@@ -54,43 +54,33 @@
                     <ul id="brands" class="list-group list-unstyled">
                         <li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
                         <li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Serta</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Tempur</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Florence</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/6');?>">Stressless</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Serta</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Tempur</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Florence</a></li>
                     </ul>
 
 				</div>
 				<!-- BRANDS -->
 
 				<!-- BANNER ROTATOR MD -->
-                <div class="hidden-sm-down  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:45%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 1</p>
-								</a>
+				<div class="hidden-sm-down  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
+					<?php foreach ($bestSellers as $bestSeller): ?>
+						<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
+								<div class="absolute" style="top:45%;">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+									</a>
 								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
+								<div class="absolute position-bottom">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+										<p>
+											<?= $bestSeller['name']?><br>
+											View Detail
+										</p>
+									</a>
 								</div>
-							</div>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:45%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 2</p>
-								</a>
-								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
-								</div>
-							</div>
+						</div>
+					<?php endforeach; ?>
 				</div>
 				<!-- /BANNER ROTATOR -->
 
@@ -106,29 +96,44 @@
 					<div class="col-lg-6 col-sm-6">
 
 					<div class="owl-carousel buttons-autohide controlls-over text-center mb-0" data-plugin-options='{"singleItem": true, "autoPlay": 8000, "navigation": true, "pagination": false}'>
-					<div class="relative mb-3">
-								<a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'>
-									<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
-								</a>
-						</div>
-						<div class="relative mb-3">
-								<a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$product['image']);?>" data-plugin-options='{"type":"image"}'>
-									<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="This is the product title" />
-								</a>
-						</div>
+                        <?php if($image['image_1'] != NULL): ?>
+                        <div class="relative mb-3">
+                            <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$image['image_1']);?>" data-plugin-options='{"type":"image"}'>
+                                <img class="img-fluid" src="<?= site_url('asset/upload/'.$image['image_1']);?>" alt="This is the product title" />
+                            </a>
+                        </div>
+                        <?php endif; if($image['image_2'] != NULL): ?>
+                        <div class="relative mb-3">
+                            <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$image['image_2']);?>" data-plugin-options='{"type":"image"}'>
+                                <img class="img-fluid" src="<?= site_url('asset/upload/'.$image['image_2']);?>" alt="This is the product title" />
+                            </a>
+                        </div>
+                        <?php endif; if($image['image_3'] != NULL): ?>
+                        <div class="relative mb-3">
+                            <a class="lightbox bottom-right" href="<?= site_url('asset/upload/'.$image['image_3']);?>" data-plugin-options='{"type":"image"}'>
+                                <img class="img-fluid" src="<?= site_url('asset/upload/'.$image['image_3']);?>" alt="This is the product title" />
+                            </a>
+                        </div>
+                        <?php endif; ?>
 					</div>
 
 
-						<div class="tabbed hidden-lg-down text-center">
-                                <?php foreach($specs as $spec):?>
-									<a href="1" id="1">
-										<img class="thumbnail-specs" src="<?= base_url('');?>asset/logo-specs/5-zone-pocket-spring.png.pagespeed.ce.MDUzM1LUYu.png" alt="">
-										<div style="width:100%">
-											<h3 class="text-center"><?= $spec['name'];?></h3>
-										</div>
-									</a>
-								<?php endforeach;?>
-								</div>
+                        <?php if ($specs != null): ?>
+                            <div class="tabbed hidden-lg-down text-center">
+                                <?php foreach ($specs as $spec): ?>
+                                    <a href="1" id="1">
+                                        <?php $icon = "3_Zone_Ortho_Spring.png";
+                                        if ($spec['icon'] != null) {
+                                            $icon = $spec['icon'];
+                                        } ?>
+                                        <img class="thumbnail-specs" src="<?= base_url('asset/spec/'.$icon); ?>" alt="">
+                                        <div style="width:100%">
+                                            <h4 class="text-center"><?= $spec['name']; ?></h4>
+                                        </div>
+                                    </a>
+                                <?php endforeach; ?>
+                            </div>
+                        <?php endif; ?>
 
 					</div>
 					<!-- /IMAGE -->
@@ -146,11 +151,15 @@
 						</div>
 
 						<div class="mb-15 pl-0">
-							<p class="text-left fs-18 bold" id="price2">
-							Rp. <span ><?=number_format(floatval($product['min_price']), 0, ',', '.')?></span>
-							-
-							Rp. <span><?=number_format(floatval($product['max_price']), 0, ',', '.')?></span>
-							</p>
+                            <p class="text-left fs-18 bold" id="price2">
+                                <?php if ($product['min_price'] != $product['max_price']) { ?>
+                                    Rp. <span><?= number_format(floatval($product['min_price']), 0, ',', '.') ?></span>
+                                    -
+                                    Rp. <span><?= number_format(floatval($product['max_price']), 0, ',', '.') ?></span>
+                                <?php } else { ?>
+                                    Rp. <span><?= number_format(floatval($product['min_price']), 0, ',', '.') ?></span>
+                                <?php } ?>
+                            </p>
 
 						</div>
 
@@ -210,6 +219,7 @@
 						<div id="shoppingForm" class="row text-center">
 							<form id="cart_form" class="clearfix form-inline m-0" method="post" action="<?= site_url('home/addToCart');?>">
 								<input type="hidden" id="product_id" name="product_id" value="<?= $product['id'];?>" />
+                                <input type="hidden" id="sku" name="sku" />
 								<input type="hidden" name="product_name" value="<?= $product['name'];?>" />
 								<input type="hidden" id="price" name="price" />
 								<input type="hidden" id="size-name" name="size-name" />
@@ -250,32 +260,23 @@
 
 				<!-- BANNER ROTATOR SM -->
 				<div class="hidden-md-up  owl-carousel buttons-autohide controlls-over mb-60 text-center" data-plugin-options='{"singleItem": true, "autoPlay": 4000, "navigation": true, "pagination": false, "transitionStyle":"goDown"}'>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:48%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p style="bottom:0px;">Best Seller 1</p>
-								</a>
+					<?php foreach ($bestSellers as $bestSeller): ?>
+						<div class="banner-rotator">
+							<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
+								<div class="absolute" style="top:45%;">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+									</a>
 								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
+								<div class="absolute position-bottom">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+										<p>
+											<?= $bestSeller['name']?><br>
+											View Detail
+										</p>
+									</a>
 								</div>
-							</div>
-							<div class="banner-rotator">
-							<img class="img-fluid" src="<?= site_url('asset/content-images/slider-1-100x100.png');?>" width="270" height="350" alt="an offer's voucher">
-							<div class="absolute" style="top:48%;">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>Best Seller 2</p>
-								</a>
-								</div>
-							<div class="absolute position-bottom">
-								<a href="<?= base_url('home/bestSeller');?>">
-								<p>View Detail</p>
-								</a>
-								</div>
-							</div>
+						</div>
+					<?php endforeach; ?>
 				</div>
 				<!-- /BANNER ROTATOR -->
 
@@ -287,33 +288,39 @@
 					<!-- REVIEWS -->
 					<div role="tabpanel" id="reviews">
 								<!-- REVIEW ITEM -->
-								<?php foreach ($reviews as $review): ?>
-									<div class="block mb-60">
+								<?php if ($reviews == NULL): ?>
+									<div class="block mb-60 text-center border">
+										<p>Komentar tidak ada.</p>
+									</div>
+								<?php else: ?>
+									<?php foreach ($reviews as $review): ?>
+										<div class="block mb-60">
 
-										<span class="user-avatar">
-											<!-- user-avatar -->
-											<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
-										</span>
+											<span class="user-avatar">
+												<!-- user-avatar -->
+												<img class="float-left media-object" src="<?= base_url('');?>asset/another-images/avatar2.jpg" width="64" height="64" alt="username's avatar">
+											</span>
 
-										<div class="media-body">
-											<h4 class="media-heading fs-14">
-												<?= $review['name']?> &ndash;
-												<span class="text-muted"><?= $review['date_attempt']?></span> &ndash;
-												<span class="fs-14 text-muted">
-													<?php for($i = 0; $i < $review['stars']; $i++): ?>
-														<i class="fa fa-star"></i>
-													<?php endfor; ?>
-												</span>
-											</h4>
+											<div class="media-body">
+												<h4 class="media-heading fs-14">
+													<?= $review['name']?> &ndash;
+													<span class="text-muted"><?= $review['date_attempt']?></span> &ndash;
+													<span class="fs-14 text-muted">
+														<?php for($i = 0; $i < $review['stars']; $i++): ?>
+															<i class="fa fa-star"></i>
+														<?php endfor; ?>
+													</span>
+												</h4>
 
-											<p>
-												<?= $review['comment']?>
-											</p>
+												<p>
+													<?= $review['comment']?>
+												</p>
+
+											</div>
 
 										</div>
-
-									</div>
-								<?php endforeach; ?>
+									<?php endforeach; ?>
+								<?php endif; ?>
 								<!-- /REVIEW ITEM -->
 
 								<?php if ($this->session->has_userdata('error')): ?>
