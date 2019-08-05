@@ -121,7 +121,7 @@
                         <?php if ($specs != null): ?>
                             <div class="tabbed hidden-lg-down text-center">
                                 <?php foreach ($specs as $spec): ?>
-                                    <a href="1" id="1">
+                                    <a id="1">
                                         <?php $icon = "3_Zone_Ortho_Spring.png";
                                         if ($spec['icon'] != null) {
                                             $icon = $spec['icon'];

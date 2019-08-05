@@ -73,9 +73,9 @@ class Home extends CI_Controller{
 
     } elseif ($this->session->userdata('uType') == NULL) {
         $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','link'=>'bannerlink'), 'tm_cover', FALSE);
-      $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
-      $data['pedias'] = $this->mhome->getPedia();
-      $data['stores'] = $this->storesToGeoJson();
+        $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
+        $data['pedias'] = $this->mhome->getPedia();
+        $data['stores'] = $this->storesToGeoJson();
         $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
         $best_seller = $this->mhome->listBestSeller_Product();
         $bed_linen = $this->mhome->get_list_bed_linen();
@@ -467,11 +467,6 @@ class Home extends CI_Controller{
     } else {
       redirect();
     }
-  }
-
-  public function testSP(){
-    $idSP = 154;
-
   }
 
   public function addToCart($idDistrict) {
@@ -959,6 +954,20 @@ class Home extends CI_Controller{
           // store id user login from session
           $idUserLogin = $this->session->userdata('uId');
           print_r($idUserLogin);echo "</br></br>";
+
+          // notes for shipping address
+          $note = $this->input->post('note');
+          print_r($note);
+
+          $cartNote = $this->cart->contents();
+          foreach ($cartNote as $setNote) {
+            $updateNote = array(
+              'rowid' =>  $setNote['rowid'],
+              'note'  =>  $note
+            );
+
+            $this->cart->update($updateNote);
+          }
 
           // store data on cart
           $carts = $this->cart->contents();
@@ -1736,17 +1745,6 @@ class Home extends CI_Controller{
     } else {
       redirect();
     }
-  }
-
-  public function test(){
-    $data['bed_linenes'] = $this->mhome->bed_linenProducts();
-    $data['beddingACC'] = $this->mhome->beddingAcc();
-    print_r(count($data['bed_linenes']));
-    print_r($data['bed_linenes']);
-    echo "</br></br>";
-    print_r(count($data['beddingACC']));
-    echo "</br></br>";
-    print_r($data['beddingACC']);
   }
 
   public function profileSetting($pass = NULL){

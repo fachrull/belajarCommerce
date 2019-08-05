@@ -82,6 +82,18 @@
 
                               </div>
                             </div>
+                            <hr>
+
+                            <div class="row ml-0 mr-0">
+                              <div class="col-6 col-md-6">
+                                <label class="fs-12 mb-0">First Name</label>
+                                <label class="pt-0 fs-16"><?= $detailOrder['first_name']?></label>
+                              </div>
+                              <div class="col-6 col-md-6">
+                                <label class="fs-12 mb-0">Last Name</label>
+                                <label class="pt-0 fs-16"><?= $detailOrder['last_name']?></label>
+                              </div>
+                            </div>
 
                               <hr>
                               <div class="row ml-0 mr-0">
@@ -101,6 +113,9 @@
                             <label class="pt-0 fs-16 mb-0"><?= $detailOrder['kecamatan'].', '.$detailOrder['kabupaten']?></label>
                             <label class="pt-0 fs-16 mb-0"><?= $detailOrder['provinsi'].','.$detailOrder['postcode']?></label>
                             <label class="pt-0 fs-16 mb-0">Telefon/Handphone: <?= $detailOrder['phone']?></label>
+                          </br>
+                            <label class="fs-12 mb-0">Note</label>
+                            <label class="pt-0 fs-16 mb-0"><?= $detailOrder['note'];?></label>
 
                             <hr>
 
