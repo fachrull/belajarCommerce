@@ -363,8 +363,8 @@ class Mhome extends CI_Model{
   }
 
   public function detailOrder($idOrder, $idCustomer){
-    $this->db->select('a.id, a.order_number, a.total, a.order_date, a.status_order, b.kode_voucher,
-      c.address, c.phone, c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
+    $this->db->select('a.id, a.order_number, a.total, a.order_date, a.note, a.status_order, b.kode_voucher,
+      c.first_name, c.last_name, c.address, c.phone, c.postcode, d.nama as provinsi, e.nama as kabupaten, f.nama as kecamatan');
     $this->db->from('tm_order a');
     $this->db->join('tm_voucher b', 'b.id = a.id_voucher', 'left');
     $this->db->join('tm_customer_detail c', 'c.id = a.address_detail', 'left');

@@ -272,12 +272,11 @@
 <!-- /PROMOTION -->
 
 <hr>
-
 <!-- Online Promotions / Special Package -->
 <section id="agmpedia" class="section-xs container">
     <div class="row">
         <div class="col-12 col-md-12">
-            <img class="pedia-img-1" src="<?= site_url('asset/upload/UpperBannerAGM.jpg'); ?>"
+            <img class="pedia-img-1" src="<?= site_url('asset/upload/special-package/cover/'.$spPackage['slide']); ?>"
                  alt="agmpedia">
             <div class="absolute justify-content-around pl-20 pb-20 text-left bg-gradient-red">
                 <div class="ml-50 mt-150">
@@ -454,4 +453,3 @@
     </div>
 </section>
 <!-- /Product Hightlight -->
-
