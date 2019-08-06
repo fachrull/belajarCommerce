@@ -64,10 +64,9 @@
                         <ul class="list-unstyled footer-list half-paddings b-0">
                             <li><a class="block" href="<?= site_url('home/shop/1'); ?>">Aireloom</a></li>
                             <li><a class="block" href="<?= site_url('home/shop/2'); ?>">Kingkoil</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/4'); ?>">Serta</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/5'); ?>">Tempur</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/3'); ?>">Florence</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/6'); ?>">Stressless</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/3'); ?>">Serta</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/4'); ?>">Tempur</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/5'); ?>">Florence</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-4 pt-5">
