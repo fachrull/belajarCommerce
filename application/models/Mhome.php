@@ -505,7 +505,7 @@ class Mhome extends CI_Model{
   }
 
     public function get_list_bed_linen(){
-        $this->db->select('a.id, b.name, b.stars, c.sub_price, d.image_1');
+        $this->db->select('b.id, b.name, b.stars, c.sub_price, d.image_1');
         $this->db->select_min('c.price');
         $this->db->from('tr_product_bed_linen a');
         $this->db->join('tm_product b', 'b.id = a.prod_id', 'inner');
