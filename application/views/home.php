@@ -143,7 +143,7 @@
                         <div class="shop-item-summary p-30">
                             <div class="row mb-10">
                                 <div class="col-8 col-md-12 col-lg-8">
-                                    <h2 class="align-middle"><?=strtoupper($bestSeller[0]["name"])?></h2>
+                                    <a href="<?=base_url("home/detailProduct/".$bestSeller[0]["id"])?>"><h2 class="align-middle"><?=strtoupper($bestSeller[0]["name"])?></h2></a>
                                 </div>
                                 <div class="col-4 col-md-12 col-lg-4">
                                     <div class="rating rating-<?=$bestSeller[0]["stars"]?> fs-13">
@@ -180,7 +180,7 @@
                         <div class="text-block">
                             <p class="text-center" style="letter-spacing: 3px;"><b>BED LINEN</b></p>
                         </div>
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$bedLinen[0]["id"])?>">
                             <img class="img-fluid" style="position: relative; z-index: auto"
                                  src="<?= site_url('asset/upload/'.$bedLinen[0]["image_1"]); ?>"
                                  alt="product name"/>
@@ -190,7 +190,7 @@
                         <div class="shop-item-summary p-30">
                             <div class="row mb-10">
                                 <div class="col-8 col-md-12 col-lg-8">
-                                    <h2 class="align-middle"><?=strtoupper($bedLinen[0]["name"])?></h2>
+									<a href="<?=base_url("home/detailProduct/".$bedLinen[0]["id"])?>"><h2 class="align-middle"><?=strtoupper($bedLinen[0]["name"])?></h2></a>
                                 </div>
                                 <div class="col-4 col-md-12 col-lg-4">
                                     <div class="rating rating-<?=$bedLinen[0]["stars"]?> fs-13">
@@ -227,7 +227,7 @@
                         <div class="text-block">
                             <p class="text-center" style="letter-spacing: 3px;"><b>BEDDING ACCESSORIES</b></p>
                         </div>
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$beddingAcc[0]["id"])?>">
                             <img class="img-fluid" style="position: relative; z-index: auto"
                                  src="<?= site_url('asset/upload/'.$beddingAcc[0]["image_1"]); ?>"
                                  alt="product name"/>
@@ -237,7 +237,7 @@
                         <div class="shop-item-summary p-30">
                             <div class="row mb-10">
                                 <div class="col-8 col-md-12 col-lg-8">
-                                    <h2 class="align-middle"><?=strtoupper($beddingAcc[0]["name"])?></h2>
+									<a href="<?=base_url("home/detailProduct/".$beddingAcc[0]["id"])?>"><h2 class="align-middle"><?=strtoupper($beddingAcc[0]["name"])?></h2></a>
                                 </div>
                                 <div class="col-4 col-md-12 col-lg-4">
                                     <div class="rating rating-<?=$beddingAcc[0]["stars"]?> fs-13">
@@ -319,7 +319,7 @@
                             <div class="shop-item-summary p-15">
                                 <div class="row mb-10">
                                     <div class="col-12">
-                                        <h2 class="align-middle"><?=strtoupper($p["name"])?></h2>
+										<a href="<?=base_url("home/detailProduct/".$p["id"])?>"><h2 class="align-middle"><?=strtoupper($p["name"])?></h2></a>
                                     </div>
                                 </div>
                                 <?php if ($p["sub_price"] != 0) { ?>
