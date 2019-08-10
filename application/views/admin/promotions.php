@@ -31,11 +31,11 @@
                                     <td><?= $promotion['name'];?></td>
                                     <td><?= $promotion['start_date']." - ". $promotion['end_date']?></td>
                                     <td>
-                                        <a href="<?= site_url('admin/detailpromotion/'.$promotion['id'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                                        <a href="<?= site_url('admin/detailpromotion/'.$promotion['slugs'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                                         <?php if ($this->session->userdata('uType') == 1): ?>
-                                          <a href="<?= site_url('admin/deletePromotion/'.$promotion['id'])?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
+                                          <a href="<?= site_url('admin/deletePromotion/'.$promotion['slugs'])?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                                         <?php endif; ?>
-                                        <a href="<?=site_url('admin/activePromotion/'.$promotion['id']);?>"><i  class="btn <?php echo $promotion['status'] == 1? 'btn-success': 'btn-danger'; ?> fa fa-power-off "></i></a>
+                                        <a href="<?=site_url('admin/activePromotion/'.$promotion['slugs']);?>"><i  class="btn <?php echo $promotion['status'] == 1? 'btn-success': 'btn-danger'; ?> fa fa-power-off "></i></a>
                                     </td>
                                 </tr>
                                 <?php $no++; ?>

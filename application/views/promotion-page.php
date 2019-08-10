@@ -37,7 +37,7 @@
 								<img class="img-fluid" src="<?= base_url('asset/upload/'.$promotion['image']);?>"
 									alt="product name">
 								<h4 class="text-center">
-									<a href="<?=site_url('home/promotionDetail/'.$promotion['id'])?>"><?=$promotion['name']?></a>
+									<a href="<?=site_url('home/promotionDetail/'.$promotion['slugs'])?>"><?=$promotion['name']?></a>
 								</h4>
 							</figure>
 

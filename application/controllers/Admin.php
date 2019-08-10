@@ -1991,7 +1991,12 @@ class Admin extends CI_Controller {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('name', 'Name', 'required');
+            $this->form_validation->set_rules('name', 'Name', 'required|callback_checkingPromotionName');
+            $this->form_validation->set_rules('kVoucher', 'Kode Voucher', 'required');
+            $this->form_validation->set_rules('jumlah', 'Limit Voucher', 'required');
+            $this->form_validation->set_rules('discount', 'Discount', 'required');
+            $this->form_validation->set_rules('start', 'Start Period', 'required');
+            $this->form_validation->set_rules('end', 'End Period', 'required');
             $this->form_validation->set_rules('desc', 'Description', 'required');
             $this->form_validation->set_rules('start', 'Start Period', 'required');
             $this->form_validation->set_rules('end', 'End Period', 'required');
@@ -2017,15 +2022,28 @@ class Admin extends CI_Controller {
                     $this->load->view('include/admin/footer');
                 } else {
                     $image = $this->upload->data();
+                    $slugs = str_replace(' ', '-', strtolower($this->input->post('name')));
                     $promotion = array(
-                        'name'         => $this->input->post('name'),
-                        'description'  => $this->input->post('desc'),
-                        'start_date'     => $this->input->post('start'),
-                        'end_date'       => $this->input->post('end'),
-                        'image'       => $image['orig_name'],
-                        'status'       => 1
+                        'name'          => $this->input->post('name'),
+                        'slugs'         => $slugs,
+                        'description'   => $this->input->post('desc'),
+                        'start_date'    => $this->input->post('start'),
+                        'end_date'      => $this->input->post('end'),
+                        'image'         => $image['orig_name'],
+                        'status'        => 1
                     );
                     $this->madmin->inputData('tm_promotion', $promotion);
+
+                    $idProm = $this->madmin->getProducts($promotion, array('idF' => 'id'), 'tm_promotion', TRUE);
+
+                    $voucher = array(
+                      'kode_voucher'  => $this->input->post('kVoucher'),
+                      'id_promotion'  => $idProm['id'],
+                      'discount'      => $this->input->post('discount'),
+                      'jumlah'        => $this->input->post('jumlah'),
+                      'active'        => 1
+                    );
+                    $this->madmin->inputData('tm_voucher', $voucher);
 
                     redirect('admin/promotions', 'refresh');
                 }
@@ -2037,9 +2055,19 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function detailPromotion($id) {
+    public function checkingPromotionName($nameProm){
+      $promotion_name = $this->madmin->getProducts(array('name' => $nameProm), array('nameF' => 'name'), 'tm_promotion', TRUE);
+      if (isset($promotion_name)) {
+        $this->session->set_flashdata('error', 'Promotion name has already been created');
+        return FALSE;
+      }else{
+        return TRUE;
+      }
+    }
+
+    public function detailPromotion($slugs) {
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
+            $data['promotion'] = $this->madmin->detailPromotion($slugs);
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
             $this->load->view('admin/detailPromotion', $data);
@@ -2051,16 +2079,16 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function activePromotion($id) {
+    public function activePromotion($slugs) {
         if($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2){
-            $stat = $this->madmin->getProducts(array('id' => $id), array('statField' => 'status'), 'tm_promotion',TRUE);
+            $stat = $this->madmin->getProducts(array('slugs' => $slugs), array('statField' => 'status'), 'tm_promotion',TRUE);
             if($stat['status'] == 1){
                 $items = array('status' => 0);
-                $this->madmin->updateData(array('id' => $id), 'tm_promotion', $items);
+                $this->madmin->updateData(array('slugs' => $slugs), 'tm_promotion', $items);
                 redirect('admin/promotions', 'refresh');
             }else{
                 $items = array('status' => 1);
-                $this->madmin->updateData(array('id' => $id), 'tm_promotion', $items);
+                $this->madmin->updateData(array('slugs' => $slugs), 'tm_promotion', $items);
                 redirect('admin/promotions', 'refresh');
             }
         }else{
@@ -2070,16 +2098,16 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function editPromotion($id) {
+    public function editPromotion($slugs) {
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('name', 'Name', 'required');
+            $this->form_validation->set_rules('name', 'Name', 'required|callback_checkingEditNameProm');
             $this->form_validation->set_rules('desc', 'Description', 'required');
             $this->form_validation->set_rules('start', 'Start Period', 'required');
             $this->form_validation->set_rules('end', 'End Period', 'required');
-            $data['promotion'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
+            $data['promotion'] = $this->madmin->detailPromotion($slugs);
             if ($this->form_validation->run() === FALSE) {
 
                 $this->load->view('include/admin/header');
@@ -2104,27 +2132,51 @@ class Admin extends CI_Controller {
                         $file = './asset/upload/' . $data['promotion']['image'];
                         unlink($file);
                         $image = $this->upload->data();
+                        $id = $this->input->post('idProm');
+                        $slug = str_replace(' ', '-', strtolower($this->input->post('name')));
                         $promotion = array(
                             'name'         => $this->input->post('name'),
+                            'slugs'        => $slug,
                             'description'  => $this->input->post('desc'),
-                            'start_date'     => $this->input->post('start'),
-                            'end_date'       => $this->input->post('end'),
-                            'image'       => $image['orig_name'],
+                            'start_date'   => $this->input->post('start'),
+                            'end_date'     => $this->input->post('end'),
+                            'image'        => $image['orig_name'],
                             'status'       => 1
                         );
                         $this->madmin->updateData(array('id' => $id),'tm_promotion', $promotion);
 
+                        $edit_voucher = array(
+                          'kode_voucher'  => $this->input->post('kVoucher'),
+                          'id_promotion'  => $id,
+                          'discount'      => $this->input->post('discount'),
+                          'jumlah'        => $this->input->post('jumlah'),
+                          'active'        => 1
+                        );
+                        $this->madmin->updateData(array('id_promotion' => $id), 'tm_voucher', $edit_voucher);
+
                         redirect('admin/promotions', 'refresh');
                     }
                 } else {
-                    $promotion = array(
-                        'name'         => $this->input->post('name'),
-                        'description'  => $this->input->post('desc'),
-                        'start_date'     => $this->input->post('start'),
-                        'end_date'       => $this->input->post('end'),
-                        'status'       => 1
-                    );
-                    $this->madmin->updateData(array('id' => $id),'tm_promotion', $promotion);
+                  $id = $this->input->post('idProm');
+                  $slug = str_replace(' ', '-', strtolower($this->input->post('name')));
+                  $promotion = array(
+                      'name'         => $this->input->post('name'),
+                      'slugs'        => $slug,
+                      'description'  => $this->input->post('desc'),
+                      'start_date'   => $this->input->post('start'),
+                      'end_date'     => $this->input->post('end'),
+                      'status'       => 1
+                  );
+                  $this->madmin->updateData(array('id' => $id),'tm_promotion', $promotion);
+
+                  $edit_voucher = array(
+                    'kode_voucher'  => $this->input->post('kVoucher'),
+                    'id_promotion'  => $id,
+                    'discount'      => $this->input->post('discount'),
+                    'jumlah'        => $this->input->post('jumlah'),
+                    'active'        => 1
+                  );
+                  $this->madmin->updateData(array('id_promotion' => $id), 'tm_voucher', $edit_voucher);
 
                     redirect('admin/promotions', 'refresh');
                 }
@@ -2136,12 +2188,23 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function deletePromotion($id) {
+    public function checkingEditNameProm($editNameProm){
+      $idProm = $this->input->post('idProm');
+      $prom_name = $this->madmin->getProducts(array('name' => $editNameProm, 'id !=' => $idProm), array('nameF' => 'name'), 'tm_promotion', TRUE);
+      if (isset($prom_name)) {
+        $this->session->set_flashdata('error', 'Promotion name has already been created');
+        return FALSE;
+      }else {
+        return TRUE;
+      }
+    }
+
+    public function deletePromotion($slugs) {
         if ($this->session->userdata('uType') == 1) {
 //            $data = $this->madmin->getProducts(array('id' => $id), NULL,'tm_promotion', TRUE);
 //            $this->madmin->deleteData(array('id' => $id), 'tm_promotion');
 //            unlink('./asset/upload/'.$data['image']);
-            $this->madmin->updateData(array('id' => $id), 'tm_promotion', array('deleted' => 1));
+            $this->madmin->updateData(array('slugs' => $slugs), 'tm_promotion', array('deleted' => 1));
             redirect('admin/promotions', 'refresh');
         }else{
             $this->load->view('include/header2');

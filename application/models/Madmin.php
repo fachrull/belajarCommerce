@@ -724,4 +724,17 @@ class Madmin extends CI_Model {
         return FALSE;
       }
     }
+
+    public function detailPromotion($slug){
+      $this->db->select('a.id, a.name, a.slugs, a.description, a.image, a.start_date, a.end_date, a.status, b.kode_voucher, b.discount, b.jumlah');
+      $this->db->from('tm_promotion a');
+      $this->db->join('tm_voucher b', 'b.id_promotion = a.id', 'left');
+      $this->db->where('a.slugs', $slug);
+      $query = $this->db->get();
+      if ($query->num_rows() != 0) {
+        return $query->row_array();
+      }else{
+        return FALSE;
+      }
+    }
 }
