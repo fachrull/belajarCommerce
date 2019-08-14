@@ -17,8 +17,9 @@
 							<?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
 							<?php endif;?>
 							<!-- /ALERT -->
-							<?= form_open_multipart('admin/editProd/' . $products[0]->id, array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
+							<?= form_open_multipart('admin/editProd/' . $products[0]->slugs, array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
 							<!-- <p class="register-box-msg">Add a new product</p> -->
+							<input type="hidden" name="idProd" value="<?= $products[0]->id;?>">
 							<div class="row mb-3">
 								<div class="col-md-12 col-xs-12">
 									<div class="form-group">

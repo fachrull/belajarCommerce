@@ -58,7 +58,7 @@
                 </div>
                 <div class="row text-center justify-content-between">
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/1'); ?>">
+                        <a href="<?= site_url('home/shop/aireloom'); ?>">
                             <img class="product-img wow fadeInUp" alt="Aireloom" data-wow-delay="0.2s"
                                  src="<?= base_url('asset/brands/Aireloom.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverAireloom.png"); ?>'"
@@ -66,7 +66,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/2'); ?>">
+                        <a href="<?= site_url('home/shop/kingkoil'); ?>">
                             <img class="product-img wow fadeInUp" alt="Kingkoil" data-wow-delay="0.2s"
                                  src="<?= base_url('asset/brands/King-koil.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverKing-koil.png"); ?>'"
@@ -74,7 +74,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/3'); ?>">
+                        <a href="<?= site_url('home/shop/serta'); ?>">
                             <img class="product-img wow fadeInUp" alt="Serta" data-wow-delay="0.2s"
                                  src="<?= base_url('asset/brands/Serta.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverSerta.png"); ?>'"
@@ -82,7 +82,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/4'); ?>">
+                        <a href="<?= site_url('home/shop/tempur'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Tempur"
                                  src="<?= base_url('asset/brands/Tempur.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverTempur.png"); ?>'"
@@ -90,7 +90,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/5'); ?>">
+                        <a href="<?= site_url('home/shop/florence'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence"
                                  src="<?= base_url('asset/brands/Florence.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverFlorence.png"); ?>'"
@@ -98,7 +98,7 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/5'); ?>">
+                        <a href="<?= site_url('home/shop/florence'); ?>">
                             <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence"
                                  src="<?= base_url('asset/brands/Florence.png'); ?>"
                                  onmouseover="this.src='<?= base_url("asset/brands/hoverFlorence.png"); ?>'"
@@ -133,7 +133,7 @@
                             <p class="text-center" style="letter-spacing: 3px;"><b>BEST SELLER</b></p>
                         </div>
 
-                        <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$bestSeller[0]["id"])?>">
+                        <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"])?>">
                             <img class="img-fluid" style="position: relative; z-index: auto"
                                  src="<?= site_url('asset/upload/'.$bestSeller[0]["image_1"]); ?>"
                                  alt="product name"/>
@@ -180,7 +180,7 @@
                         <div class="text-block">
                             <p class="text-center" style="letter-spacing: 3px;"><b>BED LINEN</b></p>
                         </div>
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"])?>">
                             <img class="img-fluid" style="position: relative; z-index: auto"
                                  src="<?= site_url('asset/upload/'.$bedLinen[0]["image_1"]); ?>"
                                  alt="product name"/>
@@ -227,7 +227,7 @@
                         <div class="text-block">
                             <p class="text-center" style="letter-spacing: 3px;"><b>BEDDING ACCESSORIES</b></p>
                         </div>
-                        <a class="shop-item-image" href="#">
+                        <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"])?>">
                             <img class="img-fluid" style="position: relative; z-index: auto"
                                  src="<?= site_url('asset/upload/'.$beddingAcc[0]["image_1"]); ?>"
                                  alt="product name"/>
@@ -309,7 +309,7 @@
                         <div class="thumbnail-highlight">
                             <!-- product image(s) -->
 
-                            <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$p["id"])?>">
+                            <a class="shop-item-image" href="<?=base_url("home/detailProduct/".$p["slugs"])?>">
                                 <img class="img-fluid" style="position: relative; z-index: auto"
                                      src="<?= site_url('asset/upload/'.$p["image_1"]); ?>"
                                      alt="product name"/>

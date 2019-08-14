@@ -16,7 +16,8 @@
                 <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
               <?php endif;?>
               <!-- /ALERT -->
-              <?= form_open_multipart('admin/editCat/'.$cat['id'], array('class' => 'm-0 sky-form')); ?>
+              <?= form_open_multipart('admin/editCat/'.$cat['slugs'], array('class' => 'm-0 sky-form')); ?>
+                <input type="hidden" name="idCat" value="<?= $cat['id']?>">
                 <label class="input mb-10">
                   <input class="form-control" name="items" type="text" placeholder="Category" value="<?= $cat['name']?>">
                 </label>

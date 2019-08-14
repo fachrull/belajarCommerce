@@ -180,19 +180,25 @@ class Home extends CI_Controller{
       if($brand === 6){
         $category = NULL;
       }
-      $data['products'] = $this->mhome->getShop_product($brand);
-      $data['brand'] = $this->mhome->getProducts(array('id' => $brand),
-       array('idField' => 'id','nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
-      $data['category'] = $this->mhome->brand_categories($brand);
+      $idBrnd = $this->mhome->getProducts(array('slugs' => $brand), array('idF' => 'id'), 'tm_brands', TRUE);
+      $brandId = $idBrnd['id'];
+      $data['products'] = $this->mhome->getShop_product($brandId);
+      $data['brand'] = $this->mhome->getProducts(array('slugs' => $brand),
+       array('idField' => 'id', 'slugsF' => 'slugs', 'nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->mhome->brand_categories($brandId);
     } else {
+      $idBrnd = $this->mhome->getProducts(array('slugs' => $brand), array('idF' => 'id'), 'tm_brands', TRUE);
+      $idCat = $this->mhome->getProducts(array('slugs' => $category), array('idF' => 'id'), 'tm_category', TRUE);
+      $categoryId = $idCat['id'];
+      $brandId = $idBrnd['id'];
       // echo "saya lengkap";exit();
-      if($brand === 6){
-        $category = NULL;
+      if($brandId === 6){
+        $categoryId = NULL;
       }
-      $data['products'] = $this->mhome->getShop_product($brand, $category);
-        $data['brand'] = $this->mhome->getProducts(array('id' => $brand),
-        array('idField' => 'id','nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
-      $data['category'] = $this->mhome->brand_categories($brand);
+      $data['products'] = $this->mhome->getShop_product($brandId, $categoryId);
+      $data['brand'] = $this->mhome->getProducts(array('slugs' => $brand),
+        array('idField' => 'id', 'slugsF' => 'slugs', 'nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
+      $data['category'] = $this->mhome->brand_categories($brandId);
     }
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
     // print_r($data['category']);
@@ -247,7 +253,7 @@ class Home extends CI_Controller{
   // }
 
   public function listArticle(){
-    $data['pedias'] = $this->mhome->getProducts(array('status' => 1, 'deleted' => 0), array('idField' => 'id', 'titleField' => 'title',
+    $data['pedias'] = $this->mhome->getProducts(array('status' => 1, 'deleted' => 0), array('slugsF' => 'slugs', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
 
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
@@ -257,10 +263,10 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function fullArticle($id){
-    $data['pedias'] = $this->mhome->getProducts(NULL, array('idField' => 'id', 'titleField' => 'title',
+  public function fullArticle($slugs){
+    $data['pedias'] = $this->mhome->getProducts(array('status' => 1, 'deleted' => 0), array('slugsF' => 'slugs', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
-    $data['article'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_agmpedia', TRUE);
+    $data['article'] = $this->mhome->getProducts(array('slugs' => $slugs), NULL, 'tm_agmpedia', TRUE);
 
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -297,10 +303,12 @@ class Home extends CI_Controller{
       }
   }
 
-  public function detailProduct($idProduct = NULL){
-    if($idProduct == NULL){
+  public function detailProduct($slugsProduct = NULL){
+    if($slugsProduct == NULL){
       show_404();
     }else {
+      $prod = $this->mhome->getProducts(array('slugs' => $slugsProduct), array('idF' => 'id'), 'tm_product', TRUE);
+      $idProduct = $prod['id'];
       $specs = array();
       $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
       if (is_null($data['product']['name'])) {
@@ -1681,9 +1689,11 @@ class Home extends CI_Controller{
     }
   }
 
-  public function detail_transaction($idOrder){
+  public function detail_transaction($orderNum){
     if ($this->session->userdata('uType') == 4) {
       $idCustomer = $this->session->userdata('uId');
+      $ordr = $this->mhome->getProducts(array('order_number' => $orderNum), array('idF' => 'id'), 'tm_order', TRUE);
+      $idOrder = $ordr['id'];
       $data['detailOrder'] = $this->mhome->detailOrder($idOrder, $idCustomer);
       $listOrder = $this->mhome->getProducts(array('id_tm_order' => $idOrder),
         array('idProd' => 'id_product', 'idTrprod_size' => 'id_tr_prod_size', 'spcl' => 'special',

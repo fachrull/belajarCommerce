@@ -40,7 +40,7 @@
                 </div>
               </div>
             </div>
-            <a href="<?=site_url('admin/editpedia/'.$article['id'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Article</a>
+            <a href="<?=site_url('admin/editpedia/'.$article['slugs'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Article</a>
             <a href="<?= site_url('admin/sa_agmpedia');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
           </div>
         </div>

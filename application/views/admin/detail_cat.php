@@ -22,7 +22,7 @@
               <a href="<?= site_url('admin/sa_cat')?>" class="btn btn-oldblue">Back</a>
             </div>
             <div class="col-xs-6 text-right">
-              <a href="<?= site_url('admin/editCat/'.$cat['id'])?>" class="btn btn-oldblue">Edit Category</a>
+              <a href="<?= site_url('admin/editCat/'.$cat['slugs'])?>" class="btn btn-oldblue">Edit Category</a>
             </div>
           </div>
         </div>
