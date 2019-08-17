@@ -30,19 +30,35 @@
 					<ul class="pajinate-container shop-item-list row list-inline m-0">
 						<?php foreach ($promotions as $promotion) { ?>
 						<!-- POST ITEM -->
-						<div class="blog-post-item col-md-6 col-sm-6">
-
-							<!-- IMAGE -->
-							<figure class="mb-20">
-								<img class="img-fluid" src="<?= base_url('asset/upload/'.$promotion['image']);?>"
-									alt="product name">
-								<h4 class="text-center">
-									<a href="<?=site_url('home/promotionDetail/'.$promotion['slugs'])?>"><?=$promotion['name']?></a>
-								</h4>
-							</figure>
-
-
-						</div>
+							<div class="col-md-6 col-sm-6">
+								<div class="card " style="width: 18rem;">
+									<img src="<?= base_url('asset/upload/'.$promotion['image']);?>" class="card-img-top" alt="promotion image">
+									<div class="card-body">
+										<h4>
+											<a href="<?=site_url('home/promotionDetail/'.$promotion['slugs'])?>"><?=$promotion['name']?></a>
+										</h4>
+										<table>
+											<tr>
+												<td>
+													<small class="text-muted">Promotion Period</small>
+													<br />
+													<?php $start_date = date_create($promotion['start_date']);
+													$end_date = date_create($promotion['end_date']);
+													echo date_format($start_date, "d M Y"). " - ". date_format($end_date, "d M Y"); ?>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<small class="text-muted">Voucher Code</small>
+													<br />
+													<p><?=$promotion['kode_voucher']?></p>
+												</td>
+											</tr>
+										</table>
+										<a href="<?=site_url('home/promotionDetail/'.$promotion['slugs'])?>" class="btn btn-oldblue btn-block">View Detail</a>
+									</div>
+								</div>
+							</div>
 						<!-- /POST ITEM -->
 						<?php } ?>
 					</ul>

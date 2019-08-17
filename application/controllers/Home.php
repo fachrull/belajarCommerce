@@ -1548,7 +1548,7 @@ class Home extends CI_Controller{
   }
 
   public function promotionPage(){
-    $data['promotions'] = $this->mhome->getProducts(array('status =' => 1, 'deleted' => 0), NULL, 'tm_promotion', FALSE);
+    $data['promotions'] = $this->mhome->getPromotions();
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
     $this->load->view('include/header2', $brands);
@@ -1622,7 +1622,6 @@ class Home extends CI_Controller{
 
   public function promotionDetail($slugs){
       $data['promotion'] = $this->mhome->detailPromotion($slugs);
-      print_r($data['promotion']);exit();
       $data['is_promotion'] = TRUE;
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 

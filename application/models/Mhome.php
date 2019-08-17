@@ -44,6 +44,14 @@ class Mhome extends CI_Model{
     }
   }
 
+  public function getPromotions() {
+	  $this->db->select('a.name, a.description, a.image, a.slugs, a.start_date, a.end_date, b.kode_voucher, b.discount');
+	  $this->db->from('tm_promotion a');
+	  $this->db->join('tm_voucher b', 'b.id_promotion = a.id', 'inner');
+	  $query = $this->db->get();
+	  return $query->result_array();
+  }
+
   public function dataPrime($id = NULL){
     $this->db->select(array('emailField' => 'email'));
     $query = $this->db->get_where('user_login', array('user_id' =>$id));
