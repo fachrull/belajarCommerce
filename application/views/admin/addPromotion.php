@@ -40,6 +40,18 @@
                                 <input placeholder="End Period" name="end" type="text" class="form-control pull-right datepicker" id="enddatepicker">
                             </div>
                             </label>
+                            <label class="input mb-10">
+                              <label><strong>Voucher Code</strong></label>
+                              <input placeholder="Voucher Code e.g = 'AGM_VCRXXXX'" class="form-control pull-right" type="text" name="kVoucher" >
+                            </label>
+                            <label class="input mb-10">
+                              <label><strong>Discount</strong></label>
+                              <input placeholder="Discount e.g = 0.7(70%)" type="text" name="discount" class="form-control pull-right">
+                            </label>
+                            <label class="input mb-10">
+                              <label><strong>Limit Voucher</strong></label>
+                              <input placeholder="Limit Voucher" type="number" name="jumlah" class="form-control pull-right">
+                            </label>
                             <div class="box-body pad pt-10 pl-0 pr-0 mb-10">
                             <label><strong>Description</strong></label>
                                 <textarea id="desc" name="desc" rows="10" cols="80"

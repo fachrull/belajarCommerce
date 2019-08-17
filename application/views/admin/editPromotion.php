@@ -16,7 +16,8 @@
                                 <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>'); ?>
                             <?php endif; ?>
                             <!-- /ALERT -->
-                            <?= form_open_multipart('admin/editpromotion/'.$promotion['id'], array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
+                            <?= form_open_multipart('admin/editpromotion/'.$promotion['slugs'], array('class' => 'm-0 sky-form', 'id' => 'addProd')); ?>
+                            <input type="hidden" name="idProm" value="<?= $promotion['id'];?>">
                             <label class="input mb-10">
                                 <label><strong>Promotion Name</strong></label>
                                     <input placeholder="Promotion Name" name="name" type="text" value="<?=$promotion['name']?>" class="form-control pull-right">
@@ -41,6 +42,18 @@
                                 <input placeholder="End Period" name="end" type="text" value="<?=$promotion['end_date']?> "class="form-control pull-right datepicker" id="enddatepicker">
                             </div>
                             </label>
+                            <label class="input mb-10">
+                              <label><strong>Voucher Code</strong></label>
+                              <input type="text" name="kVoucher" value="<?= $promotion['kode_voucher']?>" class="form-control pull-right">
+                            </label>
+                            <label class="input mb-10">
+                              <label><strong>Discount</strong></label>
+                              <input type="text" name="discount" value="<?= $promotion['discount']?>" class="form-control pull-right">
+                            </label>
+                            <label class="input mb-10">
+                              <label><strong>Limit Voucher</strong></label>
+                              <input type="text" name="jumlah" value="<?= $promotion['jumlah']?>" class="form-control pull-right">
+                            </label>
                             <div class="box-body pad pt-10 pl-0 pr-0 mb-10">
                             <label><strong>Description</strong></label>
                                 <textarea id="desc" name="desc" rows="10" cols="80"
@@ -52,7 +65,7 @@
                             </label>
                             <div class="row">
                                 <div class="col-md-6 text-left">
-                                    <a href="<?=site_url('admin/promotions');?>" id="submit" type="submit" class="btn btn-oldblue btn-default">Cancel
+                                    <a href="<?=site_url('admin/detailPromotion/'.$promotion['slugs']);?>" id="submit" type="submit" class="btn btn-oldblue btn-default">Cancel
                                     </a>
                                     <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
                                 </div>

@@ -19,12 +19,24 @@
             </div>
             <div class="product-detail">
                 <div class="col-xs-12 col-md-6 mb-20">
-                  <div class="row">
+                  <div class="row pr-20">
                       <div class="table-responsive">
                           <table class="table">
                               <tr>
                                   <th>Period</th>
                                   <td><?= $promotion['start_date']." - ". $promotion['end_date']?></td>
+                              </tr>
+                              <tr>
+                                <th>Kode Voucher</th>
+                                <td><?= $promotion['kode_voucher']?></td>
+                              </tr>
+                              <tr>
+                                <th>Discount</th>
+                                <td><?= $promotion['discount']?></td>
+                              </tr>
+                              <tr>
+                                <th>Jumlah</th>
+                                <td><?= $promotion['jumlah']?></td>
                               </tr>
                               <tr>
                                   <th>Description</th>
@@ -41,7 +53,7 @@
               </div>
             </div>
             <?php if ($this->session->userdata('uType') == 1): ?>
-              <a href="<?=site_url('admin/editpromotion/'.$promotion['id'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Promotion</a>
+              <a href="<?=site_url('admin/editPromotion/'.$promotion['slugs'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Promotion</a>
             <?php endif; ?>
             <a href="<?= site_url('admin/promotions');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
           </div>

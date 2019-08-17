@@ -72,6 +72,7 @@ class Home extends CI_Controller{
         $this->load->view('include/footer');
 
     } elseif ($this->session->userdata('uType') == NULL) {
+
         $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','link'=>'bannerlink'), 'tm_cover', FALSE);
         $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
         $data['pedias'] = $this->mhome->getPedia();
@@ -1547,10 +1548,10 @@ class Home extends CI_Controller{
   }
 
   public function promotionPage(){
-      $data['promotions'] = $this->mhome->getProducts(array('status =' => 1, 'deleted' => 0), NULL, 'tm_promotion', FALSE);
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $data['promotions'] = $this->mhome->getPromotions();
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('promotion-page', $data);
     $this->load->view('include/footer');
   }
@@ -1619,8 +1620,8 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function promotionDetail($id){
-      $data['promotion'] = $this->mhome->getProducts(array('id' => $id), NULL, 'tm_promotion', TRUE);
+  public function promotionDetail($slugs){
+      $data['promotion'] = $this->mhome->detailPromotion($slugs);
       $data['is_promotion'] = TRUE;
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
