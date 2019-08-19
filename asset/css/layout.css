@@ -11416,3 +11416,9 @@ div.tabbed>a:hover>div {
 	/*	padding:0 !important;*/
 	/*}*/
 }
+
+@media only screen and (min-width: 768px) and (max-width: 1024px) {
+	div.promotion-card {
+		font-size: 10px !important;
+	}
+}

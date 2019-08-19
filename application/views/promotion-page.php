@@ -30,8 +30,8 @@
 					<ul class="pajinate-container shop-item-list row list-inline m-0">
 						<?php foreach ($promotions as $promotion) { ?>
 						<!-- POST ITEM -->
-							<div class="col-md-6 col-sm-6">
-								<div class="card " style="width: 18rem;">
+							<div class="col-md-4 col-sm-4">
+								<div class="card ">
 									<img src="<?= base_url('asset/upload/'.$promotion['image']);?>" class="card-img-top" alt="promotion image">
 									<div class="card-body">
 										<h4>
