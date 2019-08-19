@@ -48,6 +48,8 @@ class Mhome extends CI_Model{
 	  $this->db->select('a.name, a.description, a.image, a.slugs, a.start_date, a.end_date, b.kode_voucher, b.discount');
 	  $this->db->from('tm_promotion a');
 	  $this->db->join('tm_voucher b', 'b.id_promotion = a.id', 'inner');
+	  $this->db->where('a.status', 1);
+	  $this->db->where('a.deleted', 0);
 	  $query = $this->db->get();
 	  return $query->result_array();
   }
