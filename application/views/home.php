@@ -366,7 +366,7 @@
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>STORES</b></p>
-                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-15 hidden-md-down">Find our nearest stores in your city</p>
                                 </div>
                             </div>
                         </div>
@@ -390,7 +390,7 @@
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>SUPPORT</b></p>
-                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-15 hidden-md-down">We will try to answer all of your questions. Let us help and serve you better.</p>
                                 </div>
                             </div>
                         </div>
@@ -416,7 +416,7 @@
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>AGM PEDIA</b></p>
-                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-15 hidden-md-down">Everything you need to know about AGM, good mattress, and good sleep.</p>
                                 </div>
                             </div>
                         </div>
@@ -442,7 +442,7 @@
                             <div class="row mb-10">
                                 <div class="col-12">
                                     <p class="text-center fs-20 text-help"><b>PARTNERSHIP</b></p>
-                                    <p class="text-center fs-20 hidden-md-down">Lorem ipsum dolor sit amet</p>
+                                    <p class="text-center fs-15 hidden-md-down">Find your business opportunity, and become part of the AGM extended family </p>
                                 </div>
                             </div>
                         </div>

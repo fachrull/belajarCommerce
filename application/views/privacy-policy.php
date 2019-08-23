@@ -29,71 +29,50 @@
                             <h2>Introduction and Overview</h2>
                         </div>
 
-                        <p class="left">Lorem ipsum dolor sit amet tempus malesuada. Suspendisse in dui. Ut elit metus,
-                            quis consectetuer
-                            congue augue
-                            quis erat. Quisque pretium eu, aliquam odio. Donec a pellentesque consectetuer, augue nec
-                            odio. Nam accumsan at,
-                            porttitor sem at porttitor laoreet viverra mattis. Aliquam ultricies accumsan. In tempus.
-                            Pellentesque felis.</p>
-                        <p class="left">Aliquam nisl. Nunc condimentum wisi. Aenean nonummy risus at eros. Suspendisse
-                            congue odio at
-                            purus. Quisque
-                            eu justo. Quisque eu eros. Sed accumsan dictum, laoreet sit amet ante. Curabitur ultrices
-                            iaculis. In gravida
-                            eros in consequat diam. Donec nonummy, tellus in lorem lorem pretium magna. In hac
-                            habitasse platea dictumst.
-                            Suspendisse elit eu scelerisque a, gravida vel, purus. Class aptent taciti sociosqu ad
-                            litora torquent per
-                            conubia nostra, per inceptos hymenaeos. Aenean dictum vitae, cursus sapien. Morbi accumsan
-                            imperdiet, lorem
-                            semper facilisis nisl neque vel tortor. Cum sociis natoque penatibus et ultrices volutpat.
-                            Donec viverra et,
-                            feugiat venenatis, nunc justo non nunc. Phasellus vitae ante. Donec sit amet lorem.
-                            Vestibulum tempus. Nullam
-                            sapien. Donec pede. Lorem ipsum dolor tellus, imperdiet wisi. Phasellus purus. Praesent
-                            dictum accumsan at,
-                            posuere.</p>
-                    </div>
-                </div>
+						<p>At American Giant Mattress Store, accessible from www.AGMStore.com, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by American Giant Mattress Store and how we use it.</p>
 
-            </div>
-        </section>
-        <section class="page-header page-header-xs">
-            <div class="container">
+						<p>If you have additional questions or require more information about our Privacy Policy, do not hesitate to contact us through email at admin@AGMstore.com</p>
 
-                <div class="row mb-50">
-                    <div class="col-md-10 offset-md-1">
+						<h2>Log Files</h2>
 
-                        <div class="heading-title">
-                            <h2>Information Collection</h2>
-                        </div>
+						<p>American Giant Mattress Store follows a standard procedure of using log files. These files log visitors when they visit websites. All hosting companies do this and a part of hosting services' analytics. The information collected by log files include internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends, administering the site, tracking users' movement on the website, and gathering demographic information.</p>
 
-                        <p class="left">Aliquam nisl. Nunc condimentum wisi. Aenean nonummy risus at eros. Suspendisse
-                            congue odio at
-                            purus. Quisque
-                            eu justo. Quisque eu eros. Sed accumsan dictum, laoreet sit amet ante. Curabitur ultrices
-                            iaculis. In gravida
-                            eros in consequat diam. Donec nonummy, tellus in lorem lorem pretium magna. In hac
-                            habitasse platea dictumst.
-                            Suspendisse elit eu scelerisque a, gravida vel, purus. Class aptent taciti sociosqu ad
-                            litora torquent per
-                            conubia nostra, per inceptos hymenaeos. Aenean dictum vitae, cursus sapien. Morbi accumsan
-                            imperdiet, lorem
-                            semper facilisis nisl neque vel tortor. Cum sociis natoque penatibus et ultrices volutpat.
-                            Donec viverra et,
-                            feugiat venenatis, nunc justo non nunc. Phasellus vitae ante. Donec sit amet lorem.
-                            Vestibulum tempus. Nullam
-                            sapien. Donec pede. Lorem ipsum dolor tellus, imperdiet wisi. Phasellus purus. Praesent
-                            dictum accumsan at,
-                            posuere. Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita, a! Lorem ipsum
-                            dolor sit amet consectetur, adipisicing elit. Obcaecati voluptate error harum molestias
-                            sint porro quas. Ea natus suscipit sit. Lorem ipsum dolor sit amet consectetur adipisicing
-                            elit. Consequuntur nulla ipsum hic voluptatem perferendis molestias deserunt similique.
-                            Nesciunt rerum autem cupiditate praesentium dolore voluptatem veniam excepturi ab tenetur?
-                            Molestias vitae, explicabo nulla pariatur accusamus asperiores, labore aspernatur enim
-                            reiciendis, quam similique voluptas nostrum adipisci animi non repellat nisi impedit atque!</p>
+						<h2>Cookies and Web Beacons</h2>
 
+						<p>Like any other website, American Giant Mattress Store uses 'cookies'. These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+
+						<h2>Google DoubleClick DART Cookie</h2>
+
+						<p>Google is one of a third-party vendor on our site. It also uses cookies, known as DART cookies, to serve ads to our site visitors based upon their visit to www.website.com and other sites on the internet. However, visitors may choose to decline the use of DART cookies by visiting the Google ad and content network Privacy Policy at the following URL – <a href="https://policies.google.com/technologies/ads">https://policies.google.com/technologies/ads</a></p>
+
+
+						<h2>Privacy Policies</h2>
+
+						<P>You may consult this list to find the Privacy Policy for each of the advertising partners of American Giant Mattress Store. Our Privacy Policy was created with the help of the <a href="https://www.privacypolicygenerator.info">Privacy Policy Generator</a>.</p>
+
+						<p>Third-party ad servers or ad networks uses technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on American Giant Mattress Store, which are sent directly to users' browser. They automatically receive your IP address when this occurs. These technologies are used to measure the effectiveness of their advertising campaigns and/or to personalize the advertising content that you see on websites that you visit.</p>
+
+						<p>Note that American Giant Mattress Store has no access to or control over these cookies that are used by third-party advertisers.</p>
+
+						<h2>Third Party Privacy Policies</h2>
+
+						<p>American Giant Mattress Store's Privacy Policy does not apply to other advertisers or websites. Thus, we are advising you to consult the respective Privacy Policies of these third-party ad servers for more detailed information. It may include their practices and instructions about how to opt-out of certain options. You may find a complete list of these Privacy Policies and their links here: Privacy Policy Links.</p>
+
+						<p>You can choose to disable cookies through your individual browser options. To know more detailed information about cookie management with specific web browsers, it can be found at the browsers' respective websites. What Are Cookies?</p>
+
+						<h2>Children's Information</h2>
+
+						<p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity.</p>
+
+						<p>American Giant Mattress Store does not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p>
+
+						<h2>Online Privacy Policy Only</h2>
+
+						<p>This Privacy Policy applies only to our online activities and is valid for visitors to our website with regards to the information that they shared and/or collect in American Giant Mattress Store. This policy is not applicable to any information collected offline or via channels other than this website.</p>
+
+						<h2>Consent</h2>
+
+						<p>By using our website, you hereby consent to our Privacy Policy and agree to its Terms and Conditions.</p>
                     </div>
                 </div>
 

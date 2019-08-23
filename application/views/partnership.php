@@ -31,31 +31,7 @@
                             <h2>How to be a part of us</h2>
                         </div>
 
-                        <p class="left">Lorem ipsum dolor sit amet tempus malesuada. Suspendisse in dui. Ut elit metus,
-                            quis consectetuer
-                            congue augue
-                            quis erat. Quisque pretium eu, aliquam odio. Donec a pellentesque consectetuer, augue nec
-                            odio. Nam accumsan at,
-                            porttitor sem at porttitor laoreet viverra mattis. Aliquam ultricies accumsan. In tempus.
-                            Pellentesque felis.</p>
-                        <p class="left">Aliquam nisl. Nunc condimentum wisi. Aenean nonummy risus at eros. Suspendisse
-                            congue odio at
-                            purus. Quisque
-                            eu justo. Quisque eu eros. Sed accumsan dictum, laoreet sit amet ante. Curabitur ultrices
-                            iaculis. In gravida
-                            eros in consequat diam. Donec nonummy, tellus in lorem lorem pretium magna. In hac
-                            habitasse platea dictumst.
-                            Suspendisse elit eu scelerisque a, gravida vel, purus. Class aptent taciti sociosqu ad
-                            litora torquent per
-                            conubia nostra, per inceptos hymenaeos. Aenean dictum vitae, cursus sapien. Morbi accumsan
-                            imperdiet, lorem
-                            semper facilisis nisl neque vel tortor. Cum sociis natoque penatibus et ultrices volutpat.
-                            Donec viverra et,
-                            feugiat venenatis, nunc justo non nunc. Phasellus vitae ante. Donec sit amet lorem.
-                            Vestibulum tempus. Nullam
-                            sapien. Donec pede. Lorem ipsum dolor tellus, imperdiet wisi. Phasellus purus. Praesent
-                            dictum accumsan at,
-                            posuere.</p>
+                        <p class="left">AGM® invites you to jointly have business ventures with AGM®. Seize the opportunities to be able to have your own AGM® store throughout Indonesia, only by having your strategic and potential business location. Contact us if you are interested in achieving success and success together with American Giant Mattress®.</p>
 
                     </div>
                     <!-- /LEFT -->
