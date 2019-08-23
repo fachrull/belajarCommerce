@@ -84,9 +84,9 @@ class Admin extends CI_Controller {
     }
 
 
-    public function infoBrand($idBrand){
+    public function infoBrand($slugsBrand){
       if ($this->session->userdata('uType') == 1) {
-        $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
+        $data['brand'] = $this->madmin->getProducts(array('slugs' => $slugsBrand), NULL, 'tm_brands', TRUE);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -124,8 +124,10 @@ class Admin extends CI_Controller {
                     $this->load->view('include/admin/footer');
                 }else{
                     $pName = $this->upload->data();
+                    $slugs = str_replace(' ', '-', strtolower($this->input->post('items')));
                     $items = array(
                         'name'          => $this->input->post('items'),
+                        'slugs'         => $slugs,
                         'logo'          => $pName['orig_name'],
                         'description'   => $this->input->post('desc'),
                         'status' => 1,
@@ -157,16 +159,16 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function activeBrand($brand){
+    public function activeBrand($brandSlugs){
         if($this->session->userdata('uType') == 1){
-            $stat = $this->madmin->getProducts(array('id' => $brand), array('statField' => 'status'), 'tm_brands',TRUE);
+            $stat = $this->madmin->getProducts(array('slugs' => $brandSlugs), array('statField' => 'status'), 'tm_brands',TRUE);
             if($stat['status'] == 1){
                 $items = array('status' => 0);
-                $this->madmin->updateData(array('id' => $brand), 'tm_brands', $items);
+                $this->madmin->updateData(array('slugs' => $brandSlugs), 'tm_brands', $items);
                 redirect('admin/sa_brand', 'refresh');
             }else{
                 $items = array('status' => 1);
-                $this->madmin->updateData(array('id' => $brand), 'tm_brands', $items);
+                $this->madmin->updateData(array('slugs' => $brandSlugs), 'tm_brands', $items);
                 redirect('admin/sa_brand', 'refresh');
             }
         }else{
@@ -176,10 +178,10 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function deleteBrand($brand){
+    public function deleteBrand($brandSlugs){
         if ($this->session->userdata('uType') == 1) {
 //            $this->madmin->deleteData(array('id' => $brand), 'tm_brands');
-            $this->madmin->updateData(array('id' => $brand), 'tm_brands', array('deleted' => 1));
+            $this->madmin->updateData(array('slugs' => $brandSlugs), 'tm_brands', array('deleted' => 1));
             redirect('admin/sa_brand', 'refresh');
         }else{
             $this->load->view('include/header2');
@@ -188,16 +190,16 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function editBrand($idBrand){
+    public function editBrand($slugsBrand){
       if ($this->session->userdata('uType') == 1) {
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('items', 'Brand Name', 'required');
+        $this->form_validation->set_rules('items', 'Brand Name', 'required|callback_checkingEditBrand');
         $this->form_validation->set_rules('desc', 'Brand Description', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-            $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
+            $data['brand'] = $this->madmin->getProducts(array('slugs' => $slugsBrand), NULL, 'tm_brands', TRUE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -221,22 +223,26 @@ class Admin extends CI_Controller {
                     $this->load->view('include/admin/footer');
                 }else{
                     $pName = $this->upload->data();
+                    $slugsEditBrand = str_replace(' ', '-', strtolower($this->input->post('items')));
                     $items = array(
                         'name'          => $this->input->post('items'),
+                        'slugs'         => $slugsEditBrand,
                         'logo'          => $pName['orig_name'],
                         'description'   => $this->input->post('desc'),
                         'status' => 1,
                     );
-                    $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
+                    $this->madmin->updateData(array('slugs' => $slugsBrand), 'tm_brands', $items);
                     redirect('admin/sa_brand','refresh');
                 }
             } else {
+                $slugsEditBrand = str_replace(' ', '-', strtolower($this->input->post('items')));
                 $items = array(
                     'name'          => $this->input->post('items'),
+                    'slugs'         => $slugsEditBrand,
                     'description'   => $this->input->post('desc'),
                     'status' => 1,
                 );
-                $this->madmin->updateData(array('id' => $idBrand), 'tm_brands', $items);
+                $this->madmin->updateData(array('slugs' => $slugsBrand), 'tm_brands', $items);
                 redirect('admin/sa_brand','refresh');
             }
           }
@@ -244,6 +250,17 @@ class Admin extends CI_Controller {
         $this->load->view('include/header2');
         $this->load->view('un-authorise');
         $this->load->view('include/footer');
+      }
+    }
+
+    public function checkingEditBrand($editBrandName){
+      $idBrand = $this->input->post('idBrand');
+      $hasEditBrandName = $this->madmin->getProducts(array('id !=' => $idBrand, 'name' => $editBrandName), array('nameF' => 'name'), 'tm_brands', TRUE);
+      if (isset($hasEditBrandName)) {
+        $this->session->set_flashdata('error', 'Brand has already been created');
+        return FALSE;
+      }else {
+        return TRUE;
       }
     }
 
@@ -308,8 +325,10 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/addCats');
                 $this->load->view('include/admin/footer');
             }else{
+                $slugsCat = str_replace(' ','-', strtolower($this->input->post('items')));
                 $items = array(
                     'name'        => $this->input->post('items'),
+                    'slugs'       => $slugsCat,
                     'description' => $this->input->post('desc'),
                     'status'      => 1
                 );
@@ -332,14 +351,14 @@ class Admin extends CI_Controller {
 
     public function activeCat($cat){
         if ($this->session->userdata('uType') == 1) {
-            $stat = $this->madmin->getProducts(array('id' => $cat), array('statField' => 'status'), 'tm_category',TRUE);
+            $stat = $this->madmin->getProducts(array('slugs' => $cat), array('statField' => 'status'), 'tm_category',TRUE);
             if($stat['status'] == 1){
                 $items = array('status' => 0);
-                $this->madmin->updateData(array('id' => $cat), 'tm_category', $items);
+                $this->madmin->updateData(array('slugs' => $cat), 'tm_category', $items);
                 redirect('admin/sa_cat');
             }else{
                 $items = array('status' => 1);
-                $this->madmin->updateData(array('id' => $cat), 'tm_category', $items);
+                $this->madmin->updateData(array('slugs' => $cat), 'tm_category', $items);
                 redirect('admin/sa_cat');
             }
         }else {
@@ -352,7 +371,7 @@ class Admin extends CI_Controller {
     public function deleteCat($cat){
         if ($this->session->userdata('uType') == 1) {
 //            $this->madmin->deleteData(array('id' => $cat), 'tm_category');
-            $this->madmin->updateData(array('id' => $cat), 'tm_category', array('deleted' => 1));
+            $this->madmin->updateData(array('slugs' => $cat), 'tm_category', array('deleted' => 1));
             redirect('admin/sa_cat', 'refresh');
         } else {
             $this->load->view('include/header2');
@@ -361,9 +380,9 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function infoCat($idCat){
+    public function infoCat($slugsCat){
         if ($this->session->userdata('uType') == 1 ){
-            $data['cat'] = $this->madmin->getProducts(array('id' => $idCat), NULL, 'tm_category', TRUE);
+            $data['cat'] = $this->madmin->getProducts(array('slugs' => $slugsCat), NULL, 'tm_category', TRUE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -376,28 +395,30 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function editCat($idCat){
+    public function editCat($slugsCat){
         if ($this->session->userdata('uType') == 1) {
           $this->load->helper('form');
           $this->load->library('form_validation');
 
-          $this->form_validation->set_rules('items', 'Category Name', 'required');
+          $this->form_validation->set_rules('items', 'Category Name', 'required|callback_checkingEditCatName');
           $this->form_validation->set_rules('desc', 'Category Description', 'required');
 
           if ($this->form_validation->run() === FALSE) {
-            $data['cat'] = $this->madmin->getProducts(array('id' => $idCat), NULL, 'tm_category', TRUE);
+            $data['cat'] = $this->madmin->getProducts(array('slugs' => $slugsCat), NULL, 'tm_category', TRUE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
             $this->load->view('admin/editCat', $data);
             $this->load->view('include/admin/footer');
           }else {
+            $catSlug = str_replace(' ', '-', strtolower($this->input->post('items')));
               $items = array(
                   'name'          => $this->input->post('items'),
+                  'slugs'         => $catSlug,
                   'description'   => $this->input->post('desc'),
-                  'status' => 1,
+                  'status'        => 1,
               );
-              $this->madmin->updateData(array('id' => $idCat), 'tm_category', $items);
+              $this->madmin->updateData(array('slugs' => $slugsCat), 'tm_category', $items);
               redirect('admin/sa_cat', 'refresh');
 
           }
@@ -408,6 +429,18 @@ class Admin extends CI_Controller {
         }
       }
 
+    public function checkingEditCatName($editCatName){
+      $idCat = $this->input->post('idCat');
+      $hasEditCatName = $this->madmin->getProducts(array('id !=' => $idCat, 'name' => $editCatName),
+       array('nameF' => 'name'), 'tm_category', TRUE);
+      if (isset($hasEditCatName)) {
+        $this->session->set_flashdata('error', 'Category has already been created');
+        return FALSE;
+      }else{
+        return TRUE;
+      }
+    }
+
     public function allProd(){
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
@@ -416,15 +449,15 @@ class Admin extends CI_Controller {
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             $this->form_validation->set_rules('cat', 'Category', 'required');
 
-      if ($this->form_validation->run() == FALSE){
-        $data['products'] = $this->madmin->listProduct();
-        $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
-        $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_category', FALSE);
+            if ($this->form_validation->run() == FALSE){
+              $data['products'] = $this->madmin->listProduct();
+              $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+              $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_category', FALSE);
 
-                $this->load->view('include/admin/header');
-                $this->load->view('include/admin/left-sidebar');
-                $this->load->view('admin/allProd', $data);
-                $this->load->view('include/admin/footer');
+              $this->load->view('include/admin/header');
+              $this->load->view('include/admin/left-sidebar');
+              $this->load->view('admin/allProd', $data);
+              $this->load->view('include/admin/footer');
             }else{
                 $idBrand = $this->input->post('brand');
                 $idCat = $this->input->post('cat');
@@ -460,7 +493,7 @@ class Admin extends CI_Controller {
 
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             // $this->form_validation->set_rules('cat', 'Category', 'required');
-            $this->form_validation->set_rules('pName', 'Product Name', 'required');
+            $this->form_validation->set_rules('pName', 'Product Name', 'required|callback_checkingProdName');
             $this->form_validation->set_rules('desc', 'Description', 'required');
             $this->form_validation->set_rules('size[]', 'Size', 'required');
             $this->form_validation->set_rules('price[]', 'Price', 'required');
@@ -474,11 +507,13 @@ class Admin extends CI_Controller {
                     array('pos' => 'MAX(position) as position'), 'tm_product', TRUE);
 
                 $max_position_prod['position'] = $max_position_prod['position'] + 1;
+                $slugsProd = str_replace(' ', '-', strtolower($this->input->post('pName')));
 
                 $items = array(
                     'brand_id'    => $brand_id,
                     'cat_id'      => $cat_id,
                     'name'        => $this->input->post('pName'),
+                    'slugs'       => $slugsProd,
                     'description' => $this->input->post('desc'),
                     'image'       => "/path/to/file/",
                     'stars'       => 0,
@@ -630,14 +665,24 @@ class Admin extends CI_Controller {
 
     }
 
-    public function editProd($productId){
+    public function checkingProdName($prodName){
+      $hasProdName = $this->madmin->getProducts(array('name' => $prodName), array('nameF' => 'name'), 'tm_product', TRUE);
+      if (isset($hasProdName)) {
+        $this->session->set_flashdata('error', 'Product has already been created');
+        return FALSE;
+      }else {
+        return TRUE;
+      }
+    }
+
+    public function editProd($productSlugs){
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             $this->form_validation->set_rules('cat', 'Category', 'required');
-            $this->form_validation->set_rules('pName', 'Product Name', 'required');
+            $this->form_validation->set_rules('pName', 'Product Name', 'required|callback_checkingEditProdName');
             $this->form_validation->set_rules('desc', 'Description', 'required');
             $this->form_validation->set_rules('size[]', 'Size', 'required');
             $this->form_validation->set_rules('price[]', 'Price', 'required');
@@ -645,6 +690,7 @@ class Admin extends CI_Controller {
 
 
             if ($this->form_validation->run() === TRUE) {
+                $productId = $this->input->post('idProd');
                 $brand = $this->input->post('brand');
 
                 // data for input tm_product
@@ -797,6 +843,8 @@ class Admin extends CI_Controller {
                 redirect('admin/allProd');
 
             }else{
+                $prod = $this->madmin->getProducts(array('slugs' => $productSlugs), array('idF' => 'id'), 'tm_product', TRUE);
+                $productId = $prod['id'];
                 $data['products'] = $this->madmin->getDetailProduct($productId);
                 $data['brands'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
                     'nameField' => 'name'), 'tm_brands', FALSE);
@@ -826,6 +874,17 @@ class Admin extends CI_Controller {
         }
     }
 
+    public function checkingEditProdName($editProdName){
+      $idProd = $this->input->post('idProd');
+      $hasEditProd = $this->madmin->getProducts(array('id !=' => $idProd, 'name' => $editProdName), array('nameF' => 'name'), 'tm_product', TRUE);
+      if(isset($hasEditProd)){
+        $this->session->set_flashdata('error', 'Product Name has already been created');
+        return FALSE;
+      }else {
+        return TRUE;
+      }
+    }
+
     public function test(){
         redirect('admin/bestSeller');
         exit();
@@ -849,12 +908,14 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function detailProd($idProd){
+    public function detailProd($slugsProd){
         if ($this->session->userdata('uType') == 1) {
             $specs = array();
             $prices = array();
             $sizes = array();
-            $data['product'] = $this->madmin->getProducts(array('id' => $idProd), NULL, 'tm_product', TRUE);
+            $data['product'] = $this->madmin->getProducts(array('slugs' => $slugsProd), NULL, 'tm_product', TRUE);
+            $prod = $this->madmin->getProducts(array('slugs' => $slugsProd), array('idF' => 'id'), 'tm_product', TRUE);
+            $idProd = $prod['id'];
             $data['brand'] = $this->madmin->getProducts(array('id' => $data['product']['brand_id']),
                 array('nameField' => 'name'), 'tm_brands', TRUE);
             $data['category'] = $this->madmin->getProducts(array('id' => $data['product']['cat_id']),
@@ -895,12 +956,12 @@ class Admin extends CI_Controller {
 
     }
 
-    public function deleteProd($idProd){
+    public function deleteProd($slugsProd){
         if ($this->session->userdata('uType') == 1) {
 //            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_spec');
 //            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_size');
 //            $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
-            $this->madmin->updateData(array('id' => $idProd), 'tm_product', array('deleted' => 1));
+            $this->madmin->updateData(array('slugs' => $slugsProd), 'tm_product', array('deleted' => 1));
             redirect('admin/allProd');
         } else {
             $this->load->view('include/header2');
@@ -929,8 +990,8 @@ class Admin extends CI_Controller {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('title', 'Title', 'required');
-            $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]');
+            $this->form_validation->set_rules('title', 'Title', 'required|callback_checkingPediaTitle');
+            $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]|');
             $this->form_validation->set_rules('content', 'News', 'required');
 
             if ($this->form_validation->run() === TRUE) {
@@ -951,16 +1012,18 @@ class Admin extends CI_Controller {
                     $photos = $this->upload->data();
                     $this->upload->do_upload('thumbnail');
                     $thumbnails = $this->upload->data();
+                    $slugs_pedia = str_replace(' ', '-', strtolower($this->input->post('title')));
 
                     $items = array(
-                        'title' => $this->input->post('title'),
+                        'title'       => $this->input->post('title'),
+                        'slugs'       => $slugs_pedia,
                         'sub_content' => $this->input->post('sContent'),
-                        'content' => $this->input->post('content'),
-                        'date'  => date('Ymd'),
-                        'thumbnail' => $thumbnails['orig_name'],
-                        'photo' => $photos['orig_name'],
-                        'status' => 1,
-                        'user_id' => $this->session->userdata('uId')
+                        'content'     => $this->input->post('content'),
+                        'date'        => date('Ymd'),
+                        'thumbnail'   => $thumbnails['orig_name'],
+                        'photo'       => $photos['orig_name'],
+                        'status'      => 1,
+                        'user_id'     => $this->session->userdata('uId')
                     );
                     $this->madmin->inputData('tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia');
@@ -978,9 +1041,19 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function detailPedia($articleId) {
+    public function checkingPediaTitle($titlePedia){
+      $hasTitlePedia = $this->madmin->getProducts(array('title' => $titlePedia), array('titleF' => 'title'), 'tm_agmpedia', TRUE);
+      if (isset($hasTitlePedia)) {
+        $this->session->set_flashdata('error', 'Title name has already been created');
+        return FALSE;
+      }else{
+        return TRUE;
+      }
+    }
+
+    public function detailPedia($articleSlugs) {
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $data['article'] = $this->madmin->getProducts(array('id' => $articleId), NULL, 'tm_agmpedia', TRUE);
+            $data['article'] = $this->madmin->getProducts(array('slugs' => $articleSlugs), NULL, 'tm_agmpedia', TRUE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
@@ -993,15 +1066,15 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function activePedia($idPedia){
+    public function activePedia($slugsPedia){
       if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-        $pedia = $this->madmin->getProducts(array('id' => $idPedia), array('stats' => 'status'),
+        $pedia = $this->madmin->getProducts(array('slugs' => $slugsPedia), array('stats' => 'status'),
           'tm_agmpedia', TRUE);
         if ($pedia['status'] == 1) {
-          $this->madmin->updateData(array('id' => $idPedia),'tm_agmpedia',
+          $this->madmin->updateData(array('slugs' => $slugsPedia),'tm_agmpedia',
             array('status' => 0));
         }else{
-          $this->madmin->updateData(array('id' => $idPedia),'tm_agmpedia',
+          $this->madmin->updateData(array('slugs' => $slugsPedia),'tm_agmpedia',
             array('status' => 1));
         }
         redirect('admin/sa_agmpedia');
@@ -1012,7 +1085,7 @@ class Admin extends CI_Controller {
       }
     }
 
-    public function deletePedia($idPedia){
+    public function deletePedia($slugsPedia){
       if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
 //        $file = $this->madmin->getProducts(array('id' => $idPedia), array('thumb' => 'thumbnail',
 //          'photos' => 'photo'), 'tm_agmpedia', TRUE);
@@ -1022,7 +1095,7 @@ class Admin extends CI_Controller {
 //        unlink($file_path_photo);
 //        print_r($file_path);
 //        $this->madmin->deleteData(array('id' => $idPedia), 'tm_agmpedia');
-          $this->madmin->updateData(array('id' => $idPedia), 'tm_agmpedia', array('deleted' => 1));
+          $this->madmin->updateData(array('slugs' => $slugsPedia), 'tm_agmpedia', array('deleted' => 1));
         redirect('admin/sa_agmpedia');
       }else {
         $this->load->view('include/header2');
@@ -1031,8 +1104,8 @@ class Admin extends CI_Controller {
       }
     }
 
-    public function editPedia($id) {
-        $data['article'] = $this->madmin->getProducts(array('id' => $id), NULL,'tm_agmpedia', TRUE);
+    public function editPedia($slugsPedia) {
+        $data['article'] = $this->madmin->getProducts(array('slugs' => $slugsPedia), NULL,'tm_agmpedia', TRUE);
         global $photos;
         global $thumbnails;
         global $thumbnailUploadStatus;
@@ -1042,7 +1115,7 @@ class Admin extends CI_Controller {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
-            $this->form_validation->set_rules('title', 'Title', 'required');
+            $this->form_validation->set_rules('title', 'Title', 'required|callback_checkingEditTitlePedia');
             $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]');
             $this->form_validation->set_rules('content', 'News', 'required');
 
@@ -1098,8 +1171,11 @@ class Admin extends CI_Controller {
                 }
 
                 if ($photoUploadStatus === 1 && $thumbnailUploadStatus === 1) {
+                  $idArticle = $this->input->post('idArticle');
+                  $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
                     $items = array(
                         'title' => $this->input->post('title'),
+                        'slugs' => $editSlugs,
                         'sub_content' => $this->input->post('sContent'),
                         'content' => $this->input->post('content'),
                         'thumbnail' => $thumbnails['file_name'],
@@ -1107,40 +1183,49 @@ class Admin extends CI_Controller {
                         'status' => 1,
                         'user_id' => $this->session->userdata('uId')
                     );
-                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    $this->madmin->updateData(array('id' => $idArticle), 'tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia', 'refresh');
 
                 } else if ($photoUploadStatus === 1) {
+                    $idArticle = $this->input->post('idArticle');
+                    $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
                     $items = array(
                         'title' => $this->input->post('title'),
+                        'slugs' => $editSlugs,
                         'sub_content' => $this->input->post('sContent'),
                         'content' => $this->input->post('content'),
                         'photo' => $photos['orig_name'],
                         'status' => 1,
                         'user_id' => $this->session->userdata('uId')
                     );
-                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    $this->madmin->updateData(array('id' => $idArticle), 'tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia', 'refresh');
                 } else if ($thumbnailUploadStatus === 1) {
+                  $idArticle = $this->input->post('idArticle');
+                  $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
                     $items = array(
                         'title' => $this->input->post('title'),
+                        'slugs' => $editSlugs,
                         'sub_content' => $this->input->post('sContent'),
                         'content' => $this->input->post('content'),
                         'thumbnail' => $thumbnails['orig_name'],
                         'status' => 1,
                         'user_id' => $this->session->userdata('uId')
                     );
-                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    $this->madmin->updateData(array('id' => $idArticle), 'tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia', 'refresh');
                 } else {
+                  $idArticle = $this->input->post('idArticle');
+                  $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
                     $items = array(
                         'title' => $this->input->post('title'),
+                        'slugs' => $editSlugs,
                         'sub_content' => $this->input->post('sContent'),
                         'content' => $this->input->post('content'),
                         'status' => 1,
                         'user_id' => $this->session->userdata('uId')
                     );
-                    $this->madmin->updateData(array('id' => $id), 'tm_agmpedia', $items);
+                    $this->madmin->updateData(array('id' => $idArticle), 'tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia', 'refresh');
                 }
 
@@ -1150,6 +1235,17 @@ class Admin extends CI_Controller {
             $this->load->view('un-authorise');
             $this->load->view('include/footer');
         }
+    }
+
+    public function checkingEditTitlePedia($editTitlePedia){
+      $idArticle = $this->input->post('idArticle');
+      $hasEditTitlePedia = $this->madmin->getProducts(array('id !=' => $idArticle, 'title' => $editTitlePedia), array('titleF' => 'title'), 'tm_agmpedia', TRUE);
+      if (isset($hasEditTitlePedia)) {
+        $this->session->set_flashdata('error', 'Title name has already been created');
+        return FALSE;
+      }else {
+        return TRUE;
+      }
     }
 
     public function getItem($id) {

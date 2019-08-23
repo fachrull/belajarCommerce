@@ -16,7 +16,8 @@
                                 <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
                             <?php endif;?>
                             <!-- /ALERT -->
-                            <?= form_open_multipart('admin/editPedia/'.$article['id'], array('class' => 'm-0 sky-form')); ?>
+                            <?= form_open_multipart('admin/editPedia/'.$article['slugs'], array('class' => 'm-0 sky-form')); ?>
+                            <input type="hidden" name="idArticle" value="<?= $article['id']?>">
                             <label class="input mb-10">
                                 <label><strong>Title</strong></label>
                                 <input type="text" name="title" class="form-control" value="<?=$article['title']?>" placeholder="Title">
@@ -59,5 +60,3 @@
         $('textarea#content').froalaEditor()
     });
 </script>
-
-

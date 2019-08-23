@@ -25,7 +25,7 @@
               <a href="<?= site_url('admin/sa_brand')?>" class="btn btn-oldblue">Back</a>
             </div>
             <div class="col-xs-6 text-right">
-              <a href="<?= site_url('admin/editBrand/'.$brand['id'])?>" class="btn btn-oldblue">Edit Brand</a>
+              <a href="<?= site_url('admin/editBrand/'.$brand['slugs'])?>" class="btn btn-oldblue">Edit Brand</a>
             </div>
           </div>
         </div>

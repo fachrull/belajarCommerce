@@ -76,8 +76,8 @@
                     </td>
                       <td><?=$product['position']?></td>
                     <td>
-                      <a href="<?= site_url('admin/detailProd/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
-                      <a href="<?= site_url('admin/deleteProd/'.$product['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
+                      <a href="<?= site_url('admin/detailProd/'.$product['slugs']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                      <a href="<?= site_url('admin/deleteProd/'.$product['slugs']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                     </td>
                   </tr>
                   <?php $no++; ?>

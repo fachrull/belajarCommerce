@@ -27,14 +27,14 @@
                   <tr>
                     <td><?= $no;?></td>
                     <td><?= $brand['name'];?></td>
-                    <td><a href="<?= site_url('admin/deleteBrand/'.$brand['id'])?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
+                    <td><a href="<?= site_url('admin/deleteBrand/'.$brand['slugs'])?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a></td>
                     <td>
                       <?php if ($brand['status'] == 1): ?>
-                        <a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
+                        <a href="<?=site_url('admin/activeBrand/'.$brand['slugs']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
                       <?php else: ?>
-                        <a href="<?=site_url('admin/activeBrand/'.$brand['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
+                        <a href="<?=site_url('admin/activeBrand/'.$brand['slugs']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
                       <?php endif; ?>
-                      <a href="<?= site_url('admin/infoBrand/'.$brand['id'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                      <a href="<?= site_url('admin/infoBrand/'.$brand['slugs'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                     </td>
                   </tr>
                   <?php $no++; ?>

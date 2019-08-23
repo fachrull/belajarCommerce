@@ -40,7 +40,7 @@
             <!-- RIGHT -->
             <div class="col-12 col-md-9 mb-80 order-md-2 order-lg-1 pajinate" data-pajinante-items-per-page="5"
                      data-pajinate-container=".pajinate-container">
-                     
+
 
                 <div class="side-custom-content float-left mt-0">
 
@@ -107,7 +107,7 @@
                                                         <strong>Rp. <?= number_format(floatval($myOrder['total']), 0, ',', '.')?></strong>
                                                     </div>
                                                     <div class="col-2 col-md-2">
-                                                        <a href="<?= site_url('home/detail_transaction/'.$myOrder['id']);?>" class="btn btn-outline-secondary btn-oldblue btn-sm float-right">Detail</a>
+                                                        <a href="<?= site_url('home/detail_transaction/'.$myOrder['order_number']);?>" class="btn btn-outline-secondary btn-oldblue btn-sm float-right">Detail</a>
                                                     </div>
                                                 </div>
 

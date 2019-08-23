@@ -36,7 +36,7 @@
 								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
 								<li class="list-group-noicon">
-									<a class="pt-4 pb-4" href="<?= site_url('home/shop/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
+									<a class="pt-4 pb-4" href="<?= site_url('home/shop/'.$brand['slugs'].'/'.$category['slugs']);?>"><?= $category['name'];?></a>
 								</li>
 									<?php endforeach;?>
 								</ul>
@@ -53,11 +53,11 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-								<li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Serta</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Tempur</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Florence</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/aireloom');?>">Aireloom</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/kingkoil');?>">Kingkoil</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/serta');?>">Serta</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/tempur');?>">Tempur</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/florence');?>">Florence</a></li>
 							</ul>
 
 						</div>
@@ -70,11 +70,11 @@
 								<div class="banner-rotator">
 									<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
 										<div class="absolute" style="top:45%;">
-											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 											</a>
 										</div>
 										<div class="absolute position-bottom">
-											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 												<p>
 													<?= $bestSeller['name']?><br>
 													View Detail
@@ -123,11 +123,11 @@
 										<div class="thumbnail">
 											<!-- product image(s) -->
                                             <?php if($product['image_1'] === NULL) {?>
-											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
 												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="product name" />
 											</a>
                                             <?php } else { ?>
-                                                <a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+                                                <a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
                                                     <img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image_1']);?>" alt="product name" />
                                                 </a>
                                             <?php } ?>
@@ -153,7 +153,7 @@
 
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-												<a class="btn btn-md btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+												<a class="btn btn-md btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
 													<i class="fa fa-eye"></i> View Detail
 												</a><!-- add .clean to remove css characteres -->
 											</div>

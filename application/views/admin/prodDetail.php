@@ -74,7 +74,7 @@
             </div>
               </div>
             </div>
-            <a href="<?= site_url('admin/editProd/'.$product['id'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</a>
+            <a href="<?= site_url('admin/editProd/'.$product['slugs'])?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</a>
             <a href="<?= site_url('admin/allProd');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
           </div>
         </div>

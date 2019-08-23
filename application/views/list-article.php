@@ -41,7 +41,7 @@ div.side-nav ul>li>a.dropdown-toggle:before{content:"\f107";font-family:FontAwes
 							<ul id="rp" class="list-group list-group-bordered list-group-noicon">
 								<?php foreach ($pedias as $pedia): ?>
 									<li class="list-group-item">
-										<a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">
+										<a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['slugs']);?>">
 											<span class="fs-13 text-muted float-right"></span> <?= $pedia['title'];?> <br>
 										</a>
 									</li>
@@ -61,7 +61,7 @@ div.side-nav ul>li>a.dropdown-toggle:before{content:"\f107";font-family:FontAwes
 											<a class="dropdown-toggle" href="#">Jan (4)</a>
 											<ul class="pt-0">
 												<?php foreach ($pedias as $pedia): ?>
-													<li class="bullet-bar"><a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
+													<li class="bullet-bar"><a class="pt-4 pb-4" href="<?= site_url('home/fullArticle/'.$pedia['slugs']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
 												<?php endforeach; ?>
 											</ul>
 										</li>
@@ -100,7 +100,7 @@ div.side-nav ul>li>a.dropdown-toggle:before{content:"\f107";font-family:FontAwes
 
 								<div class="blog-item-small-content">
 
-									<h2><a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><?= $pedia['title'];?></a></h2>
+									<h2><a href="<?= site_url('home/fullArticle/'.$pedia['slugs']);?>"><?= $pedia['title'];?></a></h2>
 
 
 									<p><?= $pedia['sub_content'];?>...</p>
@@ -108,7 +108,7 @@ div.side-nav ul>li>a.dropdown-toggle:before{content:"\f107";font-family:FontAwes
 								</div>
 
 							</div>
-							
+
 							<!-- /POST ITEM -->
 						<?php endforeach; ?>
 						</ul>

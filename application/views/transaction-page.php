@@ -97,7 +97,7 @@
                                                             <strong>Rp. <?= number_format(floatval($myOrder['total']), 0, ',', '.')?></strong>
                                                         </div>
                                                         <div class="col-2 col-md-2">
-                                                            <a href="<?= site_url('home/detail_transaction/'.$myOrder['id']);?>" class="btn btn-outline-secondary btn-oldblue btn-sm float-right">Detail</a>
+                                                            <a href="<?= site_url('home/detail_transaction/'.$myOrder['order_number']);?>" class="btn btn-outline-secondary btn-oldblue btn-sm float-right">Detail</a>
                                                         </div>
                                                     </div>
 

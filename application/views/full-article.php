@@ -28,7 +28,7 @@
 							<ul id="rp" class="list-group list-group-bordered list-group-noicon">
 							    <?php foreach($pedias as $pedia): ?>
 								<li class="list-group-item">
-									<a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>">
+									<a href="<?= site_url('home/fullArticle/'.$pedia['slugs']);?>">
 										<span class="fs-13 text-muted float-right"></span> <?= $pedia['title'];?> <br>
 									</a>
 								</li>
@@ -48,7 +48,7 @@
 											<a class="dropdown-toggle" href="#">Jan</a>
 											<ul>
 											    <?php foreach($pedias as $pedia): ?>
-												<li class="bullet-bar"><a href="<?= site_url('home/fullArticle/'.$pedia['id']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
+												<li class="bullet-bar"><a href="<?= site_url('home/fullArticle/'.$pedia['slugs']);?>"><span class="fs-11 text-muted float-right"></span> <?= $pedia['title'];?></a></li>
 												<?php endforeach;?>
 											</ul>
 										</li>
@@ -63,8 +63,8 @@
 
 					<!-- RIGHT -->
 					<div class="col-md-9 col-sm-9">
-
-						<h1 class="blog-post-title"><?= strtoupper($pedia['title']);?></h1>
+						
+						<h1 class="blog-post-title"><?= strtoupper($article['title']);?></h1>
                         <hr></br>
 						<!-- IMAGE -->
 						<figure class="mb-20">
@@ -79,7 +79,6 @@
 							</div>
 							-->
 						<!-- /VIDEO -->
-
 
 						<!-- article content -->
 						<p class="dropcap left">

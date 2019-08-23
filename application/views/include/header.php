@@ -115,27 +115,27 @@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li class="dropdown">
-                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/1');?>">
+                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/aireloom');?>">
                                             Aireloom
                                         </a>
                                     </li>
                                     <li class="dropdown">
-                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/2');?>">
+                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/kingkoil');?>">
                                             Kingkoil
                                         </a>
                                     </li>
                                     <li class="dropdown">
-                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/3');?>">
+                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/serta');?>">
                                             Serta
                                         </a>
                                     </li>
                                     <li class="dropdown">
-                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/4');?>">
+                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/tempur');?>">
                                             Tempur
                                         </a>
                                     </li>
                                     <li class="dropdown">
-                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/5');?>">
+                                        <a class="fs-14 text-capitalize" href="<?= base_url('home/shop/florence');?>">
                                             Florence
                                         </a>
                                     </li>

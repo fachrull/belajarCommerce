@@ -37,12 +37,12 @@
                         <td><?php echo $pedia['date']; ?></td>
                         <td>
                           <?php if ($pedia['status'] == 1): ?>
-                            <a href="<?= site_url('admin/activePedia/'.$pedia['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
+                            <a href="<?= site_url('admin/activePedia/'.$pedia['slugs']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
                           <?php else: ?>
-                            <a href="<?= site_url('admin/activePedia/'.$pedia['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
+                            <a href="<?= site_url('admin/activePedia/'.$pedia['slugs']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
                           <?php endif; ?>
-                          <a href="<?=site_url('admin/detailpedia/'.$pedia['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
-                          <a href="<?= site_url('admin/deletePedia/'.$pedia['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
+                          <a href="<?=site_url('admin/detailpedia/'.$pedia['slugs']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                          <a href="<?= site_url('admin/deletePedia/'.$pedia['slugs']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                         </td>
                       </tr>
                     <?php endforeach; ?>
