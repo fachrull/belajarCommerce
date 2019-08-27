@@ -508,6 +508,7 @@ class Admin extends CI_Controller {
 
                 $max_position_prod['position'] = $max_position_prod['position'] + 1;
                 $slugsProd = str_replace(' ', '-', strtolower($this->input->post('pName')));
+                $slugsProd = str_replace('%', '', $slugsProd);
 
                 $items = array(
                     'brand_id'    => $brand_id,
