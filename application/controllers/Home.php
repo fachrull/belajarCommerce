@@ -307,7 +307,7 @@ class Home extends CI_Controller{
     if($slugsProduct == NULL){
       show_404();
     }else {
-      $prod = $this->mhome->getProducts(array('slugs' => $slugsProduct), array('idF' => 'id'), 'tm_product', TRUE);
+      $prod = $this->mhome->getProducts(array('slugs' => $slugsProduct, "deleted !=" => 1), array('idF' => 'id'), 'tm_product', TRUE);
       $idProduct = $prod['id'];
       $specs = array();
       $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);

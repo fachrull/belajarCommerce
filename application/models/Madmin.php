@@ -394,6 +394,7 @@ class Madmin extends CI_Model {
     $this->db->from('tr_product_bed_linen a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->order_by('a.position', 'asc');
+	  $this->db->where("b.deleted !=", 1);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
@@ -432,6 +433,7 @@ class Madmin extends CI_Model {
     $this->db->from('tr_product_bedding_acc a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->order_by('a.position', 'asc');
+	  $this->db->where("b.deleted !=", 1);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
@@ -458,6 +460,7 @@ class Madmin extends CI_Model {
     $this->db->from('tr_product_best_seller a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->order_by('a.position', 'asc');
+    $this->db->where("b.deleted !=", 1);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();

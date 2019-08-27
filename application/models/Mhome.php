@@ -535,6 +535,7 @@ class Mhome extends CI_Model{
         $this->db->join('tr_product_size c', 'b.id = c.prod_id', 'inner');
         $this->db->join('tr_product_image d', 'b.id = d.id_prod', 'inner');
         $this->db->group_by('a.id');
+		$this->db->where("b.deleted !=", 1);
         $query = $this->db->get();
         if ($query->num_rows() != 0) {
             return $query->result_array();
@@ -581,6 +582,7 @@ class Mhome extends CI_Model{
     if ($category != NULL) {
       $this->db->where('b.cat_id', $category);
     }
+	  $this->db->where("b.deleted !=", 1);
     // foreach ($where as $key => $value) {
     // }
     $query = $this->db->get();
@@ -727,6 +729,7 @@ class Mhome extends CI_Model{
       );
       $this->db->where($where);
     }
+	  $this->db->where("b.deleted !=", 1);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
