@@ -600,7 +600,8 @@ class Admin extends CI_Controller {
                 $fileNames = array();
 
                 for ($i = 0; $i < 3; $i++) {
-                    $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.$i);
+                    $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
+                    $file_name = str_replace("%", "", $file_name);
                     $config['file_name']  = $file_name;
                     $this->upload->initialize($config);
 
@@ -801,6 +802,7 @@ class Admin extends CI_Controller {
 
                 for ($i = 0; $i < 3; $i++) {
                     $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
+                    $file_name = str_replace("%", "", $file_name);
                     $config['file_name']  = $file_name;
                     $this->upload->initialize($config);
 
