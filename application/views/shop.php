@@ -92,18 +92,19 @@
 					<div class="pajinate col-lg-9 col-md-9 col-sm-9 order-md-2 order-lg-2" data-pajinante-items-per-page="12"
 					 data-pajinate-container=".pajinate-container">
 					    <?php if($products == NULL):?>
-                            <p align:"center">Product tidak tersedia</p>
+                            <p class="text-center">Product tidak tersedia</p>
                         <?php else:?>
 						<!-- LIST OPTIONS -->
-                            <div class="pajinate-nav clearfix shop-list-options mb-20 absolute" style="left:unset !important; right:0px !important;">
+							<div class="pajinate-nav shop-list-options mb-20 absolute"
+								 style="left:unset !important; right:0px !important;">
 
-							<!-- Pagination Default -->
-                                <ul class="pagination mt-0">
-								<!-- pages added by pajinate plugin -->
-							</ul>
-							<!-- /Pagination Default -->
+								<!-- Pagination Default -->
+								<ul class="pagination mt-0">
+									<!-- pages added by pajinate plugin -->
+								</ul>
+								<!-- /Pagination Default -->
 
-						</div>
+							</div>
                             <div class="options-left mb-20 absolute">
                                 <select id="sort">
                                     <option selected disabled>Sort</option>
