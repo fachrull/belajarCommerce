@@ -280,7 +280,7 @@
 				</div>
 				<!-- /BANNER ROTATOR -->
 
-				<ul id="myTab" class="nav nav-tabs nav-top-border mt-80" role="tablist">
+				<ul id="review-section" class="nav nav-tabs nav-top-border mt-80" role="tablist">
 					<li class="nav-item"><a class="nav-links active" href="#reviews" data-toggle="tab">Reviews</a></li>
 				</ul>
 

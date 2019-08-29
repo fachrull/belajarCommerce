@@ -146,9 +146,9 @@
                                     <a href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($bestSeller[0]["name"])?></h2></a>
                                 </div>
                                 <div class="col-4 col-md-12 col-lg-4">
-                                    <div class="rating rating-<?=$bestSeller[0]["stars"]?> fs-13">
+                                    <a class="rating rating-<?=$bestSeller[0]["stars"]?> fs-13" href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"]."#review-section")?>">
                                         <!-- rating-0 ... rating-5 -->
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                             <?php if ($bestSeller[0]["sub_price"] != 0) { ?>
@@ -193,9 +193,9 @@
 									<a href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($bedLinen[0]["name"])?></h2></a>
                                 </div>
                                 <div class="col-4 col-md-12 col-lg-4">
-                                    <div class="rating rating-<?=$bedLinen[0]["stars"]?> fs-13">
+                                    <a class="rating rating-<?=$bedLinen[0]["stars"]?> fs-13" href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"]."#review-section")?>">
                                         <!-- rating-0 ... rating-5 -->
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                             <?php if ($bedLinen[0]["sub_price"] != 0) { ?>
@@ -240,9 +240,9 @@
 									<a href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($beddingAcc[0]["name"])?></h2></a>
                                 </div>
                                 <div class="col-4 col-md-12 col-lg-4">
-                                    <div class="rating rating-<?=$beddingAcc[0]["stars"]?> fs-13">
+                                    <a class="rating rating-<?=$beddingAcc[0]["stars"]?> fs-13" href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"]."#review-section")?>">
                                         <!-- rating-0 ... rating-5 -->
-                                    </div>
+                                    </a>
                                 </div>
                             </div>
                             <?php if ($beddingAcc[0]["sub_price"] != 0) { ?>
@@ -338,9 +338,9 @@
                                     </div>
                                     <!-- /price -->
                                 <?php } ?>
-                                <div class="mt-15 rating rating-<?=$p["stars"]?> fs-14" style="letter-spacing: 1px;">
+                                <a class="mt-15 rating rating-<?=$p["stars"]?> fs-14" href="<?=base_url("home/detailProduct/".$p["slugs"]."#review-section")?>" style="letter-spacing: 1px;">
                                     <!-- rating-0 ... rating-5 -->
-                                </div>
+                                </a>
                             </div>
                         </div>
                     </div>
