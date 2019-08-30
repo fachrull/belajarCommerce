@@ -166,47 +166,6 @@
 										PARTNERSHIP
 									</a>
 								</li>
-								<?php if($this->session->userdata('uType') == 4): ?>
-									<li class="dropdown active hidden-lg-up">
-										<!-- HOME -->
-										<a class="dropdown-toggle" href="#">
-											<i class="fa fa-user"></i> ACCOUNT
-										</a>
-										<ul class="dropdown-menu">
-											<li class="dropdown">
-												<a class="fs-14" href="<?= site_url('home/transactionPage');?>">
-													TRANSAKSI
-												</a>
-											</li>
-											<li class="dropdown">
-												<a class="fs-14" href="<?= base_url('home/historyPage');?>">
-													HISTORI
-												</a>
-											</li>
-											<li class="dropdown">
-												<a class="fs-14" href="<?= base_url('home/shopCart');?>">
-													CART
-												</a>
-											</li>
-											<li class="dropdown">
-												<a class="fs-14" href="<?= site_url('home/profilePage');?>">
-													PROFIL
-												</a>
-											</li>
-											<li class="dropdown">
-												<a class="fs-14" href="<?= site_url('auth/logout');?>">
-													LOGOUT
-												</a>
-											</li>
-										</ul>
-									</li>
-								<?php else:?>
-									<li>
-										<a href="<?= site_url('auth/login');?>">
-											LOGIN
-										</a>
-									</li>
-								<?php endif;?>
 							</ul>
 						</nav>
 					</div>
