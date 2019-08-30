@@ -3,7 +3,9 @@
 		<section class="page-header page-header-md">
 			<div class="container">
 
-				<h1><?= strtoupper($brand['name']);?></h1>
+				<?php if ($brand != NULL): ?>
+					<h1><?= strtoupper($brand['name']);?></h1>
+				<?php endif; ?>
 
 				<!-- breadcrumbs -->
 				<!--<ol class="breadcrumb">-->
@@ -28,11 +30,11 @@
 						<!-- CATEGORIES -->
 						<div class="side-nav mb-60">
 
-							<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
-								<button class="fa fa-bars btn btn-mobile"></button>
-								<h4>CATEGORIES</h4>
-							</div>
 							<?php if($category != NULL):?>
+								<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
+									<button class="fa fa-bars btn btn-mobile"></button>
+									<h4>CATEGORIES</h4>
+								</div>
 								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 							    <?php foreach($category as $category):?>
 								<li class="list-group-noicon active">
@@ -40,6 +42,10 @@
 								</li>
 									<?php endforeach;?>
 								</ul>
+							<?php else: ?>
+								<div class="side-nav-head" data-toggle="collapse" data-target="#categories">
+
+								</div>
 							<?php endif;?>
 						</div>
 						<!-- /CATEGORIES -->
@@ -53,12 +59,12 @@
 							</div>
 
 							<ul id="brands" class="list-group list-unstyled">
-								<li class="list-group-item"><a href="<?= site_url('home/shop/1/1');?>">Aireloom</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/2/1');?>">Kingkoil</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/4/1');?>">Serta</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/5/1');?>">Tempur</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/3/1');?>">Florence</a></li>
-								<li class="list-group-item"><a href="<?= site_url('home/shop/6/1');?>">Stressless</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/aireloom');?>">Aireloom</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/kingkoil');?>">Kingkoil</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/serta');?>">Serta</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/tempur');?>">Tempur</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/florence');?>">Florence</a></li>
+								<li class="list-group-item"><a href="<?= site_url('home/shop/stressless');?>">Stressless</a></li>
 							</ul>
 
 						</div>
@@ -71,11 +77,11 @@
 								<div class="banner-rotator">
 									<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
 										<div class="absolute" style="top:45%;">
-											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 											</a>
 										</div>
 										<div class="absolute position-bottom">
-											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 												<p>
 													<?= $bestSeller['name']?><br>
 													View Detail
@@ -116,11 +122,11 @@
 										<div class="thumbnail">
 											<!-- product image(s) -->
                                             <?php if($product['image_1'] === NULL) {?>
-											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
 												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image']);?>" alt="product name" />
 											</a>
                                             <?php } else { ?>
-                                                <a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+                                                <a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
                                                     <img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image_1']);?>" alt="product name" />
                                                 </a>
                                             <?php } ?>
@@ -137,12 +143,12 @@
 												</div>
 												<!-- /rating -->
 
-								
+
 											</div>
 
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-												<a class="btn btn-oldblue" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+												<a class="btn btn-oldblue" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
 													<i class="fa fa-cart-plus"></i> Add to Cart
 												</a>
 											</div>

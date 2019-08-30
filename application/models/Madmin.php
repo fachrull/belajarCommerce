@@ -390,7 +390,7 @@ class Madmin extends CI_Model {
   }
 
   public function product_bed_linen(){
-    $this->db->select('a.id, b.name, a.position');
+    $this->db->select('a.id, b.name, b.slugs, a.position');
     $this->db->from('tr_product_bed_linen a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->order_by('a.position', 'asc');
@@ -415,11 +415,11 @@ class Madmin extends CI_Model {
     }
   }
 
-  public function detail_prod_bed_linen($idBedLinen){
+  public function detail_prod_bed_linen($slugsBedLinen){
     $this->db->select('a.id, b.name, b.image, a.position');
     $this->db->from('tr_product_bed_linen a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
-    $this->db->where('a.id', $idBedLinen);
+    $this->db->where('a.slugs', $slugsBedLinen);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->row_array();
@@ -584,7 +584,7 @@ class Madmin extends CI_Model {
   }
 
   public function prime_specialPKG($idSpecialPckg){
-    $this->db->select('a.id, a.name, a.description, a.image, a.total, b.sku');
+    $this->db->select('a.id, a.name, a.slugs, a.description, a.image, a.total, b.sku');
     $this->db->from('tm_special_package a');
     $this->db->join('tr_product_size b', 'b.special = a.id', 'left');
     $this->db->where('a.id', $idSpecialPckg);

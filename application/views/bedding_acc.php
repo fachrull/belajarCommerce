@@ -36,7 +36,7 @@
 								<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 									<?php foreach($category as $category):?>
 									<li class="list-group-noicon active">
-										<a href="<?= site_url('home/bedding_Acc/'.$brand['id'].'/'.$category['id']);?>"><?= $category['name'];?></a>
+										<a href="<?= site_url('home/bedding_Acc/'.$brand['slugs'].'/'.$category['slugs']);?>"><?= $category['name'];?></a>
 									</li>
 								<?php endforeach;?>
 								</ul>
@@ -54,7 +54,7 @@
 
 							<ul id="brands" class="list-group list-unstyled">
                 <?php foreach ($brands as $brandBA): ?>
-                  <li class="list-group-item"><a href="<?= site_url('home/bedding_Acc/'.$brandBA['id']);?>"><?= $brandBA['name']?></a></li>
+                  <li class="list-group-item"><a href="<?= site_url('home/bedding_Acc/'.$brandBA['slugs']);?>"><?= $brandBA['name']?></a></li>
                 <?php endforeach; ?>
 							</ul>
 
@@ -68,11 +68,11 @@
 								<div class="banner-rotator">
 									<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
 										<div class="absolute" style="top:45%;">
-											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 											</a>
 										</div>
 										<div class="absolute position-bottom">
-											<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+											<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 												<p>
 													<?= $bestSeller['name']?><br>
 													View Detail
@@ -112,7 +112,7 @@
 
 										<div class="thumbnail">
 											<!-- product image(s) -->
-											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+											<a class="shop-item-image" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
 												<img class="img-fluid" src="<?= site_url('asset/upload/'.$product['image_1']);?>" alt="product name" />
 											</a>
 											<!-- /product image(s) -->
@@ -137,7 +137,7 @@
 
 											<!-- buttons -->
 											<div class="shop-item-buttons text-center">
-                                                <a class="btn btn-md btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['id']);?>">
+                                                <a class="btn btn-md btn-oldblue mb-15" href="<?= site_url('home/detailProduct/'.$product['slugs']);?>">
                                                     <i class="fa fa-eye"></i> View Detail
                                                 </a><!-- add .clean to remove css characteres -->
 											</div>

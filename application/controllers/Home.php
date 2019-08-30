@@ -11,43 +11,72 @@ class Home extends CI_Controller{
     $this->load->model('Mhome', 'mhome');
   }
 
+  // Index function
+  // uType = user type
+  // uType 1 = super admin
+  // uType 2 = admin
+  // uType 3 = store owner
+  // uType 4 = customer
   public function index($link = FALSE){
     $this->load->library('form_validation');
+    // checking uType
     if ($this->session->userdata('uType') == 1) {
+      // if new super admin login direct to controller auth for completing his profile
       if ($this->session->userdata('uNew') == 1) {
         redirect('auth/completing_profile');
       }else{
+        // super admin home page
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
           $this->load->view('admin/home');
           $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 2) {
+      // if new admin login direct to controller auth for completing his profile
       if ($this->session->userdata('uNew') == 1) {
         redirect('auth/completing_profile');
       }else{
+        // admin home page
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
           $this->load->view('admin/home');
           $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 3) {
+      // if new store owner login direct for completing his profile
       if ($this->session->userdata('uNew') == 1) {
         redirect('auth/completing_profile');
       }else{
+        // store owner home page
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
         $this->load->view('admin/home');
         $this->load->view('include/admin/footer');
       }
     } elseif ($this->session->userdata('uType') == 4) {
+      // customer home page
+      // data slider banner on home page
         $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','link'=>'bannerlink'), 'tm_cover', FALSE);
+
+        // data slider banner special package on home page
         $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
+
+        // agm pedia on home page
         $data['pedias'] = $this->mhome->getPedia();
+
+        // set store location to geo JSON
         $data['stores'] = $this->storesToGeoJson();
+
+        // data brand
         $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        // list of best seller
         $best_seller = $this->mhome->listBestSeller_Product();
+
+        // list of bed linen
         $bed_linen = $this->mhome->get_list_bed_linen();
+
+        // list of bedding accessories
         $bedding_acc = $this->mhome->beddingAcc();
 
         // pick 1 random data from bestSeller
@@ -71,15 +100,31 @@ class Home extends CI_Controller{
         $this->load->view('home', $data);
         $this->load->view('include/footer');
 
+        // if customer has not log yet
     } elseif ($this->session->userdata('uType') == NULL) {
 
+      // data slider banner on home page
         $data['slides'] = $this->mhome->getProducts(array('cover' => 1), array('slideField' => 'slide','link'=>'bannerlink'), 'tm_cover', FALSE);
+
+        // data slider banner special package on home page
         $data['spPackage'] = $this->mhome->getProducts(array('cover'  => 3), array('slideField' =>  'slide'), 'tm_cover', TRUE);
+
+        // agm pedia on home page
         $data['pedias'] = $this->mhome->getPedia();
+
+        // set store location to geo JSON
         $data['stores'] = $this->storesToGeoJson();
+
+        // data brand
         $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+
+        // list of best seller
         $best_seller = $this->mhome->listBestSeller_Product();
+
+        // list of bed linen
         $bed_linen = $this->mhome->get_list_bed_linen();
+
+        // list of bedding accessories
         $bedding_acc = $this->mhome->beddingAcc();
 
         // pick 1 random data from bestSeller
@@ -104,6 +149,7 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for set marker on maps
   function storesToGeoJson() {
     $geojson = array (
       'type' => 'FeatureCollection',
@@ -151,6 +197,7 @@ class Home extends CI_Controller{
     }
   }
 
+
   public function editProfile(){
     if ($this->session->userdata('uType') == 3) {
       $id = $this->session->userdata('uId');
@@ -169,40 +216,74 @@ class Home extends CI_Controller{
     }
   }
 
+  // this function for show list of product by it's brand or category slugs
   public function shop($brand = NULL, $category = NULL){
+    // checking if brand null and category null
     if ($brand === NULL && $category === NULL) {
       $data['products'] = $this->mhome->getShop_product();
       $data['brand'] = array('name' => 'All Products');
       $data['category'] = array();//$this->mhome->brand_categories($brand);
       // print_r($data['category']);exit();
+
+      // checking if brnad not null and category null
     } elseif ($brand !== NULL && $category === NULL) {
-      // echo "saya tanpa category";exit();
-      if($brand === 6){
-        $category = NULL;
-      }
+      // if($brand === 6){
+      //   $category = NULL;
+      // }
+
+      // get id brand form slugs
       $idBrnd = $this->mhome->getProducts(array('slugs' => $brand), array('idF' => 'id'), 'tm_brands', TRUE);
+
+      // store id brand on variable brandId
       $brandId = $idBrnd['id'];
+
+      // product data of specific brand
       $data['products'] = $this->mhome->getShop_product($brandId);
+
+      // detail brand
       $data['brand'] = $this->mhome->getProducts(array('slugs' => $brand),
        array('idField' => 'id', 'slugsF' => 'slugs', 'nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
+
+      // detail categories of brand
       $data['category'] = $this->mhome->brand_categories($brandId);
+
+      // if brand and category slugs not null
     } else {
+      // search brand id  from brand slugs
       $idBrnd = $this->mhome->getProducts(array('slugs' => $brand), array('idF' => 'id'), 'tm_brands', TRUE);
+
+      // search category id form category slugs
       $idCat = $this->mhome->getProducts(array('slugs' => $category), array('idF' => 'id'), 'tm_category', TRUE);
+
+      // store category id to categoryId variable
       $categoryId = $idCat['id'];
+
+      // store brand id to brandId variable
       $brandId = $idBrnd['id'];
+
+
       // echo "saya lengkap";exit();
-      if($brandId === 6){
-        $categoryId = NULL;
-      }
+      // if($brandId === 6){
+      //   $categoryId = NULL;
+      // }
+
+      // product data of specific brandid and category id
       $data['products'] = $this->mhome->getShop_product($brandId, $categoryId);
+
+      // detail brand
       $data['brand'] = $this->mhome->getProducts(array('slugs' => $brand),
         array('idField' => 'id', 'slugsF' => 'slugs', 'nameField' => 'logo', 'nameF' => 'name'), 'tm_brands', TRUE);
+
+      // detail categories of brand
       $data['category'] = $this->mhome->brand_categories($brandId);
     }
+
+    // list of best seller
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
+
     // print_r($data['category']);
     // exit();
+
     $data['image'] = $this->mhome->getProducts(NULL, NULL, 'tr_product_image', TRUE);
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -253,37 +334,51 @@ class Home extends CI_Controller{
   // }
 
   public function listArticle(){
+    // list of all pedia
     $data['pedias'] = $this->mhome->getProducts(array('status' => 1, 'deleted' => 0), array('slugsF' => 'slugs', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('list-article', $data);
     $this->load->view('include/footer');
   }
 
+  // function for detail pedia
   public function fullArticle($slugs){
+    // detail of pedia form slugs
     $data['pedias'] = $this->mhome->getProducts(array('status' => 1, 'deleted' => 0), array('slugsF' => 'slugs', 'titleField' => 'title',
       'subContent' => 'sub_content', 'thumbnailField' => 'thumbnail'), 'tm_agmpedia', FALSE);
+
+    // list of pedia
     $data['article'] = $this->mhome->getProducts(array('slugs' => $slugs), NULL, 'tm_agmpedia', TRUE);
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('full-article', $data);
     $this->load->view('include/footer');
   }
 
+  // function for checking stock by district that customer post
   public function checkStockbyDistrict($idProduct, $idDistrict){
+
+    // get stock byt district
     $data = $this->mhome->checkStock_by_District($idProduct, $idDistrict);
+
+    // empty variable to store product if exist
     $available_item = array();
+
+    // set product to available_item variable
     foreach ($data as $data) {
       $available_stock = $data['stock_akhir']-$data['postpone'];
       if ($available_stock > 3) {
         array_push($available_item, $data);
       }
     }
+
+    // checking if available_item is set or not
     if($available_item) {
         print_r(json_encode($available_item));
     } else {
@@ -292,9 +387,14 @@ class Home extends CI_Controller{
     }
   }
 
+
+  // checking product price by its size
   public function checkPricebyProdSize($idProd, $idSize){
+    // search product price by its id product and id size
       $data = $this->mhome->getProducts(array('prod_id'=>$idProd, 'id'=> $idSize),
         NULL, 'tr_product_size', TRUE);
+
+      // checking if search result is null or not
       if($data){
         print_r(json_encode($data));
       }else{
@@ -303,44 +403,67 @@ class Home extends CI_Controller{
       }
   }
 
+
   public function detailProduct($slugsProduct = NULL){
+    // check if slug is null or not
     if($slugsProduct == NULL){
+      // show 404 if its null
       show_404();
     }else {
       $prod = $this->mhome->getProducts(array('slugs' => $slugsProduct, "deleted !=" => 1), array('idF' => 'id'), 'tm_product', TRUE);
       $idProduct = $prod['id'];
+      // set empty variable for specs
       $specs = array();
+      // get detail product and its min and max price
       $data['product'] = $this->mhome->getProduct_MaxMinPrice($idProduct);
+      // if product name is null
       if (is_null($data['product']['name'])) {
         show_404();
         exit();
       }
+
+      // check product brand id
       $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
+      // store brand id product to $data['brand']
       $data['brand'] = $id_brand['brand_id'];
+      // checking categories of product brand
       $data['categories'] = $this->mhome->brand_categories($id_brand['brand_id']);
+
       // print_r($data['categories']);
       // exit();
+
+      // list of province
       $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
         'provinsi', FALSE);
+      // list of cities
       $data['cities'] = $this->mhome->getProducts(NULL, NULL, 'kabupaten', FALSE);
+      // list of sub districts
       $data['sub_districts'] = $this->mhome->getProducts(NULL, NULL, 'kecamatan', FALSE);
+      // list review of product
       $data['reviews'] = $this->mhome->getProducts(array('prod_id' => $idProduct, 'display' => 1), array('nameField' => 'name',
         'data_attemptF' => 'date_attempt', 'starsF' => 'stars', 'commentF' => 'comment'), 'tm_review', FALSE);
+
+      // id spec of product
       $idSpec = $this->mhome->getProducts(array('prod_id' => $idProduct),
          array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
 
+      // store id spec to variable specs and its icon
       for ($i=0; $i < count($idSpec) ; $i++) {
           array_push($specs, $this->mhome->getProducts(array('id' => $idSpec[$i]['spec_id']),
            array('nameField' => 'name','iconField' => 'icon'), 'tm_spec', TRUE));
         }
+
+      // store specs to data specs to view it
       $data['specs'] = $specs;
+      // list of product images
       $data['image'] = $this->mhome->getProductImage($idProduct);
+      // list of best seller
       $data['bestSellers'] = $this->mhome->topthree_bestSeller();
       // print_r($data['specs']);echo "</br></br>";
       // print_r($data['prices']);echo "</br></br>";
       // print_r($data['sizes']);echo "</br></br>";exit();
 
-        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
       $this->load->view('include/header2', $brands);
       $this->load->view('detail-product', $data);
@@ -348,9 +471,12 @@ class Home extends CI_Controller{
     }
   }
 
+  // this function for checking kabupaten (district) form province id that customer post
   public function checkProv($idProvince){
     $province = $this->mhome->getProducts(array('id_prov' => $idProvince), array('id_kabField' => 'id_kab',
       'namaField'=> 'nama'), 'kabupaten', FALSE);
+
+    // checking if kabupaten name and id are null or not
     if($province) {
         print_r(json_encode($province));
     } else {
@@ -358,9 +484,12 @@ class Home extends CI_Controller{
     }
   }
 
+  // this function for checking sub district (kecamatan) of kabupaten (district) id that customer post
   public function checkSubDistrict($idCity){
     $subDistrict = $this->mhome->getProducts(array('id_kab' => $idCity), array('id_kecField' => 'id_kec',
       'namaField'=> 'nama'), 'kecamatan', FALSE);
+
+    // checking if kecamatan name and id are null or not
     if($subDistrict) {
         print_r(json_encode($subDistrict));
     } else {
@@ -368,6 +497,7 @@ class Home extends CI_Controller{
     }
   }
 
+  // function that save review of specify product
   public function reviewProduct($idProduct){
     $this->load->helper('form');
     $this->load->library('form_validation');
@@ -418,12 +548,19 @@ class Home extends CI_Controller{
 
   }
 
+
+  // this function for update cart customer
   public function updateCart(){
+    // set cart contents to carts
     $carts = $this->cart->contents();
+
+    // checking if carts is not null
     if ($carts != NULL) {
+      // new quantity of specific cart
       $qty = $this->input->post('qty');
 
       $no = 0;
+      // update quantity for each cart from it rowid
       foreach ($carts as $cart) {
         $update_cart = array(
           'rowid' =>  $cart['rowid'],
@@ -435,31 +572,44 @@ class Home extends CI_Controller{
       }
 
       print_r($this->cart->contents());
+      // redirect it to shopcart
       redirect('home/shopCart');
     } else {
       redirect();
     }
   }
 
+  // function for deleting the whole carts
   public function deleteCart(){
       $cart = $this->cart->contents();
       $releases = $this->cart->contents();
 
+      // for each carts
       foreach ($releases as $release) {
+        // checking id address on cart is null or not
         if ($release['id_address'] != NULL) {
+
+          // get product stock akhir and its postpone
           $stock = $this->mhome->getProducts(array('id' => $release['id_trProduct']), array('sakhir' => 'stock_akhir',
            'ppone' => 'postpone'), 'tr_product', TRUE);
 
+           // release postpone product
           $release_ppone = $stock['postpone'] - $release['qty'];
+
+          // release stock akhir product
           $release_sakhir = $stock['stock_akhir'] + $release['qty'];
+
 
           $update_stock = array(
             'stock_akhir' => $release_sakhir,
             'postpone'    => $release_ppone
           );
+          // updating postpone and stock akhir product
           $this->mhome->updateData($release_stock, $update_stock, 'tr_product');
         }
       }
+
+      // checking if carts null or not
       if ($cart != NULL) {
         $this->cart->destroy();
         redirect('home/shopCart');
@@ -468,9 +618,12 @@ class Home extends CI_Controller{
       }
   }
 
+  // function for removing specify cart content form its rowid
   public function removeCart_item($cart_rowId){
     $cart = $this->cart->contents();
+
     if ($cart != NULL) {
+      // remove specify cart by it row id
       $this->cart->remove($cart_rowId);
       redirect('home/shopCart');
     } else {
@@ -478,6 +631,7 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for add cart
   public function addToCart($idDistrict) {
     // store id product to variable id_prod
     $id_prod = $this->input->post('product_id');
@@ -680,10 +834,14 @@ class Home extends CI_Controller{
       print_r($this->cart->contents());
   }
 
+
+  // function for add voucher
   public function addVoucher(){
     if ($this->cart->contents() != NULL) {
+      // get voucher code from costumer post
       $voucherCode = $this->input->post('voucher');
       $carts = $this->cart->contents();
+      // add voucher code to every content in carts
       foreach ($carts as $cart) {
         $rowId = $cart['rowid'];
         $addVoucher = array(
@@ -692,17 +850,23 @@ class Home extends CI_Controller{
         );
         $this->cart->update($addVoucher);
       }
+        // quantity of voucher that available
         $qty = $this->mhome->getProducts(array('kode_voucher' => $voucherCode), array('jumlah' => 'jumlah'), 'tm_voucher', TRUE);
+        // cutting voucher quantity
         $quantity = $qty['jumlah'] - 1;
         $data = array('jumlah' => $quantity);
 
+        // update quantity voucher
       $this->mhome->updateData(array('kode_voucher' => $voucherCode), $data, 'tm_voucher' );
       redirect('home/shopCart');
     }
   }
 
+  // function for remove voucher
   public function removeVoucher() {
       $carts = $this->cart->contents();
+
+      // set voucher null in every content on carts
       foreach ($carts as $cart) {
           $rowId = $cart['rowid'];
           $addVoucher = array(
@@ -712,14 +876,20 @@ class Home extends CI_Controller{
           $voucher = $cart['voucher'];
           $this->cart->update($addVoucher);
       }
+
+      // get quantity of voucher
       $qty = $this->mhome->getProducts(array('kode_voucher' => $voucher), array('jumlah' => 'jumlah'), 'tm_voucher', TRUE);
+      // release voucher
       $quantity = $qty['jumlah'] + 1;
       $data = array('jumlah' => $quantity);
 
+      // update voucher quantity
       $this->mhome->updateData(array('kode_voucher' => $voucher), $data, 'tm_voucher' );
       redirect('home/shopCart');
   }
 
+
+  // function view of shop cart
   public function shopCart(){
       $cart = $this->cart->contents();
       $data['cart'] = $cart;
@@ -749,11 +919,18 @@ class Home extends CI_Controller{
       $this->load->view('include/footer');
   }
 
+  // /function canceling order
   public function cancelOrder($id) {
+    // checking is it customer or not
       if($this->session->userdata('uType') ==  4) {
+        // set status order
           $statusOrder = array('status_order' => 3);
+          // get id customer
           $idCustomer = $this->session->userdata('uId');
+          // update status order
           $this->mhome->updateData(array('id' => $id), $statusOrder, 'tm_order');
+
+          // releasing stock
           $detailOrder= $this->mhome->detailOrder($id, $idCustomer);
           $orderId = $detailOrder[0]->order_number;
 
@@ -769,8 +946,11 @@ class Home extends CI_Controller{
       }
   }
 
+  // function shop summary
   public function shop_summary(){
+    // checking if its customer or not
     if ($this->session->userdata('uType') == 4) {
+      // checking availability
       $carts = $this->cart->contents();
       if ($carts != NULL) {
         $id_address = array();
@@ -781,6 +961,7 @@ class Home extends CI_Controller{
             $data['available'] = FALSE;
           }
         }
+
         $data['address_shipping'] = $this->mhome->customer_detail($id_address[0]['id_cs_detail']);
         $data['carts']  = $this->cart->contents();
         $data['midtrans'] = $this->mhome->getProducts(NULL, NULL, 'midtrans_config', TRUE);
@@ -798,10 +979,14 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for checking shop cart
   public function shopCheckout(){
     $hasCart = $this->cart->contents();
+    // check if has cart or not
     if ($hasCart != NULL) {
+      // checking user type (customer or not)
     if($this->session->userdata('uType') == 4){
+        // checking total transaction
         $totalcart = $this->cart->total();
 
         if($totalcart > 500000000){
@@ -848,20 +1033,24 @@ class Home extends CI_Controller{
 
           // checking availability for each cart and check if it special package or retail product
           foreach ($cart_availablelity as $cart) {
+            // checking if it special package product
             if ($cart['type'] == 'special') {
-
+              // get availability
               $avblty = $cart['available'];
+              // get row id
               $rowid = $cart['rowid'];
 
+              // get detail special package product for cutting
               foreach ($cart['option'] as $option) {
-
+                // checking stock akhir for availability
                 $hasPostpone_SP = $this->mhome->getProducts(array('id' => $option['id_trProduct']),
                 NULL, 'tr_product', TRUE);
 
                 $current_stock_store_SP = $hasPostpone_SP['stock_akhir'] - $hasPostpone_SP['postpone'];
 
                 $may_buy_SP = $current_stock_store_SP - $option['quantity'];
-
+                // checking if stock akhir more than 3 customer may buy
+                // and change availability
                 if ($may_buy_SP > 3) {
                   $avbl = TRUE;
                   $comment = 'Available to buy';
@@ -870,6 +1059,7 @@ class Home extends CI_Controller{
                 }
                 // echo "avbl: ";print_r($avbl);echo "</br></br>";
 
+                // change availabelity
                 if ($avbl == FALSE) {
                   $avblty = $avbl;
                   $comment = 'Not available';
@@ -883,21 +1073,19 @@ class Home extends CI_Controller{
               'rowid'     => $rowid
               );
 
-              // print_r($avblty);
+              // update cart
               $this->cart->update($SP_availability);
             }else{
-              // echo "Retail Product</br></br>";
-              // echo "Row id cart: ";print_r($cart['rowid']);echo "</br></br>";
+              // get availability
               $avbl = $cart['available'];
+              // get stock
               $hasPostpone = $this->mhome->getProducts(array('id' => $cart['id_trProduct']),
               NULL, 'tr_product', TRUE);
 
               $current_stock_store = $hasPostpone['stock_akhir'] - $hasPostpone['postpone'];
-              // echo "Current stock on store: ";print_r($current_stock_store);echo "</br></br>";
-              // echo "Request to buy: ";print_r($cart['qty']);echo "</br></br>";
 
               $may_buy = $current_stock_store - $cart['qty'];
-
+              // checking if customer may buy or not
               if ($may_buy > 3) {
                 $avbl = TRUE;
                 $comment = 'Available to buy';
@@ -911,14 +1099,13 @@ class Home extends CI_Controller{
               'comment'   => $comment,
               'rowid'     => $cart['rowid']
               );
-
+              // updating availability
               $this->cart->update($retail_availability);
               // echo "<hr>";
             }
           }
 
           $current_cart = $this->cart->contents();
-          // print_r($current_cart);echo "</br></br>";
 
           $mayPurchase = $this->cart->contents();
           $data['available'] = TRUE;
@@ -1022,7 +1209,9 @@ class Home extends CI_Controller{
           foreach ($checkout_cart_validation as $checkout_cart) {
             // is it special package?
             if ($checkout_cart['type'] == 'special') {
+              // get availability
               $checkout_avblty_SP = $cart['available'];
+              // get row id
               $checkout_rowid_SP = $cart['rowid'];
 
               foreach ($checkout_cart['option'] as $option) {
@@ -1032,7 +1221,7 @@ class Home extends CI_Controller{
                 $current_stock_checkout_SP = $hasPostpone_checkout_SP['stock_akhir'] - $hasPostpone_checkout_SP['postpone'];
 
                 $mayBuy_checkout_SP = $current_stock_checkout_SP - $option['quantity'];
-
+                // checking if customer may buy or not
                 if ($mayBuy_checkout_SP > 3) {
                   $avbl = TRUE;
                   $comment = 'Available to buy';
@@ -1053,13 +1242,17 @@ class Home extends CI_Controller{
               'available' => $checkout_avblty_SP,
               'rowid'     => $checkout_rowid_SP,
               );
-
+              // updating availability
               $this->cart->update($checkout_update_availability_SP);
-            }else {
+
               // is it retail product?
+            }else {
+              // get availabelity
               $checkout_avblty = $checkout_cart['available'];
+              // get row id
               $checkout_rowid = $checkout_cart['rowid'];
 
+              // checking stock akhir for availability
               $hasPostpone_checkout = $this->mhome->getProducts(array('id' => $checkout_cart['id_trProduct']),
               NULL, 'tr_product', TRUE);
 
@@ -1067,6 +1260,7 @@ class Home extends CI_Controller{
 
               $mayBuy_checkout = $current_stock_checkout - $checkout_cart['qty'];
 
+              // checking if customer may buy or not
               if ($mayBuy_checkout > 3) {
                 $checkout_avblty = TRUE;
                 $comment = 'Available to buy';
@@ -1083,12 +1277,14 @@ class Home extends CI_Controller{
 
               echo "Available retail: ";print_r($checkout_avblty);echo "</br></br>";
 
+              // updating availability
               $this->cart->update($checkout_update_availability);
             }
           }
 
           $checkout_address_cart  = $this->cart->contents();
 
+          // checking if address is new address or not
           if ($shipping_same_with_default_address != NULL) {
             echo "shipping same with default address arent null </br></br>";
 
@@ -1185,17 +1381,25 @@ class Home extends CI_Controller{
 
 
           foreach ($cutting_stock as $cart) {
+            // checking if availability is true or not
             if ($cart['available'] == TRUE) {
+              // checking if product special package or retail
               if ($cart['type'] == 'special') {
+                // if its special package cutting bonus product of special package
                 foreach ($cart['option'] as $option_SP) {
+                  // get id tr special package bonus
                   $checkout_id_trProduct_SP = $option_SP['id_trProduct'];
+                  // get quantity request
                   $checkout_qty_SP = $option_SP['quantity'];
 
+                  // get stock akhir and postpone
                   $checkout_current_stock_SP = $this->mhome->getProducts(array('id' => $checkout_id_trProduct_SP), NULL, 'tr_product', TRUE);
 
+                  // cutting
                   $new_postpone_SP = $checkout_current_stock_SP['postpone'] + $checkout_qty_SP;
                   $new_stock_akhir_SP = $checkout_current_stock_SP['stock_akhir'] - $checkout_qty_SP;
 
+                  // updating stock
                   $update_postpone_SP = array(
                   'postpone'    => $new_postpone_SP,
                   'stock_akhir' => $new_stock_akhir_SP
@@ -1203,15 +1407,22 @@ class Home extends CI_Controller{
 
                   $this->mhome->updateData(array('id' => $checkout_id_trProduct_SP), $update_postpone_SP, 'tr_product');
                 }
+
+                // checking if it product retail or not
               }else {
+                // get id tr product of retail product
                 $checkout_id_trProduct = $address_cart['id_trProduct'];
+                // get request quantity
                 $checkout_qty = $address_cart['qty'];
 
+                // get stock
                 $checkout_current_stock = $this->mhome->getProducts(array('id' => $checkout_id_trProduct), NULL, 'tr_product', TRUE);
 
+                // cutting stock akhir and postpone
                 $new_postpone = $checkout_current_stock['postpone'] + $checkout_qty;
                 $new_stock_akhir = $checkout_current_stock['stock_akhir'] - $checkout_qty;
 
+                // updating stock
                 $update_postpone = array(
                 'postpone'    => $new_postpone,
                 'stock_akhir' => $new_stock_akhir
@@ -1232,19 +1443,28 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for buying and connect with mitrans
     public function buy(){
         $result = json_decode($this->input->post('result_data'));
         print_r($result);echo "</br></br>";
+        // get snap token
         $snapToken = $this->input->post('snap_token');
+        // checking usertype (customer or not)
         if ($this->session->userdata('uType') == 4) {
+          // get carts contents
             $cart = $this->cart->contents();
+            // checking if cart is set or not
             if ($cart != NULL) {
                 print_r($cart);echo "</br></br>";
+                // get cart content to get cart address
                 $cartAdress = $this->cart->contents();
+                // set empty variable to store address id
                 $address_detail = array();
+                // set address id to variable $address_detail
                 foreach ($cartAdress as $cart) {
                     $address_detail['id_address'] = $cart['id_address'];
                 }
+                // get user id
                 $idUserLogin = $this->session->userdata('uId');
                 print_r($address_detail);echo "</br></br>";
                 print_r($idUserLogin);echo "</br></br>";
@@ -1268,6 +1488,7 @@ class Home extends CI_Controller{
                 $transaction_time = new DateTime($result->transaction_time);
                 $expiry_time = $transaction_time->modify('+12 hour');
 
+                // set detail order
                 $data_order = array(
                     'order_number'    => $result->order_id,
                     'id_userlogin'    => $idUserLogin,
@@ -1293,11 +1514,15 @@ class Home extends CI_Controller{
                 }
 
                 print_r($data_order);echo "</br></br>";
+                // input detail order to tm_order
                 $this->mhome->inputData('tm_order', $data_order);
+                // get id from last input
                 $idOrder = $this->mhome->getProducts(array('order_number' => $result->order_id), array('idField' => 'id'), 'tm_order', TRUE);
 
+                // checking type of order (special package or retail)
                 $carts = $this->cart->contents();
                 foreach ($carts as $cart) {
+                  // checking if its special package product
                   if ($cart['type'] == 'special') {
 
                     // input special package to order detail
@@ -1328,7 +1553,10 @@ class Home extends CI_Controller{
                       $this->mhome->inputData('tr_order_detail', $detail_order);
                       print_r($detail_order);echo "</br></br>";
                     }
+
+                  // checking if its reatil product
                   }else{
+                    // input retail product to tr_order_detail
                     $detail_order = array(
                       'id_tm_order'     =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
                       'id_tr_Prod'      =>  $cart['id_trProduct'],
@@ -1343,19 +1571,26 @@ class Home extends CI_Controller{
                   }
                 }
 
+                // checking status order (credit or not)
                 if ($statusOrder == 4) {
                     $cuttingStocks = $this->cart->contents();
                     foreach ($cuttingStocks as $cut) {
+                      // if type of product is special package
                       if ($cut['type'] == 'special') {
                         foreach ($cut['option'] as $cut_option) {
+                          // get id tr product for cutting stock akhir
                           $id = $cut_option['id_trProduct'];
+                          // get quantity request
                           $qty = $cut_option['quantity'];
+                          // get detail stock akhir and postpone from product
                           $cut_option_qtyStore = $this->mhome->getProducts(
                             array('id' => $id), array('ppone' => 'postpone', 'obound' => 'outbound'), 'tr_product', TRUE);
 
+                          // cutting stock akhir and add postpone
                           $postpone_sp = $cut_option_qtyStore['postpone'] - $qty;
                           $outbound_sp = $cut_option_qtyStore['outbound'] + $qty;
 
+                          // update stock akhir and postpone
                           $update_stock_sp = array(
                             'outbound'  => $outbound_sp,
                             'postpone'  => $postpone_sp
@@ -1372,13 +1607,19 @@ class Home extends CI_Controller{
 
                           $this->mhome->updateData(array('id' => $id), $update_stock_sp, 'tr_product');
                         }
+
+                      // if product retail
                       }else{
+                        // get id tr_product
                         $id = $cut['id_trProduct'];
+                        // get quantity request
                         $qty = $cut['qty'];
 
+                        // get detail stock akhir and postpone for cutting
                         $qtyStore = $this->mhome->getProducts(
                           array('id' => $id), array('ppone' => 'postpone', 'obound' => 'outbound'), 'tr_product', TRUE);
 
+                        // cutting stock akhir and add postpone
                         $postpone = $qtyStore['postpone'] - $qty;
                         $outbound = $qtyStore['outbound'] + $qty;
 
@@ -1410,17 +1651,30 @@ class Home extends CI_Controller{
         }
     }
 
+  // function purchase
+  /*
+  * I dont know to if this function still used or not
+  * but to purchase now we used "buy" function
+  */
   public function purchase($orderId, $snapResponse){
+    // checking user type (customer or not)
     if ($this->session->userdata('uType') == 4) {
+      // get customer cart
       $cart = $this->cart->contents();
+      // checking if cart is set or not
       if ($cart != NULL) {
         print_r($cart);echo "</br></br>";
+        // get cart address based on cart contents
         $cartAdress = $this->cart->contents();
+        // set empty variable to store adress
         $address_detail = array();
+        // store address detail id on $address_detail
         foreach ($cartAdress as $cart) {
           $address_detail['id_address'] = $cart['id_address'];
         }
+        // get user id
         $idUserLogin = $this->session->userdata('uId');
+        //
         $statusOrder = 2;
         if ($snapResponse == 200) {
             $statusOrder = 4;
@@ -1428,7 +1682,9 @@ class Home extends CI_Controller{
             $statusOrder = 2;
         }
 
+        // set a random number 1 -- 999 for order number
         $rand = rand(1, 999);
+        // set data order
         $data_order = array(
           'order_number'    => $orderId,
           'id_userlogin'    => $idUserLogin,
@@ -1437,10 +1693,14 @@ class Home extends CI_Controller{
           'status_order'    => $statusOrder,
         );
         print_r($data_order);echo "</br></br>";
+        // input data order to table tm_order
         $this->mhome->inputData('tm_order', $data_order);
+        // get id order data
         $idOrder = $this->mhome->getProducts($data_order, array('idField' => 'id'), 'tm_order', TRUE);
 
+        // get detail order
         $carts = $this->cart->contents();
+        // input every single detail product of order to tr_order_detail
         foreach ($carts as $cart) {
           $detail_order = array(
             'id_tm_order'     =>  $idOrder['id'],//'AGM'.date("dmy").$rand,
@@ -1452,8 +1712,7 @@ class Home extends CI_Controller{
           print_r($detail_order);echo "</br></br>";
         }
 
-        // cutting stock was here :))
-
+        // destroy cart
         $this->cart->destroy();
         redirect('home/checkoutDone');
         exit();
@@ -1542,8 +1801,10 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for finishing transaction
   public function checkoutDone(){
     if ($this->session->userdata('uType') == 4) {
+      // get customer username
       $data['uName'] = $this->mhome->getProducts(array('user_id' => $this->session->userdata('uId')), array('usernameField' => 'username'), 'user_login', TRUE);
         $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1555,8 +1816,10 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for all promotion view
   public function promotionPage(){
-    $data['promotions'] = $this->mhome->getPromotions();
+    // data promotion
+    $data['promotions'] = $this->mhome->getProducts(array('status =' => 1, 'deleted' => 0), NULL, 'tm_promotion', FALSE);
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
     $this->load->view('include/header2', $brands);
@@ -1564,6 +1827,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  // function for page about
   public function pageAbout(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1572,6 +1836,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  // function for page contact view
   public function pageContact(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1580,6 +1845,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  //  function for page FaQ view
   public function pageFaq(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1588,6 +1854,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  // function term and condition view
   public function termCondition(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1596,6 +1863,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  // function privacy policy page view
   public function privacyPolicy(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1612,33 +1880,42 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  // function partnership view
   public function partnership(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('partnership');
     $this->load->view('include/footer');
   }
 
+  //
   public function pageLogin(){
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+      /*
+      * I dont know who made this but login view has been handled by controller auth
+      */
+    $this->load->view('include/header2', $brands);
     $this->load->view('login');
     $this->load->view('include/footer');
   }
 
+  // function for promotion detail
   public function promotionDetail($slugs){
+    // get promotion detail by on slugs
       $data['promotion'] = $this->mhome->detailPromotion($slugs);
       $data['is_promotion'] = TRUE;
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-      $this->load->view('include/header2', $brands);
+    $this->load->view('include/header2', $brands);
     $this->load->view('promotion-detail', $data);
     $this->load->view('include/footer');
   }
 
+  // function for best seller view
   public function bestSeller($brand = NULL, $cat = NULL){
+    // get best seller product list
     $data['products'] = $this->mhome->listBestSeller_Product($brand, $cat);
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1647,10 +1924,14 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
+  // function for history page
   public function historyPage(){
+    // checking user type (customer or not)
       if ($this->session->userdata('uType') == 4) {
+        // get customer id
           $idCustomer = $this->session->userdata('uId');
 
+        // get history customer (transaction)
           $data['orderList'] = $this->mhome->getOrderHistory($idCustomer);
 
 //      print_r($data);
@@ -1665,22 +1946,27 @@ class Home extends CI_Controller{
       }
   }
 
+  // function for wishlist page view
   public function wishlistPage(){
     $this->load->view('include/header2');
     $this->load->view('wishlist-page');
     $this->load->view('include/footer');
   }
 
+  // function for list of transaction page
   public function transactionPage(){
+    // checking user type(customer or not)
     if ($this->session->userdata('uType') == 4) {
+      // get id customer
       $idCustomer = $this->session->userdata('uId');
 
+      // get all transactions customer based on his id
       $data['orderList'] = $this->mhome->getOrderList($idCustomer);
       // print_r($data['orderList']);exit();
 
-        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-        $this->load->view('include/header2', $brands);
+      $this->load->view('include/header2', $brands);
       $this->load->view('transaction-page', $data);
       $this->load->view('include/footer');
     } else {
@@ -1688,21 +1974,33 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for detail transaction
   public function detail_transaction($orderNum){
+    // checking user type (customer)
     if ($this->session->userdata('uType') == 4) {
+      // get customer id
       $idCustomer = $this->session->userdata('uId');
+      // get detail transaction from order number on parameter
       $ordr = $this->mhome->getProducts(array('order_number' => $orderNum), array('idF' => 'id'), 'tm_order', TRUE);
+      // get id from detail transaction
       $idOrder = $ordr['id'];
+      // get detail transaction to post it on view page
       $data['detailOrder'] = $this->mhome->detailOrder($idOrder, $idCustomer);
+      // get detail product based on order number
       $listOrder = $this->mhome->getProducts(array('id_tm_order' => $idOrder),
         array('idProd' => 'id_product', 'idTrprod_size' => 'id_tr_prod_size', 'spcl' => 'special',
         'qty' => 'quantity', 'sbttl' => 'subtotal'), 'tr_order_detail', FALSE);
 
+      // set empty variable list order to post it on view
       $data['listOrder'] = array();
+      // checking if list order has special package on it or not
       foreach ($listOrder as $list) {
+        // if list order has special package
         if($list['special'] == TRUE){
+          // get detail special package
           $detail = $this->mhome->getProducts(array('id' => $list['id_product']),
             array('img' => 'image', 'nameF' => 'name'), 'tm_special_package', TRUE);
+          // store special package detail in variable order
           $order = array(
             'id_product'  => $list['id_product'],
             'name'        => $detail['name'],
@@ -1713,11 +2011,17 @@ class Home extends CI_Controller{
             'qty'         => $list['quantity'],
             'subtotal'    => $list['subtotal']
           );
+          // push variable order to empty variable ($data['listOrder'])
           array_push($data['listOrder'], $order);
+
+        // checking if list order not special package
         }else {
+          // get detail size in list order
           $detailSize = $this->mhome->sizeStock($list['id_tr_prod_size']);
+          // get list order name and image
           $detail = $this->mhome->getProducts(array('id' => $list['id_product']),
             array('nameF' => 'name', 'img' => 'image'), 'tm_product', TRUE);
+          // store list order product detail in variable order
           $order = array(
             'id_product'  => $list['id_product'],
             'name'        => $detail['name'],
@@ -1728,6 +2032,7 @@ class Home extends CI_Controller{
             'qty'         => $list['quantity'],
             'subtotal'    => $list['subtotal']
           );
+          // push variable order to empty variable ($data['listOrder'])
           array_push($data['listOrder'], $order);
         }
       }
@@ -1743,14 +2048,18 @@ class Home extends CI_Controller{
 
   }
 
+  // function for profile page
   public function profilePage(){
+    // checking if uType is customer
     if ($this->session->userdata('uType') == 4) {
+      // get id user
       $id_userlogin = $this->session->userdata('uId');
+      // get data profile user
       $data['profile'] = $this->mhome->detailProfileCustomer($id_userlogin);
 
-        $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-        $this->load->view('include/header2', $brands);
+      $this->load->view('include/header2', $brands);
       $this->load->view('page-profile', $data);
       $this->load->view('include/footer');
     } else {
@@ -1758,12 +2067,16 @@ class Home extends CI_Controller{
     }
   }
 
+  // function for change profile background
   public function profileSetting($pass = NULL){
+    // checking if user type is 4 (customer)
     if ($this->session->userdata('uType') == 4) {
       $this->load->helper('form');
       $this->load->library('form_validation');
 
+      // checking if customer want to change his pass or not
       if ($pass == NULL) {
+        // if customer doesn't want to change pass this is the rules
         $this->form_validation->set_rules('firstname', 'First name', 'required');
         $this->form_validation->set_rules('lastname', 'Last name', 'required');
         $this->form_validation->set_rules('phone', 'Phone number', 'required');
@@ -1773,12 +2086,17 @@ class Home extends CI_Controller{
         $this->form_validation->set_rules('address', 'Address', 'required');
         $this->form_validation->set_rules('postcode', 'Postcode', 'required');
 
+        // checking validation
         if ($this->form_validation->run() === TRUE) {
+          // get customer id on table user login
           $id_userlogin = $this->session->userdata('uId');
+          // get customer default address
           $profile = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail'
           , TRUE);
+          // get customer id on table tm_customer
           $id_customerDetail = $profile['id'];
           print_r($profile);echo "</br></br>";
+          // set user post to array variable updateProfile
           $updateProfile = array(
             'id_userlogin'    =>  $id_userlogin,
             'first_name'      =>  $this->input->post('firstname'),
@@ -1793,40 +2111,57 @@ class Home extends CI_Controller{
             'default_address' =>  1,
           );
           print_r($updateProfile);
+          // update customer profile
           $this->mhome->updateData(array('id' => $id_customerDetail), $updateProfile, 'tm_customer_detail');
           redirect('home/profilePage');
+
+          // if validation error
         }else{
+          // get customer id from table user login
           $id_userlogin = $this->session->userdata('uId');
+          // get data profile customer
           $data['profile'] = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail', TRUE);
           $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
           // $this->session->set_flashdata('error', validation_errors());
 
-            $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+          $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
-            $this->load->view('include/header2', $brands);
+          $this->load->view('include/header2', $brands);
           $this->load->view('page-profile-settings', $data);
           $this->load->view('include/footer');
         }
+
+        // if customer want to change his password
       } else {
+        // set rules for changing password
         $this->form_validation->set_rules('current_password', 'Current Password',
           'required|callback_checkingCurrentPass');
         $this->form_validation->set_rules('password', 'New Password', 'required');
         $this->form_validation->set_rules('confirm_password', 'Re-type New Password',
           'required|matches[password]');
 
+        // if validation based on rules are true
         if ($this->form_validation->run() === TRUE) {
+          // get customer new password
           $new_password = $this->input->post('password');
+          // get customer id from table user login
           $id_userlogin = $this->session->userdata('uId');
+          // hashing customer new password
           $new_pass = array(
             'password' => password_hash($new_password, PASSWORD_DEFAULT)
           );
           print_r($new_pass);echo "</br></br>";
           print_r($id_userlogin);
 
+          // update customer password
           $this->mhome->updateData(array('user_id' => $id_userlogin), $new_pass, 'user_login');
           redirect('home/profilePage');
+
+        // if validation error
         }else{
+          // get customer id from table user login
           $id_userlogin = $this->session->userdata('uId');
+          // get data profile customer
           $data['profile'] = $this->mhome->getProducts(array('id_userlogin' => $id_userlogin, 'default_address' => 1), NULL, 'tm_customer_detail', TRUE);
           $data['provinces'] = $this->mhome->getProducts(NULL, NULL, 'provinsi', FALSE);
           // $this->session->set_flashdata('error', validation_errors());
@@ -1843,11 +2178,15 @@ class Home extends CI_Controller{
     }
   }
 
+  // function callback
   public function checkingCurrentPass($current_password){
+    // get id user login
     $id_userlogin = $this->session->userdata('uId');
+    // get current pass
     $currentPass = $this->mhome->getProducts(array('user_id' => $id_userlogin),
     array('passwordField' => 'password'), 'user_login', TRUE);
 
+    // verify current password in db with customer password posted
     if (password_verify($current_password, $currentPass['password'])) {
       return TRUE;
     }else{
@@ -1857,15 +2196,23 @@ class Home extends CI_Controller{
   }
 
   public function bed_linen($brand = NULL){
+    // checking if brand is null
     if ($brand == NULL) {
       $data['brand'] = array('id' => NULL, 'name' => 'Bed Linens');
+      // list of bed linen
       $data['products'] = $this->mhome->bed_linenProducts();
     } else {
-      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+      // detail specify brand on bed linen
+      $data['brand'] = $this->mhome->getProducts(array('slugs' => $brand), array('idField' => 'id', 'nameField' => 'name', 'slugsF' => 'slugs'),
         'tm_brands', TRUE);
-      $data['products'] = $this->mhome->bed_linenProducts($brand);
+      // search id brand from slugs
+      $bbedLinen = $this->mhome->getProducts(array('slugs' => $brand), array('idF' => 'id'), 'tm_brands', TRUE);
+      // list products of bed linen on specify brand
+      $data['products'] = $this->mhome->bed_linenProducts($bbedLinen['id']);
     }
+    // list brand that has bed linen category
     $data['brands'] = $this->mhome->bed_linenBrands();
+    // list of best seller
     $data['bestSellers'] = $this->mhome->topthree_bestSeller();
 
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
@@ -1879,57 +2226,69 @@ class Home extends CI_Controller{
     if ($brand === NULL && $category === NULL) {
       // select all product which the category aren't mattress neither bed linen
 
-      $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+      $data['brand'] = array('id' => 'all-brand', 'slugs' => 'all-brand', 'name' => 'Bedding Accessories');
       $data['products'] = $this->mhome->beddingACC();
       $data['category'] = $this->mhome->beddingACC_Categories();
       $data['brands'] = $this->mhome->beddingACC_Brands();
     } elseif ($brand !== NULL && $category === NULL) {
       // select all product with specific brand which the category aren't mattress neither bed linen
 
-      if ($brand == 0) {
+      if ($brand === 'all-brand') {
         // select all product with specific category which the category aren't mattress neither bed linen
 
-        $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
+        $data['brand'] = array('id' => 'all-brand', 'slugs' => 'all-brand', 'name' => 'Bedding Accessories');
         $data['products'] = $this->mhome->beddingAcc();
         $data['category'] = $this->mhome->beddingACC_Categories();
         $data['brands'] = $this->mhome->beddingACC_Brands();
       } else {
         // select all product with specific brand and with specific category which the category aren't mattress neither bed linen
 
-        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+        // search brand id from it slugs
+        $brandId = $this->mhome->getProducts(array('slugs' => $brand), array('idF' => 'id'), 'tm_brands', TRUE);
+
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brandId['id']), array('slugs' => 'slugs', 'nameField' => 'name'),
           'tm_brands', TRUE);
-        $data['products'] = $this->mhome->beddingAcc($brand);
-        $data['category'] = $this->mhome->beddingACC_Categories($brand);
+        $data['products'] = $this->mhome->beddingAcc($brandId['id']);
+        $data['category'] = $this->mhome->beddingACC_Categories($brandId['id']);
         $data['brands'] = $this->mhome->beddingACC_Brands();
       }
     } else {
       // select all product with specific brand and specific category which the category aren't mattress neither bed linen
 
-      if ($brand == 0) {
+      if ($brand === 'all-brand') {
         // select all product with specific category which the category aren't mattress neither bed linen
 
-        $data['brand'] = array('id' => 0, 'name' => 'Bedding Accessories');
-        $data['products'] = $this->mhome->beddingAcc(NULL, $category);
+        // search category id from it slugs
+        $catId = $this->mhome->getProducts(array('slugs' => $category), array('idF' => 'id'), 'tm_category', TRUE);
+
+        $data['brand'] = array('id' => 'all-brand', 'slugs' => 'all-brand', 'name' => 'Bedding Accessories');
+        $data['products'] = $this->mhome->beddingAcc(NULL, $catId['id']);
         $data['category'] = $this->mhome->beddingACC_Categories();
         $data['brands'] = $this->mhome->beddingACC_Brands();
       } else {
         // select all product with specific brand and with specific category which the category aren't mattress neither bed linen
 
-        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id', 'nameField' => 'name'),
+        // search brand id from it slugs
+        $brandId = $this->mhome->getProducts(array('slugs' => $brand), array('idF' => 'id'), 'tm_brands', TRUE);
+        // search category id from it slugs
+        $catId = $this->mhome->getProducts(array('slugs' => $category), array('idF' => 'id'), 'tm_category', TRUE);
+
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brandId['id']), array('idField' => 'id', 'slugsF' => 'slugs', 'nameField' => 'name'),
           'tm_brands', TRUE);
-        $data['products'] = $this->mhome->beddingAcc($brand, $category);
-        $data['category'] = $this->mhome->beddingACC_Categories($brand, $category);
+        $data['products'] = $this->mhome->beddingAcc($brandId['id'], $catId['id']);
+        $data['category'] = $this->mhome->beddingACC_Categories($brandId['id']);
         $data['brands'] = $this->mhome->beddingACC_Brands();
       }
     }
 
-      $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
-      $data['bestSellers'] = $this->mhome->topthree_bestSeller();
+    $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+    $data['bestSellers'] = $this->mhome->topthree_bestSeller();
 
     $this->load->view('include/header2', $brands);
     $this->load->view('bedding_acc', $data);
     $this->load->view('include/footer');
   }
+
   public function subscribe(){
       $email = $this->input->post('email');
       $data = array(
@@ -1970,9 +2329,11 @@ class Home extends CI_Controller{
 		}
 	}
 
+  // function of list special package
   public function special_package() {
+    // list special package that aren't deleted and active
     $data['special_packages'] = $this->mhome->getProducts(array('active' => 1, 'deleted !=' => 1),
-      array('idField' => 'id', 'nameField' => 'name', 'img' => 'image'), 'tm_special_package', FALSE);
+      array('idField' => 'id', 'nameField' => 'name', 'slugsF' => 'slugs', 'img' => 'image'), 'tm_special_package', FALSE);
 
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
@@ -1981,16 +2342,22 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function detailSpecial($idSpecialPckg = NULL) {
-    if ($idSpecialPckg == NULL) {
+  // function for detail special package
+  public function detailSpecial($slugsSpecialPckg = NULL) {
+    // checking if slugs special package is null or not
+    if ($slugsSpecialPckg == NULL) {
       show_404();
     }else {
       $data['is_promotion'] = FALSE;
+      // list of provinces
       $data['provinces'] = $this->mhome->getProducts(NULL, array('id_provField' => 'id_prov', 'nameProv' => 'nama'),
         'provinsi', FALSE);
-      $data['specialPckg'] = $this->mhome->detailSpecial($idSpecialPckg);
+      // detail special package such id, name, description, image, price, and its sku
+      $data['specialPckg'] = $this->mhome->detailSpecial($slugsSpecialPckg);
+      // list of best seller
       $data['bestSellers'] = $this->mhome->topthree_bestSeller();
-      $data['details'] = $this->mhome->detail_specialPackage($idSpecialPckg);
+      // detail bonus of special package
+      $data['details'] = $this->mhome->detail_specialPackage($slugsSpecialPckg);
       if (! is_array($data['specialPckg'])) {
         show_404();
         exit();
@@ -2003,8 +2370,13 @@ class Home extends CI_Controller{
     }
   }
 
+
+  // function for checking voucher
   public function check_voucher($voucher) {
+    // search voucher code
       $voucherDetail = $this->mhome->getProducts(array('kode_voucher' => $voucher, 'jumlah !=' => 0, 'active' => 1 ), NULL, 'tm_voucher', TRUE);
+
+      // checking if search result is null or not
       if($voucherDetail != NULL) {
           $data = array(
               "status" => 1,
@@ -2019,13 +2391,27 @@ class Home extends CI_Controller{
       print_r(json_encode($data));
   }
 
-  function search_keyword($brand = NULL, $category = NULL)
-  {
+  // search function
+  function search_keyword($brand = NULL, $category = NULL){
+
+      // keyword that customer post
       $keyword = $this->input->post('keyword');
+
+      // search product from keyword
       $data['products'] = $this->mhome->search($keyword);
+
       // $data['products'] = $this->mhome->getShop_product($brand, $category);
-      $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
-      $data['category'] = $this->mhome->brand_categories($brand);
+
+      // checking if brand is not null or null
+      if ($brand != NULL) {
+        $data['brand'] = $this->mhome->getProducts(array('id' => $brand), array('idField' => 'id','nameField' => 'name'), 'tm_brands', TRUE);
+        $data['category'] = $this->mhome->brand_categories($brand);
+      }else {
+        $data['brand'] = array();
+        $data['category'] = array();
+      }
+
+      // list of best seller
       $data['bestSellers'] = $this->mhome->topthree_bestSeller();
       // $data['image'] = $this->mhome->getProducts(array('id_prod'=>$data['products']['id']), NULL, 'tr_product_image', TRUE);
       // print_r($data);
@@ -2035,6 +2421,7 @@ class Home extends CI_Controller{
       $this->load->view('include/footer');
   }
 
+  // function for store location view
   public function store_location() {
       $this->load->view('include/header2');
       $this->load->view('location');

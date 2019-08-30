@@ -29,8 +29,8 @@
                   <td><?= $size['name'];?></td>
                   <td><?= $size['size'];?></td>
                   <td>
-                  <a href="<?= site_url('admin/deleteSize/'.$size['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
-                  <a href="<?= site_url('admin/infoSize/'.$size['id'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                  <a href="<?= site_url('admin/deleteSize/'.$size['slugs']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
+                  <a href="<?= site_url('admin/infoSize/'.$size['slugs'])?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                   </td>
                 </tr>
                 <?php $no++; ?>

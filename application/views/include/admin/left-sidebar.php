@@ -43,7 +43,6 @@
                 <li class="active"><a href="<?= site_url('admin/allProd');?>">Products</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_spec');?>">Spec</a></li>
                 <li class="active"><a href="<?= site_url('admin/sa_size');?>">Size</a></li>
-                <li class="active"><a href="<?= site_url('admin/allVoucher')?>">Voucher</a></li>
                 <li class="active"><a href="<?= site_url('admin/special_package');?>">Special Package</a></li>
                 <li class="active"><a href="<?= site_url('admin/reviews');?>">Review</a></li>
                 <li class="active"><a href="<?= site_url('admin/bed_linen');?>">Bed Linen</a></li>
@@ -96,9 +95,6 @@
           </li>
           <li>
             <a href="<?= site_url('admin/promotions');?>"><i class="fa fa-tag"></i><span> Promotion</span></a>
-          </li>
-          <li>
-            <a href="<?= site_url('admin/allVoucher')?>"><i class="fa fa-percent"></i> Voucher</a>
           </li>
           <li>
             <a href="<?= site_url('admin/stores');?>"><i class="fa fa-map"></i><span>Manage store</span></a>

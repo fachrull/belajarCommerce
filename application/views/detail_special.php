@@ -38,12 +38,12 @@
 					</div>
 
                     <ul id="brands" class="list-group list-unstyled">
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Serta</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Tempur</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Florence</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/6');?>">Stressless</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/aireloom');?>">Aireloom</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/kingkoil');?>">Kingkoil</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/serta');?>">Serta</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/tempur');?>">Tempur</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/florence');?>">Florence</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/stressless');?>">Stressless</a></li>
                     </ul>
 
 				</div>
@@ -55,11 +55,11 @@
 						<div class="banner-rotator">
 							<img class="img-fluid" src="<?= site_url('asset/upload/'.$bestSeller['image']);?>" width="270" height="350" alt="<?= $bestSeller['name']?>">
 								<div class="absolute" style="top:45%;">
-									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 									</a>
 								</div>
 								<div class="absolute position-bottom">
-									<a href="<?= base_url('home/detailProduct/'.$bestSeller['id']);?>">
+									<a href="<?= base_url('home/detailProduct/'.$bestSeller['slugs']);?>">
 										<p>
 											<?= $bestSeller['name']?><br>
 											View Detail

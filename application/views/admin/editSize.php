@@ -16,7 +16,8 @@
                 <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
               <?php endif;?>
               <!-- /ALERT -->
-              <?= form_open_multipart('admin/editSize/'.$size['id'], array('class' => 'm-0 sky-form')); ?>
+              <?= form_open_multipart('admin/editSize/'.$size['slugs'], array('class' => 'm-0 sky-form')); ?>
+                <input type="hidden" name="idSize" value="<?= $size['id'];?>">
                 <label class="input mb-10">
                   <input class="form-control" name="items" type="text" placeholder="Size Name" value="<?= $size['name']?>">
                 </label>

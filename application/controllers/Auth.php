@@ -10,6 +10,7 @@ class Auth extends CI_Controller{
     $this->load->model('Mhome', 'mhome');
   }
 
+  // function login
   public function login(){
 
     // if we are already get session to login
@@ -101,13 +102,16 @@ class Auth extends CI_Controller{
   //   $this->mauth->createDummyUser();
   // }
 
+  // function for regis new user
   public function regis(){
     $this->load->helper('form');
     $this->load->library('form_validation');
 
+    // set base rules
     $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUnameReg');
     $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmailReg|valid_email');
 
+    // checking if super admin want to regis new admin
     if ($this->session->userdata('uType') == 1) {
       $this->form_validation->set_rules('phone', 'Phone', 'required');
       $this->form_validation->set_rules('adminType', 'Admin Authority', 'required');
@@ -118,9 +122,12 @@ class Auth extends CI_Controller{
         $this->load->view('admin/register');
         $this->load->view('include/admin/footer');
       } else{
+        // model handle the registration
         $this->mauth->regis();
         redirect();
       }
+
+    // checking if new customer want to regis
     } elseif ($this->session->userdata('uType') == NULL) {
       $this->form_validation->set_rules('password', 'Password', 'required');
       $this->form_validation->set_rules('conf_pass', 'Confirm Password', 'required|matches[password]');
@@ -149,10 +156,13 @@ class Auth extends CI_Controller{
     }
   }
 
+  // callback function checking username is already set or not
   public function checkingUnameReg($username){
+    // get username request
     $user = $this->mauth->getData(array('username' => $username),
       array('unameRegField' => 'username'), TRUE);
 
+      // if the username already been added
     if(isset($user)){
       $this->session->set_flashdata('error','Username has already been taken');
       return FALSE;
@@ -161,8 +171,11 @@ class Auth extends CI_Controller{
     }
   }
 
+  // callback function checking email
   public function checkingEmailReg($email){
+    // checking if the username from usernama function callback
     if ($this->checkingUnameReg($this->input->post('uname'))) {
+      // checking email is already been created or not
       $user = $this->mauth->getData(array('email' => $email),
         array('emailRegField' => 'email'), TRUE);
 
@@ -178,11 +191,13 @@ class Auth extends CI_Controller{
     }
   }
 
+  // function regis store owner
   public function regisSO(){
     if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
       $this->load->helper('form');
       $this->load->library('form_validation');
 
+      // set rules for regis Store Owner
       $this->form_validation->set_rules('uname', 'Username', 'required|callback_checkingUnameReg');
       $this->form_validation->set_rules('email', 'Email', 'required|callback_checkingEmailReg|valid_email');
       $this->form_validation->set_rules('company_name', 'Company name', 'required');
@@ -211,10 +226,12 @@ class Auth extends CI_Controller{
     }
   }
 
+  // function for reset password
   public function reset_password_profile(){
     $this->load->helper('form');
     $this->load->library('form_validation');
 
+    // set rules
     $this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_checkingForgotPass');
 
     if ($this->form_validation->run() === FALSE) {
@@ -222,11 +239,15 @@ class Auth extends CI_Controller{
       $this->load->view('forgot_pass');
       $this->load->view('include/footer');
     } else {
+      // get email post
       $email = $this->input->post('email');
+      // get id user from email
       $id_userlogin = $this->mauth->getProducts(array('email' => $email),
         array('idField' => 'user_id'), 'user_login', TRUE);
+      // set unique id
       $uniqueID = uniqid(rand(), TRUE);
 
+      // set request reset password
       $data = array (
         'id_userLogin' => $id_userlogin['user_id'],
         'uniqueCode'   => $uniqueID,
@@ -237,6 +258,7 @@ class Auth extends CI_Controller{
 
       // print_r($data);echo "</br></br>";
 
+      // set url for reset password
       $message = $id_userlogin['user_id'].'/'.$uniqueID;
 
       $mail = array(
@@ -245,6 +267,7 @@ class Auth extends CI_Controller{
         'message'       =>  $message,
           'template'    =>  'forgot_pass'
       );
+      // input to email queue
       $this->mauth->inputData('mail_queue', $mail);
       // print_r($mail);echo "</br></br>";
       $this->load->view('include/header2');
@@ -253,7 +276,9 @@ class Auth extends CI_Controller{
     }
   }
 
+  // callback function for checking email for forgot password
   public function checkingForgotPass($email){
+    // get email from request
     $hasEmail = $this->mhome->getProducts(array('email' => $email),
       array('emailField' => 'email'), 'user_login', TRUE);
 
@@ -265,26 +290,36 @@ class Auth extends CI_Controller{
       }
   }
 
+  // function for change password
   public function changeForgotPass($idForgot, $uniqID){
+    // get parameter, id user and unique id
     $check_data = array(
       'id_userLogin' => $idForgot,
       'uniqueCode'   => $uniqID
     );
+
+    // checking id and unique id from request forgot passsword db
     $checkForgot = $this->mauth->getProducts($check_data, NULL, 'tm_forgot_pass', TRUE);
     if (isset($checkForgot)) {
       $this->load->helper('form');
       $this->load->library('form_validation');
 
+      // set rules for change password (forgot pass)
       $this->form_validation->set_rules('pass', 'New Password', 'required');
       $this->form_validation->set_rules('repass', 'Re-type Password', 'required|matches[pass]');
 
       if ($this->form_validation->run() === TRUE) {
+        // get new password
         $newPass = $this->input->post('pass');
+        // hashing new password
         $new_password = password_hash(($newPass), PASSWORD_DEFAULT);
         $dataPass = array(
           'password' => $new_password
         );
+
+        // updateing new password
         $this->mauth->updateData(array('user_id' => $idForgot), 'user_login', $dataPass);
+        // deleting queue and request
         $this->mauth->deleteData(array('id' => $checkForgot['id']), 'tm_forgot_pass');
         redirect('auth/login');
       }else {
@@ -303,12 +338,14 @@ class Auth extends CI_Controller{
     }
   }
 
+  // completing profile for super admin or admin
   public function completing_profile()
   {
     $this->load->helper('form');
     $this->load->library('form_validation');
-
+    // checking if its super admin or admin
     if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+      // set rules
       $this->form_validation->set_rules('first_name', 'First Name', 'required');
       $this->form_validation->set_rules('last_name', 'Last Name', 'required');
       $this->form_validation->set_rules('phone', 'Phone', 'required');
@@ -323,21 +360,28 @@ class Auth extends CI_Controller{
         $this->load->view('new_user', $data);
         $this->load->view('include/admin/footer');
       } else{
+      // get data admin
       $data_admin = array(
         'first_name'=>$this->input->post('first_name'),
         'last_name'=>$this->input->post('last_name'),
         'phone'=>$this->input->post('phone')
       );
+
+      // get new password
       $newer = array(
         'password'=>password_hash($this->input->post('new_pass'), PASSWORD_DEFAULT),
         'newer'=>'0'
       );
+      // updating new profile
       $this->mauth->updateData(array('id_userlogin' => $this->session->userdata('uId')), 'tm_super_admin', $data_admin);
       $this->mauth->updateData(array('user_id' => $this->session->userdata('uId')), 'user_login', $newer);
       $this->session->set_userdata('uNew','0');
       redirect();
       }
+
+      // if new store owner completing profile
     } elseif ($this->session->userdata('uType') == 3) {
+      // set rules for store owner
       $this->form_validation->set_rules('company_name', 'Company Name', 'required');
       $this->form_validation->set_rules('address', 'Address', 'required');
       $this->form_validation->set_rules('phone1', 'Phone Number 1', 'required');
@@ -357,6 +401,7 @@ class Auth extends CI_Controller{
         $this->load->view('new_user', $data);
         $this->load->view('include/admin/footer');
     } else {
+      // get profile data store owner
       $data_store = array(
         'id_userlogin'  =>$this->session->userdata('uId'),
         'company_name'  =>$this->input->post('company_name'),
@@ -369,10 +414,13 @@ class Auth extends CI_Controller{
         'phone1'        =>$this->input->post('phone1'),
         'fax'           =>$this->input->post('fax')
       );
+      // get password store owner and hash it
       $newer = array(
         'password'=>password_hash($this->input->post('new_pass'), PASSWORD_DEFAULT),
         'newer'=>'0'
       );
+
+      // update store owner profile
       $this->mauth->updateData(array('id_userlogin' => $this->session->userdata('uId')), 'tm_store_owner', $data_store);
       $this->mauth->updateData(array('user_id' => $this->session->userdata('uId')), 'user_login', $newer);
       $this->session->set_userdata('uNew','0');

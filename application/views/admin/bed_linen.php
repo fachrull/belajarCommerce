@@ -31,7 +31,7 @@
                           <td><?= $product['name'];?></td>
                           <td><?= $product['position']?></td>
                           <td>
-                            <a href="<?= site_url('admin/edit_bed_linen/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-gear"></i></a>
+                            <a href="<?= site_url('admin/edit_bed_linen/'.$product['slugs']);?>"><i class="btn btn-oldblue fa fa-gear"></i></a>
                           </td>
                         </tr>
                         <?php $no++; ?>

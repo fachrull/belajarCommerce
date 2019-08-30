@@ -29,16 +29,15 @@
 					<div class="row">
 						<ul class="pajinate-container shop-item-list row list-inline m-0">
 							<?php foreach ($special_packages as $specialPackage): ?>
-								<div class="col-md-4 col-sm-4">
-									<div class="card ">
-										<img src="<?= base_url('asset/upload/special-package/'.$specialPackage['image']);?>" class="card-img-top" alt="<?= $specialPackage['name']?>">
-										<div class="card-body">
-											<h4>
-												<a href="<?= base_url('home/detailSpecial/'.$specialPackage['id']);?>"><?= $specialPackage['name']?></a>
-											</h4>
-											<a href="<?= base_url('home/detailSpecial/'.$specialPackage['id']);?>" class="btn btn-oldblue btn-block">View Detail</a>
-										</div>
-									</div>
+								<!-- POST ITEM -->
+								<div class="blog-post-item col-md-6 col-sm-6">
+									<!-- IMAGE -->
+									<figure class="mb-20">
+										<img class="img-fluid" style="height:300px !important;"
+											src="<?= base_url('asset/upload/special-package/'.$specialPackage['image']);?>"
+											alt="<?= $specialPackage['name']?>">
+										<h4 class="text-center"><a href="<?= base_url('home/detailSpecial/'.$specialPackage['slugs']);?>"><?= $specialPackage['name']?></a></h4>
+									</figure>
 								</div>
 							<?php endforeach; ?>
 						</ul>

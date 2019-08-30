@@ -41,13 +41,13 @@
                               <?= 'Rp '. number_format($specialPackage['total'],0,',','.');?>
                             </td>
                             <td>
-                              <a href="<?= site_url('admin/detailSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
+                              <a href="<?= site_url('admin/detailSpecialPackage/'.$specialPackage['slugs']);?>"><i class="btn btn-oldblue fa fa-info"></i></a>
                               <?php if ($specialPackage['active'] == 1): ?>
-                                <a href="<?= site_url('admin/activeSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
+                                <a href="<?= site_url('admin/activeSpecialPackage/'.$specialPackage['slugs']);?>"><i class="btn btn-success fa fa-power-off"></i></a>
                               <?php else: ?>
-                                <a href="<?= site_url('admin/activeSpecialPackage/'.$specialPackage['id']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
+                                <a href="<?= site_url('admin/activeSpecialPackage/'.$specialPackage['slugs']);?>"><i class="btn btn-danger fa fa-power-off"></i></a>
                               <?php endif; ?>
-                              <a href="<?= site_url('admin/deleteSpecialPackage/'.$specialPackage['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
+                              <a href="<?= site_url('admin/deleteSpecialPackage/'.$specialPackage['slugs']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                             </td>
                           </tr>
                           <?php $no++;endforeach; ?>

@@ -22,7 +22,7 @@
               <a href="<?= site_url('admin/sa_size')?>" class="btn btn-oldblue">Back</a>
             </div>
             <div class="col-xs-6 text-right">
-              <a href="<?= site_url('admin/editSize/'.$size['id'])?>" class="btn btn-oldblue">Edit Size</a>
+              <a href="<?= site_url('admin/editSize/'.$size['slugs'])?>" class="btn btn-oldblue">Edit Size</a>
             </div>
           </div>
         </div>

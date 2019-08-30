@@ -64,7 +64,7 @@
                         </div>
                     </div>
                     <div class="mt-20">
-                        <a href="<?= site_url('admin/edit_special/'.$detail_SpclPckg['id']);?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</a>
+                        <a href="<?= site_url('admin/edit_special/'.$detail_SpclPckg['slugs']);?>" class="btn btn-oldblue btn-default" style="float:right;">Edit Product</a>
                         <a href="<?= site_url('admin/special_package');?>"><button class="btn btn-oldblue btn-default">Back</button></a>
                     </div>
                 </div>

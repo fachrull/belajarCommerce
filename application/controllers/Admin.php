@@ -12,16 +12,22 @@ class Admin extends CI_Controller {
         $this->load->model('Madmin', 'madmin');
     }
 
+    // function for list of admin
     public function listAdmin($link = FALSE){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
+          // checking parameter
             if ($link === FALSE) {
+              // if parameter false get all of admin
                 $data['posts'] = $this->madmin->getProducts(NULL, NULL, 'tm_super_admin', FALSE);
 
                 $this->load->view('include/admin/header');
                 $this->load->view('include/admin/left-sidebar');
                 $this->load->view('admin/home_admin', $data);
                 $this->load->view('include/admin/footer');
+
             }else{
+              // get specify detail of admin
                 $data['detail_admin'] = $this->madmin->detail_admin($link);
 
                 $this->load->view('include/admin/header');
@@ -36,13 +42,18 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for reset password (admin)
     public function resetPassword($idUserlogin){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
+            // set default password
             $resetPass = "admin_agm";
+            // hash default password
             $newPassword = array(
                 'password' => password_hash(($resetPass), PASSWORD_DEFAULT),
                 'newer'    => 1
             );
+            // updating default pass for specific admin
             $this->madmin->updateData(array('user_id' => $idUserlogin), 'user_login', $newPassword);
             redirect('admin/listAdmin/'.$idUserlogin);
         } else {
@@ -52,8 +63,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for list of store owners
     public function listStoreOwner(){
+      // checking usertype (super admin or admin or neither)
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2 ) {
+          // get all store owner detail
             $data['posts'] = $this->madmin->joinDetailStore();
 
             $this->load->view('include/admin/header');
@@ -67,8 +81,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for list of brand
     public function sa_brand(){
+      // checking usertype(super admin or not)
         if ($this->session->userdata('uType') == 1) {
+          // get all brand that are not deleted
             $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'deleted' => 0), NULL, 'tm_brands', FALSE);
 
             $this->load->view('include/admin/header');
@@ -84,8 +101,11 @@ class Admin extends CI_Controller {
     }
 
 
+    // function for detail brand
     public function infoBrand($slugsBrand){
+      // checking usertype (super admin or not)
       if ($this->session->userdata('uType') == 1) {
+        // get detail brand
         $data['brand'] = $this->madmin->getProducts(array('slugs' => $slugsBrand), NULL, 'tm_brands', TRUE);
 
         $this->load->view('include/admin/header');
@@ -99,22 +119,28 @@ class Admin extends CI_Controller {
       }
     }
 
+    // function for adding new brand
     public function addBrand(){
+      // checking usertype (store owner or not)
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('items', 'Brand Name', 'required|callback_checkingBrand');
             $this->form_validation->set_rules('desc', 'Brand Description', 'required');
 
             if ($this->form_validation->run() == TRUE) {
+              // set file name of brand logo
                 $file_name = strtolower('brand-logo-'.$this->input->post('items'));
 
+                // rules of logo
                 $config['upload_path'] = './asset/brands/';
                 $config['allowed_types'] = 'jpg|jpeg|png|svg';
                 $config['file_name']  = $file_name;
 
                 $this->load->library('upload', $config);
+                // checking if logo are uploaded or not
                 if (! $this->upload->do_upload('brandPict')) {
                     $this->session->set_flashdata('error', $this->upload->display_errors());
 
@@ -123,8 +149,11 @@ class Admin extends CI_Controller {
                     $this->load->view('admin/addBrands');
                     $this->load->view('include/admin/footer');
                 }else{
+                  // get data logo uploaded
                     $pName = $this->upload->data();
+                    // set slugs
                     $slugs = str_replace(' ', '-', strtolower($this->input->post('items')));
+                    // data brand and input it
                     $items = array(
                         'name'          => $this->input->post('items'),
                         'slugs'         => $slugs,
@@ -148,9 +177,12 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for checking brand name
     public function checkingBrand($brand){
+      // checking brand name is there the same name on db or not
         $has_brand = $this->madmin->getProducts(array('name' => $brand),
             array('nameField' => 'name'), 'tm_brands', TRUE);
+        // set error message if there is tbe same name
         if(isset($has_brand)){
             $this->session->set_flashdata('error', 'Brand has already been created');
             return FALSE;
@@ -159,9 +191,13 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for active or inactive brand
     public function activeBrand($brandSlugs){
+      // checking usertype (super admin or not)
         if($this->session->userdata('uType') == 1){
+          // get status active by its slugs
             $stat = $this->madmin->getProducts(array('slugs' => $brandSlugs), array('statField' => 'status'), 'tm_brands',TRUE);
+            // updating status active or inactive
             if($stat['status'] == 1){
                 $items = array('status' => 0);
                 $this->madmin->updateData(array('slugs' => $brandSlugs), 'tm_brands', $items);
@@ -178,9 +214,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for delete brand
     public function deleteBrand($brandSlugs){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
-//            $this->madmin->deleteData(array('id' => $brand), 'tm_brands');
+            // updating status deleted to be true
             $this->madmin->updateData(array('slugs' => $brandSlugs), 'tm_brands', array('deleted' => 1));
             redirect('admin/sa_brand', 'refresh');
         }else{
@@ -190,15 +228,19 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for edit brand
     public function editBrand($slugsBrand){
+      // checking usertype (super admin or not)
       if ($this->session->userdata('uType') == 1) {
         $this->load->helper('form');
         $this->load->library('form_validation');
 
+        // set rules
         $this->form_validation->set_rules('items', 'Brand Name', 'required|callback_checkingEditBrand');
         $this->form_validation->set_rules('desc', 'Brand Description', 'required');
 
         if ($this->form_validation->run() === FALSE) {
+          // get detail data of brand
             $data['brand'] = $this->madmin->getProducts(array('slugs' => $slugsBrand), NULL, 'tm_brands', TRUE);
 
             $this->load->view('include/admin/header');
@@ -206,7 +248,9 @@ class Admin extends CI_Controller {
             $this->load->view('admin/editBrand', $data);
             $this->load->view('include/admin/footer');
           }else {
+            // checking is there file to upload
             if ($_FILES['brandPict']['size'] != 0) {
+              // set file name and rules of uploaded file
                 $file_name = strtolower('brand-logo-'.$this->input->post('items'));
                 $config['upload_path'] = './asset/brands/';
                 $config['allowed_types'] = 'jpg|jpeg|png|svg';
@@ -214,7 +258,9 @@ class Admin extends CI_Controller {
                 $config['overwrite']        = true;
 
                 $this->load->library('upload', $config);
+                // checking uploaded file
                 if (! $this->upload->do_upload('brandPict')) {
+                  // set message error if there some issues
                     $this->session->set_flashdata('error', $this->upload->display_errors());
                     $data['brand'] = $this->madmin->getProducts(array('id' => $idBrand), NULL, 'tm_brands', TRUE);
                     $this->load->view('include/admin/header');
@@ -222,8 +268,11 @@ class Admin extends CI_Controller {
                     $this->load->view('admin/editBrand', $data);
                     $this->load->view('include/admin/footer');
                 }else{
+                  // get file upload data
                     $pName = $this->upload->data();
+                    // set slugs if there is some change on brand name
                     $slugsEditBrand = str_replace(' ', '-', strtolower($this->input->post('items')));
+                    // update brand
                     $items = array(
                         'name'          => $this->input->post('items'),
                         'slugs'         => $slugsEditBrand,
@@ -235,7 +284,9 @@ class Admin extends CI_Controller {
                     redirect('admin/sa_brand','refresh');
                 }
             } else {
+              // set slugs if there is some change on brand name
                 $slugsEditBrand = str_replace(' ', '-', strtolower($this->input->post('items')));
+                // update brand
                 $items = array(
                     'name'          => $this->input->post('items'),
                     'slugs'         => $slugsEditBrand,
@@ -253,8 +304,11 @@ class Admin extends CI_Controller {
       }
     }
 
+    // function callback to check brand name
     public function checkingEditBrand($editBrandName){
+      // get id brand
       $idBrand = $this->input->post('idBrand');
+      // get name (is there the same name with new edit name)
       $hasEditBrandName = $this->madmin->getProducts(array('id !=' => $idBrand, 'name' => $editBrandName), array('nameF' => 'name'), 'tm_brands', TRUE);
       if (isset($hasEditBrandName)) {
         $this->session->set_flashdata('error', 'Brand has already been created');
@@ -296,8 +350,11 @@ class Admin extends CI_Controller {
     //     }
     //   }
 
+    // function for list of categories
     public function sa_cat(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
+          // get list of categories
             $data['categories'] = $this->madmin->getProducts(array('id !=' => 0, 'deleted' => 0), NULL, 'tm_category', FALSE);
 
             $this->load->view('include/admin/header');
@@ -311,11 +368,14 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for add new category
     public function addCat(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('items', 'Category', 'required|callback_checkingCat');
             $this->form_validation->set_rules('desc', 'Description', 'required');
 
@@ -325,7 +385,9 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/addCats');
                 $this->load->view('include/admin/footer');
             }else{
+              // set slugs for new category
                 $slugsCat = str_replace(' ','-', strtolower($this->input->post('items')));
+                // input new category
                 $items = array(
                     'name'        => $this->input->post('items'),
                     'slugs'       => $slugsCat,
@@ -338,10 +400,13 @@ class Admin extends CI_Controller {
         }
     }
 
+    // callback function for checking name of category
     public function checkingCat($category){
+      // check is there the same name category on DB
         $has_cat = $this->madmin->getProducts(array('name' => $category),
             array('nameField' => 'name'), 'tm_category', TRUE);
         if(isset($has_cat)){
+          // set error message
             $this->session->set_flashdata('error', 'Category has already been created');
             return FALSE;
         }else{
@@ -349,9 +414,13 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for active or inactive category
     public function activeCat($cat){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
+          // get status of category
             $stat = $this->madmin->getProducts(array('slugs' => $cat), array('statField' => 'status'), 'tm_category',TRUE);
+            // change status active or in active
             if($stat['status'] == 1){
                 $items = array('status' => 0);
                 $this->madmin->updateData(array('slugs' => $cat), 'tm_category', $items);
@@ -368,9 +437,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for delete category
     public function deleteCat($cat){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
-//            $this->madmin->deleteData(array('id' => $cat), 'tm_category');
+          // update status delete to be true
             $this->madmin->updateData(array('slugs' => $cat), 'tm_category', array('deleted' => 1));
             redirect('admin/sa_cat', 'refresh');
         } else {
@@ -380,8 +451,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for detail of category
     public function infoCat($slugsCat){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1 ){
+          // get detail data of category
             $data['cat'] = $this->madmin->getProducts(array('slugs' => $slugsCat), NULL, 'tm_category', TRUE);
 
             $this->load->view('include/admin/header');
@@ -395,15 +469,19 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for edit category
     public function editCat($slugsCat){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
           $this->load->helper('form');
           $this->load->library('form_validation');
 
+          // set rules
           $this->form_validation->set_rules('items', 'Category Name', 'required|callback_checkingEditCatName');
           $this->form_validation->set_rules('desc', 'Category Description', 'required');
 
           if ($this->form_validation->run() === FALSE) {
+            // get detail data of category
             $data['cat'] = $this->madmin->getProducts(array('slugs' => $slugsCat), NULL, 'tm_category', TRUE);
 
             $this->load->view('include/admin/header');
@@ -411,7 +489,9 @@ class Admin extends CI_Controller {
             $this->load->view('admin/editCat', $data);
             $this->load->view('include/admin/footer');
           }else {
+            // set new slugs for category
             $catSlug = str_replace(' ', '-', strtolower($this->input->post('items')));
+            // updating category
               $items = array(
                   'name'          => $this->input->post('items'),
                   'slugs'         => $catSlug,
@@ -429,11 +509,16 @@ class Admin extends CI_Controller {
         }
       }
 
+    // function callback for checking name of edit category
     public function checkingEditCatName($editCatName){
+      // get id of category
       $idCat = $this->input->post('idCat');
+      // checking category name is there the same on DB
       $hasEditCatName = $this->madmin->getProducts(array('id !=' => $idCat, 'name' => $editCatName),
        array('nameF' => 'name'), 'tm_category', TRUE);
+
       if (isset($hasEditCatName)) {
+        // set error message
         $this->session->set_flashdata('error', 'Category has already been created');
         return FALSE;
       }else{
@@ -441,17 +526,23 @@ class Admin extends CI_Controller {
       }
     }
 
+    // function for list of all
     public function allProd(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules for searching specific brand or category
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             $this->form_validation->set_rules('cat', 'Category', 'required');
 
             if ($this->form_validation->run() == FALSE){
+              // get list of all products
               $data['products'] = $this->madmin->listProduct();
+              // get list of all brand that are not deleted and active
               $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
+              // get list of all category that are not deleted and active
               $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), NULL, 'tm_category', FALSE);
 
               $this->load->view('include/admin/header');
@@ -459,8 +550,11 @@ class Admin extends CI_Controller {
               $this->load->view('admin/allProd', $data);
               $this->load->view('include/admin/footer');
             }else{
+                // get brand id
                 $idBrand = $this->input->post('brand');
+                // get category id
                 $idCat = $this->input->post('cat');
+                // get products by it brand or category or both
                 if ($idBrand != 0 && $idCat != 0) {
                     $data['products'] = $this->madmin->listProduct(array('a.brand_id' => $idBrand,
                         'a.cat_id' => $idCat));
@@ -471,7 +565,9 @@ class Admin extends CI_Controller {
                 }elseif ($idBrand == 0 && $idCat == 0) {
                     $data['products'] = $this->madmin->listProduct();
                 }
+                // get list of all brand that are not deleted and active
                 $data['brands'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_brands', FALSE);
+                // get list of all category that are not deleted and active
                 $data['cats'] = $this->madmin->getProducts(array('status' => 1), NULL, 'tm_category', FALSE);
 
                 $this->load->view('include/admin/header');
@@ -486,11 +582,14 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for add product
     public function addProd(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             // $this->form_validation->set_rules('cat', 'Category', 'required');
             $this->form_validation->set_rules('pName', 'Product Name', 'required|callback_checkingProdName');
@@ -501,12 +600,16 @@ class Admin extends CI_Controller {
 
 
             if ($this->form_validation->run() === TRUE) {
+              // get brand id
                 $brand_id = $this->input->post('brand');
+                // get category id
                 $cat_id = $this->input->post('cat');
+                // set max position product
                 $max_position_prod = $this->madmin->getProducts(array('brand_id' => $brand_id),
                     array('pos' => 'MAX(position) as position'), 'tm_product', TRUE);
-
                 $max_position_prod['position'] = $max_position_prod['position'] + 1;
+
+                // set slugs
                 $slugsProd = str_replace(' ', '-', strtolower($this->input->post('pName')));
                 $slugsProd = str_replace('%', '', $slugsProd);
 
@@ -525,26 +628,34 @@ class Admin extends CI_Controller {
                 // input data above to database
                 $this->madmin->inputData('tm_product', $items);
 
+                // get product id
                 $idProd = $this->madmin->getProducts($items, array('idField' => 'id'), 'tm_product', TRUE);
                 $cat_id = $this->input->post('cat');
 
+                // checking product category is it bed linen or bedding accessories
                 if ($cat_id == 2) {
+                  // set position on bed linen
                     $max = $this->madmin->maxPosition_BedLinen();
                     $max['position'] = $max['position'] + 1;
                     print_r($max);
 
+                    // input product to bed linen list
                     $data_BedLinen = array(
                         'prod_id'   =>  $idProd['id'],
                         'position'  =>  $max['position']
                     );
 
                     $this->madmin->inputData('tr_product_bed_linen', $data_BedLinen);
+
+
                 }else if ($cat_id > 2) {
                     echo $cat_id;
+                    // set position of bedding accessories
                     $max = $this->madmin->maxPosition_BeddingAcc();
                     $max['position'] = $max['position'] + 1;
                     print_r($max);
 
+                    // input product to bedding accessories list
                     $data_Bedding = array(
                         'prod_id'   =>  $idProd['id'],
                         'position'  =>  $max['position']
@@ -645,12 +756,16 @@ class Admin extends CI_Controller {
                 redirect('admin/allProd');
 
             }else{
+              // get brand with active status
                 $data['brands'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), array('idField' => 'id',
           'nameField' => 'name'), 'tm_brands', FALSE);
-        $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), array('idField' => 'id',
+              // get category with active status
+                $data['cats'] = $this->madmin->getProducts(array('id !=' => 0, 'status' => 1), array('idField' => 'id',
           'nameField' => 'name'), 'tm_category', FALSE);
+              // get spec with active status
                 $data['specs'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
                     'nameField' => 'name'), 'tm_spec', FALSE);
+              // get size with active status
                 $data['sizes'] = $this->madmin->getProducts(array('status' => 1), array('idField' => 'id',
                     'nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE);
 
@@ -667,9 +782,12 @@ class Admin extends CI_Controller {
 
     }
 
+    // callback function for checking  product name
     public function checkingProdName($prodName){
+      // checking product name is there the same as in DB
       $hasProdName = $this->madmin->getProducts(array('name' => $prodName), array('nameF' => 'name'), 'tm_product', TRUE);
       if (isset($hasProdName)) {
+        // set message error
         $this->session->set_flashdata('error', 'Product has already been created');
         return FALSE;
       }else {
@@ -677,11 +795,14 @@ class Admin extends CI_Controller {
       }
     }
 
+    // function for edit product
     public function editProd($productSlugs){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('brand', 'Brand', 'required');
             $this->form_validation->set_rules('cat', 'Category', 'required');
             $this->form_validation->set_rules('pName', 'Product Name', 'required|callback_checkingEditProdName');
@@ -692,7 +813,9 @@ class Admin extends CI_Controller {
 
 
             if ($this->form_validation->run() === TRUE) {
+              // get product id
                 $productId = $this->input->post('idProd');
+                // get brand id
                 $brand = $this->input->post('brand');
 
                 // data for input tm_product
@@ -787,10 +910,13 @@ class Admin extends CI_Controller {
                     }
                 }
 
+                // update position product
                 $this->madmin->updateData(array('id' => $productId), 'tm_product', array('position' => $position));
 
+                // get brand name
                 $bName = $this->madmin->getProducts(array('id' => $this->input->post('brand')),
                     array('nameField' => 'name'), 'tm_brands', TRUE);
+                // get category name
                 $cName = $this->madmin->getProducts(array('id' => $this->input->post('cat')),
                     array('nameField' => 'name'), 'tm_category', TRUE);
                 $config['upload_path'] = './asset/upload/';
@@ -800,6 +926,7 @@ class Admin extends CI_Controller {
                 $images = $this->madmin->getProducts(array('id_prod' => $productId), NULL, 'tr_product_image', TRUE);
                 $imageData = array('id_prod' => $productId);
 
+                // upload 3 images of product
                 for ($i = 0; $i < 3; $i++) {
                     $file_name = strtolower($bName['name'].'-'.$cName['name'].'-'.$this->input->post('pName').'-'.uniqid());
                     $file_name = str_replace("%", "", $file_name);
@@ -846,6 +973,7 @@ class Admin extends CI_Controller {
                 redirect('admin/allProd');
 
             }else{
+              // get detail data of product
                 $prod = $this->madmin->getProducts(array('slugs' => $productSlugs), array('idF' => 'id'), 'tm_product', TRUE);
                 $productId = $prod['id'];
                 $data['products'] = $this->madmin->getDetailProduct($productId);
@@ -877,10 +1005,14 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for checking product name
     public function checkingEditProdName($editProdName){
+      // get product id
       $idProd = $this->input->post('idProd');
+      // checking name of edit product name is there the same on DB
       $hasEditProd = $this->madmin->getProducts(array('id !=' => $idProd, 'name' => $editProdName), array('nameF' => 'name'), 'tm_product', TRUE);
       if(isset($hasEditProd)){
+        // set error message
         $this->session->set_flashdata('error', 'Product Name has already been created');
         return FALSE;
       }else {
@@ -911,36 +1043,46 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function detail product
     public function detailProd($slugsProd){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
             $specs = array();
             $prices = array();
             $sizes = array();
+            // data detail product
             $data['product'] = $this->madmin->getProducts(array('slugs' => $slugsProd), NULL, 'tm_product', TRUE);
             $prod = $this->madmin->getProducts(array('slugs' => $slugsProd), array('idF' => 'id'), 'tm_product', TRUE);
             $idProd = $prod['id'];
+            // data detail brand of product
             $data['brand'] = $this->madmin->getProducts(array('id' => $data['product']['brand_id']),
                 array('nameField' => 'name'), 'tm_brands', TRUE);
+            // data detail category of product
             $data['category'] = $this->madmin->getProducts(array('id' => $data['product']['cat_id']),
                 array('nameField' => 'name'), 'tm_category', TRUE);
+            // get id spec of product
             $idSpec = $this->madmin->getProducts(array('prod_id' => $idProd),
                 array('idField' => 'spec_id'), 'tr_product_spec', FALSE);
+            // get id size of product
             $idSize = $this->madmin->getProducts(array('prod_id' => $idProd),
                 array('idField' => 'size_id', 'priceField' => 'price'), 'tr_product_size', FALSE);
-
+            // data detail of image product
             $data['image'] = $this->madmin->getProductImage($idProd);
 
+            // get detail spec of product
             for ($i=0; $i < count($idSpec) ; $i++) {
                 array_push($specs, $this->madmin->getProducts(array('id' => $idSpec[$i]['spec_id']),
                     array('nameField' => 'name'), 'tm_spec', TRUE));
             }
             $data['specs'] = $specs;
 
+            // get detail size of product
             for ($i=0; $i < count($idSize); $i++) {
                 array_push($prices, $idSize[$i]['price']);
             }
             $data['prices'] = $prices;
 
+            // get detail size of product
             for ($i=0; $i < count($idSize); $i++) {
                 array_push($sizes, $this->madmin->getProducts(array('id' => $idSize[$i]['size_id']),
                     array('nameField' => 'name', 'sizeField' => 'size'), 'tm_size', FALSE));
@@ -959,11 +1101,13 @@ class Admin extends CI_Controller {
 
     }
 
+    // function for set status delete of specific product
     public function deleteProd($slugsProd){
         if ($this->session->userdata('uType') == 1) {
 //            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_spec');
 //            $this->madmin->deleteData(array('prod_id' => $idProd), 'tr_product_size');
 //            $this->madmin->deleteData(array('id' => $idProd), 'tm_product');
+            // update delete status product to be true
             $this->madmin->updateData(array('slugs' => $slugsProd), 'tm_product', array('deleted' => 1));
             redirect('admin/allProd');
         } else {
@@ -973,8 +1117,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for list of agmpedias
     public function sa_agmpedia(){
+      // checking usertype (super admin or admin or neither)
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+          // get data pedias
             $data['pedias'] = $this->madmin->getProducts(array('deleted' => 0), NULL, 'tm_agmpedia', FALSE);
 
             $this->load->view('include/admin/header');
@@ -988,22 +1135,28 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for add new pedia
     public function addPedia(){
+      // checking usertype (super admin or admin or neither)
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('title', 'Title', 'required|callback_checkingPediaTitle');
             $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]|');
             $this->form_validation->set_rules('content', 'News', 'required');
 
             if ($this->form_validation->run() === TRUE) {
+              // set rules of upload images
                 $config['upload_path'] = './asset/upload/pedia/';
                 $config['allowed_types'] = 'jpg|jpeg|png';
                 $config['max_size'] = 2048;
 
                 $this->load->library('upload', $config);
+                // checking images upload
                 if ( empty($this->upload->do_upload('photo')) || empty($this->upload->do_upload('thumbnail')) ) {
+                  // set message error
                     $this->session->set_flashdata('error', $this->upload->display_errors());
 
                     $this->load->view('include/admin/header');
@@ -1011,12 +1164,15 @@ class Admin extends CI_Controller {
                     $this->load->view('admin/addPedia');
                     $this->load->view('include/admin/footer');
                 }else{
+                    // get data uploaded (images)
                     $this->upload->do_upload('photo');
                     $photos = $this->upload->data();
                     $this->upload->do_upload('thumbnail');
                     $thumbnails = $this->upload->data();
+                    // set slugs pedia
                     $slugs_pedia = str_replace(' ', '-', strtolower($this->input->post('title')));
 
+                    // input new pedia
                     $items = array(
                         'title'       => $this->input->post('title'),
                         'slugs'       => $slugs_pedia,
@@ -1044,9 +1200,12 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for checking pedia title
     public function checkingPediaTitle($titlePedia){
+      // checking pedia title is there the same as in DB
       $hasTitlePedia = $this->madmin->getProducts(array('title' => $titlePedia), array('titleF' => 'title'), 'tm_agmpedia', TRUE);
       if (isset($hasTitlePedia)) {
+        // set message error
         $this->session->set_flashdata('error', 'Title name has already been created');
         return FALSE;
       }else{
@@ -1054,8 +1213,11 @@ class Admin extends CI_Controller {
       }
     }
 
+    // function for detail pedia (view)
     public function detailPedia($articleSlugs) {
+      // checking usertype (super admin or admin or neither)
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+          // data of detail pedia
             $data['article'] = $this->madmin->getProducts(array('slugs' => $articleSlugs), NULL, 'tm_agmpedia', TRUE);
 
             $this->load->view('include/admin/header');
@@ -1069,10 +1231,14 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for active or inactive pedia
     public function activePedia($slugsPedia){
+      // checking usertype (super admin or admin or neither)
       if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+        // get pedia status
         $pedia = $this->madmin->getProducts(array('slugs' => $slugsPedia), array('stats' => 'status'),
           'tm_agmpedia', TRUE);
+        // set active or inactive status pedia
         if ($pedia['status'] == 1) {
           $this->madmin->updateData(array('slugs' => $slugsPedia),'tm_agmpedia',
             array('status' => 0));
@@ -1088,7 +1254,9 @@ class Admin extends CI_Controller {
       }
     }
 
+    // function for set delete status pedia
     public function deletePedia($slugsPedia){
+      // checking usertype (super admin or admin or neither)
       if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
 //        $file = $this->madmin->getProducts(array('id' => $idPedia), array('thumb' => 'thumbnail',
 //          'photos' => 'photo'), 'tm_agmpedia', TRUE);
@@ -1098,7 +1266,9 @@ class Admin extends CI_Controller {
 //        unlink($file_path_photo);
 //        print_r($file_path);
 //        $this->madmin->deleteData(array('id' => $idPedia), 'tm_agmpedia');
-          $this->madmin->updateData(array('slugs' => $slugsPedia), 'tm_agmpedia', array('deleted' => 1));
+
+        // update status delete to be true
+        $this->madmin->updateData(array('slugs' => $slugsPedia), 'tm_agmpedia', array('deleted' => 1));
         redirect('admin/sa_agmpedia');
       }else {
         $this->load->view('include/header2');
@@ -1107,17 +1277,21 @@ class Admin extends CI_Controller {
       }
     }
 
+    // function for edit pedia
     public function editPedia($slugsPedia) {
+      // data detail pedia
         $data['article'] = $this->madmin->getProducts(array('slugs' => $slugsPedia), NULL,'tm_agmpedia', TRUE);
         global $photos;
         global $thumbnails;
         global $thumbnailUploadStatus;
         global $photoUploadStatus;
 
+        // checking usertype (super admin or admin or neither)
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('title', 'Title', 'required|callback_checkingEditTitlePedia');
             $this->form_validation->set_rules('sContent', 'Sub news', 'required|max_length[125]');
             $this->form_validation->set_rules('content', 'News', 'required');
@@ -1129,7 +1303,9 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/editPedia', $data);
                 $this->load->view('include/admin/footer');
             } else {
+              // checking is there some file to upload (thumbnail)
                 if ($_FILES['thumbnail']['error'] == 0) {
+                  // set file name
                     $file_name = strtolower('thumbnail-image-'.uniqid());
 
                     $config['upload_path'] = './asset/upload/pedia/';
@@ -1138,6 +1314,7 @@ class Admin extends CI_Controller {
                     $config['file_name']  = $file_name;
                     $this->load->library('upload', $config);
                     if (! $this->upload->do_upload('thumbnail')) {
+                      // set error message
                         $this->session->set_flashdata('error', $this->upload->display_errors());
 
                         $this->load->view('include/admin/header');
@@ -1145,6 +1322,7 @@ class Admin extends CI_Controller {
                         $this->load->view('admin/editPedia');
                         $this->load->view('include/admin/footer');
                     } else {
+                      // get file upload (thumbnail)
                         $thumbnailUploadStatus = 1;
                         $thumbnails = $this->upload->data();
                     }
@@ -1152,7 +1330,9 @@ class Admin extends CI_Controller {
 
                 }
 
+                // checking is there some file to upload (main photo of pedia)
                 if ($_FILES['photo']['error'] == 0) {
+                  // set file name
                     $file_name = strtolower('photo-image-'.uniqid());
 
                     $config['upload_path'] = './asset/upload/pedia/';
@@ -1161,6 +1341,7 @@ class Admin extends CI_Controller {
                     $config['file_name']  = $file_name;
                     $this->load->library('upload', $config);
                     if (! $this->upload->do_upload('photo')) {
+                      // set message error
                         $this->session->set_flashdata('error', $this->upload->display_errors());
 
                         $this->load->view('include/admin/header');
@@ -1168,14 +1349,19 @@ class Admin extends CI_Controller {
                         $this->load->view('admin/editPedia');
                         $this->load->view('include/admin/footer');
                     } else {
+                      // get upload file (main photo of pedia)
                         $photoUploadStatus = 1;
                         $photos = $this->upload->data();
                     }
                 }
 
+                // updating if there some image to upload
                 if ($photoUploadStatus === 1 && $thumbnailUploadStatus === 1) {
+                  // get pedia name
                   $idArticle = $this->input->post('idArticle');
+                  // set slugs for pedia
                   $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
+                  // update pedia
                     $items = array(
                         'title' => $this->input->post('title'),
                         'slugs' => $editSlugs,
@@ -1189,9 +1375,13 @@ class Admin extends CI_Controller {
                     $this->madmin->updateData(array('id' => $idArticle), 'tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia', 'refresh');
 
+                // checking if only main photos update
                 } else if ($photoUploadStatus === 1) {
+                    // get id pedia
                     $idArticle = $this->input->post('idArticle');
+                    // set slugs
                     $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
+                    // update pedia
                     $items = array(
                         'title' => $this->input->post('title'),
                         'slugs' => $editSlugs,
@@ -1203,9 +1393,14 @@ class Admin extends CI_Controller {
                     );
                     $this->madmin->updateData(array('id' => $idArticle), 'tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia', 'refresh');
+
+                // checking if only thumbnail photo update
                 } else if ($thumbnailUploadStatus === 1) {
+                  // get id pedia
                   $idArticle = $this->input->post('idArticle');
+                  // set slugs
                   $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
+                  // update pedia
                     $items = array(
                         'title' => $this->input->post('title'),
                         'slugs' => $editSlugs,
@@ -1217,9 +1412,14 @@ class Admin extends CI_Controller {
                     );
                     $this->madmin->updateData(array('id' => $idArticle), 'tm_agmpedia', $items);
                     redirect('admin/sa_agmpedia', 'refresh');
+
+                // checking if no photos update
                 } else {
+                  // get id pedia
                   $idArticle = $this->input->post('idArticle');
+                  // set slugs
                   $editSlugs = str_replace(' ', '-', strtolower($this->input->post('title')));
+                  // update pedia
                     $items = array(
                         'title' => $this->input->post('title'),
                         'slugs' => $editSlugs,
@@ -1240,10 +1440,14 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for edit title pedia
     public function checkingEditTitlePedia($editTitlePedia){
+      // get id pedia
       $idArticle = $this->input->post('idArticle');
+      // checking pedia title is there the same as in DB
       $hasEditTitlePedia = $this->madmin->getProducts(array('id !=' => $idArticle, 'title' => $editTitlePedia), array('titleF' => 'title'), 'tm_agmpedia', TRUE);
       if (isset($hasEditTitlePedia)) {
+        // set error message
         $this->session->set_flashdata('error', 'Title name has already been created');
         return FALSE;
       }else {
@@ -1256,16 +1460,21 @@ class Admin extends CI_Controller {
         echo json_encode($result);
     }
 
+    // function for add product to store
     public function storeProd($idSO){
+      // checking usertype (super admin or admin or neither)
         if ($this->session->userdata('uType') == 2 || $this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('product', 'Product', 'required|callback_checkingSProd');
 
             if ($this->form_validation->run() === FALSE) {
+              // get id store
                 $idStore = array('idStore' => $idSO);
                 $data['storeId'] = $idStore;
+                // get products which store have
                 $data['products'] = $this->madmin->product_list();
 
                 $this->load->view('include/admin/header');
@@ -1278,6 +1487,7 @@ class Admin extends CI_Controller {
                 $data_SizePrice = array(
                     'size' => $this->input->post('size[]'),
                 );
+
                 for ($i=0; $i < $count_SizePrice; $i++) {
                     $prodSizePrice = array(
                         'id_store'           => $idSO,
@@ -1298,25 +1508,31 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for add special package to store
     public function addStore_SpecialPackage($idStoreOwner){
+      // checking id store owner
       if ($idStoreOwner == NULL) {
         $this->load->view('include/header2');
         $this->load->view('un-authorise');
         $this->load->view('include/footer');
       }else{
+        // checking if id is in DB
         $hasStoreOwner = $this->madmin->getProducts(array('id' => $idStoreOwner), array('idF' => 'id'), 'tm_store_owner', TRUE);
         if (!isset($hasStoreOwner)) {
           $this->load->view('include/header2');
           $this->load->view('un-authorise');
           $this->load->view('include/footer');
         }else{
+          // checking usertype (super admin or admin or neither)
           if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
               $this->load->helper('form');
               $this->load->library('form_validation');
 
+              // set rules
               $this->form_validation->set_rules('specialPackage', 'Special Package', 'required|callback_checkingSpecialPackage');
 
               if ($this->form_validation->run() === FALSE) {
+                // get data of special package
                 $data['id_store'] = $idStoreOwner;
                 $data['special_packages'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_special_package', FALSE);
 
@@ -1356,8 +1572,11 @@ class Admin extends CI_Controller {
       }
   }
 
+  // function for delete product on store
   public function deleteStoreProd($idStore ,$idProd_store){
+    // checking usertype (super admin or admin or neither)
     if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
+      // delete product in store owner
       $this->madmin->deleteData(array('id' => $idProd_store, 'id_store' => $idStore), 'tr_product');
       redirect('admin/stores/'.$idStore);
     }else{
@@ -1367,10 +1586,13 @@ class Admin extends CI_Controller {
     }
   }
 
+  // function callback for add special package to store
     public function checkingSpecialPackage($idSpecialPckg){
+      // checking id special package has been already added to store or not
         $alreadyAssgn = $this->madmin->getProducts(array('id_store_owner' => $this->input->post('idStore'), 'id_special_package' => $idSpecialPckg),
             NULL, 'tr_storeowner_special_package', TRUE);
         if (isset($alreadyAssgn)) {
+          // set error message
             $this->session->set_flashdata('error', 'Special package has already been added to store');
             return FALSE;
         }else {
@@ -1378,7 +1600,9 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for get product size
     public function getIdProduct($idProd){
+      // get product size and its price and change to JSON
         $sizes = $this->madmin->joinSizeProduct($idProd);
         if($sizes) {
             print_r(json_encode($sizes));
@@ -1387,10 +1611,13 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for add product to store
     public function checkingSProd($prod){
+      // checking product has been added or not
         $alreadyAssgn = $this->madmin->getProducts(array('id_product' => $prod, 'id_store' => $this->input->post('idStore')),
             NULL, 'tr_product', TRUE);
         if (isset($alreadyAssgn)) {
+          // set error message
             $this->session->set_flashdata('error', 'Product has already been added to store');
             return FALSE;
         }else{
@@ -1398,6 +1625,10 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for add quantity product
+    /*
+    * This function was not used anymore
+    */
     public function addQuan(){
         if ($this->session->userdata('uType') == 2) {
             $this->load->helper('form');
@@ -1446,8 +1677,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for list of slider
     public function sa_slider(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
+          // get slides data
             $data['slides'] = $this->madmin->getProducts(array('cover' => 1), NULL, 'tm_cover', FALSE);
 
             $this->load->view('include/admin/header');
@@ -1461,23 +1695,29 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for add new slider
     public function addSlider(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
-
+            // set rules of file upload
             $config['upload_path'] = './asset/upload/';
             $config['allowed_types'] = 'jpg|jpeg|png';
 
             $this->load->library('upload', $config);
 
             if (! $this->upload->do_upload('sliderPict')) {
+              // set error message
                 $this->session->set_flashdata('error', $this->upload->display_errors());
                 $this->load->view('include/admin/header');
                 $this->load->view('include/admin/left-sidebar');
                 $this->load->view('admin/addSlider');
                 $this->load->view('include/admin/footer');
             }else{
+              // get data of file upload
                 $pName = $this->upload->data();
+                // set identifier of slide
                 $coverIdentifier = 1;
+                // input slider
                 $items = array(
                     'slide'       => $pName['orig_name'],
                     'created_at'  => date('Ymd'),
@@ -1494,12 +1734,17 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for delete slider
     public function deleteSlider($idSlider){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
+          // get slide file name
             $file = $this->madmin->getProducts(array('id' => $idSlider), array('slideField' => 'slide'), 'tm_cover', TRUE);
+            // delete slide image from directory
             $file_path = 'asset/upload/best-seller-cover/'.$file['slide'];
             unlink($file_path);
             print_r($file_path);
+            // delete slider
             $this->madmin->deleteData(array('id' => $idSlider), 'tm_cover');
             redirect('admin/sa_slider');
         }else{
@@ -1509,8 +1754,11 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for list of specs
     public function sa_spec(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
+          // get data of all sspecs
             $data['specs'] = $this->madmin->getProducts(array('deleted' => 0), NULL, 'tm_spec', FALSE);
 
             $this->load->view('include/admin/header');
@@ -1524,11 +1772,14 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function for add spec
     public function addSpec(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('name', 'Spec name', 'required|callback_checkingSpec');
 
             if ($this->form_validation->run() === TRUE) {
@@ -1549,8 +1800,12 @@ class Admin extends CI_Controller {
                 // }else{
                 //   $pName = $this->upload->data();
 
+                // set slugs
+                $slugs = str_replace(' ', '-', $this->input->post('name'));
+                // input new spec
                 $items = array(
                     'name'        => $this->input->post('name'),
+                    'slugs'       => $slugs,
                     // 'image'       => $pName['orig_name'],
                     'created_at'  => date('Ymd')
                 );
@@ -1570,10 +1825,13 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for add spec
     public function checkingSpec($spec){
+      // checking is spec name has already been created or not
         $specName = $this->madmin->getProducts(array('name' => $spec), array('nameField' => 'name'), 'tm_spec', TRUE);
 
         if(isset($specName)){
+          // set error message
             $this->session->set_flashdata('error', 'Spec has already been created');
             return FALSE;
         }else{
@@ -1581,10 +1839,14 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function deleteSpec($specId){
+    // function delete spec
+    public function deleteSpec($specSlugs){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
 //            $this->madmin->deleteData(array('id' => $specId), 'tm_spec');
-            $this->madmin->updateData(array('id'=>$specId), 'tm_spec', array('deleted' => 1));
+
+            // update delete status spec to be true
+            $this->madmin->updateData(array('slugs'=>$specSlugs), 'tm_spec', array('deleted' => 1));
             redirect('admin/sa_spec');
         }else{
             $this->load->view('include/header2');
@@ -1593,9 +1855,12 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function infoSpec($idSpec){
+    // function for detail spec
+    public function infoSpec($slugsSpec){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
-          $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec), NULL, 'tm_spec', TRUE);
+          // get detail data of specific spec
+          $data['spec'] = $this->madmin->getProducts(array('slugs' => $slugsSpec), NULL, 'tm_spec', TRUE);
 
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
@@ -1608,22 +1873,27 @@ class Admin extends CI_Controller {
         }
       }
 
-    public function editSpec($idSpec){
+
+    // function for edit spec
+    public function editSpec($slugsSpec){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
           $this->load->helper('form');
           $this->load->library('form_validation');
 
-          $this->form_validation->set_rules('items', 'Spec Name', 'required');
+          // set rules
+          $this->form_validation->set_rules('items', 'Spec Name', 'required|callback_checkingEditSpec');
 
           if ($this->form_validation->run() === FALSE) {
-            $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec), NULL, 'tm_spec', TRUE);
+            // get detail data of specific spec
+            $data['spec'] = $this->madmin->getProducts(array('slugs' => $slugsSpec), NULL, 'tm_spec', TRUE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
             $this->load->view('admin/editSpec', $data);
             $this->load->view('include/admin/footer');
           }else {
-
+            // checking is there file to upload
               if ($_FILES['specPict']['size'] != 0) {
                   $config['upload_path'] = './asset/spec/';
                   $config['allowed_types'] = 'jpg|jpeg|png|svg';
@@ -1631,28 +1901,40 @@ class Admin extends CI_Controller {
 
                   $this->load->library('upload', $config);
                   if (! $this->upload->do_upload('specPict')) {
+                    // set error message
                       $this->session->set_flashdata('error', $this->upload->display_errors());
-                      $data['spec'] = $this->madmin->getProducts(array('id' => $idSpec), NULL, 'tm_spec', TRUE);
+                      $data['spec'] = $this->madmin->getProducts(array('slugs' => $slugsSpec), NULL, 'tm_spec', TRUE);
                       $this->load->view('include/admin/header');
                       $this->load->view('include/admin/left-sidebar');
                       $this->load->view('admin/editSpec', $data);
                       $this->load->view('include/admin/footer');
                   }else{
+                    // get detail file upload
                       $pName = $this->upload->data();
+                      // set new slugs
+                      $editSlugsSpec = str_replace(' ', '-', strtolower($this->input->post('items')));
+                      // update new spec
                       $items = array(
                           'name'          => $this->input->post('items'),
+                          'slugs'         => $editSlugsSpec,
                           'icon'          => $pName['orig_name'],
                           'status' => 1,
                       );
-                      $this->madmin->updateData(array('id' => $idSpec), 'tm_spec', $items);
+                      $this->madmin->updateData(array('slugs' => $slugsSpec), 'tm_spec', $items);
                       redirect('admin/sa_spec','refresh');
                   }
+
+              // checking if there isn't file to upload
               } else {
+                // set new slugs
+                  $editSlugsSpec = str_replace(' ', '-', strtolower($this->input->post('items')));
+                  // update new spec
                   $items = array(
-                      'name'          => $this->input->post('items'),
+                      'name'   => $this->input->post('items'),
+                      'slugs'  => $editSlugsSpec,
                       'status' => 1,
                   );
-                  $this->madmin->updateData(array('id' => $idSpec), 'tm_spec', $items);
+                  $this->madmin->updateData(array('slugs' => $slugsSpec), 'tm_spec', $items);
                   redirect('admin/sa_spec','refresh');
               }
 
@@ -1662,11 +1944,28 @@ class Admin extends CI_Controller {
           $this->load->view('un-authorise');
           $this->load->view('include/footer');
         }
-
       }
 
+    // function callback for edit spec
+    public function checkingEditSpec($editSpecName){
+      // get id spec
+      $idSpec = $this->input->post('idSpec');
+      // checking is there the same name spec in DB
+      $hasSpecName = $this->madmin->getProducts(array('id !=' => $idSpec, 'name' => $editSpecName), array('nameF' => 'name'), 'tm_spec', TRUE);
+      if (isset($hasSpecName)) {
+        // set error message
+        $this->session->set_flashdata('error', 'Spec name has already been created');
+        return FALSE;
+      }else{
+        return TRUE;
+      }
+    }
+
+    // function for list of size
     public function sa_size(){
+      // checking usertype (superadmin or not)
         if ($this->session->userdata('uType') == 1) {
+          // get data of all sizes
             $data['sizes'] = $this->madmin->getProducts(array('deleted' => 0), NULL,'tm_size', FALSE);
 
             $this->load->view('include/admin/header');
@@ -1681,11 +1980,14 @@ class Admin extends CI_Controller {
 
     }
 
+    // function for add new size
     public function addSize(){
+      // checking usertype (super admin or not)
         if ($this->session->userdata('uType') == 1) {
             $this->load->helper('form');
             $this->load->library('form_validation');
 
+            // set rules
             $this->form_validation->set_rules('name', 'Size name', 'required|callback_checkingSizeName');
             $this->form_validation->set_rules('size', 'Size', 'required|callback_checkingSize');
 
@@ -1695,8 +1997,12 @@ class Admin extends CI_Controller {
                 $this->load->view('admin/addSize');
                 $this->load->view('include/admin/footer');
             }else{
+              // set slugs
+                $slugs = str_replace(' ', '-', strtolower($this->input->post('name')));
+                // input new size
                 $items = array(
                     'name'       => $this->input->post('name'),
+                    'slugs'      => $slugs,
                     'size'       => $this->input->post('size'),
                     'created_at' => date('Ymd'),
                     'status'     => 1
@@ -1711,10 +2017,13 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for add new Size
     public function checkingSizeName($name){
+      // checking size name is there the same as in DB
         $sizeName = $this->madmin->getProducts(array('name' => $name), array('nameField' => 'name'), 'tm_size', TRUE);
 
         if (isset($sizeName)) {
+          // set error message
             $this->session->set_flashdata('error', 'Size name has already been created');
             return FALSE;
         }else{
@@ -1722,10 +2031,14 @@ class Admin extends CI_Controller {
         }
     }
 
+    // function callback for checking detail size
     public function checkingSize($size){
+      // checking back size name on function callback checkingSizeName
         if ($this->checkingSizeName($this->input->post('name'))) {
+          // get detail size
             $size = $this->madmin->getProducts(array('size' => $size), array('sizeField' => 'size'), 'tm_size', TRUE);
             if (isset($size)) {
+              // set message error
                 $this->session->set_flashdata('error', 'Size has already been created');
                 return FALSE;
             }else{
@@ -1737,10 +2050,10 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function deleteSize($sizeId){
+    public function deleteSize($sizeSlugs){
         if ($this->session->userdata('uType') == 1) {
 //            $this->madmin->deleteData(array('id' => $sizeId), 'tm_size');
-            $this->madmin->updateData(array('id' => $sizeId), 'tm_size', array('deleted' => 1));
+            $this->madmin->updateData(array('slugs' => $sizeSlugs), 'tm_size', array('deleted' => 1));
             redirect('admin/sa_size');
         } else {
             $this->load->view('include/header2');
@@ -1749,9 +2062,9 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function infoSize($idSize){
+    public function infoSize($slugsSize){
         if ($this->session->userdata('uType') == 1) {
-          $data['size'] = $this->madmin->getProducts(array('id' => $idSize), NULL, 'tm_size', TRUE);
+          $data['size'] = $this->madmin->getProducts(array('slugs' => $slugsSize), NULL, 'tm_size', TRUE);
 
           $this->load->view('include/admin/header');
           $this->load->view('include/admin/left-sidebar');
@@ -1764,28 +2077,30 @@ class Admin extends CI_Controller {
         }
       }
 
-    public function editSize($idSize){
+    public function editSize($slugsSize){
         if ($this->session->userdata('uType') == 1) {
           $this->load->helper('form');
           $this->load->library('form_validation');
 
-          $this->form_validation->set_rules('items', 'Size Name', 'required');
-          $this->form_validation->set_rules('size', 'Size', 'required');
+          $this->form_validation->set_rules('items', 'Size Name', 'required|callback_checkingEditSizeName');
+          $this->form_validation->set_rules('size', 'Size', 'required|callback_checkingEditSizeDetail');
 
           if ($this->form_validation->run() === FALSE) {
-            $data['size'] = $this->madmin->getProducts(array('id' => $idSize), NULL, 'tm_size', TRUE);
+            $data['size'] = $this->madmin->getProducts(array('slugs' => $slugsSize), NULL, 'tm_size', TRUE);
 
             $this->load->view('include/admin/header');
             $this->load->view('include/admin/left-sidebar');
             $this->load->view('admin/editSize', $data);
             $this->load->view('include/admin/footer');
           }else {
+              $slugs = str_replace(' ', '-', strtolower($this->input->post('items')));
               $items = array(
-                  'name'          => $this->input->post('items'),
+                  'name'   => $this->input->post('items'),
+                  'slugs'  => $slugs,
                   'size'   => $this->input->post('size'),
                   'status' => 1,
               );
-              $this->madmin->updateData(array('id' => $idSize), 'tm_size', $items);
+              $this->madmin->updateData(array('slugs' => $slugsSize), 'tm_size', $items);
               redirect('admin/sa_size', 'refresh');
           }
         }else {
@@ -1794,6 +2109,29 @@ class Admin extends CI_Controller {
           $this->load->view('include/footer');
         }
       }
+
+
+    public function checkingEditSizeName($editSizeName){
+      $idSize = $this->input->post('idSize');
+      $hasSizeName = $this->madmin->getProducts(array('id !=' => $idSize, 'name' => $editSizeName), array('nameF' => 'name'), 'tm_size', TRUE);
+      if (isset($hasSizeName)) {
+        $this->session->set_flashdata('error', 'Size name has already been created');
+        return FALSE;
+      }else {
+        return TRUE;
+      }
+    }
+
+    public function checkingEditSizeDetail($editSizeDetail){
+      $idSize = $this->input->post('idSize');
+      $hasSizeName = $this->madmin->getProducts(array('id !=' => $idSize, 'size' => $editSizeDetail), array('nameF' => 'size'), 'tm_size', TRUE);
+      if (isset($hasSizeName)) {
+        $this->session->set_flashdata('error', 'Size detail has already been created');
+        return FALSE;
+      }else {
+        return TRUE;
+      }
+    }
 
     public function stores($link = FALSE){
         if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2 ) {
@@ -2404,6 +2742,7 @@ class Admin extends CI_Controller {
               $this->load->view('include/admin/footer');
             }else {
               $name = $this->input->post('name');
+              $slugs = str_replace(' ', '-', strtolower($name));
               $desc = $this->input->post('desc');
               $sku = $this->input->post('sku');
               $size = 0;
@@ -2430,6 +2769,7 @@ class Admin extends CI_Controller {
                 }
                 $data_main_sp = array(
                   'name'          => $name,
+                  'slugs'         => $slugs,
                   'image'         => $upload_name,
                   'description'   => $desc,
                   'active'        => 1,
@@ -2554,21 +2894,21 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function activeSpecialPackage($idSP){
+  public function activeSpecialPackage($slugsSP){
     if ($this->session->userdata('uType') == 1) {
-      $isActive = $this->madmin->getProducts(array('id' => $idSP), array('activeField' => 'active'), 'tm_special_package', TRUE);
+      $isActive = $this->madmin->getProducts(array('slugs' => $slugsSP), array('activeField' => 'active'), 'tm_special_package', TRUE);
       if ($isActive['active'] == 1) {
         echo "this is active";
         $item = array('active' => 0);
-        $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
-        $this->madmin->updateData(array('id' => $isActive['main_product']), 'tm_product',
-         array('main_sp' => 0));
+        $this->madmin->updateData(array('slugs' => $slugsSP), 'tm_special_package', $item);
+        // $this->madmin->updateData(array('id' => $isActive['main_product']), 'tm_product',
+        //  array('main_sp' => 0));
       } else {
         echo "this is inactive";
         $item = array('active' => 1);
-        $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', $item);
-        $this->madmin->updateData(array('id' => $isActive['main_product']), 'tm_product',
-         array('main_sp' => 1));
+        $this->madmin->updateData(array('slugs' => $slugsSP), 'tm_special_package', $item);
+        // $this->madmin->updateData(array('id' => $isActive['main_product']), 'tm_product',
+        //  array('main_sp' => 1));
       }
       redirect('admin/special_package');
     } else {
@@ -2578,12 +2918,12 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function deleteSpecialPackage($idSP){
+  public function deleteSpecialPackage($slugSP){
     if ($this->session->userdata('uType') == 1) {
-      $id_mainSP = $this->madmin->getProducts(array('id' => $idSP), array('deleted' => 'deleted'),
+      $id_mainSP = $this->madmin->getProducts(array('slugs' => $slugsSP), array('deleted' => 'deleted'),
         'tm_special_package', TRUE);
 
-      $this->madmin->updateData(array('id' => $idSP), 'tm_special_package', array('deleted' => 1));
+      $this->madmin->updateData(array('slugs' => $slugsSP), 'tm_special_package', array('deleted' => 1));
       redirect('admin/special_package');
     }else {
       $this->load->view('include/header2');
@@ -2591,108 +2931,6 @@ class Admin extends CI_Controller {
       $this->load->view('include/footer');
     }
   }
-
-    public function allVoucher(){
-        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $data['vouchers'] = $this->madmin->getProduct_orderBy(NULL, NULL, 'tm_voucher', 'kode_voucher', FALSE);
-
-            $this->load->view('include/admin/header');
-            $this->load->view('include/admin/left-sidebar');
-            $this->load->view('admin/allVoucher', $data);
-            $this->load->view('include/admin/footer');
-        } else {
-            $this->load->view('include/header2');
-            $this->load->view('un-authorise');
-            $this->load->view('include/footer');
-        }
-    }
-
-    public function addVoucher(){
-        if ($this->session->userdata('uType') == 1) {
-            $this->load->helper('form');
-            $this->load->library('form_validation');
-
-            $this->form_validation->set_rules('kVoucher', 'Kode Voucher', 'required');
-            $this->form_validation->set_rules('name', 'Name', 'required');
-            $this->form_validation->set_rules('desc', 'Description', 'required');
-            $this->form_validation->set_rules('jumlah', 'Limit Voucher', 'required');
-
-            if ($this->form_validation->run() === FALSE) {
-                $data['products'] = $this->madmin->getProducts(NULL, array('idField' => 'id', 'nameField' => 'name'), 'tm_product', FALSE);
-
-                $this->load->view('include/admin/header');
-                $this->load->view('include/admin/left-sidebar');
-                $this->load->view('admin/addVoucher', $data);
-                $this->load->view('include/admin/footer');
-            } else {
-                $bonus = $this->input->post('bonus[]');
-                $primeVoucher = array(
-                    'kode_voucher' => $this->input->post('kVoucher'),
-                    'name'         => $this->input->post('name'),
-                    'description'  => $this->input->post('desc'),
-                    'discount'     => $this->input->post('discount'),
-                    'jumlah'       => $this->input->post('jumlah'),
-                    'active'       => 1
-                );
-                $this->madmin->inputData('tm_voucher', $primeVoucher);
-                print_r($primeVoucher);
-                echo "</br></br>";
-                echo "<hr>";
-                $kode_voucher = $this->input->post('kVoucher');
-                $idVoucher = $this->madmin->getProducts(array('kode_voucher' => $kode_voucher), array('idField' => 'id'),
-                    'tm_voucher', TRUE);
-                foreach ($bonus as $bonus) {
-                    $dataBonus = array(
-                        'id_voucher'  =>  $idVoucher['id'],
-                        'bonus'       =>  $bonus
-                    );
-                    print_r($dataBonus);
-                    echo "</br></br>";
-                    echo "<hr>";
-                    $this->madmin->inputData('tr_bonus_voucher', $dataBonus);
-                }
-                redirect('admin/allVoucher');
-            }
-        } else {
-            $this->load->view('include/header2');
-            $this->load->view('un-authorise');
-            $this->load->view('include/footer');
-        }
-    }
-
-    public function active_voucher($idVoucher, $active){
-        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            if ($active == 1) {
-                $items = array('active' => 0);
-                $this->madmin->updateData(array('id' => $idVoucher), 'tm_voucher', $items);
-            } else {
-                $items = array('active' => 1);
-                $this->madmin->updateData(array('id' => $idVoucher), 'tm_voucher', $items);
-            }
-            redirect('admin/allVoucher');
-        } else {
-            $this->load->view('include/header2');
-            $this->load->view('un-authorise');
-            $this->load->view('include/footer');
-        }
-    }
-    public function detail_voucher($idVoucher){
-        if ($this->session->userdata('uType') == 1 || $this->session->userdata('uType') == 2) {
-            $data['voucher'] = $this->madmin->getProducts(array('id' => $idVoucher), NULL, 'tm_voucher', TRUE);
-//            $data['detail_voucher'] = $this->madmin->detail_voucher($idVoucher);
-            // print_r($data['voucher']);
-            // exit();
-
-            $this->load->view('include/admin/header');
-            $this->load->view('include/admin/left-sidebar');
-            $this->load->view('admin/detail_voucher', $data);
-            $this->load->view('include/admin/footer');
-        } else {
-            $this->load->view('include/header2');
-            $this->load->view('un-authorise');
-            $this->load->view('include/footer');
-        }
-    }
 
     public function bed_linen(){
         if ($this->session->userdata('uType') == 1) {
@@ -2747,48 +2985,45 @@ class Admin extends CI_Controller {
         }
     }
 
-    public function edit_bed_linen($idBedLinen){
-        if ($this->session->userdata('uType') == 1) {
-            $this->load->helper('form');
-            $this->load->library('form_validation');
+    public function edit_bed_linen($slugsBedLinen){
+      if ($this->session->userdata('uType') == 1) {
+        $this->load->helper('form');
+        $this->load->library('form_validation');
 
-      $this->form_validation->set_rules('position', 'Position', 'required');
+        $this->form_validation->set_rules('position', 'Position', 'required');
 
-      if ($this->form_validation->run() == TRUE) {
-        // new position
-        $position = $this->input->post('position');
+        if ($this->form_validation->run() == TRUE) {
+          // new position
+          $position = $this->input->post('position');
 
-        // search id from new position
-        $positionProduct_destination = $this->madmin->getProducts(array('position' => $position),
-          array('idField' => 'id'), 'tr_product_bed_linen', TRUE);
-        // search last position from idBedLinen
-        $positionProduct_lastdestination = $this->madmin->getProducts(array('id' => $idBedLinen),
-          array('positionField' => 'position'), 'tr_product_bed_linen', TRUE);
+          // search id from new position
+          $positionProduct_destination = $this->madmin->getProducts(array('position' => $position),
+            array('idField' => 'id'), 'tr_product_bed_linen', TRUE);
+            // search last position from idBedLinen
+          $positionProduct_lastdestination = $this->madmin->getProducts(array('slugs' => $slugsBedLinen),
+            array('positionField' => 'position'), 'tr_product_bed_linen', TRUE);
 
-        // print_r($positionProduct_lastdestination);exit();
+          // print_r($positionProduct_lastdestination);exit();
 
-        // data new stars and new position for idBedLinen
-        $data_newDestination = array(
-          'position'  => $position
-        );
-        $this->madmin->updateData(array('id' => $idBedLinen), 'tr_product_bed_linen', $data_newDestination);
+          // data new stars and new position for idBedLinen
+          $data_newDestination = array('position'  => $position);
+          $this->madmin->updateData(array('slugs' => $slugsBedLinen), 'tr_product_bed_linen', $data_newDestination);
 
-                $data_ProdLastDestination = array(
-                    'position'  => $positionProduct_lastdestination['position']
-                );
-                $this->madmin->updateData(array('id' => $positionProduct_destination['id']), 'tr_product_bed_linen', $data_ProdLastDestination);
+          $data_ProdLastDestination = array('position'  => $positionProduct_lastdestination['position']);
+          $this->madmin->updateData(array('id' => $positionProduct_destination['id']),
+           'tr_product_bed_linen', $data_ProdLastDestination);
 
-                redirect('admin/bed_linen');
-            } else {
-                $data['product_bedlinen'] = $this->madmin->detail_prod_bed_linen($idBedLinen);
-                $maxPosition = $this->madmin->getProducts(NULL, array('positionField' => 'position'), 'tr_product_bed_linen', FALSE);
-                $data['maxPosition'] = array('max' => count($maxPosition));
+           redirect('admin/bed_linen');
+          } else {
+            $data['product_bedlinen'] = $this->madmin->detail_prod_bed_linen($slugsBedLinen);
+            $maxPosition = $this->madmin->getProducts(NULL, array('positionField' => 'position'), 'tr_product_bed_linen', FALSE);
+            $data['maxPosition'] = array('max' => count($maxPosition));
 
-                $this->load->view('include/admin/header');
-                $this->load->view('include/admin/left-sidebar');
-                $this->load->view('admin/edit_bed_linen', $data);
-                $this->load->view('include/admin/footer');
-            }
+            $this->load->view('include/admin/header');
+            $this->load->view('include/admin/left-sidebar');
+            $this->load->view('admin/edit_bed_linen', $data);
+            $this->load->view('include/admin/footer');
+          }
         } else {
             $this->load->view('include/header2');
             $this->load->view('un-authorise');
@@ -2938,12 +3173,12 @@ class Admin extends CI_Controller {
         }
     }
 
-  public function detailSpecialPackage($idSpecialPckg){
+  public function detailSpecialPackage($slugsSpecialPckg){
     if ($this->session->userdata('uType') == 1) {
-      $hasSP = $this->madmin->getProducts(array('id' => $idSpecialPckg), array('idF' => 'id', 'deletedF' => 'deleted'), 'tm_special_package', TRUE);
+      $hasSP = $this->madmin->getProducts(array('slugs' => $slugsSpecialPckg), array('idF' => 'id', 'deletedF' => 'deleted'), 'tm_special_package', TRUE);
       if ($hasSP['id'] != NULL && $hasSP['deleted'] != TRUE) {
-        $data['detail_SpclPckg'] = $this->madmin->prime_specialPKG($idSpecialPckg);
-        $data['prod_SpclPckg'] = $this->madmin->detail_specialPackage($idSpecialPckg);
+        $data['detail_SpclPckg'] = $this->madmin->prime_specialPKG($hasSP['id']);
+        $data['prod_SpclPckg'] = $this->madmin->detail_specialPackage($hasSP['id']);
 
         $this->load->view('include/admin/header');
         $this->load->view('include/admin/left-sidebar');
@@ -2961,20 +3196,20 @@ class Admin extends CI_Controller {
     }
   }
 
-  public function edit_special($idSpecialPkg){
+  public function edit_special($slugsSpecialPkg){
     if ($this->session->userdata('uType') == 1) {
-      $hasSP = $this->madmin->getProducts(array('id' => $idSpecialPkg), array('idF' => 'id', 'deletedF' => 'deleted'), 'tm_special_package', TRUE);
+      $hasSP = $this->madmin->getProducts(array('slugs' => $slugsSpecialPkg), array('idF' => 'id', 'deletedF' => 'deleted'), 'tm_special_package', TRUE);
       if ($hasSP['id'] != NULL && $hasSP['deleted'] != TRUE) {
         $this->load->helper('form');
         $this->load->library('form_validation');
 
-        $this->form_validation->set_rules('name', 'Special Package Name', 'required');
+        $this->form_validation->set_rules('name', 'Special Package Name', 'required|callback_checkingEditSPName');
         $this->form_validation->set_rules('desc', 'Special Package Description', 'required');
 
         if ($this->form_validation->run() === FALSE) {
-          $data['detail_SP'] = $this->madmin->prime_specialPKG($idSpecialPkg);
-          $data['prod_SP'] = $this->madmin->detail_specialPackage($idSpecialPkg);
-          $currentBonus = $this->madmin->current_bonus($idSpecialPkg);
+          $data['detail_SP'] = $this->madmin->prime_specialPKG($hasSP['id']);
+          $data['prod_SP'] = $this->madmin->detail_specialPackage($hasSP['id']);
+          $currentBonus = $this->madmin->current_bonus($hasSP['id']);
           $data['addBonus'] = $this->madmin->add_bonus($currentBonus);
 
 
@@ -2985,6 +3220,7 @@ class Admin extends CI_Controller {
         }else {
           $imageSP = $this->input->post('imageSP');
           $name_SP = $this->input->post('name');
+          $slugs_SP = str_replace(' ', '-', strtolower($name_SP));
           $sku_SP = $this->input->post('sku');
           $desc_SP = $this->input->post('desc');
 
@@ -3040,6 +3276,7 @@ class Admin extends CI_Controller {
           if ($hasImg_SP['image'] != NULL) {
             $update_SP = array(
               'name'        => $name_SP,
+              'slugs'       => $slugs_SP,
               'description' => $desc_SP
               // 'active'
               // 'deleted'
@@ -3064,6 +3301,7 @@ class Admin extends CI_Controller {
               $upload_name = $this->upload->data('file_name');
               $update_SP = array(
                 'name'        => $name_SP,
+                'slugs'       => $slugs_SP,
                 'image'       => $upload_name,
                 'description' => $desc_SP
                 // 'active'
@@ -3123,6 +3361,17 @@ class Admin extends CI_Controller {
       $this->load->view('include/header2');
       $this->load->view('un-authorise');
       $this->load->view('include/footer');
+    }
+  }
+
+  public function checkingEditSPName($editSPName){
+    $idSP = $this->input->post('idSP');
+    $hasEditSPName = $this->madmin->getProducts(array('id !=' => $idSP, 'name' => $editSPName), array('nameF' => 'name'), 'tm_special_package', TRUE);
+    if (isset($hasEditSPName)) {
+      $this->session->set_flashdata('error', 'Special Package name has already been created');
+      return FALSE;
+    }else {
+      return TRUE;
     }
   }
 

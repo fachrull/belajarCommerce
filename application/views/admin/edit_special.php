@@ -16,7 +16,7 @@
               <?= validation_errors('<div class="alert alert-mini alert-danger mb-30">', '</div>');?>
             <?php endif;?>
             <!-- /ALERT -->
-            <?= form_open_multipart('admin/edit_special/'.$detail_SP['id'], array('class' => 'm-0 sky-form', 'id' => 'editSpecialPackage')); ?>
+            <?= form_open_multipart('admin/edit_special/'.$detail_SP['slugs'], array('class' => 'm-0 sky-form', 'id' => 'editSpecialPackage')); ?>
             <input type="hidden" name="idSP" value="<?= $detail_SP['id']?>">
               <label class="input mb-10">
                   <input class="form-control" name="name" type="text" value="<?= $detail_SP['name']?>">
@@ -93,7 +93,7 @@
               </label>
             <div class="row">
               <div class="col-md-6">
-                  <a href="<?= site_url('admin/detailSpecialPackage/'.$detail_SP['id'])?>" class="btn btn-default">Back</a>
+                  <a href="<?= site_url('admin/detailSpecialPackage/'.$detail_SP['slugs'])?>" class="btn btn-default">Back</a>
                   <!-- <button type="button" id="submit" name="button" class="btn btn-default">Test</button> -->
               </div>
                 <div class="col-md-6 text-right">
