@@ -11405,6 +11405,10 @@ div.tabbed>a:hover>div {
 	/*}*/
 }
 
+.rating {
+	font-size: 16px !important;
+}
+
 @media only screen and (max-width: 576px) {
 	div.shop-item-price {
 		font-size: 20px !important;
@@ -11420,5 +11424,9 @@ div.tabbed>a:hover>div {
 @media only screen and (min-width: 768px) and (max-width: 1024px) {
 	div.promotion-card {
 		font-size: 10px !important;
+	}
+
+	.rating {
+		font-size: 14px !important;
 	}
 }

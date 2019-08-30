@@ -528,12 +528,13 @@ class Mhome extends CI_Model{
   }
 
     public function get_list_bed_linen(){
-        $this->db->select('a.id, b.name, b.slugs, b.stars, c.sub_price, d.image_1');
+        $this->db->select('a.id, b.name, b.slugs, b.stars, c.sub_price, d.image_1, e.name as brand');
         $this->db->select_min('c.price');
         $this->db->from('tr_product_bed_linen a');
         $this->db->join('tm_product b', 'b.id = a.prod_id', 'inner');
         $this->db->join('tr_product_size c', 'b.id = c.prod_id', 'inner');
         $this->db->join('tr_product_image d', 'b.id = d.id_prod', 'inner');
+		$this->db->join('tm_brands e', 'b.brand_id = e.id', 'inner');
         $this->db->group_by('a.id');
 		$this->db->where("b.deleted !=", 1);
         $query = $this->db->get();
@@ -560,7 +561,7 @@ class Mhome extends CI_Model{
   }
 
   public function beddingAcc($brand = NULL, $category = NULL){
-    $this->db->select('a.position, b.id, b.name, b.slugs, b.image, b.stars, f.sub_price, e.image_1');
+    $this->db->select('a.position, b.id, b.name, b.slugs, b.image, b.stars, f.sub_price, e.image_1, c.name as brand');
     $this->db->select_min('f.price');
     $this->db->from('tr_product_bedding_acc a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
@@ -704,12 +705,13 @@ class Mhome extends CI_Model{
   }
 
   public function listBestSeller_Product($brand = NULL, $cat = NULL){
-    $this->db->select('b.id as id, b.name, b.slugs, b.image, b.stars, a.position, d.sub_price, c.image_1');
+    $this->db->select('b.id as id, b.name, b.slugs, b.image, b.stars, a.position, d.sub_price, c.image_1, e.name as brand');
     $this->db->select_min('d.price');
     $this->db->from('tr_product_best_seller a');
     $this->db->join('tm_product b', 'b.id = a.prod_id', 'left');
     $this->db->join('tr_product_image c','c.id_prod=a.prod_id','left');
     $this->db->join('tr_product_size d', 'd.prod_id=a.prod_id', 'left');
+	  $this->db->join('tm_brands e', 'b.brand_id=e.id', 'left');
     $this->db->group_by('a.prod_id');
     $this->db->order_by('b.position', 'asc');
     if ($brand != NULL && $cat != NULL) {

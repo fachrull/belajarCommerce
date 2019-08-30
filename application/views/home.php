@@ -141,29 +141,34 @@
                         <!-- /product image(s) -->
 
                         <div class="shop-item-summary p-30">
-                            <div class="row mb-10">
+                            <div class="row mb-5">
                                 <div class="col-8 col-md-12 col-lg-8">
                                     <a href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($bestSeller[0]["name"])?></h2></a>
                                 </div>
-                                <div class="col-4 col-md-12 col-lg-4">
-                                    <a class="rating rating-<?=$bestSeller[0]["stars"]?> fs-13" href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"]."#review-section")?>">
+                                <div class="col-4 col-md-12 col-lg-4 p-0">
+                                    <a class="rating rating-<?=$bestSeller[0]["stars"]?> fs-16" href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"]."#review-section")?>">
                                         <!-- rating-0 ... rating-5 -->
                                     </a>
                                 </div>
                             </div>
+							<div class="row mb-10">
+								<div class="col-12 col-md-12 col-lg-12">
+									<?=$bestSeller[0]["brand"]?>
+								</div>
+							</div>
                             <?php if ($bestSeller[0]["sub_price"] != 0) { ?>
                                 <small class="text-muted">Was Rp <strike><?= number_format($bestSeller[0]["price"], 2, ",",
                                             "."); ?></strike></small>
                                 <!-- price -->
-                                <div class="shop-item-price">
-                                    Rp <?= number_format($bestSeller[0]["sub_price"], 2, ",", "."); ?>
+                                <div class="shop-item-price fs-24">
+                                    Rp <?= number_format($bestSeller[0]["sub_price"], 0, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
                             <?php } else { ?>
                                 <small class="text-muted">&nbsp;</small>
                                 <!-- price -->
-                                <div class="shop-item-price">
-                                    Rp <?= number_format($bestSeller[0]["price"], 2, ",", "."); ?>
+                                <div class="shop-item-price fs-24">
+                                    Rp <?= number_format($bestSeller[0]["price"], 0, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
                             <?php } ?>
@@ -188,29 +193,34 @@
                         <!-- /product image(s) -->
 
                         <div class="shop-item-summary p-30">
-                            <div class="row mb-10">
+                            <div class="row mb-5">
                                 <div class="col-8 col-md-12 col-lg-8">
 									<a href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($bedLinen[0]["name"])?></h2></a>
                                 </div>
-                                <div class="col-4 col-md-12 col-lg-4">
-                                    <a class="rating rating-<?=$bedLinen[0]["stars"]?> fs-13" href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"]."#review-section")?>">
+                                <div class="col-4 col-md-12 col-lg-4 p-0">
+                                    <a class="rating rating-<?=$bedLinen[0]["stars"]?> fs-16" href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"]."#review-section")?>">
                                         <!-- rating-0 ... rating-5 -->
                                     </a>
                                 </div>
                             </div>
+							<div class="row mb-10">
+								<div class="col-12 col-md-12 col-lg-12">
+									<?=$bedLinen[0]["brand"]?>
+								</div>
+							</div>
                             <?php if ($bedLinen[0]["sub_price"] != 0) { ?>
                                 <small class="text-muted">Was Rp <strike><?= number_format($bedLinen[0]["price"], 2, ",",
                                             "."); ?></strike></small>
                                 <!-- price -->
-                                <div class="shop-item-price">
-                                    Rp <?= number_format($bedLinen[0]["sub_price"], 2, ",", "."); ?>
+                                <div class="shop-item-price fs-24">
+                                    Rp <?= number_format($bedLinen[0]["sub_price"], 0, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
                             <?php } else { ?>
                                 <small class="text-muted">&nbsp;</small>
                                 <!-- price -->
-                                <div class="shop-item-price">
-                                    Rp <?= number_format($bedLinen[0]["price"], 2, ",", "."); ?>
+                                <div class="shop-item-price fs-24">
+                                    Rp <?= number_format($bedLinen[0]["price"], 0, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
                             <?php } ?>
@@ -235,29 +245,34 @@
                         <!-- /product image(s) -->
 
                         <div class="shop-item-summary p-30">
-                            <div class="row mb-10">
+                            <div class="row mb-5">
                                 <div class="col-8 col-md-12 col-lg-8">
 									<a href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($beddingAcc[0]["name"])?></h2></a>
                                 </div>
-                                <div class="col-4 col-md-12 col-lg-4">
-                                    <a class="rating rating-<?=$beddingAcc[0]["stars"]?> fs-13" href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"]."#review-section")?>">
-                                        <!-- rating-0 ... rating-5 -->
-                                    </a>
+                                <div class="col-4 col-md-12 col-lg-4 p-0">
+									<a class="rating rating-<?=$beddingAcc[0]["stars"]?>" href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"]."#review-section")?>">
+										<!-- rating-0 ... rating-5 -->
+									</a>
                                 </div>
                             </div>
+							<div class="row mb-10">
+								<div class="col-12 col-md-12 col-lg-12">
+									<?=$beddingAcc[0]["brand"]?>
+								</div>
+							</div>
                             <?php if ($beddingAcc[0]["sub_price"] != 0) { ?>
                                 <small class="text-muted">Was Rp <strike><?= number_format($beddingAcc[0]["price"], 2, ",",
                                             "."); ?></strike></small>
                                 <!-- price -->
-                                <div class="shop-item-price">
-                                    Rp <?= number_format($beddingAcc[0]["sub_price"], 2, ",", "."); ?>
+                                <div class="shop-item-price fs-24">
+                                    Rp <?= number_format($beddingAcc[0]["sub_price"], 0, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
                             <?php } else { ?>
                                 <small class="text-muted">&nbsp;</small>
                                 <!-- price -->
-                                <div class="shop-item-price">
-                                    Rp <?= number_format($beddingAcc[0]["price"], 2, ",", "."); ?>
+                                <div class="shop-item-price fs-24">
+                                    Rp <?= number_format($beddingAcc[0]["price"], 0, ",", "."); ?>
                                 </div>
                                 <!-- /price -->
                             <?php } ?>
@@ -317,28 +332,33 @@
                             <!-- /product image(s) -->
 
                             <div class="shop-item-summary p-15">
-                                <div class="row mb-10">
+                                <div class="row mb-5">
                                     <div class="col-12">
 										<a href="<?=base_url("home/detailProduct/".$p["slugs"])?>"><h2 class="align-middle"><?=strtoupper($p["name"])?></h2></a>
                                     </div>
                                 </div>
+								<div class="row mb-10">
+									<div class="col-12 col-md-12 col-lg-12">
+										<?=$p["brand"]?>
+									</div>
+								</div>
                                 <?php if ($p["sub_price"] != 0) { ?>
                                     <small class="text-muted">Was Rp <strike><?= number_format($p["price"], 2, ",",
                                                 "."); ?></strike></small>
                                     <!-- price -->
-                                    <div class="shop-item-price">
-                                        Rp <?= number_format($p["sub_price"], 2, ",", "."); ?>
+                                    <div class="shop-item-price fs-24">
+                                        Rp <?= number_format($p["sub_price"], 0, ",", "."); ?>
                                     </div>
                                     <!-- /price -->
                                 <?php } else { ?>
                                     <small class="text-muted">&nbsp;</small>
                                     <!-- price -->
-                                    <div class="shop-item-price">
-                                        Rp <?= number_format($p["price"], 2, ",", "."); ?>
+                                    <div class="shop-item-price fs-24">
+                                        Rp <?= number_format($p["price"], 0, ",", "."); ?>
                                     </div>
                                     <!-- /price -->
                                 <?php } ?>
-                                <a class="mt-15 rating rating-<?=$p["stars"]?> fs-14" href="<?=base_url("home/detailProduct/".$p["slugs"]."#review-section")?>" style="letter-spacing: 1px;">
+                                <a class="mt-15 rating rating-<?=$p["stars"]?>" href="<?=base_url("home/detailProduct/".$p["slugs"]."#review-section")?>" style="letter-spacing: 1px;">
                                     <!-- rating-0 ... rating-5 -->
                                 </a>
                             </div>
