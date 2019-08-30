@@ -38,6 +38,7 @@
                                 <td><?= $product['position']?></td>
                                 <td>
                                   <a href="<?= site_url('admin/edit_best_seller/'.$product['id']);?>"><i class="btn btn-oldblue fa fa-gear"></i></a>
+									<a href="<?= site_url('admin/delete_best_seller/'.$product['id']);?>" onclick="return confirm('Are you sure?')"><i class="btn btn-danger fa fa-trash"></i></a>
                                 </td>
                               </tr>
                               <?php $no++; ?>

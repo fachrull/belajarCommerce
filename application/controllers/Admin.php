@@ -3464,4 +3464,15 @@ class Admin extends CI_Controller {
 //        }
     }
 
+    public function delete_best_seller($id) {
+		if ($this->session->userdata('uType') == 1) {
+			$this->madmin->deleteData(array('id' => $id), 'tr_product_best_seller');
+			redirect('admin/bestSeller');
+		}else{
+			$this->load->view('include/header2');
+			$this->load->view('un-authorise');
+			$this->load->view('include/footer');
+		}
+	}
+
 }
