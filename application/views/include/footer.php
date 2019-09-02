@@ -62,11 +62,11 @@
                     <div class="col-md-4 col-4 pt-5">
                         <h4 class="letter-spacing-1 footer-zero">SHOP</h4>
                         <ul class="list-unstyled footer-list half-paddings b-0">
-                            <li><a class="block" href="<?= site_url('home/shop/1'); ?>">Aireloom</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/2'); ?>">Kingkoil</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/3'); ?>">Serta</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/4'); ?>">Tempur</a></li>
-                            <li><a class="block" href="<?= site_url('home/shop/5'); ?>">Florence</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/aireloom'); ?>">Aireloom</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/kingkoil'); ?>">Kingkoil</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/serta'); ?>">Serta</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/tempur'); ?>">Tempur</a></li>
+                            <li><a class="block" href="<?= site_url('home/shop/florence'); ?>">Florence</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-4 pt-5">
