@@ -159,7 +159,7 @@ class Mhome extends CI_Model{
     $this->db->from('tm_category a');
     $this->db->join('tm_product b', 'b.cat_id = a.id', 'left');
     if($brand != NULL){
-      $where = array('b.brand_id' => $brand);
+      $where = array('b.brand_id' => $brand, 'a.id !=' => 0);
       $this->db->where($where);
     }
     $this->db->group_by('b.cat_id');
@@ -503,7 +503,7 @@ class Mhome extends CI_Model{
   }
 
   public function bed_linenProducts($brand = NULL){
-    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.image, a.stars, d.position, e.image_1');
+    $this->db->select('a.id, b.name as brand, c.name as category, a.name, a.slugs, a.image, a.stars, d.position, e.image_1');
     $this->db->select_min('f.price');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
@@ -546,7 +546,7 @@ class Mhome extends CI_Model{
     }
 
   public function bed_linenBrands(){
-    $this->db->select('b.id, b.name as brand');
+    $this->db->select('b.id, b.name as brand, b.slugs');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
@@ -571,12 +571,9 @@ class Mhome extends CI_Model{
     $this->db->join('tr_product_size f', 'f.prod_id = a.prod_id', 'left');
     $this->db->group_by('f.prod_id');
     $this->db->order_by('a.position', 'asc');
-    $where = array(
-      'b.cat_id !='   => 1,
-      'b.cat_id !='   => 2,
-      'b.brand_id !=' => 0
-    );
-    $this->db->where($where);
+    $this->db->where('b.cat_id !=', 1);
+    $this->db->where('b.cat_id !=', 2);
+    $this->db->where('b.brand_id !=', 0);
     if ($brand != NULL) {
       $this->db->where('b.brand_id', $brand);
     }
@@ -595,7 +592,7 @@ class Mhome extends CI_Model{
   }
 
   public function beddingACC_Categories($brand = NULL, $category = NULL){
-    $this->db->select('c.id, c.name');
+    $this->db->select('c.id, c.name, c.slugs');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.cat_id', 'left');
@@ -616,7 +613,7 @@ class Mhome extends CI_Model{
   }
 
   public function beddingACC_Brands(){
-    $this->db->select('b.id, b.name');
+    $this->db->select('b.id, b.name, b.slugs');
     $this->db->from('tm_product a');
     $this->db->join('tm_brands b', 'b.id = a.brand_id', 'left');
     $this->db->join('tm_category c', 'c.id = a.brand_id', 'left');
@@ -659,7 +656,7 @@ class Mhome extends CI_Model{
     return $query->result_array();
   }
 
-  public function detail_specialPackage($idSpecialPckg){
+  public function detail_specialPackage($slugsSpecialPckg){
     $this->db->select('d.id, d.name as prod, e.name as sizeName, e.size as sizeDetail,
      b.quantity, b.subtotal as priceSpcl');
     $this->db->from('tm_special_package a');
@@ -667,7 +664,7 @@ class Mhome extends CI_Model{
     $this->db->join('tr_product_size c', 'c.id = b.id_prod_package', 'left');
     $this->db->join('tm_product d', 'd.id = c.prod_id', 'left');
     $this->db->join('tm_size e', 'e.id = c.size_id', 'left');
-    $this->db->where('a.id', $idSpecialPckg);
+    $this->db->where('a.slugs', $slugsSpecialPckg);
     $query = $this->db->get();
     if ($query->num_rows() != 0) {
       return $query->result_array();
@@ -768,9 +765,21 @@ class Mhome extends CI_Model{
       }
   }
 
-  function search($keyword)
-  {
-      $this->db->select('a.id,a.name,a.stars,a.image,b.image_1');
+  public function prod_brand($idProd){
+    $this->db->select('a.id, a.slugs, b.brand_id');
+    $this->db->from('tm_brands a');
+    $this->db->join('tm_product b', 'b.brand_id = a.id');
+    $this->db->where('b.id', $idProd);
+    $query = $this->db->get();
+    if ($query->num_rows() != 0) {
+      return $query->row_array();
+    }else{
+      return false;
+    }
+  }
+
+  function search($keyword){
+      $this->db->select('a.id,a.name,a.slugs,a.stars,a.image,b.image_1');
       $this->db->from('tm_product a');
       $this->db->join('tr_product_image b','b.id_prod=a.id','left');
       $this->db->like('name',$keyword);
@@ -778,11 +787,11 @@ class Mhome extends CI_Model{
       return $query->result_array();
   }
 
-  public function detailSpecial($idSpecialPckg){
+  public function detailSpecial($slugsSpecialPckg){
     $this->db->select('a.id, a.name, a.description, a.image, a.total as price, b.id as sku');
     $this->db->from('tm_special_package a');
     $this->db->join('tr_product_size b', 'b.special = a.id');
-    $this->db->where('a.id', $idSpecialPckg);
+    $this->db->where('a.slugs', $slugsSpecialPckg);
     $query = $this->db->get();
     if($query->num_rows() != 0){
       return $query->row_array();
