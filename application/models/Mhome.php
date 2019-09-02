@@ -766,7 +766,7 @@ class Mhome extends CI_Model{
   }
 
   public function prod_brand($idProd){
-    $this->db->select('a.id, a.slugs, b.brand_id');
+    $this->db->select('a.id, a.slugs, a.logo, b.brand_id');
     $this->db->from('tm_brands a');
     $this->db->join('tm_product b', 'b.brand_id = a.id');
     $this->db->where('b.id', $idProd);
