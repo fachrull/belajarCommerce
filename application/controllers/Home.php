@@ -2,6 +2,7 @@
 
 /**
  * this is class for home page
+ *
  */
 class Home extends CI_Controller{
 
@@ -315,8 +316,8 @@ class Home extends CI_Controller{
         show_404();
         exit();
       }
-      $id_brand = $this->mhome->getProducts(array('id' => $idProduct), array('id_brand' => 'brand_id'), 'tm_product', TRUE);
-      $data['brand'] = $id_brand['brand_id'];
+      $id_brand = $this->mhome->prod_brand($idProduct);
+      $data['brand'] = $id_brand;
       $data['categories'] = $this->mhome->brand_categories($id_brand['brand_id']);
       // print_r($data['categories']);
       // exit();

@@ -36,7 +36,7 @@
 						<ul id="categories" class="list-group list-group-bordered list-group-icon uppercase">
 						<?php foreach ($categories as $category): ?>
 							<li class="list-group-noicon active">
-								<a class="pt-4 pb-4" href="<?= site_url('home/shop/'.$brand.'/'.$category['slugs'])?>"><?= $category['name']?></a>
+								<a class="pt-4 pb-4" href="<?= site_url('home/shop/'.$brand['slugs'].'/'.$category['slugs'])?>"><?= $category['name']?></a>
 							</li>
 						<?php endforeach; ?>
 						</ul>
@@ -52,11 +52,11 @@
 					</div>
 
                     <ul id="brands" class="list-group list-unstyled">
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/1');?>">Aireloom</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/2');?>">Kingkoil</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/3');?>">Serta</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/4');?>">Tempur</a></li>
-                        <li class="list-group-item"><a href="<?= site_url('home/shop/5');?>">Florence</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/aireloom');?>">Aireloom</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/kingkoil');?>">Kingkoil</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/serta');?>">Serta</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/tempur');?>">Tempur</a></li>
+                        <li class="list-group-item"><a href="<?= site_url('home/shop/florence');?>">Florence</a></li>
                     </ul>
 
 				</div>
