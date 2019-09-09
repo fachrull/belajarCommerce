@@ -316,7 +316,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12 pb-40">
-                <h3 class="text-center" style="letter-spacing: 3px;">PRODUCT HIGHTLIGHT</h3>
+                <h3 class="text-center" style="letter-spacing: 3px;">PRODUCT HIGHLIGHT</h3>
             </div>
         </div>
         <div class="row">

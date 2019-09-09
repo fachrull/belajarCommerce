@@ -147,7 +147,7 @@
 												<p>Starts from</p>
 												<!-- price -->
 												<div class="shop-item-price">
-													Rp. <?= number_format($product['price'], 2, ",", ".");?>
+													Rp. <?= number_format($product['price'], 0, ",", ".");?>
 												</div>
 												<!-- /price -->
 											</div>

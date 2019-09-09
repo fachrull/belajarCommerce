@@ -1565,7 +1565,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function pageAbout(){
+  public function about(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
       $this->load->view('include/header2', $brands);
@@ -1573,7 +1573,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function pageContact(){
+  public function contact(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
       $this->load->view('include/header2', $brands);
@@ -1581,7 +1581,7 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
 
-  public function pageFaq(){
+  public function faq(){
       $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 
       $this->load->view('include/header2', $brands);
@@ -1973,7 +1973,7 @@ class Home extends CI_Controller{
 
   public function special_package() {
     $data['special_packages'] = $this->mhome->getProducts(array('active' => 1, 'deleted !=' => 1),
-      array('idField' => 'id', 'nameField' => 'name', 'img' => 'image'), 'tm_special_package', FALSE);
+      array('idField' => 'id', 'nameField' => 'name', 'img' => 'image', 'slugs' => 'slugs'), 'tm_special_package', FALSE);
 
     $brands['brands'] = $this->mhome->getProducts(array('id !=' => 0, 'deleted' => 0, 'status' => 1), NULL, 'tm_brands', FALSE);
 

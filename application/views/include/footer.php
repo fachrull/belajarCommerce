@@ -29,24 +29,24 @@
                             <i class="icon-facebook"></i>
                             <i class="icon-facebook"></i>
                         </a>
-                        <a href="https://twitter.com"
-                           class="social-icon social-icon-border social-icon-round social-twitter float-left"
+                        <a href="https://wa.me/6281211904686"
+                           class="social-icon social-icon-border social-icon-round social-whatsapp float-left"
                            data-toggle="tooltip"
-                           data-placement="top" title="Twitter">
-                            <i class="icon-twitter"></i>
-                            <i class="icon-twitter"></i>
+                           data-placement="top" title="Chat on Whatsapp">
+                            <i class="icon-chat"></i>
+                            <i class="icon-chat"></i>
                         </a>
-                        <a href="https://instagram.com"
+                        <a href="https://www.instagram.com/agmstore.id/"
                            class="social-icon social-icon-border social-icon-round social-instagram float-left"
                            data-toggle="tooltip"
                            data-placement="top" title="Instagram">
                             <i class="icon-instagram2"></i>
                             <i class="icon-instagram2"></i>
                         </a>
-                        <a href="https://web.whatsapp.com"
+                        <a href="whatsapp://call?number=6281211904686"
                            class="social-icon social-icon-border social-icon-round social-whatsapp float-left"
                            data-toggle="tooltip"
-                           data-placement="top" title="Whatsapp">
+                           data-placement="top" title="Call on Whatsapp">
                             <i class="icon-call"></i>
                             <i class="icon-call"></i>
                         </a>
@@ -72,9 +72,9 @@
                     <div class="col-md-4 col-4 pt-5">
                         <h4 class="letter-spacing-1 footer-zero">ABOUT</h4>
                         <ul class="list-unstyled footer-list half-paddings b-0">
-                            <li><a class="block" href="<?= site_url(''); ?>home/pageAbout">About Us</a></li>
-                            <li><a class="block" href="<?= site_url(''); ?>home/pageContact">Contact Us</a></li>
-                            <li><a class="block" href="<?= site_url(''); ?>home/pageFaq">FAQ</a></li>
+                            <li><a class="block" href="<?= site_url(''); ?>home/about">About Us</a></li>
+                            <li><a class="block" href="<?= site_url(''); ?>home/contact">Contact Us</a></li>
+                            <li><a class="block" href="<?= site_url(''); ?>home/faq">FAQ</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-4 pt-5">

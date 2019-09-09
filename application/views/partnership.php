@@ -44,7 +44,7 @@
 
 
         <!-- BUTTON CALLOUT -->
-        <a href="#purchase" rel="nofollow" target="_blank" class="btn btn-xlg btn-footer fs-2 fullwidth m-0 rad-0 p-40">
+        <a href="mailto:partnership@agmstore.com?Subject=AGM%20Partnership" rel="nofollow" class="btn btn-xlg btn-footer fs-2 fullwidth m-0 rad-0 p-40">
             <span class="font-lato fs-30">
                 Interested in partnership?
                 <strong>Join now &raquo;</strong>

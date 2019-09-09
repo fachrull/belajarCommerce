@@ -2410,6 +2410,8 @@ class Admin extends CI_Controller {
               $prod_PKG = $this->input->post('sizeSpcl[]');
               $prod_qty = $this->input->post('qtySpcl[]');
               $prod_prc = $this->input->post('prcSpcl[]');
+              $slugs = str_replace(' ', '-', strtolower($name));
+              $slugs = str_replace('%', '', $slugs);
 
               $file_name = strtolower('special_package-'.$name);
 
@@ -2433,7 +2435,8 @@ class Admin extends CI_Controller {
                   'image'         => $upload_name,
                   'description'   => $desc,
                   'active'        => 1,
-                  'total'         => $total
+                  'total'         => $total,
+					'slugs'		  => $slugs
                 );
                 $this->madmin->inputData('tm_special_package', $data_main_sp);
 

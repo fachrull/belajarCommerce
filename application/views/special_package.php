@@ -34,9 +34,9 @@
 										<img src="<?= base_url('asset/upload/special-package/'.$specialPackage['image']);?>" class="card-img-top" alt="<?= $specialPackage['name']?>">
 										<div class="card-body">
 											<h4>
-												<a href="<?= base_url('home/detailSpecial/'.$specialPackage['id']);?>"><?= $specialPackage['name']?></a>
+												<a href="<?= base_url('home/detailSpecial/'.$specialPackage['slugs']);?>"><?= $specialPackage['name']?></a>
 											</h4>
-											<a href="<?= base_url('home/detailSpecial/'.$specialPackage['id']);?>" class="btn btn-oldblue btn-block">View Detail</a>
+											<a href="<?= base_url('home/detailSpecial/'.$specialPackage['slugs']);?>" class="btn btn-oldblue btn-block">View Detail</a>
 										</div>
 									</div>
 								</div>
