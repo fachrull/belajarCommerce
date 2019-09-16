@@ -103,11 +103,11 @@
                         </a>
                     </div>
                     <div class="col-6 col-sm-6 col-md-6 col-lg-2 pb-40">
-                        <a href="<?= site_url('home/shop/florence'); ?>">
-                            <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Florence"
-                                 src="<?= base_url('asset/brands/Florence.png'); ?>"
-                                 onmouseover="this.src='<?= base_url("asset/brands/hoverFlorence.png"); ?>'"
-                                 onmouseout="this.src='<?= base_url("asset/brands/Florence.png"); ?>'"/>
+                        <a href="<?= site_url('home/shop/ogawa'); ?>">
+                            <img class="product-img wow fadeInUp" data-wow-delay="0.4s" alt="Ogawa"
+                                 src="<?= base_url('asset/brands/Ogawa.png'); ?>"
+                                 onmouseover="this.src='<?= base_url("asset/brands/hoverOgawa.png"); ?>'"
+                                 onmouseout="this.src='<?= base_url("asset/brands/Ogawa.png"); ?>'"/>
                         </a>
                     </div>
                 </div>

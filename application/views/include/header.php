@@ -139,6 +139,11 @@
                                             Florence
                                         </a>
                                     </li>
+									<li class="dropdown">
+										<a class="fs-14 text-capitalize" href="<?= base_url('home/shop/ogawa');?>">
+											Ogawa
+										</a>
+									</li>
                                 </ul>
                             </li>
                             <li>

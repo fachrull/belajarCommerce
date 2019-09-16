@@ -67,6 +67,7 @@
                             <li><a class="block" href="<?= site_url('home/shop/serta'); ?>">Serta</a></li>
                             <li><a class="block" href="<?= site_url('home/shop/tempur'); ?>">Tempur</a></li>
                             <li><a class="block" href="<?= site_url('home/shop/florence'); ?>">Florence</a></li>
+							<li><a class="block" href="<?= site_url('home/shop/ogawa'); ?>">Ogawa</a></li>
                         </ul>
                     </div>
                     <div class="col-md-4 col-4 pt-5">
