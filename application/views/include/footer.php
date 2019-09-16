@@ -29,13 +29,6 @@
                             <i class="icon-facebook"></i>
                             <i class="icon-facebook"></i>
                         </a>
-                        <a href="https://wa.me/6281211904686"
-                           class="social-icon social-icon-border social-icon-round social-whatsapp float-left"
-                           data-toggle="tooltip"
-                           data-placement="top" title="Chat on Whatsapp">
-                            <i class="icon-chat"></i>
-                            <i class="icon-chat"></i>
-                        </a>
                         <a href="https://www.instagram.com/agmstore.id/"
                            class="social-icon social-icon-border social-icon-round social-instagram float-left"
                            data-toggle="tooltip"
@@ -43,6 +36,13 @@
                             <i class="icon-instagram2"></i>
                             <i class="icon-instagram2"></i>
                         </a>
+						<a href="https://wa.me/6281211904686"
+						   class="social-icon social-icon-border social-icon-round social-whatsapp float-left"
+						   data-toggle="tooltip"
+						   data-placement="top" title="Chat on Whatsapp">
+							<i class="icon-chat"></i>
+							<i class="icon-chat"></i>
+						</a>
                         <a href="whatsapp://call?number=6281211904686"
                            class="social-icon social-icon-border social-icon-round social-whatsapp float-left"
                            data-toggle="tooltip"

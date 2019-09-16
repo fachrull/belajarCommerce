@@ -137,7 +137,7 @@
 
 				<p>
 					<span class="block"><strong><i class="fa fa-whatsapp"></i> Whatsapp:</strong> <a href="https://wa.me/6281211904686" target="_blank">+6281211904686</a></span>
-					<span class="block"><strong><i class="fa fa-envelope"></i> Email:</strong> <a href="mailto:mail@yourdomain.com">mail@yourdomain.com</a></span>
+					<span class="block"><strong><i class="fa fa-envelope"></i> Email:</strong> <a href="mailto:contact@agmstore.com">contact@AGMstore.com</a></span>
 				</p>
                 <p>
                     <span class="block"><strong>Operation Hours:</strong> Monday - Friday, 9 AM - 6 PM</span>
