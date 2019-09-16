@@ -497,8 +497,6 @@ class Admin extends CI_Controller {
             $this->form_validation->set_rules('desc', 'Description', 'required');
             $this->form_validation->set_rules('size[]', 'Size', 'required');
             $this->form_validation->set_rules('price[]', 'Price', 'required');
-            $this->form_validation->set_rules('sku[]', 'SKU', 'required');
-
 
             if ($this->form_validation->run() === TRUE) {
                 $brand_id = $this->input->post('brand');
