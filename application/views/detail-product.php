@@ -57,6 +57,7 @@
                         <li class="list-group-item"><a href="<?= site_url('home/shop/serta');?>">Serta</a></li>
                         <li class="list-group-item"><a href="<?= site_url('home/shop/tempur');?>">Tempur</a></li>
                         <li class="list-group-item"><a href="<?= site_url('home/shop/florence');?>">Florence</a></li>
+						<li class="list-group-item"><a href="<?= site_url('home/shop/ogawa');?>">Ogawa</a></li>
                     </ul>
 
 				</div>
