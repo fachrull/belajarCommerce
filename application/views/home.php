@@ -147,18 +147,18 @@
 
                         <div class="shop-item-summary p-30">
                             <div class="row mb-5">
-                                <div class="col-8 col-md-12 col-lg-8">
+								<div class="col-12 col-md-12 col-lg-12">
                                     <a href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($bestSeller[0]["name"])?></h2></a>
-                                </div>
-                                <div class="col-4 col-md-12 col-lg-4 p-0">
-                                    <a class="rating rating-<?=$bestSeller[0]["stars"]?> fs-16" href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"]."#review-section")?>">
-                                        <!-- rating-0 ... rating-5 -->
-                                    </a>
                                 </div>
                             </div>
 							<div class="row mb-10">
-								<div class="col-12 col-md-12 col-lg-12">
+								<div class="col-8 col-md-12 col-lg-8">
 									<?=$bestSeller[0]["brand"]?>
+								</div>
+								<div class="col-4 col-md-12 col-lg-4 p-0">
+									<a class="rating rating-<?=$bestSeller[0]["stars"]?> fs-16" href="<?=base_url("home/detailProduct/".$bestSeller[0]["slugs"]."#review-section")?>">
+										<!-- rating-0 ... rating-5 -->
+									</a>
 								</div>
 							</div>
                             <?php if ($bestSeller[0]["sub_price"] != 0) { ?>
@@ -199,18 +199,18 @@
 
                         <div class="shop-item-summary p-30">
                             <div class="row mb-5">
-                                <div class="col-8 col-md-12 col-lg-8">
+								<div class="col-12 col-md-12 col-lg-12">
 									<a href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($bedLinen[0]["name"])?></h2></a>
-                                </div>
-                                <div class="col-4 col-md-12 col-lg-4 p-0">
-                                    <a class="rating rating-<?=$bedLinen[0]["stars"]?> fs-16" href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"]."#review-section")?>">
-                                        <!-- rating-0 ... rating-5 -->
-                                    </a>
                                 </div>
                             </div>
 							<div class="row mb-10">
-								<div class="col-12 col-md-12 col-lg-12">
+								<div class="col-8 col-md-12 col-lg-8">
 									<?=$bedLinen[0]["brand"]?>
+								</div>
+								<div class="col-4 col-md-12 col-lg-4 p-0">
+									<a class="rating rating-<?=$bedLinen[0]["stars"]?> fs-16" href="<?=base_url("home/detailProduct/".$bedLinen[0]["slugs"]."#review-section")?>">
+										<!-- rating-0 ... rating-5 -->
+									</a>
 								</div>
 							</div>
                             <?php if ($bedLinen[0]["sub_price"] != 0) { ?>
@@ -251,18 +251,18 @@
 
                         <div class="shop-item-summary p-30">
                             <div class="row mb-5">
-                                <div class="col-8 col-md-12 col-lg-8">
+								<div class="col-12 col-md-12 col-lg-12">
 									<a href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"])?>"><h2 class="align-middle"><?=strtoupper($beddingAcc[0]["name"])?></h2></a>
-                                </div>
-                                <div class="col-4 col-md-12 col-lg-4 p-0">
-									<a class="rating rating-<?=$beddingAcc[0]["stars"]?>" href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"]."#review-section")?>">
-										<!-- rating-0 ... rating-5 -->
-									</a>
                                 </div>
                             </div>
 							<div class="row mb-10">
-								<div class="col-12 col-md-12 col-lg-12">
+								<div class="col-8 col-md-12 col-lg-8">
 									<?=$beddingAcc[0]["brand"]?>
+								</div>
+								<div class="col-4 col-md-12 col-lg-4 p-0">
+									<a class="rating rating-<?=$beddingAcc[0]["stars"]?>" href="<?=base_url("home/detailProduct/".$beddingAcc[0]["slugs"]."#review-section")?>">
+										<!-- rating-0 ... rating-5 -->
+									</a>
 								</div>
 							</div>
                             <?php if ($beddingAcc[0]["sub_price"] != 0) { ?>
