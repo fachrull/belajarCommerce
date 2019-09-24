@@ -1932,13 +1932,45 @@ class Home extends CI_Controller{
     $this->load->view('include/footer');
   }
   public function subscribe(){
-      $email = $this->input->post('email');
-      $data = array(
-          'email'   =>  $email
+	  $this->load->helper('form');
+	  $this->load->library('form_validation');
 
-      );
-      $this->mhome->addNewsLetter($data);
-      redirect('/');
+	  $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+
+	  if ($this->form_validation->run() == TRUE) {
+		  $secretKey = "6Lcxm5wUAAAAABvbtNLsnQwiPTQJNjM57xV7vOTA";
+		  $captcha = $this->input->post('token');
+		  $url = 'https://www.google.com/recaptcha/api/siteverify';
+		  $data = array('secret' => $secretKey, 'response' => $captcha);
+
+		  $options = array(
+			  'http' => array(
+				  'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+				  'method'  => 'POST',
+				  'content' => http_build_query($data)
+			  )
+		  );
+		  $context  = stream_context_create($options);
+		  $response = file_get_contents($url, false, $context);
+		  $responseKeys = json_decode($response,true);
+		  header('Content-type: application/json');
+		  if($responseKeys["success"]) {
+			  $email = $this->input->post('email');
+			  $data = array(
+				  'email'   =>  $email
+
+			  );
+			  $this->mhome->addNewsLetter($data);
+			  redirect('/');
+		  } else {
+			  $this->session->set_flashdata('error_newsletter', 'captcha error');
+			  redirect('/#footer');
+		  }
+	  } else {
+		  $this->session->set_flashdata('error_newsletter', validation_errors());
+		  redirect('/#footer');
+	  }
+
   }
 
   public function store_lookup()

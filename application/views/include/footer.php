@@ -1,4 +1,5 @@
 <?php defined('BASEPATH') or Exit('No direct script access allowed'); ?>
+<script src="https://www.google.com/recaptcha/api.js?render=6Lcxm5wUAAAAAEhnAdo5xeknvh7RXGpTqWq5XDTO"></script>
 <!-- FOOTER -->
 <footer id="footer">
     <div class="container footer-zero">
@@ -9,12 +10,18 @@
                     Stay in the know
                 </h2>
                 <h6>Be the first to hear about new inventory and offers.</h6>
-                <form method="post" action="<?=site_url('home/subscribe')?>">
+                <form id="newsletter" method="post" action="<?=site_url('home/subscribe')?>">
+					<?php if($this->session->has_userdata('error_newsletter')): ?>
+						<div class="alert alert-mini alert-danger">
+							<?= $this->session->userdata('error_newsletter')?>
+						</div>
+					<?php endif; ?>
                     <div class="input-email">
                         <input type="email" name="email" class="form-control form-control-footer" placeholder="Your Mail"
                                aria-label="Your Mail" aria-describedby="basic-addon2" style="background-color: #5F5F5F;">
+						<input type="hidden" name="token" id="token">
                         <div>
-                            <button class="email-button eyebrow">SUBMIT<i class="pl-5 fa fa-chevron-right"></i></button>
+                            <button type="button" class="email-button eyebrow" data-toggle="modal" data-target="#newsletter-modal">SUBMIT<i class="pl-5 fa fa-chevron-right"></i></button>
                         </div>
                     </div>
                 </form>
@@ -99,6 +106,29 @@
 </footer>
 <!-- /FOOTER -->
 
+<div class="modal fade bs-example-modal-sm" id="newsletter-modal" tabindex="-1" role="dialog" aria-labelledby="newsletterModal" aria-hidden="true">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+
+			<!-- header modal -->
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="mySmallModalLabel">Small modal</h4>
+			</div>
+
+			<!-- body modal -->
+			<div class="modal-body">
+				<p>Terima kasih atas minat Anda pada situs web kami. Data diri Anda hanya akan digunakan untuk tujuan pengiriman promosi dan informasi dari AGM.</p>
+			</div>
+
+			<!-- Modal Footer -->
+			<div class="modal-footer">
+				<button type="button" id="ok" class="btn btn-default" data-dismiss="modal">Ok</button>
+			</div>
+
+		</div>
+	</div>
+</div>
 
 </div>
 <!-- SCROLL TO TOP -->
@@ -136,6 +166,12 @@
         $('#store-location').load('<?php echo base_url('home/store-lookup'); ?>');
     }
 
+</script>
+<script>
+    $('#newsletter-modal').on('hidden.bs.modal', function(){
+        /* when the submit button in the modal is clicked, submit the form */
+        $('#newsletter').submit();
+    });
 </script>
 <script>
     $(document).ready(function () {
